@@ -2,7 +2,7 @@
   <div v-show="loading">
     <div class="list-box box box-tb" v-if="data">
       <div class="list-item box box-lr" v-for="(item, index) of data" :key="index">
-        <img src="../../assets/logo.png" alt="">
+        <img src="../../../assets/logo.png" alt="">
         <div class="desc">{{item.desc}}</div>
       </div>
     </div>

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import home from './pages/home/module'
-import list from './pages/list/module'
+import home from './pages/worldcup/home/module'
+import list from './pages/worldcup/list/module'
 
 Vue.use(Vuex)
 
