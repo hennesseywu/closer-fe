@@ -1,0 +1,1 @@
+export const VUE_APP_BACKEND_SERVER = process.env.VUE_APP_BACKEND_SERVER || 'http://118.31.251.156:9898'
