@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+
 const Home = () =>
-    import ('@/pages/home')
+    import ('@/pages/worldcup/home')
 const LoginSuccess = () =>
-    import ('@/pages/login-success')
+    import ('@/pages/worldcup/login-success')
 const List = () =>
-    import ('@/pages/list')
+    import ('@/pages/worldcup/list')
 
 Vue.use(Router)
 
