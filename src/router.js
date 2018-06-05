@@ -10,6 +10,8 @@ const List = () =>
     import ('@/pages/worldcup/list')
 const Index = () =>
     import ('@/pages/worldcup/index')
+const Share = () =>
+    import ('@/pages/worldcup/share')
 
 Vue.use(Router)
 
@@ -23,11 +25,11 @@ const router = new Router({
             title: '首页'
         }
     }, {
-        path: '/loginSuccess',
-        name: '首页',
-        component: LoginSuccess,
+        path: '/worldcup/share',
+        name: '分享',
+        component: Share,
         meta: {
-            title: '登录成功'
+            title: '贴近世界杯，瓜分600万'
         }
     }, {
         path: '/list',
