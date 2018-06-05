@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
-import './reset.css'
+// import './reset.css'
+import './assets/style/reset.less'
 import './common.css'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
