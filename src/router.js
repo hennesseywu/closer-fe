@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const Index = () => import('@/pages/worldcup/index')
+const Activity = () => import('@/pages/worldcup/activity')
 
 Vue.use(Router)
 
@@ -13,6 +14,13 @@ const router = new Router({
       component: Index,
       meta: {
         title: '领取机会'
+      }
+    },{
+      path: '/activity',
+      name: '贴近世界杯 瓜分600万',
+      component: Activity,
+      meta: {
+        title: '贴近世界杯 瓜分600万'
       }
     }
   ]
