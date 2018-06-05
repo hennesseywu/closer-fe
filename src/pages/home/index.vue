@@ -2,27 +2,25 @@
     <div class="index box box-tb">
         <div class="login">新用户登录</div>
         <div class="login-box box box-tb">
-            <input type="text" placeholder="请输入您的姓名" v-model="userLogin.userName" ref="username">
-            <input type="password" placeholder="请输入密码" v-model="userLogin.password" ref="pwd">
+            <input type="text" placeholder="手机号" v-model="user.phone" ref="phone">
             <button class="login-btn" @click="submit">登录</button>
         </div>
     </div>
 </template>
 
 <script>
+import {  mapActions } from "vuex";
 
-export default {
+export default {  
     components: {
-    
+
     },
-  data() {
+    data() {
     return {
-      userLogin: {
-        userName: "",
-        password: ""
-      },
-      isLogin: true
-    };
+      user:{
+            phone:"13551379879"
+      }
+      };
   },
   created() {
     //   document.addEventListener('keydown', this.enterSubmit, false)
@@ -33,18 +31,23 @@ export default {
   methods: {
       async submit() {
           let nameReg = /[\u4e00-\u9fa5]/gm
-          let pwdReg = /^\w+$/
-            if(!nameReg.test(this.userLogin.userName)) {
-                console.log(this.userLogin.userName)
-                alert('请输入正确的姓名')
-                return
-            }
-            if(!pwdReg.test(this.$refs.password)) {
-                alert('请输入正确的密码') 
-                return
-            }
-        this.$router.push('/loginSuccess')
+          let pwdReg = /^\w+$/;
+              this.getCode(this.user.phone);
+            // if(!nameReg.test(this.userLogin.userName)) {
+            //     console.log(this.userLogin.userName)
+            //     alert('请输入正确的姓名')
+            //     return
+            // }
+            // if(!pwdReg.test(this.$refs.password)) {
+            //     alert('请输入正确的密码') 
+            //     return
+            // }
+
+      
+        // this.$router.push('/loginSuccess')
       },
+
+     ...mapActions("home",["getCode"])
     //   enterSubmit(e) {
     //       if(e.kerCode === 13) this.submit()
     //   }
