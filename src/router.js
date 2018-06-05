@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+
 const Home = () =>
     import ('@/pages/worldcup/home')
 const LoginSuccess = () =>
     import ('@/pages/worldcup/login-success')
 const List = () =>
     import ('@/pages/worldcup/list')
+const Index = () =>
+    import ('@/pages/worldcup/index')
 
 Vue.use(Router)
 
@@ -34,6 +37,7 @@ const router = new Router({
             title: '列表'
         }
     }]
+
 })
 
 // router.beforeEach(({meta, path}, from, next) => {
