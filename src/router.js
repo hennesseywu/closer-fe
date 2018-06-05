@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const Home = () => import('@/pages/worldcup/home')
 const LoginSuccess = () => import('@/pages/worldcup/login-success')
 const List = () => import('@/pages/worldcup/list')
+const Index = () => import('@/pages/worldcup/index')
 
 Vue.use(Router)
 
@@ -29,6 +30,13 @@ const router = new Router({
       component: List,
       meta: {
         title: '列表'
+      }
+    },{
+      path: '/index',
+      name: '列表页',
+      component: Index,
+      meta: {
+        title: '领取机会'
       }
     }
   ]
