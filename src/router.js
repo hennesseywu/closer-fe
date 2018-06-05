@@ -1,37 +1,39 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const Home = () => import('@/pages/home')
-const LoginSuccess = () => import('@/pages/login-success')
-const List = () => import('@/pages/list')
+const Home = () =>
+    import ('@/pages/home')
+const LoginSuccess = () =>
+    import ('@/pages/login-success')
+const List = () =>
+    import ('@/pages/list')
 
 Vue.use(Router)
 
 const router = new Router({
-  routes: [
-    {
-      path: '/',
-      name: '首页',
-      component: Home,
-      meta: {
-        title: '首页'
-      }
-    },{
-      path: '/loginSuccess',
-      name: '首页',
-      component: LoginSuccess,
-      meta: {
-        title: '登录成功'
-      }
-    },{
-      path: '/list',
-      name: '列表页',
-      component: List,
-      meta: {
-        title: '列表'
-      }
-    }
-  ]
+    mode: 'history',
+    routes: [{
+        path: '/worldcup',
+        name: '首页',
+        component: Home,
+        meta: {
+            title: '首页'
+        }
+    }, {
+        path: '/loginSuccess',
+        name: '首页',
+        component: LoginSuccess,
+        meta: {
+            title: '登录成功'
+        }
+    }, {
+        path: '/list',
+        name: '列表页',
+        component: List,
+        meta: {
+            title: '列表'
+        }
+    }]
 })
 
 // router.beforeEach(({meta, path}, from, next) => {
