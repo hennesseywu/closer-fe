@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+<<<<<<< HEAD
 
 const Home = () =>
     import ('@/pages/worldcup/home')
@@ -12,10 +13,15 @@ const Index = () =>
     import ('@/pages/worldcup/index')
 const Share = () =>
     import ('@/pages/worldcup/share')
+=======
+const Index = () => import('@/pages/worldcup/index')
+const Activity = () => import('@/pages/worldcup/activity')
+>>>>>>> 1a5dc5c4148266db340422edea8223ecad15d67f
 
 Vue.use(Router)
 
 const router = new Router({
+<<<<<<< HEAD
     mode: 'history',
     routes: [{
         path: '/worldcup',
@@ -40,6 +46,25 @@ const router = new Router({
         }
     }]
 
+=======
+  routes: [
+    {
+      path: '/',
+      name: '首页',
+      component: Index,
+      meta: {
+        title: '领取机会'
+      }
+    },{
+      path: '/activity',
+      name: '贴近世界杯 瓜分600万',
+      component: Activity,
+      meta: {
+        title: '贴近世界杯 瓜分600万'
+      }
+    }
+  ]
+>>>>>>> 1a5dc5c4148266db340422edea8223ecad15d67f
 })
 
 // router.beforeEach(({meta, path}, from, next) => {
