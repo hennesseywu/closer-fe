@@ -3,7 +3,7 @@
         <div class="pop-header">
             <div class="close-icon" @click="close"></div>
         </div>
-        <div :class="win ?  'win-pop-box':'pop-body'">
+        <div :class="win ?'win-pop-box':'pop-body'">
             <div class="title">
                 <span class="text">很遗憾你猜错了</span>
             </div>

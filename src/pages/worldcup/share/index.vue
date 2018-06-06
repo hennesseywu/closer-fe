@@ -1,95 +1,94 @@
 <template>
-    <mt-popup v-model="notAccessVisible" :class="'pop-box'" :closeOnClickModal="false">
-        <div class="pop-header">
-            <div class="close-icon" @click="close"></div>
+  <div class="index">
+    <div class="wrapper">
+      <div class="invite-img"></div>
+      <div class="share-box">
+        <div class="title">
+          <span>你的朋友正在参与竞猜</span>
         </div>
-        <div :class="'pop-body'">
-            <div class="title">
-                <span class="text">很遗憾你猜错了</span>
-            </div>
+        <div class="content">
+          <img class="left-ball" src="../../../assets/images/left_ball.png"> 瓜分了
+          <label class="middel-label">600</label>万
+          <img class="right-ball" src="../../../assets/images/right_ball.png">
         </div>
-        <div class="pop-body">
-
+        <div class="bottom">
+          <button class="enter-button">去瓜分600万</button>
         </div>
-    </mt-popup>
+      </div>
+    </div>
+  </div>
 </template>
 
-
 <script>
-    import Vue from 'vue'
-    import {
-        Popup
-    } from 'mint-ui'
-    Vue.component(Popup.name, Popup)
-    export default {
-    
-        name: 'pop',
-        components: {
-    
-        },
-        props: {
-            className: String
-        },
-        data() {
-            return {
-                notAccessVisible: true
-            }
-        },
-        methods: {
-            open: function() {
-                this.notAccessVisible = true
-            },
-            close: function() {
-                this.notAccessVisible = false
-            }
-        }
-    }
+  
 </script>
 
+
 <style lang="less" scoped>
-.pop-box {
-    box-sizing: border-box;
-    width: 592pr;
-    // padding: 16pr 0px;
-    border-radius: 10pr;
-}
-
-.pop-header {
-    height: 24pr;
-    .close-icon {
+  .index {
+    width: 100%;
+    height: 100%;
+    .wrapper {
+      width: 100%;
+      height: 100%;
+      background: url('../../../assets/images/bg.png') no-repeat center center;
+      background-size: cover;
+      .invite-img {
         position: absolute;
-        right: 20pr;
-        top: 20pr;
-        width: 24pr;
-        height: 24pr;
-        &::before, &::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 2px;
-            height: 24pr;
-            background-color: #9B9B9B;
+        top: 48pr;
+        right: 0;
+        width: 128pr;
+        height: 148pr;
+        background: url('../../../assets/images/share.png') no-repeat center;
+        background-size: cover;
+      }
+      .share-box {
+        left: 2%;
+        width: 96%;
+        top: 536pr;
+        background: #041C4D;
+        position: absolute;
+        border-radius: 12pr;
+        text-align: center;
+        color: #ffffff;
+        .title {
+          margin-top: 60pr;
+          font-size: 14pr;
         }
-        &::before {
-            transform: translate(-50%, -50%) rotate(-45deg);
+        .content {
+          margin: 20pr 0 100pr 0;
+          .left-ball {
+            float: left;
+            margin-left: 39pr;
+            width: 92;
+            height: 62pr;
+          }
+          .middel-label {
+            color: #FDDB00;
+            font-size: 48pr;
+          }
+          .right-ball {
+            float: right;
+            margin-right: 39pr;
+            width: 92pr;
+            height: 62pr;
+          }
+          ;
         }
-        &::after {
-            transform: translate(-50%, -50%) rotate(45deg);
+        .bottom {
+          .enter-button {
+            width: 372pr;
+            height: 80pr;
+            margin: 0 87pr 60pr 87pr;
+            background: #FDDB00;
+            border-radius: 25pr;
+            color: #4B4945;
+          }
         }
+      }
     }
-}
-
-
-
-.pop-body {
-    text-align: center;
-    .title {
-        height: 56pr;
-        color: #43475B;
-        .text {
-            font-size: 40pr;
-        }
-    }
-    }
+  }
 </style>
+
+
+
