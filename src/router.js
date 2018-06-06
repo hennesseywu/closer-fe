@@ -10,9 +10,11 @@ const Activity = () =>
 const Share = () =>
     import ('@/pages/worldcup/share')
 
+
 Vue.use(Router)
 
 const router = new Router({
+
     mode: 'history',
     routes: [{
             path: '/',
@@ -38,8 +40,8 @@ const router = new Router({
             }
         }
     ]
-})
 
+})
 router.beforeEach(({ meta, path }, from, next) => {
 
     let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
