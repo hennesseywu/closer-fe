@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      visible: true,
+      visible: false,
       descText: '“去APP找一找会有更多机会”'
     };
   },
