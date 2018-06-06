@@ -7,6 +7,10 @@ import activity from './pages/worldcup/activity/module'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    state: {
+        UA: "",
+        IS_APP: false
+    },
     modules: {
         index,
         activity

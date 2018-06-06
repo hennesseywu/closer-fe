@@ -8,13 +8,15 @@ import 'mint-ui/lib/style.css'
 import router from './router'
 import store from './store'
 import axio from './utils/axio'
+import Cookies from 'js-cookie';
+
 // import VueAxios from 'vue-axios'
 // vconsole 调试
 // import Vconsole from 'vconsole'
 // var vconsole = new Vconsole()
 
 window.axios = axio;
-
+window.Cookies = Cookies;
 // Vue.use(VueAxios, axios);
 
 
