@@ -3,81 +3,65 @@
         <div class="pop-header">
             <div class="close-icon" @click="close"></div>
         </div>
-        <div class="pop-body">
+        <div :class="'pop-body'">
             <div class="title">
                 <span class="text">很遗憾你猜错了</span>
             </div>
-            <div class="title-desc">
-              <span class="desc">9378人参与，2367答对</span>
-            </div>
-            <div class="content">
-                  <img class="result-img" src="../../../assets/images/result_wrong.png">
-            <div class="share">
-            <button  class="button">邀请好友 一起赚钱</button>
-            </div>
-            <div>
-            <span  class="guide">增加机会 查看攻略</span>
-            </div>
-            <div class="line"></div>
-            <div>
-             <span class="match-title">竞猜比赛队伍</span>
-            </div>
-            <div class="match">
-              <span class="detail">俄罗斯 vs 中国</span><span class="guess">俄罗斯x10</span>
-              <span class="detail">俄罗斯 vs 中国</span><span class="guess">俄罗斯x10</span>
-              <span class="detail">俄罗斯 vs 中国</span><span class="guess">俄罗斯x10</span>
-            </div>
         </div>
-        </div>
-        <div class="pop-bottom">
-          <span class="wait">等等再说</span>
-          <button class="getMoney">去提现</button>
+        <div class="pop-body">
+
         </div>
     </mt-popup>
 </template>
+
+
 <script>
-import Vue from 'vue'
-import { Popup } from 'mint-ui'
-Vue.component(Popup.name, Popup)
-
-export default {
-    name: 'pop',
-    components: {
-
-    },
-    props: {
-        className: String
-    },
-    data() {
-        return {
-            notAccessVisible: true
-        }
-    },
-    methods: {
-        open: function () {
-            this.notAccessVisible = true
+    import Vue from 'vue'
+    import {
+        Popup
+    } from 'mint-ui'
+    Vue.component(Popup.name, Popup)
+    export default {
+    
+        name: 'pop',
+        components: {
+    
         },
-        close: function () {
-            this.notAccessVisible = false
+        props: {
+            className: String
+        },
+        data() {
+            return {
+                notAccessVisible: true
+            }
+        },
+        methods: {
+            open: function() {
+                this.notAccessVisible = true
+            },
+            close: function() {
+                this.notAccessVisible = false
+            }
         }
     }
-}
 </script>
+
 <style lang="less" scoped>
 .pop-box {
     box-sizing: border-box;
     width: 592pr;
-    padding: 16pr 0px;
+    // padding: 16pr 0px;
     border-radius: 10pr;
 }
+
 .pop-header {
-    height: 36pr;
+    height: 24pr;
     .close-icon {
         position: absolute;
-        right: 10pr;
-        top: 10pr;
-        width: 36pr;
-        height: 36pr;
+        right: 20pr;
+        top: 20pr;
+        width: 24pr;
+        height: 24pr;
         &::before, &::after {
             content: '';
             position: absolute;
@@ -96,8 +80,9 @@ export default {
     }
 }
 
+
+
 .pop-body {
-    padding-top: 10pr;
     text-align: center;
     .title {
         height: 56pr;
@@ -106,83 +91,5 @@ export default {
             font-size: 40pr;
         }
     }
-    .title-desc{
-        margin-top: 10pr;
-        height: 38pr;
-        color: #B1B3BB;
-    }
-
-    .content{
-      margin-top: 48pr;
-      text-align: center;
-      .result-img{
-            width:348pr;
-            height: 320pr;
-      }
-    }
-    .share{
-        margin-top: 48pr;
-    .button{
-        background:#FDDB00;
-        width: 372pr;
-        height: 80pr;
-        border-radius: 50pr;
-        color: #4B4945;
-          }
-    }
-    .guide{
-      margin-top:20pr;
-      font-size: 24pr;
-      color: #14306B;
-    }
-
-    .line{
-      margin-top:31pr;
-      // width:425pr;
-      height:2pr;
-      border:1px solid #EFF0F4
-    }
-    .match-title{
-      margin-top:11pr;
-      color: #B1B3BB;
-      font-size: 24pr;
-    }
-
-    .match{
-      margin-top:18pr;
-      color:#43475B;
-      .detail{
-      float: left;
-      margin-left: 94pr;
-      }
-      .guess{
-        float:right;
-        margin-right: 72pr;
-      }
-    }
-}
-
-.pop-bottom{
-      margin-top: 62pr;
-      .wait{
-          padding-top: 12pr;
-          color: #8E8F94;
-          font-size: 32pr;
-          width: 128pr;
-          height: 80pr;
-          float: left;
-          margin-left: 94pr;
-      }
-      .getMoney{
-        float: right;
-        margin-right: 70pr;
-        font-size: 32pr;
-        background:#ffffff;
-        width:240pr;
-        color:#4B4945;
-        height:80pr;
-        border-radius:50pr;
-        border:1px solid #FDDB00;
-      }
     }
 </style>
