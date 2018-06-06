@@ -1,11 +1,11 @@
 <template>
-  <div class="rule-box">
-      <div class="rule-title box box-tb box-center-center">
+  <div class="rule-box activity-rule">
+      <div class="rule-title box box-tb box-center-center" v-if="false">
         <div class="top-line"></div>
         活动规则
         <div class="bottom-line"></div>
       </div>
-      <div class="rule">投注机会获取规则：</div>
+      <div class="rule activity">投注机会获取规则：</div>
       <div class="rule-ul">
         <div class="item">
           <span class="c-img"></span>
@@ -66,8 +66,16 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-  .rule-box {
+  .activity-rule {
+    margin: 0 16pr 60pr 16pr;
+    padding-top: 52pr;
+    
+  }
+  .index-rule {
     margin: 40pr;
+  }
+  .rule-box {
+    // margin: 40pr;
     font-size: 26pr;
     line-height: 36pr;
     color:#92B3F8;
@@ -85,8 +93,11 @@ export default {
         background-size: cover;
       }
     }
-    .rule {
+    .index-mt40 {
       margin-top: 40pr;
+    }
+    .rule {
+      // margin-top: 40pr;
       line-height: 40pr;
     }
     .rule-ul {

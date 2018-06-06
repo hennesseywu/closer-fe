@@ -54,24 +54,34 @@
         <div class="rule">规则说明</div>
         <div class="record">投注记录</div>
       </div>
+      <Rule ref="rule"></Rule>
     </div>
   </div>
 </template>
 <script>
 import { Swipe, SwipeItem } from 'mint-ui';
+import Rule from '../../../components/rule.vue'
 export default {
   name: 'index',
   components: {
     Swipe,
-    SwipeItem
+    SwipeItem,
+    Rule
 	},
 }
 </script>
 <style lang="less" scoped>
   .activity {
+    // height: 100%;
     background: #000d01;
     .wrapper {
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      // right: 0;
+      // bottom: 0;
       padding-top: 1pr;
+      padding-bottom: 60pr;
     background: url("../../../assets/images/activity_bg.jpg") no-repeat center
       center;
     background-size: cover;
@@ -217,8 +227,23 @@ export default {
       }
     }
     .rule_record {
-      background:rgba(20,48,107,1);
-      border-radius:0px 10px 0px 0px;
+      margin-top: 20pr;
+      margin: 20pr 16pr 0 16pr;
+      font-size: 28pr;
+      line-height: 40pr;
+      color: #92B3F8;
+      // background:rgba(20,48,107,1);
+      // border-radius:0px 10pr 10pr 0px;
+      .rule {
+        padding: 20pr 24pr;
+        background:#041C4D;
+        border-radius:10pr 0px 0px 0px;
+      }
+      .record {
+        padding: 20pr 24pr;
+        background: #14306B;
+        border-radius:0px 10pr 0px 0px;
+      }
     }
   }
 </style>
