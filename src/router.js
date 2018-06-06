@@ -1,43 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-
-const Home = () =>
-    import ('@/pages/worldcup/home')
-const LoginSuccess = () =>
-    import ('@/pages/worldcup/login-success')
-const List = () =>
-    import ('@/pages/worldcup/list')
-const Index = () =>
-    import ('@/pages/worldcup/index')
+const Index = () => import('@/pages/worldcup/index')
+const Activity = () => import('@/pages/worldcup/activity')
 
 Vue.use(Router)
 
 const router = new Router({
-    mode: 'history',
-    routes: [{
-        path: '/worldcup',
-        name: '首页',
-        component: Home,
-        meta: {
-            title: '首页'
-        }
-    }, {
-        path: '/loginSuccess',
-        name: '首页',
-        component: LoginSuccess,
-        meta: {
-            title: '登录成功'
-        }
-    }, {
-        path: '/list',
-        name: '列表页',
-        component: List,
-        meta: {
-            title: '列表'
-        }
-    }]
 
+  routes: [
+    {
+      path: '/',
+      name: '首页',
+      component: Index,
+      meta: {
+        title: '领取机会'
+      }
+    },{
+      path: '/activity',
+      name: '贴近世界杯 瓜分600万',
+      component: Activity,
+      meta: {
+        title: '贴近世界杯 瓜分600万'
+      }
+    }
+  ]
 })
 
 // router.beforeEach(({meta, path}, from, next) => {
