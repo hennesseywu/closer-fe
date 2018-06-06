@@ -69,7 +69,6 @@ export default {
   .activity-rule {
     margin: 0 16pr 60pr 16pr;
     padding-top: 52pr;
-    
   }
   .index-rule {
     margin: 40pr;
@@ -78,7 +77,7 @@ export default {
     // margin: 40pr;
     font-size: 26pr;
     line-height: 36pr;
-    color:#92B3F8;
+    color: rgba(146,179,248,0.5);
     background:rgba(4,28,77,1);
     padding-bottom: 20pr;
     .rule-title {
