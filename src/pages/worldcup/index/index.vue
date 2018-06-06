@@ -59,7 +59,7 @@
         chanceBoxShow:true,
         loginBoxShow:false,
         phone: "13551379879",
-        code:"105800",
+        code:"",
         countDown:"发送验证码"
       }
     },

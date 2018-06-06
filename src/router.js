@@ -7,24 +7,37 @@ const Index = () =>
 const Activity = () =>
     import ('@/pages/worldcup/activity')
 
+const Share = () =>
+    import ('@/pages/worldcup/share')
+
 Vue.use(Router)
 
 const router = new Router({
+    mode: 'history',
     routes: [{
-        path: '/',
-        name: '首页',
-        component: Index,
-        meta: {
-            title: '领取机会'
+            path: '/',
+            name: '首页',
+            component: Index,
+            meta: {
+                title: '领取机会'
+            }
+        }, {
+            path: '/activity',
+            name: '贴近世界杯 瓜分600万',
+            component: Activity,
+            meta: {
+                title: '贴近世界杯 瓜分600万'
+            }
+        },
+        {
+            path: '/share',
+            name: '贴近世界杯 瓜分600',
+            component: Share,
+            meta: {
+                title: '贴近世界杯 瓜分600'
+            }
         }
-    }, {
-        path: '/activity',
-        name: '贴近世界杯 瓜分600万',
-        component: Activity,
-        meta: {
-            title: '贴近世界杯 瓜分600万'
-        }
-    }]
+    ]
 })
 
 router.beforeEach(({ meta, path }, from, next) => {
