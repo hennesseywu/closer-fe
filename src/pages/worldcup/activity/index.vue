@@ -54,19 +54,22 @@
         <div class="rule">规则说明</div>
         <div class="record">投注记录</div>
       </div>
-      <Rule ref="rule"></Rule>
+      <!-- <Rule ref="rule"></Rule> -->
+      <Record ref="record"></Record>
     </div>
   </div>
 </template>
 <script>
 import { Swipe, SwipeItem } from 'mint-ui';
 import Rule from '../../../components/rule.vue'
+import Record from '../../../components/record.vue'
 export default {
   name: 'index',
   components: {
     Swipe,
     SwipeItem,
-    Rule
+    Rule,
+    Record
 	},
 }
 </script>
