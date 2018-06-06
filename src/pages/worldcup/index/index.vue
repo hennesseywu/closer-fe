@@ -77,6 +77,9 @@ export default {
       .desc {
       }
       .tips {
+        position: absolute;
+        top: -10pr;
+        right: 0;
         margin-left: 142pr;
         padding: 6pr 12pr;
         background: linear-gradient(
@@ -127,13 +130,14 @@ export default {
     .login-box {
       .login-info {
         margin: 70pr 84pr 12pr 84pr;
+        font-size: 28pr;
         input {
           margin-left: 24pr;
           background: #0F4C92;
           color: #fff;
         }
         ::-webkit-input-placeholder { 
-          color: #fff;
+          color: rgba(146,179,248,0.5);
           font-size: 28pr;
         }
         .login-commen {
@@ -161,7 +165,7 @@ export default {
           }
           .code {
             padding: 20pr 12pr 20pr 14pr;
-            color: #fff;
+            color: rgba(255, 255, 255, 0.7);
             border-left: 1px solid #25B1EC;
           }
         }
