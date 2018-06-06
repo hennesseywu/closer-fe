@@ -127,6 +127,19 @@
           height: 50pr;
           background: url("../../../assets/images/text.png") no-repeat center;
           background-size: cover;
+    }
+    .login-box {
+      .login-info {
+        margin: 70pr 84pr 12pr 84pr;
+        font-size: 28pr;
+        input {
+          margin-left: 24pr;
+          background: #0F4C92;
+          color: #fff;
+        }
+        ::-webkit-input-placeholder { 
+          color: rgba(146,179,248,0.5);
+          font-size: 28pr;
         }
         .app-text {
           margin-top: 12pr;
@@ -194,6 +207,10 @@
             height: 50pr;
             background: url("../../../assets/images/login_text.png") no-repeat center;
             background-size: cover;
+          .code {
+            padding: 20pr 12pr 20pr 14pr;
+            color: rgba(255, 255, 255, 0.7);
+            border-left: 1px solid #25B1EC;
           }
         }
       }
