@@ -96,7 +96,9 @@
         color: #fff;
         .desc {}
         .tips {
-          margin-left: 142pr;
+          position: absolute;
+          top: -10pr;
+          right: 0;
           padding: 6pr 12pr;
           background: linear-gradient( -90deg, rgba(54, 176, 175, 1), rgba(54, 176, 143, 1));
           box-shadow: 0px 4pr 20pr 0px rgba(7, 72, 54, 1);
