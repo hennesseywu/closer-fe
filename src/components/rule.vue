@@ -89,7 +89,7 @@ export default {
     padding-top: 52pr;
   }
   .index-rule {
-    margin: 40pr;
+    margin-top: -400pr;
   }
   .rule-box {
     // margin: 40pr;

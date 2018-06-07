@@ -94,6 +94,7 @@
     background: #000d01;
     padding-bottom: 8pr;
     .wrapper {
+      height: 1406pr;
       padding-top: 1pr;
       background: url("../../../assets/images/index_bg.jpg") no-repeat center center;
       background-size: cover;
