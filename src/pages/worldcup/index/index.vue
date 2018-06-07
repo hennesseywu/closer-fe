@@ -194,9 +194,10 @@
             line-height: 80pr;
             margin-top: 30pr;
             >input {
-              width: 60%;
+              width: 56%;
             }
             .code {
+              font-size: 28pr;
               padding: 20pr 12pr 20pr 14pr;
               color: #fff;
               border-left: 1px solid #25B1EC;
