@@ -37,7 +37,7 @@
         <div class="download-btn">立即下载</div>
       </div>
     </div>
-    <Rule ref='rule'></Rule>
+    <Rule ref="rule" :showIndexRule="showIndexRule"></Rule>
     
     <!-- <Loginpop ref='loginpop' v-if="loginSuccess"></Loginpop> -->
     <Newuserpop ref='Newuserpop' :newUser="newUser" :isApp="isApp" v-if="loginSuccess"></Newuserpop>
@@ -66,7 +66,8 @@
         phone: "",
         code: "",
         countDown: "发送验证码",
-        isApp:""
+        isApp:"",
+        showIndexRule: true
       }
     },
     computed: {
@@ -192,7 +193,7 @@
             line-height: 80pr;
             margin-top: 30pr;
             >input {
-              width: 60;
+              width: 60%;
             }
             .code {
               padding: 20pr 12pr 20pr 14pr;

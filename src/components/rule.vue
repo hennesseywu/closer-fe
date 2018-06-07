@@ -1,6 +1,6 @@
 <template>
-  <div class="rule-box activity-rule" v-if="showRule">
-      <div class="rule-title box box-tb box-center-center" v-if="false">
+  <div class="rule-box activity-rule" :class="showIndexRule ? 'index-rule' : ''" v-if="showRule || showIndexRule">
+      <div class="rule-title box box-tb box-center-center" v-if="showIndexRule">
         <div class="top-line"></div>
         活动规则
         <div class="bottom-line"></div>
@@ -65,6 +65,10 @@ export default {
   name: 'rule',
   props: {
     showRule: {
+      type: Boolean,
+      default: false
+    },
+    showIndexRule: {
       type: Boolean,
       default: false
     }
