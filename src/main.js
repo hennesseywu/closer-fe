@@ -42,14 +42,6 @@ function pageResize() {
     document.documentElement.style.fontSize = (fontSize >= 32 ? 32 : fontSize) + 'px'
 }
 
-// 路由跳转时动态设置标题
-router.beforeEach((to, from, next) => {
-    document.title = to.meta.title ? to.meta.title : '贴近'
-    setTimeout(() => {
-        document.title = to.meta.title ? to.meta.title : '贴近'
-    }, 500)
-    next();
-})
 
 new Vue({
     router,
