@@ -2,6 +2,7 @@ export default {
     serverUrl: 'https://api-sandbox.tiejin.cn/command/',
     devserverUrl: 'http://192.168.156.232:8080/command/',
     subdevserverUrl: 'http://oms-sandbox.tiejin.cn/command',
+    serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
     file: '/file/upload/public',
     admin: {

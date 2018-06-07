@@ -4,7 +4,7 @@
       <div class="invite-img"></div>
       <div class="share-box">
         <div class="title">
-          <span>你的朋友正在参与竞猜</span>
+          <span>{{desc}}正在参与竞猜</span>
         </div>
         <div class="content">
           <img class="left-ball" src="../../../assets/images/left_ball.png"> 瓜分了
@@ -20,6 +20,25 @@
 </template>
 
 <script>
+
+export default {
+  data() {
+      return {
+       desc:"你的朋友"
+      }
+    },
+  created(){
+      console.log(this.$route.params);
+      this.checkUser();
+  },  
+  methods:{
+    checkUser(){
+        if(Cookies.get('GroukAuth')&&Cookies.get('GroukAuth')==this.$route.params.id){
+            this.desc="我"
+        }
+    }
+  }
+}
   
 </script>
 

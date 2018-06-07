@@ -1,7 +1,7 @@
 <template>
   <div class="activity">
     <div class="wrapper">
-      <div class="invite-img"></div>
+      <div class="invite-img" @click="redirectTo()"></div>
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
@@ -21,6 +21,7 @@
               <div class="right-ball"></div>
             </div>
             <div class="swiper-wrapper">
+
               <div class="info-box box box-lr">
                 <div class="left-arrow box box-center-center">
                   <span class="img"></span>
@@ -55,6 +56,7 @@
   
       </mt-swipe>
 
+
       <div class="rule_record box box-lr">
         <div class="rule" :class="showRule ? 'checkbg' : 'uncheckbg'" @click="showRules">规则说明</div>
         <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">投注记录</div>
@@ -78,6 +80,7 @@
   import Rule from '../../../components/rule.vue'
   import Record from '../../../components/record.vue'
   import Votepop from '../../../components/votepop.vue'
+
   export default {
     name: 'index',
     components: {
@@ -143,6 +146,16 @@
       showRecords() {
         this.showRule = false
         this.showRecord = true
+
+      },
+      redirectTo() {
+        let token = "";
+        if (Cookies.get("GroukAuth")) {
+          token = Cookies.get("GroukAuth");
+        };
+        this.$router.push({
+          path: '/share/'+token
+        })
       }
     }
   }
@@ -300,6 +313,7 @@
         .yellowbg {
           color: #4B4945;
           background: rgba(249, 219, 2, 1);
+
         }
         .winner1 {
           margin-left: 90pr;
@@ -310,6 +324,7 @@
         .gray {
           background: #BFBFBF;
         }
+
       }
     }
     .rule_record {
@@ -323,6 +338,7 @@
       .rule {
         padding: 20pr 24pr;
         // background:#041C4D;
+
         border-radius: 10pr 0px 0px 0px;
       }
       .record {

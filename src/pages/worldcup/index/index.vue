@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="wrapper">
-      <div class="invite-img"></div>
+        <div class="invite-img" @click="redirectTo()"></div>
       <div class="text-desc">
         <span class="desc">扫描寻找二维码，可获得更多竞猜机会</span>
         <span class="tips">查看攻略</span>
@@ -9,7 +9,7 @@
       <!-- 领取机会框 -->
       <div class="chance-box box-commen box box-tb box-center-center" v-if="chanceBoxShow">
         <div class="img"></div>
-        <div class="btn-img" v-on:click="chanceBoxShow=false,loginBoxShow=true"></div>
+        <div class="btn-img" v-on:click="openLoginBox()"></div>
         <div class="text-img mt-20" v-if="true"></div>
         <div class="app-text mt-20" v-else></div>
       </div>
@@ -21,14 +21,14 @@
           </div>
           <div class="code-box login-commen">
             <input type="text" v-model="code" placeholder="请输入手机验证码">
-            <span class="code" v-on:click="getCode(phone)" >{{countDown}}</span>
+            <span class="code" v-on:click="getCode(phone)">{{countDown}}</span>
           </div>
           <div class="get-btn" v-on:click="login({phone,code})"></div>
           <div class="text"></div>
         </div>
       </div>
   
-      <div class="download box box-lr">
+      <div class="download box box-lr" v-if="isApp">
         <div class="logo"></div>
         <div class="d-text box box-tb">
           <span>下载「贴近」客户端</span>
@@ -38,33 +38,51 @@
       </div>
     </div>
     <Rule ref='rule'></Rule>
+    
+    <!-- <Loginpop ref='loginpop' v-if="loginSuccess"></Loginpop> -->
+    <Newuserpop ref='Newuserpop' :newUser="newUser" :isApp="isApp" v-if="loginSuccess"></Newuserpop>
   </div>
 </template>
 
 <script>
-  import Rule from '../../../components/rule.vue'
+  import Rule from '../../../components/rule.vue';
+  import Loginpop from '../../../components/loginpop.vue';
+  import Newuserpop from '../../../components/newuserpop.vue';
+  
   import {
-    mapActions
+    mapActions,
+    mapState
   } from 'vuex';
   export default {
     name: 'index',
     components: {
-      Rule
+      Rule,
+      Loginpop,
+      Newuserpop
     },
-    created:function(){
-    }
-    ,
+    created() {},
     data() {
       return {
-        chanceBoxShow:true,
-        loginBoxShow:false,
-        phone: "13551379879",
-        code:"",
-        countDown:"发送验证码"
+        phone: "",
+        code: "",
+        countDown: "发送验证码",
+        isApp:""
       }
     },
+    computed: {
+      ...mapState("index", {
+        'loginSuccess': state => state.loginSuccess,
+        'chanceBoxShow': state => state.chanceBoxShow,
+        'loginBoxShow': state => state.loginBoxShow
+  
+      })
+    },
     methods: {
-      ...mapActions('index', ['getCode','login'])
+      ...mapActions('index', ['getCode', 'login']),
+      checkIsApp(){
+        console.log(this.$store.IS_APP)
+        this.isApp=this.$store.IS_APP;
+      }
     }
   
   };
