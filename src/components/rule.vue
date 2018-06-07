@@ -1,5 +1,5 @@
 <template>
-  <div class="rule-box activity-rule">
+  <div class="rule-box activity-rule" v-if="showRule">
       <div class="rule-title box box-tb box-center-center" v-if="false">
         <div class="top-line"></div>
         活动规则
@@ -62,7 +62,21 @@
 </template>
 <script>
 export default {
-  
+  name: 'rule',
+  props: {
+    showRule: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      
+    }
+  },
+  methods: {
+
+  }
 }
 </script>
 <style lang="less" scoped>

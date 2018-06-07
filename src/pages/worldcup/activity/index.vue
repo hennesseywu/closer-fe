@@ -4,90 +4,164 @@
       <div class="invite-img"></div>
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
-          <div class="chance-box">您还有<span>3</span>次机会喔</div>
+          <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
           <div class="whole-num"><span>9929</span>人参与</div>
         </div>
         <div class="right">增加机会</div>
       </div>
-      <div class="choose-box">
-        <div class="time-wrapper box box-lr">
-          <div class="left-ball"></div>
-          <div class="time">
-            <span>6</span>月<span>14</span>号
-            <span>16:00</span>
-            
-          </div>
-          <div class="right-ball"></div>
-        </div>
-        <div class="swiper-wrapper">
-          <mt-swipe :continuous="false" :showIndicators="false">
-            <mt-swipe-item>
+      <mt-swipe :continuous="true" :showIndicators="true" v-if="matchList" >
+        <mt-swipe-item v-for="(item, index) in matchList" :key="index">
+          <div class="choose-box">
+            <div class="time-wrapper box box-lr">
+              <div class="left-ball"></div>
+              <div class="time">
+                <span>{{getMonth(new Date(item.startTime * 1000))}}</span>月<span>{{getDate(new Date(item.startTime * 1000))}}</span>号
+                <span>{{getHours(new Date(item.startTime * 1000))}}</span>
+              </div>
+              <div class="right-ball"></div>
+            </div>
+            <div class="swiper-wrapper">
               <div class="info-box box box-lr">
                 <div class="left-arrow box box-center-center">
                   <span class="img"></span>
                 </div>
                 <div class="country country1 box box-tb">
-                  <span>俄罗斯</span>
-                  <span class="flag"></span>
+                  <span>{{item.homeTeam.teamName}}</span>
+                  <span class="flag">
+                      <img :src="item.homeTeam.logo" alt="主队logo">
+                    </span>
                 </div>
                 <div class="vs-img"></div>
                 <div class="country box box-tb">
-                  <span>澳大利亚</span>
-                  <span class="flag"></span>
+                  <span>{{item.gustTeam.teamName}}</span>
+                  <span class="flag">
+                      <img :src="item.gustTeam.logo" alt="客队logo">
+                    </span>
                 </div>
                 <div class="right-arrow box box-center-center">
                   <span class="img rotate"></span>
                 </div>
               </div>
-            </mt-swipe-item>
-            <!-- <mt-swipe-item>2</mt-swipe-item>
-            <mt-swipe-item>3</mt-swipe-item> -->
-          </mt-swipe>
-        </div>
-        <div class="result box box-lr">
-          <div class="common winner1">胜利</div>
-          <div class="common tie">平局</div>
-          <div class="common winner2">胜利</div>
-        </div>
-      </div>
+              <!-- <mt-swipe-item>2</mt-swipe-item>
+              <mt-swipe-item>3</mt-swipe-item> -->
+            </div>
+            <div class="result box box-lr">
+              <div class="commonsize yellowbg winner1" @click="openVotepop(item.homeTeam.logo)">胜利</div>
+              <div class="commonsize tie" :class="grayBtn ? 'gray' : 'yellowbg'">平局</div>
+              <div class="commonsize yellowbg winner2" @click="openVotepop(item.gustTeam.logo)">胜利</div>
+            </div>
+          </div>
+        </mt-swipe-item>
+  
+      </mt-swipe>
+
       <div class="rule_record box box-lr">
-        <div class="rule">规则说明</div>
-        <div class="record">投注记录</div>
+        <div class="rule" :class="showRule ? 'checkbg' : 'uncheckbg'" @click="showRules">规则说明</div>
+        <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">投注记录</div>
       </div>
-      <!-- <Rule ref="rule"></Rule> -->
-      <Record ref="record"></Record>
+      <Rule ref="rule" :showRule="showRule"></Rule>
+      <Record ref="record" :showRecord="showRecord"></Record>
+      <Votepop ref="votepop" :voteInfo="voteInfo" :totalChance="userGuessStatistic.totalChance"></Votepop>
     </div>
   </div>
 </template>
+
 <script>
-import { Swipe, SwipeItem } from 'mint-ui';
-import Rule from '../../../components/rule.vue'
-import Record from '../../../components/record.vue'
-export default {
-  name: 'index',
-  components: {
+  import {
     Swipe,
-    SwipeItem,
-    Rule,
-    Record
-	},
-}
+    SwipeItem
+  } from 'mint-ui';
+  import {
+    mapState,
+    mapActions
+  } from 'vuex'
+  import Rule from '../../../components/rule.vue'
+  import Record from '../../../components/record.vue'
+  import Votepop from '../../../components/votepop.vue'
+  export default {
+    name: 'index',
+    components: {
+      Swipe,
+      SwipeItem,
+      Rule,
+      Record,
+      Votepop
+    },
+    data() {
+      return {
+        showRule: true,
+        showRecord: false
+      }
+    },
+    computed: {
+      ...mapState('activity', {
+        grayBtn: state => state.grayBtn,
+        matchList: state => state.matchList,
+        userGuessStatistic: state => state.userGuessStatistic,
+        voteInfo: state => state.voteInfo
+      })
+    },
+    created() {
+      this.getMatchList()
+      // this.getUserGuessList()
+      // this.guessMatch()
+      // this.getUserGuessStatistic()
+    },
+    methods: {
+      ...mapActions('activity', [
+        'getMatchList',
+        'setVoteInfo',
+        // 'getUserGuessList',
+        // 'guessMatch'
+        // 'getUserGuessStatistic'
+      ]),
+      guessMatch() {
+        // this.getMatchList()
+        // this.guessMatch()
+      },
+      openVotepop(param) {
+        this.setVoteInfo(param)
+        console.log(param)
+        this.$refs.votepop.open()
+      },
+      getMonth(date) {
+        if (!date) return
+        return date.getMonth() + 1
+      },
+      getDate(date) {
+        if (!date) return
+        return date.getDate()
+      },
+      getHours(date) {
+        if (!date) return
+        return date.getHours() + ':' + date.getMinutes()
+      },
+      showRules() {
+        this.showRule = true
+        this.showRecord = false
+      },
+      showRecords() {
+        this.showRule = false
+        this.showRecord = true
+      }
+    }
+  }
 </script>
+
 <style lang="less" scoped>
   .activity {
     // height: 100%;
     background: #000d01;
     .wrapper {
-      // position: absolute;
-      // top: 0;
-      // left: 0;
-      // right: 0;
-      // bottom: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       padding-top: 1pr;
       padding-bottom: 60pr;
-    background: url("../../../assets/images/activity_bg.jpg") no-repeat center
-      center;
-    background-size: cover;
+      background: url("../../../assets/images/activity_bg.jpg") no-repeat center center;
+      background-size: cover;
     }
     .invite-img {
       position: absolute;
@@ -108,7 +182,7 @@ export default {
       .left {
         font-size: 32pr;
         .chance-box {
-          > span {
+          >span {
             color: #F9DB02;
           }
         }
@@ -126,8 +200,8 @@ export default {
         font-size: 24pr;
         line-height: 34pr;
         color: #fff;
-        background:linear-gradient(-90deg,rgba(224,30,30,1),rgba(252,193,34,1));
-        border-radius:50pr 0px 0px 50pr;
+        background: linear-gradient(-90deg, rgba(224, 30, 30, 1), rgba(252, 193, 34, 1));
+        border-radius: 50pr 0px 0px 50pr;
       }
     }
     .choose-box {
@@ -147,7 +221,7 @@ export default {
         }
         .time {
           margin: 0 99pr;
-          > span {
+          >span {
             font-size: 32pr;
             color: #F9DB02;
           }
@@ -165,7 +239,8 @@ export default {
         height: 196pr;
         .info-box {
           width: 100%;
-          .left-arrow, .right-arrow {
+          .left-arrow,
+          .right-arrow {
             width: 70pr;
             height: 196pr;
             background: #14306B;
@@ -194,7 +269,11 @@ export default {
               width: 88pr;
               height: 88pr;
               border-radius: 88pr;
-              border: 1px solid red;
+              >img {
+                width: 88pr;
+                height: 88pr;
+                border-radius: 88pr;
+              }
             }
           }
           .country1 {
@@ -212,13 +291,15 @@ export default {
       .result {
         margin: 34pr;
         padding-bottom: 40pr;
-        .common {
+        .commonsize {
           font-size: 28pr;
-          color: #4B4945;
           line-height: 44pr;
           padding: 18pr 38pr;
-          background:rgba(249,219,2,1);
-          border-radius:30pr;
+          border-radius: 30pr;
+        }
+        .yellowbg {
+          color: #4B4945;
+          background: rgba(249, 219, 2, 1);
         }
         .winner1 {
           margin-left: 90pr;
@@ -226,7 +307,9 @@ export default {
         .tie {
           margin: 0 48pr;
         }
-        
+        .gray {
+          background: #BFBFBF;
+        }
       }
     }
     .rule_record {
@@ -239,13 +322,19 @@ export default {
       // border-radius:0px 10pr 10pr 0px;
       .rule {
         padding: 20pr 24pr;
-        background:#041C4D;
-        border-radius:10pr 0px 0px 0px;
+        // background:#041C4D;
+        border-radius: 10pr 0px 0px 0px;
       }
       .record {
         padding: 20pr 24pr;
+        // background: #14306B;
+        border-radius: 0px 10pr 0px 0px;
+      }
+      .checkbg {
+        background: #041C4D;
+      }
+      .uncheckbg {
         background: #14306B;
-        border-radius:0px 10pr 0px 0px;
       }
     }
   }

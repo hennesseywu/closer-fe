@@ -9,8 +9,13 @@ axios.interceptors.request.use(
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
+        config.headers.Authorization = 'GroukAuth 1.b657d9b445ebcfd0ce1d98a75a4ba14caea5e7e6fd138d8873a1494c3c37a37e';
+    
+
         console.log("open", config)
-        config.url = feConfig.serverUrl + config.url;
+        // config.url = feConfig.serverUrl + config.url;
+        config.url = feConfig.devserverUrl + config.url;
+        // config.url = feConfig.subdevserverUrl + config.url;
         Indicator.open()
         return config;
     },

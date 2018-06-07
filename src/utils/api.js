@@ -1,5 +1,7 @@
 export default {
     serverUrl: 'https://api-sandbox.tiejin.cn/command/',
+    devserverUrl: 'http://192.168.156.232:8080/command/',
+    subdevserverUrl: 'http://oms-sandbox.tiejin.cn/command',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
     file: '/file/upload/public',
     admin: {
@@ -54,5 +56,15 @@ export default {
         recruiting: 'closer_class.recruiting',
         group_subject_list: 'closer_subject.class_subject_list_index',
         share_group: 'closer_share.outer_group'
+    },
+    activity: {
+        // 世界杯活动接口
+        add_channel: 'activity_worldcup.add_channel',
+        check_guess_result: 'activity_worldcup.check_guess_result',
+        get_match_list: 'activity_worldcup.get_match_list',
+        get_user_guess_list: 'activity_worldcup.get_user_guess_list',
+        get_user_guess_statistic: 'activity_worldcup.get_user_guess_statistic',
+        guess_match: 'activity_worldcup.guess_match',
+        receive_chance: 'activity_worldcup.receive_chance'
     }
 }

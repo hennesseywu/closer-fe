@@ -1,5 +1,5 @@
 <template>
-  <div class="record-box">
+  <div class="record-box" v-if="showRecord">
     <div class="record-list box box-lr" v-if="false">
       <div class="time">6月14日</div>
       <div class="coountry">意大利（W）VS 俄罗斯</div>
@@ -18,7 +18,15 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  name: 'records',
+  props: {
+    showRecord: {
+      type: Boolean,
+      default: false
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .record-box {
