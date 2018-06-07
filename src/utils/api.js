@@ -1,5 +1,6 @@
 export default {
     serverUrl: 'https://api-sandbox.tiejin.cn/command/',
+    serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
     file: '/file/upload/public',
     admin: {

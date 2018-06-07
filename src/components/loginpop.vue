@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      visible: false
+      visible: true
     };
   },
   methods: {

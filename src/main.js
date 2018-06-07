@@ -9,6 +9,7 @@ import router from './router'
 import store from './store'
 import axio from './utils/axio'
 import Cookies from 'js-cookie';
+import JsBridge from './utils/jsBridge'
 
 // import VueAxios from 'vue-axios'
 // vconsole 调试
@@ -17,6 +18,7 @@ import Cookies from 'js-cookie';
 
 window.axios = axio;
 window.Cookies = Cookies;
+window.JsBridge = JsBridge;
 // Vue.use(VueAxios, axios);
 
 
@@ -26,7 +28,14 @@ Vue.use(MintUI)
 
 // 运行时动态设置
 pageResize()
-window.onresize = pageResize
+window.onresize = pageResize;
+
+
+
+
+
+
+
 
 function pageResize() {
     let fontSize = Math.min(screen.width, document.documentElement.getBoundingClientRect().width) / 375 * 16

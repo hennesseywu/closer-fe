@@ -32,7 +32,7 @@ const router = new Router({
             }
         },
         {
-            path: '/share',
+            path: '/share/:id',
             name: '贴近世界杯 瓜分600',
             component: Share,
             meta: {
@@ -44,13 +44,21 @@ const router = new Router({
 })
 router.beforeEach(({ meta, path }, from, next) => {
 
+    document.title = meta.title ? meta.title : '贴近'
+    setTimeout(() => {
+        document.title = meta.title ? meta.title : '贴近'
+    }, 500)
+
     let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
     Store.state.UA = ua;
     if (ua.indexOf("closer-ios") != -1 || ua.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
-    console.log("router", Cookies.get("GroukAuth"))
-        // const isLogin = hasAuthToken() // true用户已登录， false用户未登录
+    if (Cookies.get("GroukAuth") && (path == "/" || path == "/index")) {
+        console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
+        router.push("/activity");
+    }
+    // const isLogin = hasAuthToken() // true用户已登录， false用户未登录
 
     // // 不需要验证的地址
     // if (/^\/example/.test(path)) return next()

@@ -1,7 +1,7 @@
 <template>
   <div class="activity">
     <div class="wrapper">
-      <div class="invite-img"></div>
+      <div class="invite-img" @click="redirectTo()"></div>
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
           <div class="chance-box">您还有<span>3</span>次机会喔</div>
@@ -15,7 +15,7 @@
           <div class="time">
             <span>6</span>月<span>14</span>号
             <span>16:00</span>
-            
+  
           </div>
           <div class="right-ball"></div>
         </div>
@@ -41,7 +41,7 @@
               </div>
             </mt-swipe-item>
             <!-- <mt-swipe-item>2</mt-swipe-item>
-            <mt-swipe-item>3</mt-swipe-item> -->
+              <mt-swipe-item>3</mt-swipe-item> -->
           </mt-swipe>
         </div>
         <div class="result box box-lr">
@@ -59,20 +59,36 @@
     </div>
   </div>
 </template>
+
 <script>
-import { Swipe, SwipeItem } from 'mint-ui';
-import Rule from '../../../components/rule.vue'
-import Record from '../../../components/record.vue'
-export default {
-  name: 'index',
-  components: {
+  import {
     Swipe,
-    SwipeItem,
-    Rule,
-    Record
-	},
-}
+    SwipeItem
+  } from 'mint-ui';
+  import Rule from '../../../components/rule.vue'
+  import Record from '../../../components/record.vue'
+  export default {
+    name: 'index',
+    components: {
+      Swipe,
+      SwipeItem,
+      Rule,
+      Record
+    },
+    methods: {
+      redirectTo() {
+        let token = "";
+        if (Cookies.get("GroukAuth")) {
+          token = Cookies.get("GroukAuth");
+        };
+        this.$router.push({
+          path: '/share/'+token
+        })
+      }
+    }
+  }
 </script>
+
 <style lang="less" scoped>
   .activity {
     // height: 100%;
@@ -85,9 +101,8 @@ export default {
       // bottom: 0;
       padding-top: 1pr;
       padding-bottom: 60pr;
-    background: url("../../../assets/images/activity_bg.jpg") no-repeat center
-      center;
-    background-size: cover;
+      background: url("../../../assets/images/activity_bg.jpg") no-repeat center center;
+      background-size: cover;
     }
     .invite-img {
       position: absolute;
@@ -108,7 +123,7 @@ export default {
       .left {
         font-size: 32pr;
         .chance-box {
-          > span {
+          >span {
             color: #F9DB02;
           }
         }
@@ -126,8 +141,8 @@ export default {
         font-size: 24pr;
         line-height: 34pr;
         color: #fff;
-        background:linear-gradient(-90deg,rgba(224,30,30,1),rgba(252,193,34,1));
-        border-radius:50pr 0px 0px 50pr;
+        background: linear-gradient(-90deg, rgba(224, 30, 30, 1), rgba(252, 193, 34, 1));
+        border-radius: 50pr 0px 0px 50pr;
       }
     }
     .choose-box {
@@ -147,7 +162,7 @@ export default {
         }
         .time {
           margin: 0 99pr;
-          > span {
+          >span {
             font-size: 32pr;
             color: #F9DB02;
           }
@@ -165,7 +180,8 @@ export default {
         height: 196pr;
         .info-box {
           width: 100%;
-          .left-arrow, .right-arrow {
+          .left-arrow,
+          .right-arrow {
             width: 70pr;
             height: 196pr;
             background: #14306B;
@@ -217,8 +233,8 @@ export default {
           color: #4B4945;
           line-height: 44pr;
           padding: 18pr 38pr;
-          background:rgba(249,219,2,1);
-          border-radius:30pr;
+          background: rgba(249, 219, 2, 1);
+          border-radius: 30pr;
         }
         .winner1 {
           margin-left: 90pr;
@@ -226,7 +242,6 @@ export default {
         .tie {
           margin: 0 48pr;
         }
-        
       }
     }
     .rule_record {
@@ -239,13 +254,13 @@ export default {
       // border-radius:0px 10pr 10pr 0px;
       .rule {
         padding: 20pr 24pr;
-        background:#041C4D;
-        border-radius:10pr 0px 0px 0px;
+        background: #041C4D;
+        border-radius: 10pr 0px 0px 0px;
       }
       .record {
         padding: 20pr 24pr;
         background: #14306B;
-        border-radius:0px 10pr 0px 0px;
+        border-radius: 0px 10pr 0px 0px;
       }
     }
   }

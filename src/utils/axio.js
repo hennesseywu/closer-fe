@@ -6,11 +6,23 @@ import feConfig from '../utils/api';
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
+        let reqUrl = feConfig.serverUrl + config.url
+        if (/sandbox.tiejin/.test(config.url)) {
+            reqUrl = feConfig.serverDevUrl;
+        } else if (/tiejin/.test(config.url)) {
+            reqUrl = feConfig.serverUrl;
+        }
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
+        JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+            bridge.callHandler("getUserToken", null, function(data, responseCallback) {});
+        })
+        JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+            bridge.callHandler("jumpLogin", null);
+        });
         console.log("open", config)
-        config.url = feConfig.serverUrl + config.url;
+        config.url = reqUrl;
         Indicator.open()
         return config;
     },

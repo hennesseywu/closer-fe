@@ -1,26 +1,26 @@
 <template>
   <mt-popup v-model="visible" class="newuser-pop" :closeOnClickModal="closeOnClickModal">
     <div class="close-icon"></div>
-    
     <div class="pop-header">
-      <div class="winner" v-if="false">
+      <div class="winner" v-if="newUser">
         <div class="win-text">恭喜您！</div>
         <div class="win-btn">获得1次竞猜机会</div>
       </div>
-      <div class="loser">
+      <div class="loser" v-if="!newUser">
         <div class="loser-text">很遗憾<br> 已经领取过了哟～</div>
       </div>
     </div>
     <div class="pop-body box box-tb box-center-center">
-      <div class="win-img" v-if="false"></div>
-      <div class="loser-img"></div>
-      <div class="decs">{{descText}}</div>
-      <div class="app-text">还有<span>10</span>元新人大礼哟~</div>
-      <div class="app-desc">进入【我的钱包】-【奖励金】中领取</div>
+      <div class="win-img" v-if="newUser"></div>
+      <div class="loser-img" v-else></div>
+      <div class="decs" v-if="newUser">“是时候展示真正的技术了！”</div>
+      <div class="decs" v-else>“去APP找一找会有更多机会”</div>
+      <div class="app-text" v-if="newUser">还有<span>10</span>元新人大礼哟~</div>
+      <div class="app-desc" v-if="newUser">进入【我的钱包】-【奖励金】中领取</div>
       <!-- <slot></slot> -->
     </div>
-    <div class="pop-footer" v-if="false">
-      <div class="confirm-btn">下载APP 机会翻倍</div>
+    <div class="pop-footer" v-if="!isApp">
+    <div class="confirm-btn"  v-on:click="redirectTo()">下载APP 机会翻倍</div>
     </div>
   </mt-popup>
 </template>
@@ -33,19 +33,30 @@ export default {
   name: "pop",
   components: {},
   props: {
+    newUser:{
+      type:Boolean,
+      default:false
+      },
+    isApp:{
+      type:Boolean,
+      default:true
+    },
     className: String,
     closeOnClickModal: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data() {
     return {
-      visible: false,
-      descText: '“去APP找一找会有更多机会”'
+      visible: true,
     };
   },
   methods: {
+    redirectTo(){
+
+    }
+    ,
     open() {
       this.visible = true;
     },
