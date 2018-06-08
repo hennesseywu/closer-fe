@@ -6,7 +6,7 @@ export default {
     state: {
         grayBtn: false,
         matchList: {},
-        userGuessList: {},
+        userGuessList: [],
         userGuessStatistic: {},
         recieveChanceInfo: {},
         userGuessResult: {},
@@ -14,7 +14,7 @@ export default {
             logo: '',
             matchId: '',
             winTeamId: '',
-            mathResult: ""
+            mathResult:''
         }
     },
     mutations: {
@@ -31,7 +31,9 @@ export default {
         },
         updateUserGuesslist(state, payload) {
             console.log(1, payload)
-            state.userGuessList = payload
+            
+            state.userGuessList = payload.data.result.data
+            console.log('userGuessList', state.userGuessList)
         },
         updateUserGuessStatistic(state, payload) {
             console.log(2, payload)
@@ -62,7 +64,6 @@ export default {
                 Toast('网络开小差啦，请稍后再试')
             }
         },
-
         async getMatchList({ commit, state }, payload) {
             let { data } = await getMatchList(payload).catch(err => {
                     Toast('网络开小差啦，请稍后再试')
@@ -82,7 +83,6 @@ export default {
                 type: 'updateMatchlist',
                 data
             })
-
         },
         async getUserGuessList({ commit, state }, payload) {
             const { data } = await getUserGuessList(payload).catch(err => {
@@ -248,5 +248,6 @@ export default {
                 data
             })
         }
+
     }
 }

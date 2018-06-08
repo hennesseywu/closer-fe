@@ -37,7 +37,7 @@
         <div class="download-btn">立即下载</div>
       </div>
     </div>
-    <Rule ref='rule'></Rule>
+    <Rule ref="rule" :showIndexRule="showIndexRule"></Rule>
     
     <!-- <Loginpop ref='loginpop' v-if="loginSuccess"></Loginpop> -->
     <Newuserpop ref='Newuserpop' :newUser="newUser" :isApp="isApp" v-if="loginSuccess"></Newuserpop>
@@ -66,7 +66,8 @@
         phone: "",
         code: "",
         countDown: "发送验证码",
-        isApp:""
+        isApp:"",
+        showIndexRule: true
       }
     },
     computed: {
@@ -93,6 +94,7 @@
     background: #000d01;
     padding-bottom: 8pr;
     .wrapper {
+      height: 1406pr;
       padding-top: 1pr;
       background: url("../../../assets/images/index_bg.jpg") no-repeat center center;
       background-size: cover;
@@ -192,9 +194,10 @@
             line-height: 80pr;
             margin-top: 30pr;
             >input {
-              width: 60;
+              width: 56%;
             }
             .code {
+              font-size: 28pr;
               padding: 20pr 12pr 20pr 14pr;
               color: #fff;
               border-left: 1px solid #25B1EC;
