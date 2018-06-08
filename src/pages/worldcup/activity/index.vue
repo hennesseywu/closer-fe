@@ -10,7 +10,7 @@
         <div class="right">增加机会</div>
       </div>
       <div class="swipe">
-        <mt-swipe :continuous="true" :showIndicators="true" v-if="matchList">
+        <mt-swipe :continuous="true" :auto="0" :showIndicators="true" v-if="matchList">
           <mt-swipe-item v-for="(item, index) in matchList" :key="index">
             <div class="choose-box">
               <div class="time-wrapper box box-lr">
@@ -302,6 +302,9 @@
             .country {
               margin-top: 28pr;
               font-size: 24pr;
+              > span:first-child {
+                text-align: center;
+              }
               .flag {
                 margin-top: 20pr;
                 width: 88pr;
@@ -318,7 +321,7 @@
               margin-left: 60pr;
             }
             .vs-img {
-              margin: 80pr 36pr 20pr 36pr;
+              margin: 80pr 46pr 20pr 66pr;
               width: 172pr;
               height: 94pr;
               background: url('../../../assets/images/vs_img.png') no-repeat center;
@@ -351,10 +354,10 @@
             background: rgba(249, 219, 2, 1);
           }
           .winner1 {
-            margin-left: 90pr;
+            margin-left: 70pr;
           }
           .tie {
-            margin: 0 48pr;
+            margin: 0 58pr;
           }
           .gray {
             background: #BFBFBF;
