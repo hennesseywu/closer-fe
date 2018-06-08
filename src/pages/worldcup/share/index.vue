@@ -4,15 +4,16 @@
       <div class="invite-img"></div>
       <div class="share-box">
         <div class="title">
-          <span>{{desc}}正在参与竞猜</span>
+          <span>{{desc}}</span>
         </div>
         <div class="content">
-          <img class="left-ball" src="../../../assets/images/left_ball.png"> 瓜分了
-          <label class="middel-label">600</label>万
+          <img class="left-ball" src="../../../assets/images/left_ball.png"> 获得了
+          <label class="middel-label" v-if="amount>0"> {{amount}} </label>
+          <label class="middel-label" v-else> 100 </label> 元
           <img class="right-ball" src="../../../assets/images/right_ball.png">
         </div>
         <div class="bottom">
-          <button class="enter-button">去瓜分600万</button>
+          <button class="enter-button" @click="goHome()">{{buttonDesc}}</button>
         </div>
       </div>
     </div>
@@ -20,28 +21,57 @@
 </template>
 
 <script>
-
-export default {
-  data() {
+  import {
+    mapState,
+    mapActions
+  } from 'vuex'
+  export default {
+    data() {
       return {
-       desc:"你的朋友"
+        desc:  "",
+        isSelf: false,
+        amount: 0,
+        buttonDesc: "去瓜分600万"
       }
     },
-  created(){
-      console.log(this.$route.params);
+    computed: {
+  
+    },
+    created() {
       this.checkUser();
-  },  
-  methods:{
-    checkUser(){
-        if(Cookies.get('GroukAuth')&&Cookies.get('GroukAuth')==this.$route.params.id){
-            this.desc="我"
+    },
+    methods: {
+      ...mapActions('index', ['getUserById']),
+      goHome() {
+        console.log("go")
+        this.$router.push({
+          path: '/'
+        })
+      },
+     async checkUser() {
+        if (this.$route.params.amount) {
+            this.amount = this.$route.params.amount;
+          }
+        if (Cookies.get("user")) {
+          let user = JSON.parse(Cookies.get("user"))
+        if (user.objectID == this.$route.params.id) {
+          console.log("true")
+          this.desc = "我参与竞猜游戏";
+          this.isSelf = true;
+          this.buttonDesc = "再玩一次"
+        } else {
+          if (this.$route.params.id) {
+            let user =await this.getUserById(this.$route.params.id);
+            if (user.data.result&&user.data.result.username) {
+              this.desc ="你的朋友 "+user.data.result.username.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') + " 参与竞猜";
+            }
+          }
         }
+     }
+      }
     }
   }
-}
-  
 </script>
-
 
 <style lang="less" scoped>
   .index {

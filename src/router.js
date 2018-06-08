@@ -32,7 +32,7 @@ const router = new Router({
             }
         },
         {
-            path: '/share/:id',
+            path: '/share/:id/:amount',
             name: '贴近世界杯 瓜分600',
             component: Share,
             meta: {
@@ -51,10 +51,10 @@ router.beforeEach(({ meta, path }, from, next) => {
 
     let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
     Store.state.UA = ua;
-    if (ua.indexOf("closer-ios") != -1 || ua.indexOf("closer-ios") != -1) {
+    if (ua.indexOf("closer-andriod") != -1 || ua.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
-    Cookies.set("GroukAuth", "1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc")
+    // Cookies.set("GroukAuth", "1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc")
     if (Cookies.get("GroukAuth") && (path == "/" || path == "/index")) {
         console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
         router.push("/activity");

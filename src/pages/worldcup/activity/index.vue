@@ -9,7 +9,7 @@
         </div>
         <div class="right">增加机会</div>
       </div>
-      <mt-swipe :continuous="true" :showIndicators="true" v-if="matchList" >
+      <mt-swipe :continuous="true" :showIndicators="true" v-if="matchList">
         <mt-swipe-item v-for="(item, index) in matchList" :key="index">
           <div class="choose-box">
             <div class="time-wrapper box box-lr">
@@ -21,7 +21,7 @@
               <div class="right-ball"></div>
             </div>
             <div class="swiper-wrapper">
-
+  
               <div class="info-box box box-lr">
                 <div class="left-arrow box box-center-center">
                   <span class="img"></span>
@@ -29,41 +29,41 @@
                 <div class="country country1 box box-tb">
                   <span>{{item.homeTeam.teamName}}</span>
                   <span class="flag">
-                      <img :src="item.homeTeam.logo" alt="主队logo">
-                    </span>
+                          <img :src="item.homeTeam.logo" alt="主队logo">
+                        </span>
                 </div>
                 <div class="vs-img"></div>
                 <div class="country box box-tb">
                   <span>{{item.gustTeam.teamName}}</span>
                   <span class="flag">
-                      <img :src="item.gustTeam.logo" alt="客队logo">
-                    </span>
+                          <img :src="item.gustTeam.logo" alt="客队logo">
+                        </span>
                 </div>
                 <div class="right-arrow box box-center-center">
                   <span class="img rotate"></span>
                 </div>
               </div>
               <!-- <mt-swipe-item>2</mt-swipe-item>
-              <mt-swipe-item>3</mt-swipe-item> -->
+                  <mt-swipe-item>3</mt-swipe-item> -->
             </div>
             <div class="result box box-lr">
-              <div class="commonsize yellowbg winner1" @click="openVotepop(item.homeTeam.logo)">胜利</div>
-              <div class="commonsize tie" :class="grayBtn ? 'gray' : 'yellowbg'">平局</div>
-              <div class="commonsize yellowbg winner2" @click="openVotepop(item.gustTeam.logo)">胜利</div>
+              <div class="commonsize yellowbg winner1" @click="openVotepop(item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win')">胜利</div>
+              <div class="commonsize tie" :class="grayBtn ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.logo,item.matchId,'equal')">平局</div>
+              <div class="commonsize yellowbg winner2" @click="openVotepop(item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win')">胜利</div>
             </div>
           </div>
         </mt-swipe-item>
-  
       </mt-swipe>
-
-
+  
+  
       <div class="rule_record box box-lr">
         <div class="rule" :class="showRule ? 'checkbg' : 'uncheckbg'" @click="showRules">规则说明</div>
         <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">投注记录</div>
       </div>
       <Rule ref="rule" :showRule="showRule"></Rule>
       <Record ref="record" :showRecord="showRecord"></Record>
-      <Votepop ref="votepop" :voteInfo="voteInfo" :totalChance="userGuessStatistic.totalChance"></Votepop>
+      <Votepop ref="votepop" @guessMatch="guessMatch" :voteInfo="voteInfo" :totalChance="userGuessStatistic.totalChance"></Votepop>
+      <Newuserpop ref="newuserpop" :isApp="isApp" :count="recieveChanceInfo.count" :newUser="recieveChanceInfo.status" v-if="recieveChanceInfo.presentAvailable"></Newuserpop>
     </div>
   </div>
 </template>
@@ -80,7 +80,8 @@
   import Rule from '../../../components/rule.vue'
   import Record from '../../../components/record.vue'
   import Votepop from '../../../components/votepop.vue'
-
+  import Newuserpop from '../../../components/newuserpop.vue'
+  
   export default {
     name: 'index',
     components: {
@@ -88,12 +89,14 @@
       SwipeItem,
       Rule,
       Record,
-      Votepop
+      Votepop,
+      Newuserpop
     },
     data() {
       return {
         showRule: true,
-        showRecord: false
+        showRecord: false,
+        isApp: false
       }
     },
     computed: {
@@ -101,30 +104,36 @@
         grayBtn: state => state.grayBtn,
         matchList: state => state.matchList,
         userGuessStatistic: state => state.userGuessStatistic,
-        voteInfo: state => state.voteInfo
+        voteInfo: state => state.voteInfo,
+        recieveChanceInfo:state=>state.recieveChanceInfo
       })
     },
     created() {
-      this.getMatchList()
+      this.getMatchList();
+      // this.checkUser();
       // this.getUserGuessList()
       // this.guessMatch()
-      // this.getUserGuessStatistic()
+      this.getUserGuessStatistic();
+      this.checkGuessResult();
+      this.checkRecieveChance();
     },
     methods: {
       ...mapActions('activity', [
         'getMatchList',
         'setVoteInfo',
-        // 'getUserGuessList',
-        // 'guessMatch'
-        // 'getUserGuessStatistic'
+        'getUserGuessList',
+        'guessMatch',
+        'getUserGuessStatistic',
+        'checkGuessResult',
+        'checkRecieveChance'
       ]),
-      guessMatch() {
-        // this.getMatchList()
-        // this.guessMatch()
-      },
-      openVotepop(param) {
-        this.setVoteInfo(param)
-        console.log(param)
+      openVotepop(logo, matchId, winTeamId, matchResult) {
+        this.setVoteInfo({
+          logo,
+          matchId,
+          winTeamId,
+          matchResult
+        })
         this.$refs.votepop.open()
       },
       getMonth(date) {
@@ -146,15 +155,22 @@
       showRecords() {
         this.showRule = false
         this.showRecord = true
-
+      },
+      checkUser() {
+        this.isNewUser = this.$store.state.IS_NEW_USER;
+        this.isApp = this.$store.state.IS_APP;
       },
       redirectTo() {
-        let token = "";
-        if (Cookies.get("GroukAuth")) {
-          token = Cookies.get("GroukAuth");
-        };
+        let userId = ""
+        let amount=0;
+        if (Cookies.get("user")) {
+          let user = JSON.parse(Cookies.get("user"))
+          if (user.objectID) {
+            userId = user.objectID//.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+          }
+        }
         this.$router.push({
-          path: '/share/'+token
+          path: '/share/' + userId+"/"+amount
         })
       }
     }
@@ -313,7 +329,6 @@
         .yellowbg {
           color: #4B4945;
           background: rgba(249, 219, 2, 1);
-
         }
         .winner1 {
           margin-left: 90pr;
@@ -324,7 +339,6 @@
         .gray {
           background: #BFBFBF;
         }
-
       }
     }
     .rule_record {
@@ -338,7 +352,6 @@
       .rule {
         padding: 20pr 24pr;
         // background:#041C4D;
-
         border-radius: 10pr 0px 0px 0px;
       }
       .record {

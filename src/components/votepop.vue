@@ -24,7 +24,7 @@
     </div>
     <div class="pop-footer box box-lr box-center-center">
       <div class="other-btn" @click="close">再想想</div>
-      <div class="confirm-btn" @click="confirm">确认</div>
+      <div class="confirm-btn" @click="confirm(voteInfo)">确认</div>
     </div>
   </mt-popup>
 </template>
@@ -39,6 +39,9 @@ export default {
     Toast
   },
   props: {
+    guessMatch:{
+      type:Function
+    },
     voteInfo: {
       type: Object,
       default: {}
@@ -58,7 +61,7 @@ export default {
     return {
       showText: false,
       visible: false,
-      chance: 3,
+      chance: 0,
       inputChance: 0
     };
   },
@@ -79,7 +82,7 @@ export default {
     },
     checkChance() {
       this.showText = false
-      if(this.inputChance > this.totalChance || this.chance > this.totalChance) {
+      if(this.inputChance >=this.totalChance || this.chance >= this.totalChance) {
         this.showText = true
       } else {
         this.showText = false
@@ -91,10 +94,12 @@ export default {
       this.checkChance()
     },
     add() {
-      if(this.chance <=this.totalChance) {
+      this.checkChance()
+      if(this.chance >=this.totalChance) {
+          this.chance=this.totalChance
+      }else{
         this.chance++
       }
-      this.checkChance()
     },
     reduce() {
       if(this.chance > 0) {
@@ -102,9 +107,15 @@ export default {
       } 
       this.checkChance()
     },
-    confirm() {
+    confirm(voteInfo) {
       // this.checkChance()
-      if(this.showText) return
+            if(this.showText) return;
+      console.log("confirm",voteInfo);
+      delete voteInfo['logo']
+      voteInfo['guessTimes']=this.chance;
+      this.$emit('guessMatch',voteInfo)
+      this.close();
+
       // this.$emit('input', event)
     }
   }

@@ -13,7 +13,7 @@ export async function getUserGuessList(payload) {
  *  获取比赛竞猜列表
  */
 export async function getMatchList(payload) {
-    console.log('service', payload)
+    // console.log('service', payload)
     return await axios.post(api.activity.get_match_list, payload);
 }
 
@@ -21,30 +21,27 @@ export async function getMatchList(payload) {
  *  获取用户竞猜统计信息, 机会次数，累计金额, 总参与人数
  */
 export async function getUserGuessStatistic(payload) {
-    console.log('service', payload)
     return await axios.post(api.activity.get_user_guess_statistic, payload);
 }
 
 /**
  *  竞猜比赛
  */
-export async function getGuessMatch(payload) {
+export async function guessMatch(payload) {
     console.log('service', payload)
     return await axios.post(api.activity.guess_match, payload);
 }
-// export async function add_channel(payload) {
-//   console.log('service', payload)
-//   return await axios.post(api.activity.add_channel, payload);
-// }
-/**
- * 登录/注册 验证码
- */
-// export async function login({ phone, code }) {
-//     let params = {
-//         phone: phone,
-//         token: code,
-//         protocol: 'WEB_SOCKET'
-//     }
-//     return await axios.post(api.admin.closeruser_regist, params)
 
-// }
+/**  比赛结果
+ */
+export async function checkGuessResult(payload) {
+    console.log('service', payload)
+    return await axios.post(api.activity.check_guess_result, payload);
+}
+/**
+ * 通过渠道号获取是否获得抽奖次数
+ * 
+ */
+export async function checkRecieveChance(channelCode) {
+    return await axios.post(api.activity.receive_chance, { channelCode: channelCode })
+}

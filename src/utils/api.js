@@ -66,6 +66,7 @@ export default {
         get_user_guess_list: 'activity_worldcup.get_user_guess_list',
         get_user_guess_statistic: 'activity_worldcup.get_user_guess_statistic',
         guess_match: 'activity_worldcup.guess_match',
-        receive_chance: 'activity_worldcup.receive_chance'
+        receive_chance: 'activity_worldcup.receive_chance',
+        check_guess_result: 'activity_worldcup.check_guess_result'
     }
 }
