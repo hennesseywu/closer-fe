@@ -48,9 +48,15 @@
                 <mt-swipe-item>3</mt-swipe-item> -->
               </div>
               <div class="result box box-lr">
-                <div class="commonsize yellowbg winner1" @click="openVotepop(item.homeTeam.logo)">胜利</div>
+                <div class="commonsize yellowbg winner1" @click="openVotepop(item.homeTeam.logo)">
+                  <div class="winbtn">胜利</div> 
+                  <div class="times">X93</div>
+                </div>
                 <div class="commonsize tie" :class="grayBtn ? 'gray' : 'yellowbg'">平局</div>
-                <div class="commonsize yellowbg winner2" @click="openVotepop(item.gustTeam.logo)">胜利</div>
+                <div class="commonsize yellowbg winner2" @click="openVotepop(item.gustTeam.logo)">
+                  <div class="winbtn">胜利</div>
+                  <span class="times">X3</span>
+                </div>
               </div>
             </div>
           </mt-swipe-item>
@@ -303,10 +309,21 @@
           margin: 34pr;
           padding-bottom: 40pr;
           .commonsize {
+            position: relative;
             font-size: 28pr;
             line-height: 44pr;
             padding: 18pr 38pr;
             border-radius: 30pr;
+            .times {
+              position: absolute;
+              top: -35pr;
+              right: -30pr;
+              color: #fff;
+              font-size: 20pr;
+              background: #D7373F;
+              border-radius: 100%;
+              padding: 5pr 8pr;
+            }
           }
           .yellowbg {
             color: #4B4945;
