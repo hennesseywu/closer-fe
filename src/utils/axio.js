@@ -2,14 +2,50 @@ import axios from 'axios'
 import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import feConfig from '../utils/api';
+import Store from '../store'
 
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
-        console.log("open", config.url)
-        config.url = feConfig.serverUrl + config.url;
-        Indicator.open()
-        return config;
+        let reqUrl = feConfig.serverUrl + config.url
+        if (/sandbox.tiejin/.test(config.url)) {
+            reqUrl = feConfig.serverDevUrlv;
+        } else if (/tiejin/.test(config.url)) {
+            reqUrl = feConfig.serverUrl;
+        }
+        config.headers['Closer-Agent'] = 'Closer-H5';
+        if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
+            config.headers.Authorization = Cookies.get("GroukAuth");
+        }
+        console.log("header", config)
+        if (Store.state.UA.indexOf("closer-andriod") > 0) {
+            //安卓检查登录状态
+        } else if (Store.state.UA.indexOf("closer-ios") > 0) {
+            JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                //ios获取用户token 判断登录
+                bridge.callHandler("getUserToken", null, function(data, responseCallback) {
+                    if (data.token) {
+                        config.headers.Authorization = data.token;
+                        config.url = reqUrl;
+                        Indicator.open()
+                        return config;
+                    } else {
+                        JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                            bridge.callHandler("jumpLogin", null);
+                            config.headers.Authorization = data.token;
+                            config.url = reqUrl;
+                            Indicator.open()
+                            return config;
+                        });
+                    }
+                });
+            })
+        } else {
+            config.url = reqUrl;
+            Indicator.open()
+            return config;
+        }
+
     },
     err => {
         Indicator.close()

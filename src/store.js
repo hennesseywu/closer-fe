@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import home from './pages/worldcup/home/module'
-import list from './pages/worldcup/list/module'
+import index from './pages/worldcup/index/module'
+import activity from './pages/worldcup/activity/module'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    state: {
+        UA: "",
+        IS_APP: false,
+        IS_NEW_USER: false
+    },
     modules: {
-        home,
-        list
+        index,
+        activity
     }
 })

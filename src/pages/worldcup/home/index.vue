@@ -18,7 +18,7 @@ export default {
     data() {
     return {
       user:{
-            phone:"13551379879"
+            phone:""
       }
       };
   },
