@@ -12,7 +12,7 @@
       <div class="money">获得3.33元</div>
       <div class="correct-times">正确X2</div> 
     </div> -->
-    <div class="no-record">
+    <div class="no-record" >
       您还没有投注过哦~快去参与拿大奖吧
     </div>
   </div>
@@ -30,12 +30,11 @@ export default {
 </script>
 <style lang="less" scoped>
 .record-box {
-  margin: 0 16pr;
-  padding:20pr 41pr 40pr 41pr;
+  margin: 0 16pr 60pr 16pr;
+  padding:30pr 41pr 40pr 41pr;
   font-size: 24pr;
   line-height: 34pr;
   color: rgba(146,179,248,0.5);
-  // color: #fff;
   background: #041c4d;
   border-radius: 0px 10pr 10pr 10pr;
   .record-list {
@@ -55,7 +54,7 @@ export default {
     }
   }
   .no-record {
-    margin-top: 30pr;
+    margin: 30pr auto;
   }
 }
 </style>
