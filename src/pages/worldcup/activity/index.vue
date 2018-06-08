@@ -69,7 +69,7 @@
       <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">投注记录</div>
     </div>
     <Rule ref="rule" :showRule="showRule"></Rule>
-    <Record ref="record" :showRecord="showRecord"></Record>
+    <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList"></Record>
     <Votepop ref="votepop" :voteInfo="voteInfo" :totalChance="userGuessStatistic.totalChance"></Votepop>
   </div>
 </template>
@@ -107,12 +107,14 @@
         grayBtn: state => state.grayBtn,
         matchList: state => state.matchList,
         userGuessStatistic: state => state.userGuessStatistic,
-        voteInfo: state => state.voteInfo
+        voteInfo: state => state.voteInfo,
+        userGuessList: state => state.userGuessList
       })
     },
     created() {
       this.getMatchList()
-      // this.getUserGuessList()
+
+      this.getUserGuessList()
       // this.guessMatch()
       // this.getUserGuessStatistic()
     },
@@ -120,7 +122,7 @@
       ...mapActions('activity', [
         'getMatchList',
         'setVoteInfo',
-        // 'getUserGuessList',
+        'getUserGuessList'
         // 'guessMatch'
         // 'getUserGuessStatistic'
       ]),
@@ -152,7 +154,7 @@
       showRecords() {
         this.showRule = false
         this.showRecord = true
-  
+        
       },
       redirectTo() {
         let token = "";

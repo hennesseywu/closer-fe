@@ -1,4 +1,4 @@
-import { getMatchList, getUserGuessList, getGuessMatch, getUserGuessStatistic } from './service'
+import { getMatchList, getGuessMatch, getUserGuessStatistic, getUserGuessList } from './service'
 import { Toast } from 'mint-ui'
 
 export default {
@@ -7,11 +7,11 @@ export default {
   state: {
     grayBtn: false,
     matchList: {},
-    userGuessList: {},
+    userGuessList: [],
     userGuessStatistic: {},
     voteInfo: {
       logo: ''
-    }
+    },
   },
   mutations: {
     updateMatchlist(state, payload) {
@@ -26,16 +26,16 @@ export default {
       } 
     },
     updateUserGuesslist(state, payload) {
-      console.log(1, payload)
-      state.userGuessList = payload
+      console.log(2, payload)
+      state.userGuessList = payload.data.result.data
     },
     updateUserGuessStatistic(state, payload) {
-      console.log(2, payload)
+      console.log(3, payload)
       state.userGuessStatistic = payload.data.result
     },
     guessMatch(state, payload) {
       state.guessMatchPrm = { ...state.guessMatchPrm, payload }
-    }
+    },
   },
   actions: {
     async getMatchList({ commit, state }, payload) {
@@ -57,6 +57,10 @@ export default {
     async getUserGuessList({ commit, state }, payload) {
       console.log(payload)
       const { data } = await getUserGuessList(payload)
+      if(data.code && data.code != 0) {
+        Toast(data.result)
+        return
+      }
       commit({
         type: 'updateUserGuesslist',
         data
