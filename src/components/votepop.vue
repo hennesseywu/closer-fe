@@ -133,13 +133,12 @@ export default {
       height: 128pr;
       border-radius: 100%;
       background: #fff;
-      border: 1px solid black;
       > img {
         width: 110pr;
         height: 110pr;
         border-radius: 100%;
+        margin: 9pr;
         overflow: hidden;
-        border: 1px solid red;
       } 
     }
     .match2{
