@@ -316,8 +316,8 @@
             border-radius: 30pr;
             .times {
               position: absolute;
-              top: -35pr;
-              right: -30pr;
+              top: -30pr;
+              right: -25pr;
               color: #fff;
               font-size: 20pr;
               background: #D7373F;
