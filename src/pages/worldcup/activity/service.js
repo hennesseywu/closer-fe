@@ -34,7 +34,7 @@ export async function guessMatch(payload) {
 
 /**  比赛结果
  */
-export async function checkGuessResult(payload) {
+export async function getGuessResult(payload) {
     console.log('service', payload)
     return await axios.post(api.activity.check_guess_result, payload);
 }

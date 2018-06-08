@@ -1,78 +1,92 @@
 <template>
-  <mt-popup v-model="notAccessVisible" :class="win? 'win-pox-box':'pop-box'" :closeOnClickModal="false">
+  <mt-popup v-model="notAccessVisible" class="pop-box" :closeOnClickModal="false">
     <div class="pop-header">
       <div class="close-icon" @click="close"></div>
     </div>
-    <div :class="win ?'win-pop-box':'pop-body'">
+    <div class="pop-body">
       <div class="title box box-tb">
         <span class="text" v-if="false">很遗憾你猜错了</span>
         <span class="text win-text1">恭喜你猜对了！</span>
-        <span class="text win-text2">你获得了<span>276.3</span>元</span>
+        <span class="text win-text2">你获得了<span>{{toYuan()}}</span>元</span>
       </div>
       <div class="title-desc">
-        <span class="desc">9378人参与，2367答对</span>
+        <span class="desc">{{totalGuessPerson}}人参与，{{totalGuessPerson}}答对</span>
       </div>
       <div class="content box box-tb box-center-center">
         <div class="result-win"></div>
-        <div class="share">
+        <div class="share" @click="jump()">
           <button class="button">{{buttonText}}</button>
         </div>
         <div class="guide">
           <a class="href">增加机会 查看攻略</a>
         </div>
-              <div class="line"></div>
-              <div class="match-title">
-               <span class="title">竞猜比赛队伍</span>
-              </div>
-              <div class="match">
-                <div class="detail-box box box-lr">
-                  <span class="detail">俄罗斯 vs 中国</span><span class="guess">俄罗斯x10</span>
-                </div>
-                <div class="detail-box box box-lr">
-                  <span class="detail">俄罗斯 vs 中国</span><span class="guess">俄罗斯x10</span>
-                </div>
-                <div class="detail-box box box-lr">
-                  <span class="detail">俄罗斯 vs 中国</span><span class="guess">俄罗斯x10</span>
-                </div>
-                <div class="detail-box box box-lr">
-                  <span class="detail">俄罗斯 vs 中国</span><span class="guess">俄罗斯x10</span>
-                </div>
-              </div>
-          </div>
-          <div class="bottom">
-            <span class="wait">等等再说</span>
-            <button class="getMoney">去提现</button>
-          </div>
-          <div class="tips">进入【我的钱包】-【奖励金】中领取</div>
+        <div class="line"></div>
+        <div class="match-title">
+          <span class="title">竞猜比赛队伍</span>
         </div>
-      </mt-popup>
+        <div class="match">
+          <div class="detail-box box box-lr" v-for="(item,index) in matchList" :key="index">
+            <span class="detail">{{item.homeTeam.teamName}} vs {{item.gustTeam.teamName}}</span><span class="guess">{{item.matchDesc}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <span class="wait" @click="close()">等等再说</span>
+        <button class="getMoney">去提现</button>
+      </div>
+      <div class="tips">进入【我的钱包】-【奖励金】中领取</div>
+    </div>
+  </mt-popup>
 </template>
 
 <script>
   import Vue from "vue";
-  import { Popup } from "mint-ui";
+  import {
+    Popup
+  } from "mint-ui";
   Vue.component(Popup.name, Popup);
   
   export default {
     name: "pop",
     components: {},
     props: {
-      className: String
+      className: String,
+      totalBingoPerson: Number,
+      totalGuessPerson: Number,
+      awardAmt: {
+        type: Number,
+        default: 0
+      },
+      matchList: {
+        type: Array,
+        defaut: []
+      },
+      jumpTo:Function
     },
     data() {
       return {
         win: false,
         buttonText: '炫耀一下',
+        isShow: false,
         notAccessVisible: true
+  
       };
     },
     methods: {
+      toYuan:function(money){
+            return (money/10000+"").substring(".",(money/10000+"").indexOf(".")+3)
+      }
+      ,
       open: function() {
         this.notAccessVisible = true;
       },
       close: function() {
         this.notAccessVisible = false;
+      },jump:function(){
+          console.log("eeeee")
+        this.$emit('jumpTo')
       }
+
     }
   };
 </script>
@@ -124,7 +138,7 @@
       }
       .win-text2 {
         margin-top: 10pr;
-        > span {
+        >span {
           color: rgb(214, 82, 49);
         }
       }
@@ -168,7 +182,7 @@
       }
       .line {
         margin-top: 31pr;
-        width:425pr;
+        width: 425pr;
         height: 1pr;
         background: #eff0f4;
       }
@@ -202,7 +216,6 @@
             margin-left: 120pr;
           }
         }
-        
       }
     }
     .bottom {

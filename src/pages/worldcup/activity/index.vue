@@ -5,7 +5,7 @@
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
-          <div class="whole-num"><span>9929</span>人参与</div>
+          <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>人参与</div>
         </div>
         <div class="right">增加机会</div>
       </div>
@@ -30,35 +30,37 @@
                   <div class="country country1 box box-tb">
                     <span>{{item.homeTeam.teamName}}</span>
                     <span class="flag">
-                        <img :src="item.homeTeam.logo" alt="主队logo">
-                      </span>
+                            <img :src="item.homeTeam.logo" alt="主队logo">
+                          </span>
                   </div>
                   <div class="vs-img"></div>
                   <div class="country box box-tb">
                     <span>{{item.gustTeam.teamName}}</span>
                     <span class="flag">
-                        <img :src="item.gustTeam.logo" alt="客队logo">
-                      </span>
+                            <img :src="item.gustTeam.logo" alt="客队logo">
+                          </span>
                   </div>
                   <div class="right-arrow box box-center-center">
                     <span class="img rotate"></span>
                   </div>
                 </div>
                 <!-- <mt-swipe-item>2</mt-swipe-item>
-                <mt-swipe-item>3</mt-swipe-item> -->
+                    <mt-swipe-item>3</mt-swipe-item> -->
               </div>
               <div class="result box box-lr">
-                <div class="commonsize yellowbg winner1" @click="openVotepop(item.homeTeam.logo)">
-                  <div class="winbtn">胜利</div> 
-                  <div class="times">X93</div>
-                </div>
-                <div class="commonsize tie" :class="grayBtn ? 'gray' : 'yellowbg'">平局</div>
-                <div class="commonsize yellowbg winner2" @click="openVotepop(item.gustTeam.logo)">
+                <div class="commonsize yellowbg winner1"  @click="openVotepop(item.homeTeam.logo)">
                   <div class="winbtn">胜利</div>
-                  <span class="times">X3</span>
+                  <div class="times" v-if="item.userGuess&&item.homeTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</div>
+                </div>
+                <div class="commonsize tie"  :class="grayBtn ? 'gray' : 'yellowbg'">
+                 <div class="winbtn">平局</div>
+                  <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='equal'">X {{item.userGuess.guessTimes}}</span>
+                  </div>
+                <div class="commonsize yellowbg winner2"   @click="openVotepop(item.gustTeam.logo)">
+                  <div class="winbtn">胜利</div>
+                  <span class="times" v-if="item.userGuess&&item.gustTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</span>
                 </div>
               </div>
-
             </div>
           </mt-swipe-item>
   
@@ -70,8 +72,11 @@
       <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">投注记录</div>
     </div>
     <Rule ref="rule" :showRule="showRule"></Rule>
+    <Votepop ref="votepop" :voteInfo="voteInfo" @guessMatch="guessMatch()" :totalChance="userGuessStatistic.totalChance"></Votepop>
     <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList"></Record>
-    <Votepop ref="votepop" :voteInfo="voteInfo" :totalChance="userGuessStatistic.totalChance"></Votepop>
+    <Newuserpop ref="newuserpop" v-if="recieveChanceInfo.presentAvailable" :newUser="recieveChanceInfo.status" :isApp="isApp" :count="recieveChanceInfo.count"></Newuserpop>
+    <Winpop ref="winpop" v-if="userGuessResult.guessResult" @jumpTo="redirectTo()" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList" :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
+  
   </div>
 </template>
 
@@ -88,6 +93,7 @@
   import Record from '../../../components/record.vue'
   import Votepop from '../../../components/votepop.vue'
   import Newuserpop from '../../../components/newuserpop.vue'
+  import Winpop from '../../../components/winpop.vue'
   
   export default {
     name: 'index',
@@ -97,7 +103,8 @@
       Rule,
       Record,
       Votepop,
-      Newuserpop
+      Newuserpop,
+      Winpop
     },
     data() {
       return {
@@ -112,15 +119,14 @@
         matchList: state => state.matchList,
         userGuessStatistic: state => state.userGuessStatistic,
         voteInfo: state => state.voteInfo,
-        recieveChanceInfo:state=>state.recieveChanceInfo,
-        userGuessList:state=>state.userGuessList
+        recieveChanceInfo: state => state.recieveChanceInfo,
+        userGuessList: state => state.userGuessList,
+        userGuessResult: state => state.userGuessResult
       })
     },
     created() {
       this.getMatchList()
-
       this.getUserGuessList()
-      // this.guessMatch()
       this.getUserGuessStatistic();
       this.checkGuessResult();
       this.checkRecieveChance();
@@ -173,15 +179,19 @@
       },
       redirectTo() {
         let userId = ""
-        let amount=0;
+        let amount = 0;
+        console.log(Cookies.get("totalAwardAmt"))
+        if(Cookies.get("totalAwardAmt")){
+          amount=Cookies.get("totalAwardAmt");
+        }
         if (Cookies.get("user")) {
           let user = JSON.parse(Cookies.get("user"))
           if (user.objectID) {
-            userId = user.objectID//.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+            userId = user.objectID //.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
           }
         }
         this.$router.push({
-          path: '/share/' + userId+"/"+amount
+          path: '/share/' + userId + "/" + amount
         })
       }
     }

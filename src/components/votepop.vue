@@ -109,12 +109,15 @@ export default {
     },
     confirm(voteInfo) {
       // this.checkChance()
-            if(this.showText) return;
+      if(this.showText) return;
       console.log("confirm",voteInfo);
       delete voteInfo['logo']
       voteInfo['guessTimes']=this.chance;
+      console.log(voteInfo)
       this.$emit('guessMatch',voteInfo)
-      this.close();
+      setTimeout(()=>{
+        this.close();
+      },500)
 
       // this.$emit('input', event)
     }

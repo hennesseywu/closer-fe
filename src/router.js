@@ -59,6 +59,10 @@ router.beforeEach(({ meta, path }, from, next) => {
         console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
         router.push("/activity");
     }
+
+    if (path == "/activity" && !Cookies.get("GroukAuth")) {
+        router.push("/")
+    }
     // const isLogin = hasAuthToken() // true用户已登录， false用户未登录
 
     // // 不需要验证的地址
