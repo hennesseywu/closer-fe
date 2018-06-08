@@ -5,7 +5,7 @@
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
-          <div class="whole-num"><span>9929</span>人参与</div>
+          <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>人参与</div>
         </div>
         <div class="right">增加机会</div>
       </div>
@@ -70,8 +70,11 @@
       <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">投注记录</div>
     </div>
     <Rule ref="rule" :showRule="showRule"></Rule>
-    <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList"></Record>
     <Votepop ref="votepop" :voteInfo="voteInfo" :totalChance="userGuessStatistic.totalChance"></Votepop>
+    <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList"></Record>
+    <Newuserpop ref="votepop" :newUser="recieveChanceInfo.presentAvailable" :isApp="isApp" :count="recieveChanceInfo.count"></Newuserpop>
+    <Winpop ref="winpop" :isShow="userGuessResult.guessResult"></Winpop>
+  
   </div>
 </template>
 
@@ -88,7 +91,8 @@
   import Record from '../../../components/record.vue'
   import Votepop from '../../../components/votepop.vue'
   import Newuserpop from '../../../components/newuserpop.vue'
-  
+  import Winpop from '../.../.../components/winpop.vue'
+
   export default {
     name: 'index',
     components: {
@@ -97,7 +101,8 @@
       Rule,
       Record,
       Votepop,
-      Newuserpop
+      Newuserpop,
+      Winpop
     },
     data() {
       return {

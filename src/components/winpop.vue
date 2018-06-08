@@ -1,5 +1,5 @@
 <template>
-  <mt-popup v-model="notAccessVisible" :class="win? 'win-pox-box':'pop-box'" :closeOnClickModal="false">
+  <mt-popup v-model="notAccessVisible" :class="pop-box" :closeOnClickModal="false">
     <div class="pop-header">
       <div class="close-icon" @click="close"></div>
     </div>
@@ -63,7 +63,7 @@
       return {
         win: false,
         buttonText: '炫耀一下',
-        notAccessVisible: true
+        isShow: false
       };
     },
     methods: {
