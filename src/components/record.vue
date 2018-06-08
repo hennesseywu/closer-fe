@@ -6,9 +6,10 @@
       <div class="coountry" v-else-if="item.winTeamId == item.gustTeamId">{{item.homeTeam.teamName}} VS {{item.gustTeam.teamName}}(W)</div>
       <div class="coountry" v-else>{{item.homeTeam.teamName}} VS {{item.gustTeam.teamName}} </div>
       <div class="money">获得{{item.userGuess.awardAmt}}元</div>
-      <div class="correct-times" v-if="item.userGuess.guessResult">{{item.userGuess.guessResult === 'bingo' ? '正确' : (item.userGuess.guessResult === 'fail' ? '失败' : '无结果')}}X{{item.userGuess.guessTimes}}</div> 
-      <div class="correct-times" v-else>无结果</div> 
+      <div class="correct-times" v-if="item.userGuess.guessResult">{{item.userGuess.guessResult === 'bingo' ? '正确' : (item.userGuess.guessResult === 'fail' ? '失败' : '待开奖')}}X{{item.userGuess.guessTimes}}</div> 
+      <div class="correct-times" v-else>待开奖</div> 
     </div>
+    <div class="btn-goapp" v-if="userGuessList.length > 0">去APP提现</div>
     <div class="no-record" v-if="userGuessList.length == 0">
       您还没有投注过哦~快去参与拿大奖吧
     </div>
@@ -63,6 +64,17 @@ export default {
       top: 0;
       right: 0;
     }
+  }
+  .btn-goapp {
+    margin: 60pr 350pr 40pr;
+    width: 300pr;
+    height: 80pr;
+    line-height: 80pr;
+    text-align: center;
+    border-radius: 60pr;
+    color: #4B4945;
+    background: #FDDB00;
+    
   }
   .no-record {
     margin: 30pr auto;
