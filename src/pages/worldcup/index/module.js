@@ -102,14 +102,15 @@ export default {
                     return;
                 }
                 if (data.result && data.result.token) {
+                    Cookies.set("GroukAuth", data.result.token, { expires: 7 });
                     if (data.result.user) {
                         Cookies.set("user", JSON.stringify(data.result.user), { expires: 7 });
                     }
                     if (data.result.isNewUser) {
                         rootState.isNewUser = data.result.isNewUser;
                     }
-                    Cookies.set("GroukAuth", data.result.token, { expires: 7 });
-                    Router.push({ name: "worldcupActivity" });
+                    console.log("push worldcupActivity")
+                    Router.push({ path: "/worldcup/activity/" });
                 }
             }
         }

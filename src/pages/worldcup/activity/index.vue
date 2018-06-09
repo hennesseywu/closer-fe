@@ -10,7 +10,7 @@
         <div class="right">增加机会</div>
       </div>
       <div class="swipe">
-        <mt-swipe :continuous="true" :auto="0" :showIndicators="true" v-if="matchList">
+        <mt-swipe ref="swipe" :continuous="true" :auto="0" :showIndicators="true" v-if="matchList">
           <mt-swipe-item v-for="(item, index) in matchList" :key="index">
             <div class="choose-box">
               <div class="time-wrapper box box-lr">
@@ -24,7 +24,7 @@
               <div class="swiper-wrapper">
   
                 <div class="info-box box box-lr">
-                  <div class="left-arrow box box-center-center">
+                  <div class="left-arrow box box-center-center" @click="arrowLeft()">
                     <span class="img"></span>
                   </div>
                   <div class="country country1 box box-tb">
@@ -40,7 +40,7 @@
                             <img :src="item.gustTeam.logo" alt="客队logo">
                           </span>
                   </div>
-                  <div class="right-arrow box box-center-center">
+                  <div class="right-arrow box box-center-center" @click="arrowRight()">
                     <span class="img rotate"></span>
                   </div>
                 </div>
@@ -147,6 +147,13 @@
         // 'guessMatch'
         // 'getUserGuessStatistic'
       ]),
+      arrowRight(){
+        this.$refs.swipe.next();
+      },
+      arrowLeft(){
+        this.$refs.swipe.prev();
+      }
+      ,
       openVotepop(logo, matchId, winTeamId, matchResult,userGuess) {
         console.log(winTeamId,"--",matchResult,"---",userGuess)
         console.log(this.userGuessStatistic.totalChance);

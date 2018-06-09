@@ -17,18 +17,18 @@ const router = new Router({
 
     mode: 'history',
     routes: [{
+            path: '/worldcup/activity',
+            name: 'worldcupActivity',
+            component: Activity,
+            meta: {
+                title: '贴近世界杯 瓜分600万'
+            }
+        }, {
             path: '/worldcup/:channelCode',
             name: 'worldcupIndex',
             component: Index,
             meta: {
                 title: '领取机会'
-            }
-        }, {
-            path: '/worldcup/activity/',
-            name: 'worldcupActivity',
-            component: Activity,
-            meta: {
-                title: '贴近世界杯 瓜分600万'
             }
         },
         {
@@ -64,7 +64,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
     }
 
     if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
-        router.push({ name: "worldcupIndex" })
+        router.push({ name: "worldcupIndex", params: { channelCode: 0 } })
     }
     next()
 })
