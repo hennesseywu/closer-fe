@@ -31,22 +31,27 @@ export default {
             if (rootState.IS_APP) { //app内打开
                 let ua = rootState.UA;
                 console.log("ua", ua);
-                if (ua.indexOf("closer-andriod") != -1) {
-                    //安卓检查登录状态
+                if (ua.indexOf("closer-android") != -1) {
+                    console.log('module android', typeof window.bridge)
+                        //安卓检查登录状态
                     if (typeof window.bridge != "undefined") {
                         let token = window.bridge.getUserToken(null);
+                        console.log('module android token', token)
                         Cookies.set("GroukAuth", token, { expires: 7 });
                         config.headers.Authorization = token;
                     }
                 } else if (ua.indexOf("closer-ios") != -1) {
                     if (window.WebViewJavascriptBridge) {
+
                         //ios获取用户token 判断登录
                         bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                            console.log('module ios token', token)
                             if (token) {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
                                 config.headers.Authorization = token;
 
                             } else {
+                                console.log('jumpLogin');
                                 JsBridge.setupWebViewJavascriptBridge(function(bridge) {
                                     bridge.callHandler("jumpLogin", null);
                                     return;
