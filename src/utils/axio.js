@@ -19,45 +19,9 @@ axios.interceptors.request.use(
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
-        let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
-        if (ua.indexOf("closer-android") != -1) {
-            console.log("android", typeof window.bridge != "undefined")
-                //安卓检查登录状态
-            if (typeof window.bridge != "undefined") {
-                let token = window.bridge.getUserToken(null);
-                console.log("android", token)
-                if (token) {
-                    Cookies.set("GroukAuth", token, { expires: 7 });
-                    config.headers.Authorization = token;
-                } else {
-                    window.bridge.jumpLogin(null);
-                }
-                return config;
-            }
-        } else if (ua.indexOf("closer-ios") != -1) {
-            console.log("ios", typeof window.bridge != "undefined")
-            if (window.WebViewJavascriptBridge) {
-                //ios获取用户token 判断登录
-                bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                    console.log("ios", token)
-                    if (token) {
-                        Cookies.set("GroukAuth", token, { expires: 7 });
-                        config.headers.Authorization = token;
-                        return config;
-                    } else {
-                        console.log("ios jumpLogin")
-                        JsBridge.setupWebViewJavascriptBridge(function(bridge) {
-                            bridge.callHandler("jumpLogin", null);
-                            return config;
-                        });
-                    }
-                });
-            }
-        } else {
-            console.log("axio req header", config)
-            Indicator.open()
-            return config;
-        }
+        console.log("axio req header", config)
+        Indicator.open()
+        return config;
 
     },
     err => {

@@ -29,34 +29,37 @@ export default {
         openLoginBox({ state, rootState }) {
             console.log("rootState", rootState)
             if (rootState.IS_APP) { //app内打开
-                let ua = rootState.UA;
+                let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
                 console.log("ua", ua);
                 if (ua.indexOf("closer-android") != -1) {
-                    console.log('module android', typeof window.bridge)
+                    console.log("android", typeof window.bridge != "undefined")
                         //安卓检查登录状态
                     if (typeof window.bridge != "undefined") {
                         let token = window.bridge.getUserToken(null);
-                        console.log('module android token', token)
+                        console.log("android", token)
                         if (token) {
                             Cookies.set("GroukAuth", token, { expires: 7 });
+                            config.headers.Authorization = token;
                         } else {
-                            window.bridge.jumpLogin(null)
+                            window.bridge.jumpLogin(null);
                         }
+                        return config;
                     }
                 } else if (ua.indexOf("closer-ios") != -1) {
+                    console.log("ios", typeof window.bridge != "undefined")
                     if (window.WebViewJavascriptBridge) {
                         //ios获取用户token 判断登录
                         bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                            console.log('module ios token', token)
+                            console.log("ios", token)
                             if (token) {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
                                 config.headers.Authorization = token;
-
+                                return config;
                             } else {
-                                console.log('jumpLogin');
+                                console.log("ios jumpLogin")
                                 JsBridge.setupWebViewJavascriptBridge(function(bridge) {
                                     bridge.callHandler("jumpLogin", null);
-                                    return;
+                                    return config;
                                 });
                             }
                         });
