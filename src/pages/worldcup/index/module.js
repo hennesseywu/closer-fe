@@ -17,6 +17,7 @@ export default {
             state.sendCode = 59;
             let countDown = setInterval(() => {
                 state.sendCode--;
+                state.sendCode += "s"
                 if (state.sendCode == 0) {
                     clearInterval(countDown);
                     state.sendCode = "再次发送";
@@ -26,17 +27,18 @@ export default {
     },
     actions: {
         openLoginBox({ state, rootState }) {
+            console.log("rootState", rootState)
             if (rootState.IS_APP) { //app内打开
                 let ua = rootState.UA;
                 console.log("ua", ua);
-                if (ua.indexOf("closer-andriod") > 0) {
+                if (ua.indexOf("closer-andriod") != -1) {
                     //安卓检查登录状态
                     if (typeof window.bridge != "undefined") {
                         let token = window.bridge.getUserToken(null);
                         Cookies.set("GroukAuth", token, { expires: 7 });
                         config.headers.Authorization = token;
                     }
-                } else if (ua.indexOf("closer-ios") > 0) {
+                } else if (ua.indexOf("closer-ios") != -1) {
                     if (window.WebViewJavascriptBridge) {
                         //ios获取用户token 判断登录
                         bridge.callHandler("getUserToken", null, function(token, responseCallback) {

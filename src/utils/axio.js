@@ -8,7 +8,7 @@ import Store from '../store'
 axios.interceptors.request.use(
     config => {
         let reqUrl = feConfig.serverDevUrl + config.url
-            // let reqUrl = feConfig.serverUrl + config.url
+            // let reqUrl = feConfig.devserverUrl + config.url
             // if (/sandbox.tiejin/.test(config.url)) {
             //     reqUrl = feConfig.serverDevUrl;
             // } else if (/tiejin/.test(config.url)) {
