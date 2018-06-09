@@ -26,8 +26,12 @@ axios.interceptors.request.use(
             if (typeof window.bridge != "undefined") {
                 let token = window.bridge.getUserToken(null);
                 console.log("android", token)
-                Cookies.set("GroukAuth", token, { expires: 7 });
-                config.headers.Authorization = token;
+                if (token) {
+                    Cookies.set("GroukAuth", token, { expires: 7 });
+                    config.headers.Authorization = token;
+                } else {
+                    window.bridge.jumpLogin(null);
+                }
                 return config;
             }
         } else if (ua.indexOf("closer-ios") != -1) {
