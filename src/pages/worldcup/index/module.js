@@ -39,11 +39,9 @@ export default {
                         console.log("android", token)
                         if (token) {
                             Cookies.set("GroukAuth", token, { expires: 7 });
-                            config.headers.Authorization = token;
                         } else {
                             window.bridge.jumpLogin(null);
                         }
-                        return config;
                     }
                 } else if (ua.indexOf("closer-ios") != -1) {
                     console.log("ios", typeof window.bridge != "undefined")
@@ -53,13 +51,10 @@ export default {
                             console.log("ios", token)
                             if (token) {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
-                                config.headers.Authorization = token;
-                                return config;
                             } else {
                                 console.log("ios jumpLogin")
                                 JsBridge.setupWebViewJavascriptBridge(function(bridge) {
                                     bridge.callHandler("jumpLogin", null);
-                                    return config;
                                 });
                             }
                         });
