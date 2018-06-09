@@ -21,21 +21,25 @@ axios.interceptors.request.use(
 
         let ua = Store.state.UA;
         if (ua.indexOf("closer-android") != -1) {
-            //安卓检查登录状态
+            console.log("android", typeof window.bridge != "undefined")
+                //安卓检查登录状态
             if (typeof window.bridge != "undefined") {
                 let token = window.bridge.getUserToken(null);
+                console.log("android", token)
                 Cookies.set("GroukAuth", token, { expires: 7 });
                 config.headers.Authorization = token;
             }
         } else if (ua.indexOf("closer-ios") > 0) {
+            console.log("ios", typeof window.bridge != "undefined")
             if (window.WebViewJavascriptBridge) {
                 //ios获取用户token 判断登录
                 bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                    console.log("ios", token)
                     if (token) {
                         Cookies.set("GroukAuth", token, { expires: 7 });
                         config.headers.Authorization = token;
-
                     } else {
+                        console.log("ios jumpLogin")
                         JsBridge.setupWebViewJavascriptBridge(function(bridge) {
                             bridge.callHandler("jumpLogin", null);
                             return;
