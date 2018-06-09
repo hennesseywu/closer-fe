@@ -150,7 +150,6 @@
       openVotepop(logo, matchId, winTeamId, matchResult,userGuess) {
         console.log(winTeamId,"--",matchResult,"---",userGuess)
         // console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
-        console.log(userGuess.matchResult);
         if((userGuess&&userGuess.matchResult=="win"&&(matchResult!="win"||userGuess.winTeamId!=winTeamId))||(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal")){
             console.log("can not guess")
             return;
