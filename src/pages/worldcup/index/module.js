@@ -37,12 +37,14 @@ export default {
                     if (typeof window.bridge != "undefined") {
                         let token = window.bridge.getUserToken(null);
                         console.log('module android token', token)
-                        Cookies.set("GroukAuth", token, { expires: 7 });
-                        config.headers.Authorization = token;
+                        if (token) {
+                            Cookies.set("GroukAuth", token, { expires: 7 });
+                        } else {
+                            window.bridge.jumpLogin(null)
+                        }
                     }
                 } else if (ua.indexOf("closer-ios") != -1) {
                     if (window.WebViewJavascriptBridge) {
-
                         //ios获取用户token 判断登录
                         bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                             console.log('module ios token', token)
