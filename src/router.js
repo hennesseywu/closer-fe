@@ -50,10 +50,29 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
 
     let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
     Store.state.UA = ua;
-    if (ua.indexOf("closer-andriod") != -1 || ua.indexOf("closer-ios") != -1) {
+    if (ua.indexOf("closer-andriod") > 0) {
         Store.state.IS_APP = true;
+        //安卓检查登录状态
+        if (typeof window.bridge != "undefined") {
+            let token = window.bridge.getUserToken(null);
+            Cookies.set("GroukAuth", token, { expires: 7 });
+        }
+    } else if (ua.indexOf("closer-ios") > 0) {
+        Store.state.IS_APP = true;
+        if (window.WebViewJavascriptBridge) {
+            //ios获取用户token 判断登录
+            bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                if (token) {
+                    Cookies.set("GroukAuth", token, { expires: 7 });
+                } else {
+                    JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                        bridge.callHandler("jumpLogin", null);
+
+                    });
+                }
+            });
+        }
     }
-    // Cookies.set("GroukAuth", "1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc")
     if (Cookies.get("GroukAuth") && (name == "worldcupIndex")) {
         console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
         if (params && params.channelCode) {

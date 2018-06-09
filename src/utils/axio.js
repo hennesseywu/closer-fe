@@ -18,34 +18,44 @@ axios.interceptors.request.use(
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
-        console.log("header", config)
-        if (Store.state.UA.indexOf("closer-andriod") > 0) {
+
+        let ua = Store.state.UA;
+        if (ua.indexOf("closer-andriod") > 0) {
+            Store.state.IS_APP = true;
             //安卓检查登录状态
-        } else if (Store.state.UA.indexOf("closer-ios") > 0) {
-            JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+            if (typeof window.bridge != "undefined") {
+                let token = window.bridge.getUserToken(null);
+                Cookies.set("GroukAuth", token, { expires: 7 });
+                config.headers.Authorization = token;
+            }
+        } else if (ua.indexOf("closer-ios") > 0) {
+            Store.state.IS_APP = true;
+            if (window.WebViewJavascriptBridge) {
                 //ios获取用户token 判断登录
-                bridge.callHandler("getUserToken", null, function(data, responseCallback) {
-                    if (data.token) {
-                        config.headers.Authorization = data.token;
-                        config.url = reqUrl;
-                        Indicator.open()
-                        return config;
+                bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                    if (token) {
+                        Cookies.set("GroukAuth", token, { expires: 7 });
+                        config.headers.Authorization = token;
+
                     } else {
                         JsBridge.setupWebViewJavascriptBridge(function(bridge) {
                             bridge.callHandler("jumpLogin", null);
-                            config.headers.Authorization = data.token;
-                            config.url = reqUrl;
-                            Indicator.open()
-                            return config;
+                            return;
                         });
                     }
                 });
-            })
+            }
         } else {
+            console.log("header", config)
             config.url = reqUrl;
             Indicator.open()
             return config;
         }
+
+
+
+
+
 
     },
     err => {
