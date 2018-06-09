@@ -10,9 +10,9 @@ axios.interceptors.request.use(
         let reqUrl = feConfig.serverDevUrl + config.url;
         config.log(reqUrl)
         if (/sandbox.tiejin/.test(config.url)) {
-            reqUrl = feConfig.serverDevUrl;
+            reqUrl = feConfig.serverDevUr + config.url;
         } else if (/tiejin/.test(config.url)) {
-            reqUrl = feConfig.serverUrl;
+            reqUrl = feConfig.serverUrl + config.url;
         }
         config.headers['Closer-Agent'] = 'Closer-H5';
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
