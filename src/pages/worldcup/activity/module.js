@@ -51,6 +51,8 @@ export default {
             if (payload && payload.channelCode && (payload.channelCode == "0" || payload.channelCode == "")) {
                 payload = {}
                 console.log(payload)
+            } else {
+                payload["type"] = "other";
             }
             let { data } = await checkRecieveChance(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
