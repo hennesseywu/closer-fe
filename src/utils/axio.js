@@ -7,10 +7,9 @@ import Store from '../store'
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
-        // let reqUrl = feConfig.devserverUrl + config.url
-        let reqUrl = feConfig.serverUrl + config.url
+        let reqUrl = feConfig.devserverUrl + config.url
         if (/sandbox.tiejin/.test(config.url)) {
-            reqUrl = feConfig.serverDevUrlv;
+            reqUrl = feConfig.serverDevUrl;
         } else if (/tiejin/.test(config.url)) {
             reqUrl = feConfig.serverUrl;
         }
