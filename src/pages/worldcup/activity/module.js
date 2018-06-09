@@ -47,7 +47,7 @@ export default {
     },
     actions: {
         async checkRecieveChance({ commit }, payload) {
-            console.log("xxxx", payload)
+            console.log("checkRecieveChance", payload)
             if (payload && payload.channelCode && (payload.channelCode == "0" || payload.channelCode == "")) {
                 payload = {}
                 console.log(payload)

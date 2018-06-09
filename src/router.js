@@ -36,7 +36,7 @@ const router = new Router({
             name: 'worldcupShare',
             component: Share,
             meta: {
-                title: '贴近世界杯 瓜分600'
+                title: '贴近世界杯 瓜分600万'
             }
         }
     ]

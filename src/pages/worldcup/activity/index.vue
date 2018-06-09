@@ -16,8 +16,8 @@
               <div class="time-wrapper box box-lr">
                 <div class="left-ball"></div>
                 <div class="time">
-                  <span>{{getMonth(new Date(item.startTime * 1000))}}</span>月<span>{{getDate(new Date(item.startTime * 1000))}}</span>号
-                  <span>{{getHours(new Date(item.startTime * 1000))}}</span>
+                  <span>{{getMonth(new Date(item.startTime))}}</span>月<span>{{getDate(new Date(item.startTime))}}</span>号
+                  <span>{{getHours(new Date(item.startTime))}}</span>
                 </div>
                 <div class="right-ball"></div>
               </div>
@@ -172,7 +172,11 @@
       },
       getHours(date) {
         if (!date) return
-        return date.getHours() + ':' + date.getMinutes()
+        let minutes=date.getMinutes();
+        if(minutes==0){
+            minutes+="0"
+        }
+        return date.getHours() + ':' + minutes
       },
       showRules() {
         this.showRule = true
