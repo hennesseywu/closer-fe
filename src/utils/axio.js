@@ -31,6 +31,7 @@ axios.interceptors.request.use(
                 console.log("android", token)
                 Cookies.set("GroukAuth", token, { expires: 7 });
                 config.headers.Authorization = token;
+                return config;
             }
         } else if (ua.indexOf("closer-ios") > 0) {
             console.log("ios", typeof window.bridge != "undefined")
@@ -41,11 +42,12 @@ axios.interceptors.request.use(
                     if (token) {
                         Cookies.set("GroukAuth", token, { expires: 7 });
                         config.headers.Authorization = token;
+                        return config;
                     } else {
                         console.log("ios jumpLogin")
                         JsBridge.setupWebViewJavascriptBridge(function(bridge) {
                             bridge.callHandler("jumpLogin", null);
-                            return;
+                            return config;
                         });
                     }
                 });
