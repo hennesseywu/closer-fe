@@ -39,8 +39,9 @@ export default {
                         console.log("android", token)
                         if (token) {
                             Cookies.set("GroukAuth", token, { expires: 7 });
-                            router.push({ name: "worldcupActivity" });
+                            Router.push({ name: "worldcupActivity" });
                         } else {
+                            console.log("android jumpLogin")
                             window.bridge.jumpLogin(null);
                         }
                     }
@@ -52,7 +53,7 @@ export default {
                             console.log("ios", token)
                             if (token) {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
-                                router.push({ name: "worldcupActivity" });
+                                Router.push({ name: "worldcupActivity" });
                             } else {
                                 console.log("ios jumpLogin")
                                 JsBridge.setupWebViewJavascriptBridge(function(bridge) {
