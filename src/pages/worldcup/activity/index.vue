@@ -149,6 +149,11 @@
       ]),
       openVotepop(logo, matchId, winTeamId, matchResult,userGuess) {
         console.log(winTeamId,"--",matchResult,"---",userGuess)
+        console.log(this.userGuessStatistic.totalChance);
+        if(this.userGuessStatistic&&this.userGuessStatistic.totalChance==0){
+          Toast("没有机会了");
+          return;
+        }
         // console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
         if((userGuess&&userGuess.matchResult=="win"&&(matchResult!="win"||userGuess.winTeamId!=winTeamId))||(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal")){
             console.log("can not guess")

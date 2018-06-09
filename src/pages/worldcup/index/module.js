@@ -82,7 +82,7 @@ export default {
         // 登录
         async login({ commit, state, rootState }, payLoad) {
             console.log("loginModule", payLoad);
-            if (payLoad.phone && !(/^(0|86|17951)?(13[0-9]|15[012356789]|16[012356789|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(payLoad.phone))) {
+            if (payLoad.phone && !(/^(0|86|17951)?(12[0-9]|13[0-9]|15[012356789]|16[012356789|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(payLoad.phone))) {
                 Toast('请输入正确的手机号');
                 return;
             };
