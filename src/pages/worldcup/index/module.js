@@ -39,6 +39,7 @@ export default {
                         console.log("android", token)
                         if (token) {
                             Cookies.set("GroukAuth", token, { expires: 7 });
+                            router.push({ name: "worldcupActivity" });
                         } else {
                             window.bridge.jumpLogin(null);
                         }
