@@ -81,6 +81,21 @@
           this.$store.state.CHANNEL_CODE = this.$route.params.channelCode;
         }
         this.isApp = this.$store.state.IS_APP;
+      },
+      redirectTo() {
+        let userId = ""
+        let amount = 0;
+        console.log(Cookies.get("totalAwardAmt"))
+        if(Cookies.get("totalAwardAmt")){
+          amount=Cookies.get("totalAwardAmt");
+        }
+        if (Cookies.get("user")) {
+          let user = JSON.parse(Cookies.get("user"))
+          if (user.objectID) {
+            userId = user.objectID //.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+          }
+        }
+        this.$router.push({ name: "worldcupShare" ,params:{userId:userId,amount:amount}});
       }
     }
   
