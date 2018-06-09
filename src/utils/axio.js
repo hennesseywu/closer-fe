@@ -13,7 +13,9 @@ axios.interceptors.request.use(
             //     reqUrl = feConfig.serverDevUrl;
             // } else if (/tiejin/.test(config.url)) {
             //     reqUrl = feConfig.serverUrl;
-            // }
+        console.log("reqUrl", reqUrl);
+        // }
+        config.url = reqUrl;
         config.headers['Closer-Agent'] = 'Closer-H5';
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
@@ -50,7 +52,6 @@ axios.interceptors.request.use(
             }
         } else {
             console.log("header", config)
-            config.url = reqUrl;
             Indicator.open()
             return config;
         }
