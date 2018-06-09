@@ -69,11 +69,10 @@
         'chanceBoxShow': state => state.chanceBoxShow,
         'loginBoxShow': state => state.loginBoxShow,
         'sendCode': state => state.sendCode
-  
       })
     },
     methods: {
-      ...mapActions('index', ['getCode', 'login']),
+      ...mapActions('index', ['getCode', 'login','openLoginBox']),
       checkIsApp() {
         console.log("isApp", this.$store.state.IS_APP)
         console.log("params",this.$route.params)

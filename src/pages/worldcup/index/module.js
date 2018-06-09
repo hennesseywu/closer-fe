@@ -7,8 +7,8 @@ export default {
     // 定义状态 
     state: {
         loginSuccess: false,
-        chanceBoxShow: false,
-        loginBoxShow: true,
+        chanceBoxShow: true,
+        loginBoxShow: false,
         isApp: false,
         sendCode: "发送验证码"
     },
@@ -16,7 +16,7 @@ export default {
         updateCountDown(state) {
             state.sendCode = 59;
             let countDown = setInterval(() => {
-                state.sendCode = "        " + state.sendCode--;
+                state.sendCode--;
                 if (state.sendCode == 0) {
                     clearInterval(countDown);
                     state.sendCode = "再次发送";
@@ -25,6 +25,39 @@ export default {
         }
     },
     actions: {
+        openLoginBox({ state, rootState }) {
+            if (rootState.IS_APP) { //app内打开
+                let ua = rootState.UA;
+                console.log("ua", ua);
+                if (ua.indexOf("closer-andriod") > 0) {
+                    //安卓检查登录状态
+                    if (typeof window.bridge != "undefined") {
+                        let token = window.bridge.getUserToken(null);
+                        Cookies.set("GroukAuth", token, { expires: 7 });
+                        config.headers.Authorization = token;
+                    }
+                } else if (ua.indexOf("closer-ios") > 0) {
+                    if (window.WebViewJavascriptBridge) {
+                        //ios获取用户token 判断登录
+                        bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                            if (token) {
+                                Cookies.set("GroukAuth", token, { expires: 7 });
+                                config.headers.Authorization = token;
+
+                            } else {
+                                JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                                    bridge.callHandler("jumpLogin", null);
+                                    return;
+                                });
+                            }
+                        });
+                    }
+                }
+            } else {
+                state.loginBoxShow = true;
+                state.chanceBoxShow = false;
+            }
+        },
         async getUserById({ state }, uid) {
             return await getUserById(uid).catch(err => {
                 Toast('网络开小差啦，请稍后再试')

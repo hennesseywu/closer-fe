@@ -7,8 +7,8 @@ import Store from '../store'
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
-        let reqUrl = feConfig.devserverUrl + config.url
-            // let reqUrl = feConfig.serverUrl + config.url
+        // let reqUrl = feConfig.devserverUrl + config.url
+        let reqUrl = feConfig.serverUrl + config.url
         if (/sandbox.tiejin/.test(config.url)) {
             reqUrl = feConfig.serverDevUrlv;
         } else if (/tiejin/.test(config.url)) {
@@ -20,8 +20,8 @@ axios.interceptors.request.use(
         }
 
         let ua = Store.state.UA;
+        console.log("ua: ", ua)
         if (ua.indexOf("closer-andriod") > 0) {
-            Store.state.IS_APP = true;
             //安卓检查登录状态
             if (typeof window.bridge != "undefined") {
                 let token = window.bridge.getUserToken(null);
@@ -29,7 +29,6 @@ axios.interceptors.request.use(
                 config.headers.Authorization = token;
             }
         } else if (ua.indexOf("closer-ios") > 0) {
-            Store.state.IS_APP = true;
             if (window.WebViewJavascriptBridge) {
                 //ios获取用户token 判断登录
                 bridge.callHandler("getUserToken", null, function(token, responseCallback) {

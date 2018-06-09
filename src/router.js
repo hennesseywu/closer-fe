@@ -24,7 +24,7 @@ const router = new Router({
                 title: '领取机会'
             }
         }, {
-            path: '/worldcup/activity',
+            path: '/worldcup/activity/',
             name: 'worldcupActivity',
             component: Activity,
             meta: {
@@ -32,7 +32,7 @@ const router = new Router({
             }
         },
         {
-            path: '/worldcup/share',
+            path: '/worldcup/share/',
             name: 'worldcupShare',
             component: Share,
             meta: {
@@ -50,6 +50,10 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
 
     let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
     Store.state.UA = ua;
+
+    if (ua.indexOf("closer-andriod") > 0 || ua.indexOf("closer-ios") > 0) {
+        Store.state.IS_APP = true;
+    }
 
     if (Cookies.get("GroukAuth") && (name == "worldcupIndex")) {
         console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
