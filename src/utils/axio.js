@@ -7,8 +7,8 @@ import Store from '../store'
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
-        // let reqUrl = feConfig.devserverUrl + config.url
-        let reqUrl = feConfig.serverUrl + config.url
+        let reqUrl = feConfig.devserverUrl + config.url
+            // let reqUrl = feConfig.serverUrl + config.url
         if (/sandbox.tiejin/.test(config.url)) {
             reqUrl = feConfig.serverDevUrlv;
         } else if (/tiejin/.test(config.url)) {
@@ -67,12 +67,12 @@ axios.interceptors.response.use(
 
                 case 401:
                     err.message = '未授权，请登录'
-                    router.push({ path: '/login' })
+                    router.push({ name: 'worldcupIndex' })
                     break
 
                 case 403:
                     err.message = '拒绝访问'
-                    router.push({ path: '/login' })
+                    router.push({ name: 'worldcupIndex' })
                     break
 
                 case 404:

@@ -39,9 +39,7 @@ export default {
     Toast
   },
   props: {
-    guessMatch:{
-      type:Function
-    },
+    guessMatch:Function,
     voteInfo: {
       type: Object,
       default: {}
@@ -69,11 +67,7 @@ export default {
     
   },
   methods: {
-    // watch: {
-    //   value(newValue, oldValue) {
-    //     this.chance
-    //   }
-    // },
+    
     open() {
       this.visible = true;
     },
@@ -110,10 +104,9 @@ export default {
     confirm(voteInfo) {
       // this.checkChance()
       if(this.showText) return;
-      console.log("confirm",voteInfo);
       delete voteInfo['logo']
       voteInfo['guessTimes']=this.chance;
-      console.log(voteInfo)
+      console.log("confirm",voteInfo)
       this.$emit('guessMatch',voteInfo)
       setTimeout(()=>{
         this.close();

@@ -44,46 +44,44 @@
                     <span class="img rotate"></span>
                   </div>
                 </div>
-                <!-- <mt-swipe-item>2</mt-swipe-item>
-                    <mt-swipe-item>3</mt-swipe-item> -->
               </div>
               <div class="result box box-lr">
-                <div class="commonsize yellowbg winner1"  @click="openVotepop(item.homeTeam.logo)">
+                <div class="commonsize yellowbg winner1"  @click="openVotepop(item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess)">
                   <div class="winbtn">胜利</div>
-                  <div class="times" v-if="item.userGuess&&item.homeTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</div>
+                  <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</div>
                 </div>
-                <div class="commonsize tie"  :class="grayBtn ? 'gray' : 'yellowbg'">
+                <div class="commonsize tie"  :class="grayBtn ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'equal',item.userGuess)">
                  <div class="winbtn">平局</div>
                   <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='equal'">X {{item.userGuess.guessTimes}}</span>
                   </div>
-                <div class="commonsize yellowbg winner2"   @click="openVotepop(item.gustTeam.logo)">
+                <div class="commonsize yellowbg winner2"   @click="openVotepop(item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win',item.userGuess)">
                   <div class="winbtn">胜利</div>
-                  <span class="times" v-if="item.userGuess&&item.gustTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</span>
+                  <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</span>
                 </div>
               </div>
             </div>
           </mt-swipe-item>
-  
         </mt-swipe>
       </div>
     </div>
+    <Getapp ref="getapp" v-if="!isApp"></Getapp>
     <div class="rule_record box box-lr">
       <div class="rule" :class="showRule ? 'checkbg' : 'uncheckbg'" @click="showRules">规则说明</div>
       <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">投注记录</div>
     </div>
     <Rule ref="rule" :showRule="showRule"></Rule>
-    <Votepop ref="votepop" :voteInfo="voteInfo" @guessMatch="guessMatch()" :totalChance="userGuessStatistic.totalChance"></Votepop>
+    <Votepop ref="votepop" :voteInfo="voteInfo" @guessMatch="guessMatch" :totalChance="userGuessStatistic.totalChance"></Votepop>
     <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList"></Record>
     <Newuserpop ref="newuserpop" v-if="recieveChanceInfo.presentAvailable" :newUser="recieveChanceInfo.status" :isApp="isApp" :count="recieveChanceInfo.count"></Newuserpop>
-    <Winpop ref="winpop" v-if="userGuessResult.guessResult" @jumpTo="redirectTo()" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList" :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
-  
+    <Winpop ref="winpop" v-if="userGuessResult.guessResult" @jumpTo="redirectTo" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList" :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
   </div>
 </template>
 
 <script>
   import {
     Swipe,
-    SwipeItem
+    SwipeItem,
+    Toast
   } from 'mint-ui';
   import {
     mapState,
@@ -94,6 +92,9 @@
   import Votepop from '../../../components/votepop.vue'
   import Newuserpop from '../../../components/newuserpop.vue'
   import Winpop from '../../../components/winpop.vue'
+  import Getapp from '../../../components/getapp.vue'
+
+  
   
   export default {
     name: 'index',
@@ -104,7 +105,8 @@
       Record,
       Votepop,
       Newuserpop,
-      Winpop
+      Winpop,
+      Getapp
     },
     data() {
       return {
@@ -126,10 +128,11 @@
     },
     created() {
       this.getMatchList()
-      this.getUserGuessList()
+      // this.getUserGuessList()
+      this.checkUser();
       this.getUserGuessStatistic();
       this.checkGuessResult();
-      this.checkRecieveChance();
+      this.checkRecieveChance( {channelCode:this.$store.state.CHANNEL_CODE});
     },
     methods: {
       ...mapActions('activity', [
@@ -144,7 +147,14 @@
         // 'guessMatch'
         // 'getUserGuessStatistic'
       ]),
-      openVotepop(logo, matchId, winTeamId, matchResult) {
+      openVotepop(logo, matchId, winTeamId, matchResult,userGuess) {
+        console.log(winTeamId,"--",matchResult,"---",userGuess)
+        // console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
+        console.log(userGuess.matchResult);
+        if((userGuess&&userGuess.matchResult=="win"&&(matchResult!="win"||userGuess.winTeamId!=winTeamId))||(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal")){
+            console.log("can not guess")
+            return;
+        }
         this.setVoteInfo({
           logo,
           matchId,
@@ -171,10 +181,10 @@
       },
       showRecords() {
         this.showRule = false
+        this.getUserGuessList()
         this.showRecord = true
       },
       checkUser() {
-        this.isNewUser = this.$store.state.IS_NEW_USER;
         this.isApp = this.$store.state.IS_APP;
       },
       redirectTo() {
@@ -190,9 +200,7 @@
             userId = user.objectID //.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
           }
         }
-        this.$router.push({
-          path: '/share/' + userId + "/" + amount
-        })
+        this.$router.push({ name: "worldcupShare" ,params:{userId:userId,amount:amount}});
       }
     }
   }

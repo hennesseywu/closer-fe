@@ -17,23 +17,23 @@ const router = new Router({
 
     mode: 'history',
     routes: [{
-            path: '/',
-            name: '首页',
+            path: '/worldcup/:channelCode',
+            name: 'worldcupIndex',
             component: Index,
             meta: {
                 title: '领取机会'
             }
         }, {
-            path: '/activity',
-            name: '贴近世界杯 瓜分600万',
+            path: '/worldcup/activity',
+            name: 'worldcupActivity',
             component: Activity,
             meta: {
                 title: '贴近世界杯 瓜分600万'
             }
         },
         {
-            path: '/share/:id/:amount',
-            name: '贴近世界杯 瓜分600',
+            path: '/worldcup/share',
+            name: 'worldcupShare',
             component: Share,
             meta: {
                 title: '贴近世界杯 瓜分600'
@@ -42,8 +42,7 @@ const router = new Router({
     ]
 
 })
-router.beforeEach(({ meta, path }, from, next) => {
-
+router.beforeEach(({ meta, path, name, params }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
     setTimeout(() => {
         document.title = meta.title ? meta.title : '贴近'
@@ -55,33 +54,17 @@ router.beforeEach(({ meta, path }, from, next) => {
         Store.state.IS_APP = true;
     }
     // Cookies.set("GroukAuth", "1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc")
-    if (Cookies.get("GroukAuth") && (path == "/" || path == "/index")) {
+    if (Cookies.get("GroukAuth") && (name == "worldcupIndex")) {
         console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
-        router.push("/activity");
+        if (params && params.channelCode) {
+            Store.state.CHANNEL_CODE = params.channelCode;
+        }
+        router.push({ name: "worldcupActivity" });
     }
 
-    if (path == "/activity" && !Cookies.get("GroukAuth")) {
-        router.push("/")
+    if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
+        router.push({ name: "worldcupIndex" })
     }
-    // const isLogin = hasAuthToken() // true用户已登录， false用户未登录
-
-    // // 不需要验证的地址
-    // if (/^\/example/.test(path)) return next()
-    // const noLoginArr = ['/pwd']
-    // for (let i = 0, len = noLoginArr.length; i < len; i++) {
-    //     if (noLoginArr[i] === path) {
-    //         next()
-    //         return
-    //     }
-    // }
-
-    // if (path === '/login' && isLogin) {
-    //     clearSession()
-    //     location.reload()
-    // }
-    // if (path !== '/login' && !isLogin) {
-    //     return next({ path: '/login' })
-    // }
     next()
 })
 

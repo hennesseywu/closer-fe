@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="wrapper">
-        <div class="invite-img" @click="redirectTo()"></div>
+      <div class="invite-img" @click="redirectTo()"></div>
       <div class="text-desc">
         <span class="desc">扫描寻找二维码，可获得更多竞猜机会</span>
         <span class="tips">查看攻略</span>
@@ -21,26 +21,15 @@
           </div>
           <div class="code-box login-commen">
             <input type="text" v-model="code" placeholder="请输入手机验证码">
-            <span class="code" v-on:click="getCode(phone)">{{countDown}}</span>
+            <span class="code" v-on:click="getCode(phone)">{{sendCode}}</span>
           </div>
           <div class="get-btn" v-on:click="login({phone,code})"></div>
           <div class="text"></div>
         </div>
       </div>
-  
-      <div class="download box box-lr" v-if="isApp">
-        <div class="logo"></div>
-        <div class="d-text box box-tb">
-          <span>下载「贴近」客户端</span>
-          <span>机会翻倍，奖励翻倍</span>
-        </div>
-        <div class="download-btn">立即下载</div>
-      </div>
     </div>
     <Rule ref="rule" :showIndexRule="showIndexRule"></Rule>
-    
-    <!-- <Loginpop ref='loginpop' v-if="loginSuccess"></Loginpop> -->
-    <Newuserpop ref='Newuserpop' :newUser="newUser" :isApp="isApp" v-if="loginSuccess"></Newuserpop>
+    <Getapp ref='getapp' v-if="!isApp"></Getapp>
   </div>
 </template>
 
@@ -48,6 +37,7 @@
   import Rule from '../../../components/rule.vue';
   import Loginpop from '../../../components/loginpop.vue';
   import Newuserpop from '../../../components/newuserpop.vue';
+  import Getapp from '../../../components/getapp.vue';
   
   import {
     mapActions,
@@ -58,31 +48,39 @@
     components: {
       Rule,
       Loginpop,
-      Newuserpop
+      Newuserpop,
+      Getapp
     },
-    created() {},
+    created() {
+      this.checkIsApp();
+    },
     data() {
       return {
         phone: "",
         code: "",
-        countDown: "发送验证码",
-        isApp:"",
-        showIndexRule: true
+        isApp: "",
+        showIndexRule: true,
+        channelCode: ""
       }
     },
     computed: {
       ...mapState("index", {
         'loginSuccess': state => state.loginSuccess,
         'chanceBoxShow': state => state.chanceBoxShow,
-        'loginBoxShow': state => state.loginBoxShow
+        'loginBoxShow': state => state.loginBoxShow,
+        'sendCode': state => state.sendCode
   
       })
     },
     methods: {
       ...mapActions('index', ['getCode', 'login']),
-      checkIsApp(){
-        console.log(this.$store.IS_APP)
-        this.isApp=this.$store.IS_APP;
+      checkIsApp() {
+        console.log("isApp", this.$store.state.IS_APP)
+        console.log("params",this.$route.params)
+        if (this.$route.params.channelCode) {
+          this.$store.state.CHANNEL_CODE = this.$route.params.channelCode;
+        }
+        this.isApp = this.$store.state.IS_APP;
       }
     }
   
@@ -194,11 +192,11 @@
             line-height: 80pr;
             margin-top: 30pr;
             >input {
-              width: 56%;
+              width: 60%;
             }
             .code {
               font-size: 28pr;
-              padding: 20pr 12pr 20pr 14pr;
+              padding: 20pr 12pr 20pr 18pr;
               color: #fff;
               border-left: 1px solid #25B1EC;
             }
@@ -218,43 +216,6 @@
             background: url("../../../assets/images/login_text.png") no-repeat center;
             background-size: cover;
           }
-        }
-      }
-      .download {
-        position: fixed;
-        top: 80%;
-        width: 100%;
-        height: 126pr;
-        background: url('../../../assets/images/down_bg.png') no-repeat center;
-        background-size: cover;
-        .logo {
-          width: 84pr;
-          height: 84pr;
-          background: url('../../../assets/images/logo.png') no-repeat center;
-          background-size: cover;
-          margin: 18pr 22pr 24pr 48pr;
-        }
-        .d-text {
-          color: #fff;
-          >span:first-child {
-            font-size: 28pr;
-            height: 40pr;
-            line-height: 40pr;
-            margin-top: 26pr;
-          }
-          >span:last-child {
-            font-size: 20pr;
-            height: 28pr;
-            line-height: 28pr;
-          }
-        }
-        .download-btn {
-          margin: 26pr 40pr 31pr auto;
-          padding: 15pr 32pr;
-          font-size: 28pr;
-          color: rgba(75, 73, 69, 1);
-          background: rgba(253, 219, 0, 1);
-          border-radius: 12pr;
         }
       }
     }

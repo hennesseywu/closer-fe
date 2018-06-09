@@ -10,7 +10,8 @@ export default new Vuex.Store({
     state: {
         UA: "",
         IS_APP: false,
-        IS_NEW_USER: false
+        IS_NEW_USER: false,
+        CHANNEL_CODE: "",
     },
     modules: {
         index,

@@ -17,21 +17,31 @@
         </div>
       </div>
     </div>
+        <Getapp ref='getapp' v-if="!isApp"></Getapp>
   </div>
 </template>
 
 <script>
+
   import {
     mapState,
     mapActions
   } from 'vuex'
+  import Getapp from '../../../components/getapp.vue';
+
+
   export default {
+    name:"share",
+    components: {
+        Getapp
+    },
     data() {
       return {
         desc:  "",
         isSelf: false,
         amount: 0,
-        buttonDesc: "去瓜分600万"
+        buttonDesc: "去瓜分600万",
+        isApp:false,
       }
     },
     computed: {
@@ -45,10 +55,12 @@
       goHome() {
         console.log("go")
         this.$router.push({
-          path: '/'
+          name: 'worldcupIndex'
         })
       },
      async checkUser() {
+        this.isApp = this.$store.state.IS_APP;
+        console.log("share",this.$route.params)
         if (this.$route.params.amount) {
             this.amount = this.$route.params.amount;
           }

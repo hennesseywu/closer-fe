@@ -43,5 +43,5 @@ export async function getGuessResult(payload) {
  * 
  */
 export async function checkRecieveChance(channelCode) {
-    return await axios.post(api.activity.receive_chance, { channelCode: channelCode })
+    return await axios.post(api.activity.receive_chance, channelCode)
 }
