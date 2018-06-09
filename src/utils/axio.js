@@ -7,22 +7,19 @@ import Store from '../store'
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
-        let reqUrl = feConfig.serverDevUrl + config.url
-            // let reqUrl = feConfig.devserverUrl + config.url
-            // if (/sandbox.tiejin/.test(config.url)) {
-            //     reqUrl = feConfig.serverDevUrl;
-            // } else if (/tiejin/.test(config.url)) {
-            //     reqUrl = feConfig.serverUrl;
-        console.log("reqUrl", reqUrl);
+        let reqUrl = feConfig.serverDevUrl + config.url;
+        // let reqUrl = feConfig.devserverUrl + config.url
+        // if (/sandbox.tiejin/.test(config.url)) {
+        //     reqUrl = feConfig.serverDevUrl;
+        // } else if (/tiejin/.test(config.url)) {
+        //     reqUrl = feConfig.serverUrl;
         // }
         config.url = reqUrl;
         config.headers['Closer-Agent'] = 'Closer-H5';
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
-
-        let ua = Store.state.UA;
-        cconsole.log("axio ua", ua.indexOf("closer-android"));
+        let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
         if (ua.indexOf("closer-android") != -1) {
             console.log("android", typeof window.bridge != "undefined")
                 //安卓检查登录状态
@@ -33,7 +30,7 @@ axios.interceptors.request.use(
                 config.headers.Authorization = token;
                 return config;
             }
-        } else if (ua.indexOf("closer-ios") > 0) {
+        } else if (ua.indexOf("closer-ios") != -1) {
             console.log("ios", typeof window.bridge != "undefined")
             if (window.WebViewJavascriptBridge) {
                 //ios获取用户token 判断登录
@@ -53,15 +50,10 @@ axios.interceptors.request.use(
                 });
             }
         } else {
-            console.log("header", config)
+            console.log("axio req header", config)
             Indicator.open()
             return config;
         }
-
-
-
-
-
 
     },
     err => {
