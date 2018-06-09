@@ -20,7 +20,6 @@ axios.interceptors.request.use(
         }
 
         let ua = Store.state.UA;
-        console.log("ua: ", ua)
         if (ua.indexOf("closer-andriod") > 0) {
             //安卓检查登录状态
             if (typeof window.bridge != "undefined") {
