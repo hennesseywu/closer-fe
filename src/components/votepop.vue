@@ -4,12 +4,14 @@
       <div class="match">
         <img :src="voteInfo.logo" alt="">
       </div>
-      <!-- <div class="match match2">
-        <img src="" alt="">
-      </div> -->
+      <div class="match match2" v-if="voteInfo.gustTeamLogo&&voteInfo.gustTeamLogo!=''">
+        <img :src="voteInfo.gustTeamLogo" alt="">
+      </div>
     </div>
     <div class="pop-body box box-tb box-center-center">
-      <div class="vote-resule">{{voteResult}}</div>
+      <div class="vote-resule" v-if="voteInfo.matchResult=='equal'">投注平局</div>
+            
+            <div class="vote-resule" v-else>投注胜利</div>
       <div class="rest-times">还剩{{totalChance}}次机会</div>
       <div class="vote-box box box-lr box-center-center">
         <span>使用</span>
@@ -20,7 +22,7 @@
         </div>
         <span>次机会</span> 
       </div>
-      <div class="add-vote"><span v-if="showText">机会不足</span> 增加机会 查看攻略</div>
+      <div class="add-vote"><span v-if="showText">{{textTip}}</span> 增加机会 查看攻略</div>
     </div>
     <div class="pop-footer box box-lr box-center-center">
       <div class="other-btn" @click="close">再想想</div>
@@ -59,15 +61,15 @@ export default {
     return {
       showText: false,
       visible: false,
-      chance: 0,
-      inputChance: 0
+      chance: 1,
+      inputChance: 1,
+      textTip:"机会不足"
     };
   },
   created() {
     
   },
   methods: {
-    
     open() {
       this.visible = true;
     },
@@ -78,6 +80,7 @@ export default {
       this.showText = false
       if(this.inputChance >=this.totalChance || this.chance >= this.totalChance) {
         this.showText = true
+        this.textTip="机会不足"
       } else {
         this.showText = false
       }
@@ -88,7 +91,7 @@ export default {
       this.checkChance()
     },
     add() {
-      this.checkChance()
+      this.checkChance();
       if(this.chance >=this.totalChance) {
           this.chance=this.totalChance
       }else{
@@ -96,7 +99,7 @@ export default {
       }
     },
     reduce() {
-      if(this.chance > 0) {
+      if(this.chance > 1) {
         this.chance--
       } 
       this.checkChance()
@@ -104,6 +107,17 @@ export default {
     confirm(voteInfo) {
       // this.checkChance()
       if(this.showText) return;
+      if(!(/^[1-9]+[0-9]*]*$/.test(this.chance))){
+        this.textTip="请输入正整数";
+        this.showText=true; 
+        return;
+      }
+
+      if(this.chance==0){
+        this.textTip="投注次数不能为0";
+        this.showText=true; 
+        return;
+        }
       delete voteInfo['logo']
       voteInfo['guessTimes']=this.chance;
       console.log("confirm",voteInfo)

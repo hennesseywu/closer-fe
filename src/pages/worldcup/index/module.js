@@ -10,15 +10,16 @@ export default {
         chanceBoxShow: true,
         loginBoxShow: false,
         isApp: false,
-        sendCode: "发送验证码"
+        sendCode: "发送验证码",
+        countDown: 59
     },
     mutations: {
         updateCountDown(state) {
-            state.sendCode = 59;
+            state.countDown = 59;
             let countDown = setInterval(() => {
-                state.sendCode--;
-                state.sendCode += "s"
-                if (state.sendCode == 0) {
+                state.countDown--;
+                state.sendCode = state.countDown + " s"
+                if (state.countDown == 0) {
                     clearInterval(countDown);
                     state.sendCode = "再次发送";
                 }

@@ -10,7 +10,7 @@
         <div class="right">增加机会</div>
       </div>
       <div class="swipe">
-        <mt-swipe ref="swipe" :continuous="true" :auto="0" :showIndicators="true" v-if="matchList">
+        <mt-swipe ref="swipe" :continuous="true" :auto="0" :showIndicators="false" v-if="matchList">
           <mt-swipe-item v-for="(item, index) in matchList" :key="index">
             <div class="choose-box">
               <div class="time-wrapper box box-lr">
@@ -50,7 +50,7 @@
                   <div class="winbtn">胜利</div>
                   <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</div>
                 </div>
-                <div class="commonsize tie"  :class="grayBtn ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'equal',item.userGuess)">
+                <div class="commonsize tie"  :class="!grayBtn ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'equal',item.userGuess,item.gustTeam.logo)">
                  <div class="winbtn">平局</div>
                   <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='equal'">X {{item.userGuess.guessTimes}}</span>
                   </div>
@@ -154,24 +154,28 @@
         this.$refs.swipe.prev();
       }
       ,
-      openVotepop(logo, matchId, winTeamId, matchResult,userGuess) {
+      openVotepop(logo, matchId, winTeamId, matchResult,userGuess,gustTeamLogo) {
         console.log(winTeamId,"--",matchResult,"---",userGuess)
         console.log(this.userGuessStatistic.totalChance);
         if(this.userGuessStatistic&&this.userGuessStatistic.totalChance==0){
-          Toast("没有机会了");
+          console.log("没有机会了");
           return;
         }
         // console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
         if((userGuess&&userGuess.matchResult=="win"&&(matchResult!="win"||userGuess.winTeamId!=winTeamId))||(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal")){
-            console.log("can not guess")
+          Toast("只能投注已选队伍");
             return;
         }
-        this.setVoteInfo({
-          logo,
-          matchId,
-          winTeamId,
-          matchResult
-        })
+        let guessInfo={
+          logo:logo,
+          matchId:matchId,
+          winTeamId:winTeamId,
+          matchResult:matchResult
+        }
+        if(gustTeamLogo){
+              guessInfo['gustTeamLogo']=gustTeamLogo
+        }
+        this.setVoteInfo(guessInfo)
         this.$refs.votepop.open()
       },
       getMonth(date) {

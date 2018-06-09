@@ -14,7 +14,8 @@ export default {
             logo: '',
             matchId: '',
             winTeamId: '',
-            mathResult: ''
+            mathResult: '',
+            gustTeamLogo: false
         }
     },
     mutations: {
