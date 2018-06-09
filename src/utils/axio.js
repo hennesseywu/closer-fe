@@ -7,13 +7,13 @@ import Store from '../store'
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
-        let reqUrl = feConfig.serverDevUrl + config.url;
-        config.log(reqUrl)
-        if (/sandbox.tiejin/.test(config.url)) {
-            reqUrl = feConfig.serverDevUr + config.url;
-        } else if (/tiejin/.test(config.url)) {
-            reqUrl = feConfig.serverUrl + config.url;
-        }
+        let reqUrl = feConfig.serverDevUrl + config.url
+            // let reqUrl = feConfig.serverUrl + config.url
+            // if (/sandbox.tiejin/.test(config.url)) {
+            //     reqUrl = feConfig.serverDevUrl;
+            // } else if (/tiejin/.test(config.url)) {
+            //     reqUrl = feConfig.serverUrl;
+            // }
         config.headers['Closer-Agent'] = 'Closer-H5';
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
