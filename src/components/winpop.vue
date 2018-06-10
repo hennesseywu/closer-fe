@@ -140,7 +140,7 @@
   
   .pop-body {
     text-align: center;
-    margin-top: 60pr;
+    margin-top: 40pr;
     // height: 1038pr;
     .title {
       // height: 56pr;
@@ -149,19 +149,19 @@
         font-size: 40pr;
       }
       .win-text2 {
-        margin-top: 10pr;
+        // margin-top: 5pr;
         >span {
           color: rgb(214, 82, 49);
         }
       }
     }
     .title-desc {
-      margin-top: 10pr;
+      // margin-top: 5pr;
       height: 38pr;
       color: #b1b3bb;
     }
     .content {
-      margin-top: 48pr;
+      margin-top: 38pr;
       text-align: center;
       .result-img {
         width: 348pr;
@@ -209,21 +209,12 @@
         margin-top: 11pr;
         color: #43475b;
         font-size: 24pr;
-        height: 180pr;
+        height: 80pr;
         overflow: scroll;
         overflow-x: hidden;
         overflow-y: scroll;
         .detail-box {
-          // margin-top: 20pr;
-          // width: 100%;
-          // margin-left: 90pr;
-          margin: 20pr 10pr;
-          .detail {
-            // display: block;
-            // float: left;
-            // margin-top: 20pr;
-            // margin-left: 94pr;
-          }
+          margin: 10pr;
           .guess {
             margin-left: 120pr;
           }
@@ -231,7 +222,7 @@
       }
     }
     .bottom {
-      margin-top: 62pr;
+      margin-top: 42pr;
       .wait {
         padding-top: 18pr;
         color: #8e8f94;
@@ -254,7 +245,7 @@
       color: #B1B3BB;
       font-size: 24pr;
       line-height: 34pr;
-      margin-top: 40pr;
+      margin-top: 20pr;
       text-align: center;
     }
   }
