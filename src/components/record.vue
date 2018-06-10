@@ -2,20 +2,22 @@
   <div class="record-box" v-if="showRecord">
     <div class="record-list box box-lr" v-if="userGuessList.length > 0" v-for="(item, index) in userGuessList" :key="index">
       <div class="time">{{formataDate(new Date(item.startTime))}}</div>
-      <div class="coountry" v-if="item.winTeamId == item.homeTeamId">{{item.homeTeam.teamName}}(W) VS {{item.gustTeam.teamName}}</div>
-      <div class="coountry" v-else-if="item.winTeamId == item.gustTeamId">{{item.homeTeam.teamName}} VS {{item.gustTeam.teamName}}(W)</div>
+      <div class="coountry" v-if="item.userGuess.guessResult && item.winTeamId == item.homeTeamId">{{item.homeTeam.teamName}}(W) VS {{item.gustTeam.teamName}}</div>
+      <div class="coountry" v-else-if="item.userGuess.guessResult && item.winTeamId == item.gustTeamId">{{item.homeTeam.teamName}} VS {{item.gustTeam.teamName}}(W)</div>
       <div class="coountry" v-else>{{item.homeTeam.teamName}} VS {{item.gustTeam.teamName}} </div>
       <div class="money" v-if="item.userGuess.guessResult">获得{{item.userGuess.awardAmt}}元</div>
       <div class="correct-times" v-if="item.userGuess.guessResult">{{item.userGuess.guessResult === 'bingo' ? '正确' : (item.userGuess.guessResult === 'fail' ? '失败' : '待开奖')}}X{{item.userGuess.guessTimes}}</div> 
       <div class="correct-times" v-else>待开奖</div> 
     </div>
-    <div class="btn-goapp" v-if="userGuessList.length > 0">去APP提现</div>
+    <div class="btn-goapp" v-if="userGuessList.length > 0" @click="goApp">去APP提现</div>
+    <div class="tips" v-if="showTips">进入【我的钱包】-【奖励金】中领取</div>
     <div class="no-record" v-if="userGuessList.length == 0">
       您还没有投注过哦~快去参与拿大奖吧
     </div>
   </div>
 </template>
 <script>
+import utils from '../utils/utils'
 export default {
   name: 'records',
   props: {
@@ -30,6 +32,12 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      isApp: false,
+      showTips: false
+    }
+  },
   mounted() {
     console.log(this.userGuessList.length)
   },
@@ -37,13 +45,21 @@ export default {
     formataDate(date) {
       if (!date) return
       return (date.getMonth() + 1) + '月' + date.getDate() + '日'
+    },
+    goApp() {
+      this.isApp = this.$store.state.IS_APP;
+      if(this.isApp) {
+        utils.downloadApp()
+      } else {
+        this.showTips = true
+      }
     }
   }
 };
 </script>
 <style lang="less" scoped>
 .record-box {
-  margin: 0 16pr 60pr 16pr;
+  margin: 0 16pr 150pr 16pr;
   padding:30pr;
   font-size: 24pr;
   line-height: 34pr;
@@ -75,6 +91,13 @@ export default {
     color: #4B4945;
     background: #FDDB00;
     
+  }
+  .tips {
+    text-align: center;
+    margin-top: 30pr;
+    font-size: 24pr;
+    color: #B1B3BB;
+    padding-bottom: 20pr;
   }
   .no-record {
     margin: 30pr auto;

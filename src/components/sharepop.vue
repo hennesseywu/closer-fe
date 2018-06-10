@@ -10,7 +10,7 @@
       <div class="pop-text">截图分享好友吧，一起瓜分<span>600</span>万</div>
     </div>
     <div class="pop-footer">
-      <div class="confirm-btn" v-on:click="redirectTo()">确认</div>
+      <div class="confirm-btn" @click="close">确认</div>
       <div class="tips">长按识别二维码就可以参加活动</div>
     </div>
   </mt-popup>
@@ -54,7 +54,7 @@ export default {
       },
       close() {
         this.visible = false;
-      }
+      },
     }
   };
 </script>
