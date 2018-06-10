@@ -44,22 +44,22 @@ export default {
                         }
                     }
                 } else if (ua.indexOf("closer-ios") > -1) {
-                    console.log("closer-ios", window.JsBridge);
-                    if (window.WebViewJavascriptBridge) {
-                        setupWebViewJavascriptBridge(function(bridge) {
-                            console.log("ios bridge", bridge)
-                            if (bridge) {
-                                //ios获取用户token 判断登录
-                                bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                                    console.log("ios token", token)
-                                    if (token) {
-                                        Cookies.set("GroukAuth", token, { expires: 7 });
-                                        Router.push({ name: "worldcupActivity" });
-                                    }
-                                });
-                            }
-                        })
-                    }
+                    console.log("closer-ios", window.WebViewJavascriptBridge);
+                    setupWebViewJavascriptBridge(function(bridge) {
+                        console.log("ios bridge", bridge)
+                        if (bridge) {
+                            //ios获取用户token 判断登录
+                            bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                                console.log("ios token", token)
+                                if (token) {
+                                    Cookies.set("GroukAuth", token, { expires: 7 });
+                                    Router.push({ name: "worldcupActivity" });
+                                }
+                            });
+                        } else {
+                            this.chanceBoxShow = true;
+                        }
+                    })
                 } else {
                     this.chanceBoxShow = true;
                 }
