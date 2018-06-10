@@ -46,6 +46,7 @@
                 </div>
               </div>
               <div class="result box box-lr">
+
                 <div class="commonsize winner1" :class="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId!=item.userGuess.winTeamId ? 'gray' : 'yellowbg'"  @click="openVotepop(item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess)">
                   <div class="winbtn">胜利</div>
                   <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</div>
@@ -154,7 +155,7 @@
         this.$refs.swipe.prev();
       }
       ,
-      openVotepop(logo, matchId, winTeamId, matchResult,userGuess,gustTeamLogo) {
+      openVotepop(teamName,logo, matchId, winTeamId, matchResult,userGuess,gustTeamLogo) {
         console.log(winTeamId,"--",matchResult,"---",userGuess)
         console.log(this.userGuessStatistic.totalChance);
         if(this.userGuessStatistic&&this.userGuessStatistic.totalChance==0){
@@ -171,6 +172,9 @@
           matchId:matchId,
           winTeamId:winTeamId,
           matchResult:matchResult
+        }
+         if(teamName){
+              guessInfo['teamName']=teamName
         }
         if(gustTeamLogo){
               guessInfo['gustTeamLogo']=gustTeamLogo
