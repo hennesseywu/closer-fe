@@ -1,18 +1,17 @@
 <template>
-  <mt-popup v-model="visible" class="nochance-pop" :closeOnClickModal="closeOnClickModal">
+  <mt-popup v-model="visible" class="share-pop" :closeOnClickModal="closeOnClickModal">
     <div class="close-icon" @click="close()"></div>
     <div class="pop-header">
       <div class="winner">
-        <div class="win-text">已经没有机会了哟~</div>
+        <div class="win-text">分享好友~</div>
       </div>
     </div>
     <div class="pop-body box box-tb box-center-center">
-      <div class="loser-img"></div>
-      <div class="pop-text">“在贴近app的文章里、酒吧里、<br> 广告牌里寻找<span>机会</span>吧</div>
+      <div class="pop-text">截图分享好友吧，一起瓜分<span>600</span>万</div>
     </div>
     <div class="pop-footer">
       <div class="confirm-btn" v-on:click="redirectTo()">确认</div>
-      <div class="tips">增加机会 查看攻略</div>
+      <div class="tips">长按识别二维码就可以参加活动</div>
     </div>
   </mt-popup>
 </template>
@@ -61,11 +60,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .nochance-pop {
+  .share-pop {
     width: 590pr;
     border-radius: 10pr;
     background: #fff;
     text-align: center;
+    color: #4b4945;
     padding-bottom: 40pr;
     .close-icon {
       position: absolute;
@@ -92,28 +92,20 @@ export default {
     }
     .pop-header {
       margin-top: 56pr;
-      font-size: 40pr;
+      font-size: 32pr;
       line-height: 44pr;
-      color: #43475B;
       .winner {
-        margin-top: 60pr;
+        margin-top: 62pr;
       }
     }
     .pop-body {
-      font-size: 24pr;
+      font-size: 28pr;
       line-height: 40pr;
-      color: #777C90;
-      .loser-img {
-        margin-top: 88pr;
-        width: 320pr;
-        height: 306pr;
-        background: url('../assets/images/new_loser.png') no-repeat center;
-        background-size: cover;
-      }
+      margin-top: 60pr;
       .pop-text {
-        margin-top: 50pr;
         > span {
-          color: #E7461F;
+          font-size: 60pr;
+          color: #E7C90D;
         }
       }
     }
@@ -123,12 +115,12 @@ export default {
       color: #4B4945;
       .confirm-btn {
         padding: 20pr 70pr;
-        margin: 30pr 160pr 20pr;
+        margin: 30pr 160pr 26pr;
         background: #FDDB00;
         border-radius: 50pr;
       }
       .tips {
-        color: #14306B;
+        color: #E7760D;
       }
     }
   }
