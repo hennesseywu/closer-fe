@@ -46,11 +46,8 @@
                 </div>
               </div>
               <div class="result box box-lr">
-<<<<<<< HEAD
-                <div class="commonsize yellowbg winner1"  @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess)">
-=======
+
                 <div class="commonsize winner1" :class="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId!=item.userGuess.winTeamId ? 'gray' : 'yellowbg'"  @click="openVotepop(item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess)">
->>>>>>> 3b6057d3387b091197c3beb72799baf8a56650e3
                   <div class="winbtn">胜利</div>
                   <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</div>
                 </div>
@@ -58,11 +55,7 @@
                  <div class="winbtn">平局</div>
                   <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='equal'">X {{item.userGuess.guessTimes}}</span>
                   </div>
-<<<<<<< HEAD
-                <div class="commonsize yellowbg winner2"   @click="openVotepop(item.gustTeam.teamName,item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win',item.userGuess)">
-=======
                 <div class="commonsize yellowbg winner2" :class="item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId!=item.userGuess.winTeamId ? 'gray' : 'yellowbg'"  @click="openVotepop(item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win',item.userGuess)">
->>>>>>> 3b6057d3387b091197c3beb72799baf8a56650e3
                   <div class="winbtn">胜利</div>
                   <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</span>
                 </div>

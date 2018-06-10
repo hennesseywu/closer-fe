@@ -53,6 +53,7 @@
     },
     created() {
       this.checkIsApp();
+      this.checkLogin();
     },
     data() {
       return {
@@ -72,7 +73,7 @@
       })
     },
     methods: {
-      ...mapActions('index', ['getCode', 'login','openLoginBox']),
+      ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin']),
       checkIsApp() {
         console.log("isApp", this.$store.state.IS_APP)
         console.log("params",this.$route.params)
