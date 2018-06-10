@@ -175,7 +175,8 @@
       }
       .login-box {
         .login-info {
-          margin: 70pr 84pr 12pr 84pr;
+          width: 70%;
+          margin: 70pr auto 12pr;
           input {
             margin-left: 24pr;
             background: #0F4C92;
@@ -194,7 +195,6 @@
           }
           .phone-box {
             width: 100%;
-            height: 80pr;
             line-height: 80pr;
             >input {
               width: 90%;
@@ -202,17 +202,22 @@
           }
           .code-box {
             width: 100%;
-            height: 80pr;
             line-height: 80pr;
             margin-top: 30pr;
+            
             >input {
               width: 60%;
             }
             .code {
+              height: 78pr;
+              display: inline-block;
+              width: 160pr;
+              text-align: center;
               font-size: 28pr;
-              padding: 20pr 12pr 20pr 18pr;
               color: #fff;
               border-left: 1px solid #25B1EC;
+              justify-content: center;
+
             }
           }
           .get-btn {

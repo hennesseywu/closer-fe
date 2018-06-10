@@ -117,15 +117,12 @@ export default {
         this.showText=true; 
         return;
         }
-      delete voteInfo['logo']
       voteInfo['guessTimes']=this.chance;
       console.log("confirm",voteInfo)
       this.$emit('guessMatch',voteInfo)
       setTimeout(()=>{
-        this.close();
+        this.close()
       },500)
-
-      // this.$emit('input', event)
     }
   }
 };
