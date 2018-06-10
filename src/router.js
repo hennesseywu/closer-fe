@@ -13,25 +13,6 @@ const Share = () =>
 
 Vue.use(Router)
 
-function setupWebViewJavascriptBridge(callback) {
-    // console.log(ca llback)
-    console.log('setupWebViewJavascriptBridge')
-    if (window.WebViewJavascriptBridge) {
-        return callback(WebViewJavascriptBridge);
-    }
-    if (window.WVJBCallbacks) {
-        return window.WVJBCallbacks.push(callback);
-    }
-    window.WVJBCallbacks = [callback];
-    var WVJBIframe = document.createElement('iframe');
-    WVJBIframe.style.display = 'none';
-    WVJBIframe.src = 'https://__bridge_loaded__';
-    document.documentElement.appendChild(WVJBIframe);
-    setTimeout(function() {
-        document.documentElement.removeChild(WVJBIframe)
-    }, 0)
-}
-
 const router = new Router({
 
     mode: 'history',
@@ -87,21 +68,22 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                 }
             }
         } else if (ua.indexOf("closer-ios") > -1) {
-            console.log("router closer-ios xx");
-            setupWebViewJavascriptBridge(function(bridge) {
-                console.log("ios bridge", bridge)
-                if (bridge) {
-                    //ios获取用户token 判断登录
-                    bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                        console.log("ios token", token)
-                        if (token) {
-                            Cookies.set("GroukAuth", token, { expires: 7 });
-                            router.push({ name: "worldcupActivity" });
-                        }
-                    });
-                }
-            })
-
+            console.log("router closer-ios", window.WebViewJavascriptBridge);
+            if (window.WebViewJavascriptBridge) {
+                setupWebViewJavascriptBridge(function(bridge) {
+                    console.log("ios bridge", bridge)
+                    if (bridge) {
+                        //ios获取用户token 判断登录
+                        bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                            console.log("ios token", token)
+                            if (token) {
+                                Cookies.set("GroukAuth", token, { expires: 7 });
+                                router.push({ name: "worldcupActivity" });
+                            }
+                        });
+                    }
+                })
+            }
         } else {
             if (Cookies.get("GroukAuth")) {
                 console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
