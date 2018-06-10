@@ -64,7 +64,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                 console.log("android", token)
                 if (token) {
                     Cookies.set("GroukAuth", token, { expires: 7 });
-                    Router.push({ name: "worldcupActivity" });
+                    router.push({ name: "worldcupActivity" });
                 }
             }
         } else if (ua.indexOf("closer-ios") > -1) {
@@ -78,7 +78,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                             console.log("ios token", token)
                             if (token) {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
-                                Router.push({ name: "worldcupActivity" });
+                                router.push({ name: "worldcupActivity" });
                             }
                         });
                     }
