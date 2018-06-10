@@ -7,7 +7,7 @@
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
           <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>人参与</div>
         </div>
-        <div class="right">增加机会</div>
+        <div class="right" @click="addChance">增加机会</div>
       </div>
       <div class="swipe">
         <mt-swipe ref="swipe" :continuous="true" :auto="0" :showIndicators="false" v-if="matchList">
@@ -89,6 +89,7 @@
     mapState,
     mapActions
   } from 'vuex'
+  import Utils from '../../../utils/utils'
   import Rule from '../../../components/rule.vue'
   import Record from '../../../components/record.vue'
   import Votepop from '../../../components/votepop.vue'
@@ -96,6 +97,7 @@
   import Winpop from '../../../components/winpop.vue'
   import Getapp from '../../../components/getapp.vue'
   import Nochancepop from '../../../components/nochancepop.vue'
+import utils from '../../../utils/utils';
   
   
   export default {
@@ -232,6 +234,14 @@
           }
         }
         this.$router.push({ name: "worldcupShare" ,params:{userId:userId,amount:amount}});
+      },
+      addChance() {
+        this.isApp = this.$store.state.IS_APP;
+        if(this.isApp){
+          location.href="https://h5.tiejin.cn/community/9j9m4gy8sM";
+        }else {
+          location.href="closer://community/9j9m4gy8sM";
+        }
       }
     }
   }
