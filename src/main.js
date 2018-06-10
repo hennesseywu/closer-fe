@@ -16,6 +16,7 @@ var vconsole = new Vconsole()
 
 window.axios = axio;
 window.Cookies = Cookies;
+
 window.setupWebViewJavascriptBridge = function(callback) {
         // console.log(ca llback)
         if (window.WebViewJavascriptBridge) {

@@ -48,7 +48,7 @@ export default {
                         }
                     }
                 } else if (ua.indexOf("closer-ios") > -1) {
-                    console.log("closer-ios", window.JsBridge);
+                    console.log("closer-ios", window.WebViewJavascriptBridge);
                     if (window.WebViewJavascriptBridge) {
                         setupWebViewJavascriptBridge(function(bridge) {
                             console.log("ios bridge", bridge)
