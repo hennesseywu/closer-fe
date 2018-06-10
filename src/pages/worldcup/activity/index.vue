@@ -75,6 +75,7 @@
     <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList"></Record>
     <Newuserpop ref="newuserpop" v-if="recieveChanceInfo.presentAvailable" :newUser="recieveChanceInfo.status" :isApp="isApp" :count="recieveChanceInfo.count"></Newuserpop>
     <Winpop ref="winpop" v-if="userGuessResult.guessResult" @jumpTo="redirectTo" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList" :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
+    <Nochancepop ref="nochancepop"></Nochancepop>
   </div>
 </template>
 
@@ -94,7 +95,7 @@
   import Newuserpop from '../../../components/newuserpop.vue'
   import Winpop from '../../../components/winpop.vue'
   import Getapp from '../../../components/getapp.vue'
-
+  import Nochancepop from '../../../components/nochancepop.vue'
   
   
   export default {
@@ -107,7 +108,8 @@
       Votepop,
       Newuserpop,
       Winpop,
-      Getapp
+      Getapp,
+      Nochancepop
     },
     data() {
       return {
@@ -135,6 +137,11 @@
       this.checkGuessResult();
       this.checkRecieveChance( {channelCode:this.$store.state.CHANNEL_CODE});
     },
+    mounted() {
+      if(this.userGuessStatistic.totalChance == 0) {
+        this.$refs.nochancepop.open()
+      }
+    },
     methods: {
       ...mapActions('activity', [
         'getMatchList',
@@ -153,11 +160,14 @@
       },
       arrowLeft(){
         this.$refs.swipe.prev();
-      }
-      ,
+      },
       openVotepop(teamName,logo, matchId, winTeamId, matchResult,userGuess,gustTeamLogo) {
         console.log(winTeamId,"--",matchResult,"---",userGuess)
         console.log(this.userGuessStatistic.totalChance);
+        if(this.userGuessStatistic.totalChance == 0) {
+          this.$refs.nochancepop.open()
+          return
+        }
         if(this.userGuessStatistic&&this.userGuessStatistic.totalChance==0){
           console.log("没有机会了");
           return;

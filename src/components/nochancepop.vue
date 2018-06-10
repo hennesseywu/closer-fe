@@ -12,7 +12,7 @@
     </div>
     <div class="pop-footer">
       <div class="confirm-btn" v-on:click="redirectTo()">确认</div>
-      <div class="tips">增加机会 查看攻略</div>
+      <div class="tips" @click="goTips">增加机会 查看攻略</div>
     </div>
   </mt-popup>
 </template>
@@ -55,6 +55,9 @@ export default {
       },
       close() {
         this.visible = false;
+      },
+      goTips() {
+        window.location.href = 'http://baidu.com/'
       }
     }
   };
