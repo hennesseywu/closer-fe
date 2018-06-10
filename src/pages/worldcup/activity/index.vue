@@ -188,11 +188,9 @@
       },
       getHours(date) {
         if (!date) return
+        let hours = date.getHours()
         let minutes=date.getMinutes();
-        if(minutes==0){
-            minutes+="0"
-        }
-        return date.getHours() + ':' + minutes
+        return (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes)
       },
       showRules() {
         this.showRule = true
