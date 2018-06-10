@@ -9,7 +9,6 @@ import router from './router'
 import store from './store'
 import axio from './utils/axio'
 import Cookies from 'js-cookie';
-import JsBridge from './utils/jsBridge'
 
 // vconsole 调试
 import Vconsole from 'vconsole'
@@ -17,8 +16,24 @@ var vconsole = new Vconsole()
 
 window.axios = axio;
 window.Cookies = Cookies;
-window.JsBridge = JsBridge;
-// Vue.use(VueAxios, axios);
+window.setupWebViewJavascriptBridge = function(callback) {
+        // console.log(ca llback)
+        if (window.WebViewJavascriptBridge) {
+            return callback(WebViewJavascriptBridge);
+        }
+        if (window.WVJBCallbacks) {
+            return window.WVJBCallbacks.push(callback);
+        }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement('iframe');
+        WVJBIframe.style.display = 'none';
+        WVJBIframe.src = 'https://__bridge_loaded__';
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function() {
+            document.documentElement.removeChild(WVJBIframe)
+        }, 0)
+    }
+    // Vue.use(VueAxios, axios);
 
 
 Vue.config.productionTip = false

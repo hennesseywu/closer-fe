@@ -49,7 +49,7 @@ export default {
                 } else if (ua.indexOf("closer-ios") > -1) {
                     console.log("closer-ios", window.JsBridge);
                     if (window.WebViewJavascriptBridge) {
-                        window.JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                        setupWebViewJavascriptBridge(function(bridge) {
                             console.log("ios bridge", bridge)
                             if (bridge) {
                                 //ios获取用户token 判断登录
@@ -60,7 +60,7 @@ export default {
                                         Router.push({ name: "worldcupActivity" });
                                     } else {
                                         console.log("ios jumpLogin")
-                                        window.JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                                        setupWebViewJavascriptBridge(function(bridge) {
                                             bridge.callHandler("jumpLogin", null);
                                         });
                                     }
