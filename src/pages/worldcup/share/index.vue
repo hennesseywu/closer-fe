@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="wrapper">
-      <div class="invite-img"></div>
+      <div class="invite-img" @click="share"></div>
       <div class="share-box">
         <div class="title">
           <span>{{desc}}</span>
@@ -18,6 +18,7 @@
       </div>
     </div>
         <Getapp ref='getapp' v-if="!isApp"></Getapp>
+        <Sharepop ref="sharepop"></Sharepop>
   </div>
 </template>
 
@@ -28,12 +29,14 @@
     mapActions
   } from 'vuex'
   import Getapp from '../../../components/getapp.vue';
+  import Sharepop from '../../../components/sharepop.vue';
 
 
   export default {
     name:"share",
     components: {
-        Getapp
+        Getapp,
+        Sharepop
     },
     data() {
       return {
@@ -80,6 +83,10 @@
           }
         }
      }
+      },
+      share() {
+        console.log('vadfadfadfadfadfadf')
+        this.$refs.sharepop.open()
       }
     }
   }
@@ -90,6 +97,11 @@
     width: 100%;
     height: 100%;
     .wrapper {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       background: url('../../../assets/images/bg.png') no-repeat center center;

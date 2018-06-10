@@ -20,7 +20,7 @@
       <!-- <slot></slot> -->
     </div>
     <div class="pop-footer" v-if="!isApp">
-      <div class="confirm-btn" v-on:click="redirectTo()">下载APP 机会翻倍</div>
+      <div class="confirm-btn" @click="download()">下载APP 机会翻倍</div>
     </div>
   </mt-popup>
 </template>
@@ -30,6 +30,7 @@
   import {
     Popup
   } from "mint-ui";
+  import utils from '../utils/utils'
   Vue.component(Popup.name, Popup);
   
   export default {
@@ -63,6 +64,9 @@
       },
       close() {
         this.visible = false;
+      },
+      download() {
+        utils.downloadApp()
       }
     }
   };
