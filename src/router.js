@@ -15,6 +15,7 @@ Vue.use(Router)
 
 function setupWebViewJavascriptBridge(callback) {
     // console.log(ca llback)
+    console.log('setupWebViewJavascriptBridge')
     if (window.WebViewJavascriptBridge) {
         return callback(WebViewJavascriptBridge);
     }
