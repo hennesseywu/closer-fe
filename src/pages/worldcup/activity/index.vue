@@ -296,7 +296,7 @@
             background-size: cover;
           }
           .time {
-            margin: 0 99pr;
+            margin: 0 89pr;
             >span {
               font-size: 32pr;
               color: #F9DB02;
