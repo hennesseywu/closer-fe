@@ -47,7 +47,7 @@ export default {
                         }
                     }
                 } else if (ua.indexOf("closer-ios") != -1) {
-                    console.log("ios", typeof window.bridge != "undefined")
+                    console.log("ios", window.WebViewJavascriptBridge);
                     if (window.WebViewJavascriptBridge) {
                         //ios获取用户token 判断登录
                         bridge.callHandler("getUserToken", null, function(token, responseCallback) {
