@@ -11,7 +11,7 @@
       <div class="pop-text">“在贴近app的文章里、酒吧里、<br> 广告牌里寻找<span>机会</span>吧</div>
     </div>
     <div class="pop-footer">
-      <div class="confirm-btn" v-on:click="redirectTo()">确认</div>
+      <div class="confirm-btn" @click="close">确认</div>
       <div class="tips" @click="goTips">增加机会 查看攻略</div>
     </div>
   </mt-popup>
