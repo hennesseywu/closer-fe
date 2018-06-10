@@ -11,7 +11,7 @@ export default {
         loginBoxShow: true,
         isApp: false,
         sendCode: "发送验证码",
-        countDown: 59
+        countDown: 60
     },
     mutations: {
         updateCountDown(state) {
@@ -21,6 +21,7 @@ export default {
                 state.sendCode = state.countDown + " s"
                 if (state.countDown == 0) {
                     clearInterval(countDown);
+                    state.countDown = 60;
                     state.sendCode = "再次发送";
                 }
             }, 1000)
@@ -91,8 +92,10 @@ export default {
                 return;
             });
             if (codeRes.status && codeRes.status == 200) {
-                commit('updateCountDown');
-                Toast("验证码发送成功")
+                if (state.countDown == 60) {
+                    commit('updateCountDown');
+                    Toast("验证码发送成功")
+                }
             }
         },
         // 登录
