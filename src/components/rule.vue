@@ -42,7 +42,7 @@
           <span class="c-img"></span>
           <span class="right">5. 比赛第二日10：00，结算现金奖励。</span>
         </div>
-        <div class="item">
+        <div class="item last">
           <span class="c-img"></span>
           <span class="right">所有的竞猜活动，以公司制定的规则为准。公司拥有本活动的最终解释权</span>
         </div>
@@ -74,7 +74,7 @@ export default {
 </script>
 <style lang="less" scoped>
   .activity-rule {
-    margin: 0 16pr 60pr 16pr;
+    margin: 0 16pr 150pr 16pr;
     padding-top: 52pr;
   }
   .index-rule {
@@ -125,6 +125,9 @@ export default {
           margin-left: 60pr;
           margin-top: -30pr;
         }
+      }
+      .last {
+        padding-bottom: 50pr;
       }
     }
   }

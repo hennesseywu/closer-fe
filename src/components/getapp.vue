@@ -28,7 +28,7 @@ export default {
 <style lang="less" scoped>
 .download {
         position: fixed;
-        top: 80%;
+        top: 90.5%;
         width: 100%;
         height: 126pr;
         background: url('../assets/images/down_bg.png') no-repeat center;

@@ -59,7 +59,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .record-box {
-  margin: 0 16pr 60pr 16pr;
+  margin: 0 16pr 150pr 16pr;
   padding:30pr;
   font-size: 24pr;
   line-height: 34pr;
@@ -97,6 +97,7 @@ export default {
     margin-top: 30pr;
     font-size: 24pr;
     color: #B1B3BB;
+    padding-bottom: 20pr;
   }
   .no-record {
     margin: 30pr auto;
