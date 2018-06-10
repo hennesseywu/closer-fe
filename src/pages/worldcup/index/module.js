@@ -32,7 +32,7 @@ export default {
             if (rootState.IS_APP) { //app内打开
                 let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
                 console.log("ua", ua);
-                if (ua.indexOf("closer-android") != -1) {
+                if (ua.indexOf("closer-android") > -1) {
                     console.log("android", typeof window.bridge != "undefined")
                         //安卓检查登录状态
                     if (typeof window.bridge != "undefined") {
@@ -46,22 +46,44 @@ export default {
                             window.bridge.jumpLogin(null);
                         }
                     }
-                } else if (ua.indexOf("closer-ios") != -1) {
+                } else if (ua.indexOf("closer-ios") > -1) {
+
+                    if (this.$store.state.agent.indexOf("closer-ios") > -1) {
+                        if (window.WebViewJavascriptBridge) {
+                            this.$com.setupWebViewJavascriptBridge(function(bridge) {
+                                bridge.callHandler("inviteUser", null);
+                            });
+                        } else {
+                            // 兼容 老版本
+                            location.href = "closer_invite_guys_raise_cash";
+                        }
+                    } else {
+                        if (typeof window.bridge != "undefined") {
+                            window.bridge.inviteUser(null);
+                        } else {
+                            location.href = "closer_invite_guys_raise_cash";
+                        }
+                    }
                     console.log("closer-ios", window.JsBridge);
-                    if (typeof window.JsBridge != "undefined") {
-                        //ios获取用户token 判断登录
-                        window.JsBridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                            console.log("ios", token)
-                            if (token) {
-                                Cookies.set("GroukAuth", token, { expires: 7 });
-                                Router.push({ name: "worldcupActivity" });
-                            } else {
-                                console.log("ios jumpLogin")
-                                window.JsBridge.setupWebViewJavascriptBridge(function(bridge) {
-                                    bridge.callHandler("jumpLogin", null);
+                    if (window.WebViewJavascriptBridge) {
+                        window.JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                            console.log("ios bridge", bridge)
+                            if (bridge) {
+                                //ios获取用户token 判断登录
+                                bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                                    console.log("ios token", token)
+                                    if (token) {
+                                        Cookies.set("GroukAuth", token, { expires: 7 });
+                                        Router.push({ name: "worldcupActivity" });
+                                    } else {
+                                        console.log("ios jumpLogin")
+                                        window.JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                                            bridge.callHandler("jumpLogin", null);
+                                        });
+                                    }
                                 });
                             }
-                        });
+                        })
                     }
                 }
             } else {
