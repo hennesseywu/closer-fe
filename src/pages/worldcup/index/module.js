@@ -7,7 +7,7 @@ export default {
     // 定义状态 
     state: {
         loginSuccess: false,
-        chanceBoxShow: true,
+        chanceBoxShow: false,
         loginBoxShow: false,
         isApp: false,
         sendCode: "发送验证码",
@@ -59,6 +59,8 @@ export default {
                             }
                         })
                     }
+                } else {
+                    this.chanceBoxShow = true;
                 }
             }
         },
