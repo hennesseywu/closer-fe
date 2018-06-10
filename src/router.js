@@ -68,7 +68,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                 }
             }
         } else if (ua.indexOf("closer-ios") > -1) {
-            console.log("router closer-ios", window.JsBridge);
+            console.log("router closer-ios", window.WebViewJavascriptBridge);
             if (window.WebViewJavascriptBridge) {
                 setupWebViewJavascriptBridge(function(bridge) {
                     console.log("ios bridge", bridge)
