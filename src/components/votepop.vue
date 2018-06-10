@@ -10,7 +10,7 @@
     </div>
     <div class="pop-body box box-tb box-center-center">
       <div class="vote-resule" v-if="voteInfo.matchResult=='equal'">投注平局</div>
-            <div class="vote-resule" v-else>投注{{voteInfo.teamName}}胜利</div>
+            <div class="vote-resule" v-else>投给{{voteInfo.teamName}}</div>
       <div class="rest-times">还剩{{totalChance}}次机会</div>
       <div class="vote-box box box-lr box-center-center">
         <span>使用</span>
