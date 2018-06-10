@@ -5,20 +5,21 @@
     </div>
     <div class="pop-body">
       <div class="title box box-tb">
-        <span class="text" v-if="false">很遗憾你猜错了</span>
-        <span class="text win-text1">恭喜你猜对了！</span>
-        <span class="text win-text2">你获得了<span>{{toYuan()}}</span>元</span>
+        <span class="text" v-if="!guessResult">很遗憾你猜错了</span>
+        <span class="text win-text1" v-if="guessResult">恭喜你猜对了！</span>
+        <span class="text win-text2" v-if="guessResult">你获得了<span>{{toYuan(awardAmt)}}</span>元</span>
       </div>
       <div class="title-desc">
         <span class="desc">{{totalGuessPerson}}人参与，{{totalBingoPerson}}答对</span>
       </div>
       <div class="content box box-tb box-center-center">
         <div class="result-win"></div>
-        <div class="share" @click="jump()">
-          <button class="button">{{buttonText}}</button>
+        <div class="share" @click="jumpToShare()">
+          <button class="button" v-if="guessResult">炫耀一下</button>
+          <button class="button" v-if="guessResult">邀请好友一起赚钱</button>
         </div>
         <div class="guide">
-          <a class="href">增加机会 查看攻略</a>
+          <a class="href" @click="jumpToAddChance()">增加机会 查看攻略</a>
         </div>
         <div class="line"></div>
         <div class="match-title">
@@ -44,6 +45,7 @@
   import {
     Popup
   } from "mint-ui";
+  import {redirectAddChance} from "../utils/utils";
   Vue.component(Popup.name, Popup);
   
   export default {
@@ -53,6 +55,7 @@
       className: String,
       totalBingoPerson: Number,
       totalGuessPerson: Number,
+      guessResult:Boolean,
       awardAmt: {
         type: Number,
         default: 0
@@ -74,7 +77,7 @@
     },
     methods: {
       toYuan:function(money){
-            return (money/10000+"").substring(".",(money/10000+"").indexOf(".")+3)
+            return (money/100+"").substring(".",(money/100+"").indexOf(".")+3)
       }
       ,
       open: function() {
@@ -82,9 +85,11 @@
       },
       close: function() {
         this.notAccessVisible = false;
-      },jump:function(){
-          console.log("eeeee")
+      },jumpToShare:function(){
         this.$emit('jumpTo')
+      },jumpToAddChance(){
+        console.log("jump2chance")
+        redirectAddChance(this.$store.state.IS_APP);
       }
 
     }
