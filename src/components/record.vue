@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import utils from '../utils/utils'
+import {downloadApp} from '../utils/utils'
 export default {
   name: 'records',
   props: {
@@ -49,7 +49,7 @@ export default {
     goApp() {
       this.isApp = this.$store.state.IS_APP;
       if(this.isApp) {
-        utils.downloadApp()
+        downloadApp()
       } else {
         this.showTips = true
       }

@@ -30,7 +30,7 @@
   import {
     Popup
   } from "mint-ui";
-  import utils from '../utils/utils'
+import {downloadApp} from '../utils/utils'
   Vue.component(Popup.name, Popup);
   
   export default {
@@ -66,7 +66,7 @@
         this.visible = false;
       },
       download() {
-        utils.downloadApp()
+        downloadApp();
       }
     }
   };
