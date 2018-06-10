@@ -8,7 +8,7 @@ export default {
     state: {
         loginSuccess: false,
         chanceBoxShow: false,
-        loginBoxShow: false,
+        loginBoxShow: true,
         isApp: false,
         sendCode: "发送验证码",
         countDown: 59
@@ -27,43 +27,6 @@ export default {
         }
     },
     actions: {
-        checkLogin({ state, rootState }) {
-            if (rootState.IS_APP) { //app内打开
-                let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
-                console.log("ua", ua);
-                if (ua.indexOf("closer-android") > -1) {
-                    console.log("android", typeof window.bridge != "undefined")
-                        //安卓检查登录状态
-                    if (typeof window.bridge != "undefined") {
-                        let token = window.bridge.getUserToken(null);
-                        console.log("android", token)
-                        if (token) {
-                            Cookies.set("GroukAuth", token, { expires: 7 });
-                            Router.push({ name: "worldcupActivity" });
-                        }
-                    }
-                } else if (ua.indexOf("closer-ios") > -1) {
-                    console.log("closer-ios", window.JsBridge);
-                    if (window.WebViewJavascriptBridge) {
-                        setupWebViewJavascriptBridge(function(bridge) {
-                            console.log("ios bridge", bridge)
-                            if (bridge) {
-                                //ios获取用户token 判断登录
-                                bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                                    console.log("ios token", token)
-                                    if (token) {
-                                        Cookies.set("GroukAuth", token, { expires: 7 });
-                                        Router.push({ name: "worldcupActivity" });
-                                    }
-                                });
-                            }
-                        })
-                    }
-                } else {
-                    this.chanceBoxShow = true;
-                }
-            }
-        },
         openLoginBox({ state, rootState }) {
             console.log("rootState", rootState)
             if (rootState.IS_APP) { //app内打开

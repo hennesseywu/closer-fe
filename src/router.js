@@ -50,18 +50,48 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
 
     let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
     Store.state.UA = ua;
-    console.log(ua)
-    console.log("ua", ua.indexOf("closer-android"));
+    console.log("ua", ua);
     if (ua.indexOf("closer-android") != -1 || ua.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
     console.log("name", name)
-    if (Cookies.get("GroukAuth") && (name == "worldcupIndex") && ua.indexOf("closer-ios") == -1 && ua.indexOf("closer-android") == -1) {
-        console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
-        if (params && params.channelCode) {
-            Store.state.CHANNEL_CODE = params.channelCode;
+    if (Cookies.get("GroukAuth") && (name == "worldcupIndex")) {
+        if (ua.indexOf("closer-android") > -1) {
+            console.log("router android", typeof window.bridge != "undefined")
+                //安卓检查登录状态
+            if (typeof window.bridge != "undefined") {
+                let token = window.bridge.getUserToken(null);
+                console.log("android", token)
+                if (token) {
+                    Cookies.set("GroukAuth", token, { expires: 7 });
+                    Router.push({ name: "worldcupActivity" });
+                }
+            }
+        } else if (ua.indexOf("closer-ios") > -1) {
+            console.log("router closer-ios", window.JsBridge);
+            if (window.WebViewJavascriptBridge) {
+                setupWebViewJavascriptBridge(function(bridge) {
+                    console.log("ios bridge", bridge)
+                    if (bridge) {
+                        //ios获取用户token 判断登录
+                        bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                            console.log("ios token", token)
+                            if (token) {
+                                Cookies.set("GroukAuth", token, { expires: 7 });
+                                Router.push({ name: "worldcupActivity" });
+                            }
+                        });
+                    }
+                })
+            }
+        } else {
+            console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
+            if (params && params.channelCode) {
+                Store.state.CHANNEL_CODE = params.channelCode;
+            }
+            router.push({ name: "worldcupActivity" });
         }
-        router.push({ name: "worldcupActivity" });
+
     }
 
     if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
