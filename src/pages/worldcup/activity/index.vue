@@ -96,7 +96,7 @@
   import Winpop from '../../../components/winpop.vue'
   import Getapp from '../../../components/getapp.vue'
   import Nochancepop from '../../../components/nochancepop.vue'
-import utils from '../../../utils/utils';
+import {redirectAddChance} from '../../../utils/utils';
   
   
   export default {
@@ -235,12 +235,8 @@ import utils from '../../../utils/utils';
         this.$router.push({ name: "worldcupShare" ,params:{userId:userId,amount:amount}});
       },
       addChance() {
-        this.isApp = this.$store.state.IS_APP;
-        if(this.isApp){
-          location.href="https://h5.tiejin.cn/community/9j9m4gy8sM";
-        }else {
-          location.href="closer://community/9j9m4gy8sM";
-        }
+        redirectAddChance(this.$store.state.IS_APP);
+
       }
     }
   }

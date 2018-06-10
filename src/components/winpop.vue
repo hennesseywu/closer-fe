@@ -5,7 +5,7 @@
     </div>
     <div class="pop-body">
       <div class="title box box-tb">
-        <span class="text" v-if="!guessResult">很遗憾你猜错了</span>
+        <span class="text" v-if="!guessResult">很遗憾,你猜错了</span>
         <span class="text win-text1" v-if="guessResult">恭喜你猜对了！</span>
         <span class="text win-text2" v-if="guessResult">你获得了<span>{{toYuan(awardAmt)}}</span>元</span>
       </div>
@@ -13,10 +13,10 @@
         <span class="desc">{{totalGuessPerson}}人参与，{{totalBingoPerson}}答对</span>
       </div>
       <div class="content box box-tb box-center-center">
-        <div class="result-win"></div>
+        <div :class="guessResult ? 'result-win':'result-img'"></div>
         <div class="share" @click="jumpToShare()">
           <button class="button" v-if="guessResult">炫耀一下</button>
-          <button class="button" v-if="guessResult">邀请好友一起赚钱</button>
+          <button class="button" v-else>邀请好友一起赚钱</button>
         </div>
         <div class="guide">
           <a class="href" @click="jumpToAddChance()">增加机会 查看攻略</a>
@@ -33,7 +33,7 @@
       </div>
       <div class="bottom">
         <span class="wait" @click="close()">等等再说</span>
-        <button class="getMoney">去提现</button>
+        <button class="getMoney" @click="jumpToDownload()">去提现</button>
       </div>
       <div class="tips">进入【我的钱包】-【奖励金】中领取</div>
     </div>
@@ -45,7 +45,10 @@
   import {
     Popup
   } from "mint-ui";
-  import {redirectAddChance} from "../utils/utils";
+  import {
+    redirectAddChance,
+    downloadApp
+  } from "../utils/utils";
   Vue.component(Popup.name, Popup);
   
   export default {
@@ -55,7 +58,7 @@
       className: String,
       totalBingoPerson: Number,
       totalGuessPerson: Number,
-      guessResult:Boolean,
+      guessResult: Boolean,
       awardAmt: {
         type: Number,
         default: 0
@@ -64,7 +67,7 @@
         type: Array,
         defaut: []
       },
-      jumpTo:Function
+      jumpTo: Function
     },
     data() {
       return {
@@ -76,22 +79,26 @@
       };
     },
     methods: {
-      toYuan:function(money){
-            return (money/100+"").substring(".",(money/100+"").indexOf(".")+3)
-      }
-      ,
+      toYuan: function(money) {
+        return (money / 100 + "").substring(".", (money / 100 + "").indexOf(".") + 3)
+      },
       open: function() {
         this.notAccessVisible = true;
       },
       close: function() {
         this.notAccessVisible = false;
-      },jumpToShare:function(){
+      },
+      jumpToShare: function() {
         this.$emit('jumpTo')
-      },jumpToAddChance(){
-        console.log("jump2chance")
+      },
+      jumpToAddChance() {
+        console.log("jump2chance",this.$store.state.IS_APP)
         redirectAddChance(this.$store.state.IS_APP);
+      },
+      jumpToDownload() {
+        downloadApp()
       }
-
+  
     }
   };
 </script>
