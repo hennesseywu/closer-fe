@@ -13,7 +13,7 @@ const Share = () =>
 
 Vue.use(Router)
 
-setupWebViewJavascriptBridge = function(callback) {
+function setupWebViewJavascriptBridge(callback) {
     // console.log(ca llback)
     if (window.WebViewJavascriptBridge) {
         return callback(WebViewJavascriptBridge);
