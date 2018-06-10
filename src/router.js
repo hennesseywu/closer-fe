@@ -78,7 +78,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                             console.log("ios token", token)
                             if (token) {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
-                                router.push({ name: "worldcupActivity" });
+                                Router.push({ name: "worldcupActivity" });
                             }
                         });
                     }
