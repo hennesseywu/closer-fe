@@ -10,7 +10,7 @@
         <span class="text win-text2">你获得了<span>{{toYuan()}}</span>元</span>
       </div>
       <div class="title-desc">
-        <span class="desc">{{totalGuessPerson}}人参与，{{totalGuessPerson}}答对</span>
+        <span class="desc">{{totalGuessPerson}}人参与，{{totalBingoPerson}}答对</span>
       </div>
       <div class="content box box-tb box-center-center">
         <div class="result-win"></div>

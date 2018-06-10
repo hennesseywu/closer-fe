@@ -12,6 +12,7 @@ export default {
         userGuessResult: {},
         voteInfo: {
             logo: '',
+            teamName: '',
             matchId: '',
             winTeamId: '',
             mathResult: '',
