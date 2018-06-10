@@ -86,13 +86,12 @@ export default {
                 Toast('请输入正确的手机号');
                 return;
             };
-
-            let codeRes = await getCode(phone).catch(err => {
-                Toast('网络开小差啦，请稍后再试')
-                return;
-            });
-            if (codeRes.status && codeRes.status == 200) {
-                if (state.countDown == 60) {
+            if (state.countDown == 60) {
+                let codeRes = await getCode(phone).catch(err => {
+                    Toast('网络开小差啦，请稍后再试')
+                    return;
+                });
+                if (codeRes.status && codeRes.status == 200) {
                     commit('updateCountDown');
                     Toast("验证码发送成功")
                 }
