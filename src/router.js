@@ -55,7 +55,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
         Store.state.IS_APP = true;
     }
     console.log("name", name)
-    if (Cookies.get("GroukAuth") && (name == "worldcupIndex")) {
+    if (name == "worldcupIndex") {
         if (ua.indexOf("closer-android") > -1) {
             console.log("router android", typeof window.bridge != "undefined")
                 //安卓检查登录状态
@@ -85,11 +85,13 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                 })
             }
         } else {
-            console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
-            if (params && params.channelCode) {
-                Store.state.CHANNEL_CODE = params.channelCode;
+            if (Cookies.get("GroukAuth")) {
+                console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
+                if (params && params.channelCode) {
+                    Store.state.CHANNEL_CODE = params.channelCode;
+                }
+                router.push({ name: "worldcupActivity" });
             }
-            router.push({ name: "worldcupActivity" });
         }
 
     }
