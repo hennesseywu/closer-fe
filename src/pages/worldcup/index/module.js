@@ -47,17 +47,17 @@ export default {
                         }
                     }
                 } else if (ua.indexOf("closer-ios") != -1) {
-                    console.log("ios", window.WebViewJavascriptBridge);
-                    if (window.WebViewJavascriptBridge) {
+                    console.log("ios", window.JsBridge);
+                    if (typeof window.JsBridge != "undefined") {
                         //ios获取用户token 判断登录
-                        bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                        window.JsBridge.callHandler("getUserToken", null, function(token, responseCallback) {
                             console.log("ios", token)
                             if (token) {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
                                 Router.push({ name: "worldcupActivity" });
                             } else {
                                 console.log("ios jumpLogin")
-                                JsBridge.setupWebViewJavascriptBridge(function(bridge) {
+                                window.JsBridge.setupWebViewJavascriptBridge(function(bridge) {
                                     bridge.callHandler("jumpLogin", null);
                                 });
                             }
