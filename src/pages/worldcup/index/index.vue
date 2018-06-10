@@ -4,7 +4,7 @@
       <div class="invite-img" @click="redirectTo()"></div>
       <div class="text-desc">
         <span class="desc">扫描寻找二维码，可获得更多竞猜机会</span>
-        <span class="tips">查看攻略</span>
+        <span class="tips" @click="redirect2Chance()">查看攻略</span>
       </div>
       <!-- 领取机会框 -->
       <div class="chance-box box-commen box box-tb box-center-center" v-if="chanceBoxShow">
@@ -38,7 +38,10 @@
   import Loginpop from '../../../components/loginpop.vue';
   import Newuserpop from '../../../components/newuserpop.vue';
   import Getapp from '../../../components/getapp.vue';
-  
+   import {
+    redirectAddChance
+  } from '../../../utils/utils';
+
   import {
     mapActions,
     mapState
@@ -82,7 +85,10 @@
           this.$store.state.CHANNEL_CODE = this.$route.params.channelCode;
         }
         this.isApp = this.$store.state.IS_APP;
-      },
+      },redirect2Chance(){
+        redirectAddChance(this.$store.state.IS_APP);
+      } 
+      ,
       redirectTo() {
         let userId = ""
         let amount = 0;
