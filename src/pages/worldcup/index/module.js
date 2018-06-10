@@ -47,23 +47,6 @@ export default {
                         }
                     }
                 } else if (ua.indexOf("closer-ios") > -1) {
-
-                    if (this.$store.state.agent.indexOf("closer-ios") > -1) {
-                        if (window.WebViewJavascriptBridge) {
-                            this.$com.setupWebViewJavascriptBridge(function(bridge) {
-                                bridge.callHandler("inviteUser", null);
-                            });
-                        } else {
-                            // 兼容 老版本
-                            location.href = "closer_invite_guys_raise_cash";
-                        }
-                    } else {
-                        if (typeof window.bridge != "undefined") {
-                            window.bridge.inviteUser(null);
-                        } else {
-                            location.href = "closer_invite_guys_raise_cash";
-                        }
-                    }
                     console.log("closer-ios", window.JsBridge);
                     if (window.WebViewJavascriptBridge) {
                         window.JsBridge.setupWebViewJavascriptBridge(function(bridge) {
