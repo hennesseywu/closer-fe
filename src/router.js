@@ -56,7 +56,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
         Store.state.IS_APP = true;
     }
     console.log("name", name)
-    if (Cookies.get("GroukAuth") && (name == "worldcupIndex")) {
+    if (Cookies.get("GroukAuth") && (name == "worldcupIndex") && ua.indexOf("closer-ios") == -1 && ua.indexOf("closer-android") == -1) {
         console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
         if (params && params.channelCode) {
             Store.state.CHANNEL_CODE = params.channelCode;
