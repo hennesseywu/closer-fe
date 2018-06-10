@@ -39,7 +39,6 @@ export default {
                         let token = window.bridge.getUserToken(null);
                         console.log("android", token)
                         if (token) {
-                            Cookies.set("GroukAuth", token, { expires: 7 });
                             Router.push({ name: "worldcupActivity" });
                         } else {
                             console.log("android jumpLogin")
@@ -56,7 +55,6 @@ export default {
                                 bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                                     console.log("ios token", token)
                                     if (token) {
-                                        Cookies.set("GroukAuth", token, { expires: 7 });
                                         Router.push({ name: "worldcupActivity" });
                                     } else {
                                         console.log("ios jumpLogin")
