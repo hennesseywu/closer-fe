@@ -34,19 +34,26 @@ export default {
                 console.log("ua", ua);
                 if (ua.indexOf("closer-ios") > -1) {
                     console.log("closer-ios", window.WebViewJavascriptBridge);
-                    setupWebViewJavascriptBridge(function(bridge) {
-                        console.log("ios bridge", bridge)
-                        if (bridge) {
-                            //ios获取用户token 判断登录
-                            bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                                console.log("ios token", token)
-                                if (token) {
-                                    Cookies.set("GroukAuth", token, { expires: 7 });
-                                    Router.push({ name: "worldcupActivity" });
-                                }
-                            });
-                        }
-                    })
+                    if (window.WebViewJavascriptBridge) {
+                        setupWebViewJavascriptBridge(function(bridge) {
+                            console.log("ios bridge", bridge)
+                            if (bridge) {
+                                //ios获取用户token 判断登录
+                                bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                                    console.log("ios token", token)
+                                    if (token) {
+                                        Cookies.set("GroukAuth", token, { expires: 7 });
+                                        Router.push({ name: "worldcupActivity" });
+                                    } else {
+                                        console.log("ios jumpLogin")
+                                        setupWebViewJavascriptBridge(function(bridge) {
+                                            bridge.callHandler("jumpLogin", null);
+                                        });
+                                    }
+                                });
+                            }
+                        })
+                    }
                 }
             }
         },
