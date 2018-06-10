@@ -21,7 +21,7 @@
         </div>
         <span>次机会</span> 
       </div>
-      <div class="add-vote"><span v-if="showText">{{textTip}}</span> 增加机会 查看攻略</div>
+      <div class="add-vote" @click="goTips"><span v-if="showText">{{textTip}}</span> 增加机会 查看攻略</div>
     </div>
     <div class="pop-footer box box-lr box-center-center">
       <div class="other-btn" @click="close">再想想</div>
@@ -123,6 +123,9 @@ export default {
       setTimeout(()=>{
         this.close()
       },500)
+    },
+    goTips() {
+      window.location.href = 'http://baidu.com/'
     }
   }
 };
