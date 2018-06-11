@@ -7,7 +7,7 @@
       <div class="title box box-tb">
         <span class="text" v-if="!guessResult">很遗憾,你猜错了</span>
         <span class="text win-text1" v-if="guessResult">恭喜你猜对了！</span>
-        <span class="text win-text2" v-if="guessResult">你获得了<span>{{toYuan(awardAmt)}}</span>元</span>
+        <span class="text win-text2" v-if="guessResult">你获得了<span>{{change(awardAmt)}}</span>元</span>
       </div>
       <div class="title-desc">
         <span class="desc">{{totalGuessPerson}}人参与，{{totalBingoPerson}}答对</span>
@@ -47,7 +47,8 @@
   } from "mint-ui";
   import {
     redirectAddChance,
-    downloadApp
+    downloadApp,
+    toYuan
   } from "../utils/utils";
   Vue.component(Popup.name, Popup);
   
@@ -79,8 +80,8 @@
       };
     },
     methods: {
-      toYuan: function(money) {
-        return (money / 100 + "").substring(".", (money / 100 + "").indexOf(".") + 3)
+      change(money) {
+        return toYuan(money)
       },
       open: function() {
         this.notAccessVisible = true;
