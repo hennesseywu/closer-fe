@@ -51,7 +51,7 @@ export default {
     },
     goApp() {
       this.isApp = this.$store.state.IS_APP;
-      if(this.isApp) {
+      if(!this.isApp) {
         downloadApp()
       } else {
         this.showTips = true

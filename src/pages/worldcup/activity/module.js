@@ -28,7 +28,6 @@ export default {
                 } else {
                     state.grayBtn = false
                 }
-                console.log("gggg", state.grayBtn)
             }
         },
         updateUserGuesslist(state, payload) {
