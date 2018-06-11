@@ -425,6 +425,7 @@
             margin: 0 58pr;
           }
           .gray {
+            color: #fff;
             background: #BFBFBF;
           }
         }
