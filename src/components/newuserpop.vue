@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="pop-body box box-tb box-center-center">
-      <div class="win-img" v-if="presentAvailable"></div>
+      <div class="win-img" v-if="status"></div>
       <div class="loser-img" v-else></div>
       <div class="decs" v-if="presentAvailable">“是时候展示真正的技术了！”</div>
       <div class="decs" v-else>“去APP找一找会有更多机会”</div>
