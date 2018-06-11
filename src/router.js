@@ -68,6 +68,8 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                     router.push({ name: "worldcupActivity" });
                 }
             }
+        } else if (ua.indexOf("closer-ios") > -1) {
+            Cookies.remove("GroukAuth");
         } else {
             if (Cookies.get("GroukAuth")) {
                 console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
