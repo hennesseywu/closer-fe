@@ -29,9 +29,9 @@ export default {
     },
     actions: {
         checkLogin({ state, rootState }) {
-            console.log("checkLogin");
+            console.log("checkLogin", rootState.IS_APP);
             if (rootState.IS_APP) { //app内打开 ios补救措施
-                let ua = Store.state.UA;
+                let ua = rootState.UA;
                 console.log("ua", ua);
                 if (ua.indexOf("closer-ios") > -1) {
                     console.log("module closer-ios", window.WebViewJavascriptBridge);
@@ -59,7 +59,7 @@ export default {
             }
         },
         openLoginBox({ state, rootState }) {
-            console.log("rootState", rootState)
+            console.log("openLoginBox", rootState.IS_APP)
             if (rootState.IS_APP) { //app内打开
                 let ua = rootState.UA;
                 if (ua.indexOf("closer-android") > -1) {
