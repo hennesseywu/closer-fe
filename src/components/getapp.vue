@@ -40,13 +40,13 @@ export default {
         .d-text {
           color: #fff;
           >span:first-child {
-            font-size: 28pr;
+            font-size: 20pr;
             height: 40pr;
             line-height: 40pr;
             margin-top: 26pr;
           }
           >span:last-child {
-            font-size: 20pr;
+            font-size: 28pr;
             height: 28pr;
             line-height: 28pr;
           }
