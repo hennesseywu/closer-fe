@@ -5,8 +5,8 @@
         活动规则
         <div class="bottom-line"></div>
       </div>
-      <div class="rule activity">本活动奖金与苹果公司无关</div>
-      <div class="rule activity">竞猜机会获取规则：</div>
+      <div class="rule mt14 activity">本活动奖金与苹果公司无关</div>
+      <div class="rule mt40 activity opacity">竞猜机会获取规则：</div>
       <div class="rule-ul">
         <div class="item">
           <span class="c-img"></span>
@@ -21,7 +21,7 @@
           <span class="right">3. 每天登陆贴近APP获得一次竞猜机会。</span>
         </div>
       </div>
-      <div class="rule">竞猜规则：</div>
+      <div class="rule mt40 opacity">竞猜规则：</div>
       <div class="rule-ul">
         <div class="item">
           <span class="c-img"></span>
@@ -79,19 +79,19 @@ export default {
     padding-top: 52pr;
   }
   .index-rule {
-    margin-top: -400pr;
+    margin: -400pr 40pr 140pr;
   }
   .rule-box {
     // margin: 40pr;
     font-size: 26pr;
     line-height: 36pr;
-    color: rgba(146,179,248,0.5);
+    color: rgba(146,179,248,1);
     background:rgba(4,28,77,1);
     padding-bottom: 20pr;
     .rule-title {
       text-align: center;
       padding-top: 16pr;
-      font-size: 32pr;
+      font-size: 28pr;
       line-height: 44pr;
       .top-line, .bottom-line {
         width: 488pr;
@@ -100,11 +100,19 @@ export default {
         background-size: cover;
       }
     }
+    .opacity {
+      color: rgba(146,179,248,0.5);
+    }
     .index-mt40 {
       margin-top: 40pr;
     }
+    .mt14 {
+      margin-top: 14pr;
+    }
+    .mt40 {
+      margin-top: 40pr;
+    }
     .rule {
-      // margin-top: 40pr;
       line-height: 40pr;
     }
     .rule-ul {
@@ -128,7 +136,7 @@ export default {
         }
       }
       .last {
-        padding-bottom: 50pr;
+        padding-bottom: 20pr;
       }
     }
   }
