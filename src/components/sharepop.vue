@@ -7,7 +7,8 @@
       </div>
     </div>
     <div class="pop-body box box-tb box-center-center">
-      <div class="pop-text">截图分享好友吧，一起瓜分<span>600</span>万</div>
+      <div class="pop-text" v-if="isApp">截图分享好友吧，一起瓜分<span>600</span>万</div>
+      <div class="pop-text" v-else>打开浏览器分享，一起瓜分<span>600</span>万</div>
     </div>
     <div class="pop-footer">
       <div class="confirm-btn" @click="close">确认</div>
@@ -27,16 +28,10 @@ export default {
     name: "pop",
     components: {},
     props: {
-      newUser: {
-        type: Boolean,
-        default: false
-      },
       isApp: {
         type: Boolean,
         default: true
       },
-      count:Number
-      ,
       className: String,
       closeOnClickModal: {
         type: Boolean,
