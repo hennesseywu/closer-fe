@@ -7,13 +7,12 @@ import Store from '../store'
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
-        let reqUrl = feConfig.serverDevUrl + config.url;
-        // let reqUrl = feConfig.devserverUrl + config.url
-        // if (/sandbox.tiejin/.test(config.url)) {
-        //     reqUrl = feConfig.serverDevUrl;
-        // } else if (/tiejin/.test(config.url)) {
-        //     reqUrl = feConfig.serverUrl;
-        // }
+        let reqUrl = feConfig.serverDevUrl + config.url
+        if (/sandbox.tiejin/.test(config.url)) {
+            reqUrl = feConfig.serverDevUrl + config.url;
+        } else if (/tiejin/.test(config.url)) {
+            reqUrl = feConfig.serverUrl + config.url;
+        }
         config.url = reqUrl;
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
