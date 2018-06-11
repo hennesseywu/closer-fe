@@ -7,9 +7,8 @@
           <span>{{desc}}</span>
         </div>
         <div class="content">
-          <img class="left-ball" src="../../../assets/images/left_ball.png"> 获得了
-          <label class="middel-label" v-if="amount>0"> {{amount}} </label>
-          <label class="middel-label" v-else> 100 </label> 元
+          <img class="left-ball" src="../../../assets/images/left_ball.png"> 
+          <div class="middel-label">参与竞猜就有钱拿<br>奖金600万</div>
           <img class="right-ball" src="../../../assets/images/right_ball.png">
           <div class="code-img"></div>
           <div class="code-tips">扫码瓜分600万</div>

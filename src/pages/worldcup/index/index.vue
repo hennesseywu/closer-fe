@@ -129,18 +129,16 @@
       background: url("../../../assets/images/index_bg.jpg") no-repeat center center;
       background-size: cover;
       .code-img {
-      position: absolute;
-      top: 48pr;
-      left: 20pr;;
+      margin-top: 48pr;
+      margin-left: 20pr;
         width: 120pr;
         height: 120pr;
         background: url('../../../assets/images/test_code.png') no-repeat center;
         background-size: cover;
       }
       .code-tips {
-        position: absolute;
-        top: 168pr;
-        left: 20pr;
+        margin-top: 5pr;
+        margin-left: 20pr;
         font-size: 14pr;
         color: #fff;
       }
@@ -155,7 +153,7 @@
       }
       .text-desc {
         position: relative;
-        margin: 440pr 40pr 20pr;
+        margin: 230pr 40pr 20pr;
         font-size: 24pr;
         height: 34pr;
         line-height: 34pr;
