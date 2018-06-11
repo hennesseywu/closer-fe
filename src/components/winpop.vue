@@ -68,7 +68,6 @@
         type: Array,
         defaut: []
       },
-      jumpTo: Function
     },
     data() {
       return {
@@ -90,10 +89,12 @@
         this.notAccessVisible = false;
       },
       jumpToShare: function() {
-        this.$emit('jumpTo')
+        this.$router.push({
+          name: "worldcupShare"
+        })
       },
       jumpToAddChance() {
-        console.log("jump2chance",this.$store.state.IS_APP)
+        console.log("jump2chance", this.$store.state.IS_APP)
         redirectAddChance(this.$store.state.IS_APP);
       },
       jumpToDownload() {

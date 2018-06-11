@@ -42,12 +42,12 @@ export default {
       isSelf: false,
       amount: 0,
       buttonDesc: "去瓜分600万",
-      isApp: false
+      isApp:false
     };
   },
   computed: {},
   created() {
-    this.checkUser();
+    this.isApp=this.$store.state.IS_APP
     if (this.isApp) {
       Toast({
         message: "截图分享好友哦",
@@ -62,35 +62,6 @@ export default {
       this.$router.push({
         name: "worldcupIndex"
       });
-    },
-    async checkUser() {
-      this.isApp = this.$store.state.IS_APP;
-      console.log("share", this.$route.params);
-      if (this.$route.params.amount) {
-        this.amount = this.$route.params.amount;
-      }
-      if (Cookies.get("user")) {
-        let user = JSON.parse(Cookies.get("user"));
-        if (user.objectID == this.$route.params.id) {
-          console.log("true");
-          this.desc = "我参与竞猜游戏";
-          this.isSelf = true;
-          this.buttonDesc = "再玩一次";
-        } else {
-          if (this.$route.params.id) {
-            let user = await this.getUserById(this.$route.params.id);
-            if (user.data.result && user.data.result.username) {
-              this.desc =
-                "你的朋友 " +
-                user.data.result.username.replace(
-                  /(\d{3})\d{4}(\d{4})/,
-                  "$1****$2"
-                ) +
-                " 参与竞猜";
-            }
-          }
-        }
-      }
     },
     share() {
       console.log("vadfadfadfadfadfadf");

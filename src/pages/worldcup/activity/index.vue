@@ -75,7 +75,7 @@
     <Votepop ref="votepop" :voteInfo="voteInfo" @guessMatch="guessMatch" :totalChance="userGuessStatistic.totalChance"></Votepop>
     <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList" :isApp="isApp"></Record>
     <Newuserpop ref="newuserpop" v-if="recieveChanceInfo.isPopUp" :status="recieveChanceInfo.status" :presentAvailable="recieveChanceInfo.presentAvailable" :isApp="isApp" :count="recieveChanceInfo.count"></Newuserpop>
-    <Winpop ref="winpop" v-if="typeof(userGuessResult.guessResult)!='undefined'" @jumpTo="redirectTo" :guessResult="userGuessResult.guessResult" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList"
+    <Winpop ref="winpop" v-if="typeof(userGuessResult.guessResult)!='undefined'"  :guessResult="userGuessResult.guessResult" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList"
       :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
     <Nochancepop ref="nochancepop"></Nochancepop>
     <Sharepop ref="sharepop" :isApp="isApp"></Sharepop>
@@ -247,15 +247,7 @@ export default {
     checkUser() {
       this.isApp = this.$store.state.IS_APP;
     },
-    redirectTo() {
-      this.$router.push({
-        name: "worldcupShare",
-        params: {
-          userId: userId,
-          amount: amount
-        }
-      });
-    },
+   
     addChance() {
       redirectAddChance(this.$store.state.IS_APP);
     },
