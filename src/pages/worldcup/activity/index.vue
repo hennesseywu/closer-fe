@@ -79,6 +79,7 @@
       :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
     <Nochancepop ref="nochancepop"></Nochancepop>
     <Sharepop ref="sharepop" :isApp="isApp"></Sharepop>
+    <Appusepop ref="appusepop"></Appusepop>
   </div>
 </template>
 
@@ -94,6 +95,7 @@ import Winpop from "../../../components/winpop.vue";
 import Getapp from "../../../components/getapp.vue";
 import Nochancepop from "../../../components/nochancepop.vue";
 import Sharepop from "../../../components/sharepop.vue";
+import Appusepop from "../../../components/appusepop.vue";
 import { redirectAddChance } from "../../../utils/utils";
 
 export default {
@@ -108,7 +110,8 @@ export default {
     Winpop,
     Getapp,
     Nochancepop,
-    Sharepop
+    Sharepop,
+    Appusepop
   },
   data() {
     return {
@@ -176,6 +179,10 @@ export default {
       if (this.userGuessStatistic.totalChance == 0) {
         this.$refs.nochancepop.open();
         return;
+      }
+      if(!this.userGuessStatistic.canGuess) {
+        this.$refs.appusepop.open()
+        return
       }
       if (this.userGuessStatistic && this.userGuessStatistic.totalChance == 0) {
         console.log("没有机会了");

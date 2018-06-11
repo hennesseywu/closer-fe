@@ -5,7 +5,7 @@
       <div class="text">需要在APP中使用哦</div>
     </div>
     <div class="pop-footer">
-      <div class="confirm-btn">进入APP使用</div>
+      <div class="confirm-btn" @click="goApp">进入APP使用</div>
       <div class="tips">每日开奖，100%中奖<br> 决赛瓜分600万</div>
     </div>
   </mt-popup>
@@ -13,6 +13,7 @@
 <script>
 import Vue from "vue";
 import { Popup } from "mint-ui";
+import { downloadApp } from '../utils/utils'
 Vue.component(Popup.name, Popup);
 
 export default {
@@ -36,6 +37,9 @@ export default {
     },
     close() {
       this.visible = false;
+    },
+    goApp(){
+      downloadApp()
     }
   }
 };
