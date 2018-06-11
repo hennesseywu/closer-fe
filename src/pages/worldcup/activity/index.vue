@@ -56,7 +56,7 @@
                   <div class="winbtn">平局</div>
                   <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='equal'">X {{item.userGuess.guessTimes}}</span>
                 </div>
-                <div class="commonsize yellowbg winner2" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId!=item.userGuess.winTeamId) ? 'gray' : 'yellowbg'" @click="openVotepop(item.gustTeam.teamName,item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win',item.userGuess,false,item.matchType)">
+                <div class="commonsize ml yellowbg winner2" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId!=item.userGuess.winTeamId) ? 'gray' : 'yellowbg'" @click="openVotepop(item.gustTeam.teamName,item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win',item.userGuess,false,item.matchType)">
                   <div class="winbtn">胜利</div>
                   <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</span>
                 </div>
@@ -457,11 +457,15 @@ export default {
           margin-left: 70pr;
         }
         .tie {
-          margin: 0 58pr;
+          margin-left: 58pr;
         }
         .gray {
           color: #fff;
           background: #bfbfbf;
+        }
+        .ml {
+          position: absolute;
+          right: 110pr;
         }
       }
     }
