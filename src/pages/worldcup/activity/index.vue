@@ -330,9 +330,9 @@ export default {
     }
   }
   .swipe {
-    height: 548pr;
+    height: 518pr;
     .choose-box {
-      margin: 40pr 14pr 20pr 14pr;
+      margin: 40pr 14pr 0 14pr;
       font-size: 24pr;
       line-height: 34pr;
       color: #fff;
