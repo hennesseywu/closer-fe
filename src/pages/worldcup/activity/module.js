@@ -66,7 +66,9 @@ export default {
                 //     "count": 11, //-----这次获取的次数
                 //     "status": true //-----是否领取成功
                 // }
-                commit({ type: 'updateRecieveChance', result })
+                commit({ type: 'updateRecieveChance', result });
+                await dispatch('getUserGuessStatistic');
+
             } else {
                 Toast('网络开小差啦，请稍后再试')
             }
