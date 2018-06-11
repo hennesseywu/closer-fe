@@ -63,7 +63,7 @@
       this.checkIsApp();
 
     },
-    beforeMount(){
+    mounted(){
       this.checkLogin();
     }
     ,
