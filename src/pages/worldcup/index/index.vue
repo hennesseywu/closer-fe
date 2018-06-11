@@ -1,7 +1,9 @@
 <template>
   <div class="index">
     <div class="wrapper">
-      <div class="invite-img" @click="redirectTo()"></div>
+      <div class="code-img"></div>
+      <div class="code-tips">扫码瓜分600万</div>
+      <div class="invite-img" @click="openSharePop"></div>
       <div class="text-desc">
         <span class="desc">扫描寻找二维码，可获得更多竞猜机会</span>
         <span class="tips" @click="redirect2Chance()">查看攻略</span>
@@ -30,6 +32,7 @@
     </div>
     <Rule ref="rule" :showIndexRule="showIndexRule"></Rule>
     <Getapp ref='getapp' v-if="!isApp"></Getapp>
+    <Sharepop ref="sharepop" :isApp="isApp"></Sharepop>
   </div>
 </template>
 
@@ -38,6 +41,7 @@
   import Loginpop from '../../../components/loginpop.vue';
   import Newuserpop from '../../../components/newuserpop.vue';
   import Getapp from '../../../components/getapp.vue';
+  import Sharepop from '../../../components/sharepop.vue';
    import {
     redirectAddChance
   } from '../../../utils/utils';
@@ -52,7 +56,8 @@
       Rule,
       Loginpop,
       Newuserpop,
-      Getapp
+      Getapp,
+      Sharepop
     },
     created() {
       this.checkIsApp();
@@ -90,23 +95,25 @@
         this.isApp = this.$store.state.IS_APP;
       },redirect2Chance(){
         redirectAddChance(this.$store.state.IS_APP);
-      } 
-      ,
-      redirectTo() {
-        let userId = ""
-        let amount = 0;
-        console.log(Cookies.get("totalAwardAmt"))
-        if(Cookies.get("totalAwardAmt")){
-          amount=Cookies.get("totalAwardAmt");
-        }
-        if (Cookies.get("user")) {
-          let user = JSON.parse(Cookies.get("user"))
-          if (user.objectID) {
-            userId = user.objectID //.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
-          }
-        }
-        this.$router.push({ name: "worldcupShare" ,params:{userId:userId,amount:amount}});
+      },
+      openSharePop() {
+        this.$refs.sharepop.open()
       }
+      // redirectTo() {
+      //   let userId = ""
+      //   let amount = 0;
+      //   console.log(Cookies.get("totalAwardAmt"))
+      //   if(Cookies.get("totalAwardAmt")){
+      //     amount=Cookies.get("totalAwardAmt");
+      //   }
+      //   if (Cookies.get("user")) {
+      //     let user = JSON.parse(Cookies.get("user"))
+      //     if (user.objectID) {
+      //       userId = user.objectID //.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+      //     }
+      //   }
+      //   this.$router.push({ name: "worldcupShare" ,params:{userId:userId,amount:amount}});
+      // }
     }
   
   };
@@ -121,6 +128,22 @@
       padding-top: 1pr;
       background: url("../../../assets/images/index_bg.jpg") no-repeat center center;
       background-size: cover;
+      .code-img {
+      position: absolute;
+      top: 48pr;
+      left: 20pr;;
+        width: 120pr;
+        height: 120pr;
+        background: url('../../../assets/images/test_code.png') no-repeat center;
+        background-size: cover;
+      }
+      .code-tips {
+        position: absolute;
+        top: 168pr;
+        left: 20pr;
+        font-size: 14pr;
+        color: #fff;
+      }
       .invite-img {
         position: absolute;
         top: 48pr;
