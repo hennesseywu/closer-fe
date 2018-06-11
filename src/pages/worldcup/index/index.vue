@@ -152,17 +152,18 @@
         background-size: cover;
       }
       .text-desc {
-        position: relative;
         margin: 230pr 40pr 20pr;
         font-size: 24pr;
         height: 34pr;
         line-height: 34pr;
         color: #fff;
-        .desc {}
+        .desc {
+          margin-left: 0;
+        }
         .tips {
-          position: absolute;
-          top: -10pr;
-          right: 0;
+          float: right;
+          margin-right: 0;
+          margin-top: -10pr;
           padding: 6pr 12pr;
           background: linear-gradient( -90deg, rgba(54, 176, 175, 1), rgba(54, 176, 143, 1));
           box-shadow: 0px 4pr 20pr 0px rgba(7, 72, 54, 1);
