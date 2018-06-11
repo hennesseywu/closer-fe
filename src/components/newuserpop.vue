@@ -2,11 +2,11 @@
   <mt-popup v-model="visible" class="newuser-pop" :closeOnClickModal="closeOnClickModal">
     <div class="close-icon" @click="close()"></div>
     <div class="pop-header">
-      <div class="winner" v-if="newUser">
+      <div class="winner" v-if="status">
         <div class="win-text">恭喜您！</div>
         <div class="win-btn">获得{{count}}次竞猜机会</div>
       </div>
-      <div class="loser" v-if="!newUser">
+      <div class="loser" v-if="!status">
         <div class="loser-text">很遗憾<br> 已经领取过了哟～</div>
       </div>
     </div>
@@ -37,13 +37,11 @@ import {downloadApp} from '../utils/utils'
     name: "pop",
     components: {},
     props: {
-      newUser: {
-        type: Boolean,
-        default: false
+      status: {
+        type: Boolean
       },
       isApp: {
-        type: Boolean,
-        default: true
+        type: Boolean
       },
       count:Number
       ,
