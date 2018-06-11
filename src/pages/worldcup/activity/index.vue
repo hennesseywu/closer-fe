@@ -73,7 +73,7 @@
     </div>
     <Rule ref="rule" :showRule="showRule"></Rule>
     <Votepop ref="votepop" :voteInfo="voteInfo" @guessMatch="guessMatch" :totalChance="userGuessStatistic.totalChance"></Votepop>
-    <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList"></Record>
+    <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList" :isApp="isApp"></Record>
     <Newuserpop ref="newuserpop" v-if="recieveChanceInfo.status" :newUser="false" :presentAvailable="recieveChanceInfo.presentAvailable" :isApp="isApp" :count="recieveChanceInfo.count"></Newuserpop>
     <Winpop ref="winpop" v-if="typeof(userGuessResult.guessResult)!='undefined'" @jumpTo="redirectTo" :guessResult="userGuessResult.guessResult" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList"
       :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
