@@ -163,7 +163,7 @@ export default {
           background-size: cover;
         }
         .code-tips {
-          font-size: 14pr;
+          font-size: 18pr;
           color: #fff;
         }
       }

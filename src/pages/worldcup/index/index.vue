@@ -139,7 +139,7 @@
       .code-tips {
         margin-top: 5pr;
         margin-left: 20pr;
-        font-size: 14pr;
+        font-size: 18pr;
         color: #fff;
       }
       .invite-img {
@@ -212,10 +212,10 @@
           input {
             margin-left: 24pr;
             background: #0F4C92;
-            color: #fff;
+            color: rgba(255, 255, 255, 0.5);
           }
            ::-webkit-input-placeholder {
-            color: #fff;
+            color: rgba(255, 255, 255, 0.5);
             font-size: 28pr;
           }
           .login-commen {
@@ -246,7 +246,7 @@
               width: 160pr;
               text-align: center;
               font-size: 28pr;
-              color: #fff;
+              color: rgba(255, 255, 255, 0.5);
               border-left: 1px solid #25B1EC;
               justify-content: center;
 

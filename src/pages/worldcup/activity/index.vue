@@ -287,7 +287,7 @@ export default {
   .code-tips {
     margin-top: 5pr;
     margin-left: 20pr;
-    font-size: 14pr;
+    font-size: 18pr;
     color: #fff;
   }
   .invite-img {
