@@ -60,9 +60,7 @@ export default {
         openLoginBox({ state, rootState }) {
             console.log("rootState", rootState)
             if (rootState.IS_APP) { //app内打开
-                let ua = navigator.userAgent || window.navigator.userAgent;
-                ua = ua.toLowerCase;
-                console.log("ua", ua);
+                let ua = rootState.UA;
                 if (ua.indexOf("closer-android") > -1) {
                     console.log("android", typeof window.bridge != "undefined")
                         //安卓检查登录状态
