@@ -1,7 +1,9 @@
 <template>
   <div class="activity">
     <div class="wrapper">
-      <div class="invite-img" @click="redirectTo()"></div>
+      <div class="code-img"></div>
+      <div class="code-tips">扫码瓜分600万</div>
+      <div class="invite-img" @click="openSharePop"></div>
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
@@ -76,6 +78,7 @@
     <Winpop ref="winpop" v-if="typeof(userGuessResult.guessResult)!='undefined'" @jumpTo="redirectTo" :guessResult="userGuessResult.guessResult" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList"
       :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
     <Nochancepop ref="nochancepop"></Nochancepop>
+    <Sharepop ref="sharepop" :isApp="isApp"></Sharepop>
   </div>
 </template>
 
@@ -97,6 +100,7 @@
   import Winpop from '../../../components/winpop.vue'
   import Getapp from '../../../components/getapp.vue'
   import Nochancepop from '../../../components/nochancepop.vue'
+  import Sharepop from '../../../components/sharepop.vue';
   import {
     redirectAddChance
   } from '../../../utils/utils';
@@ -113,7 +117,8 @@
       Newuserpop,
       Winpop,
       Getapp,
-      Nochancepop
+      Nochancepop,
+      Sharepop
     },
     data() {
       return {
@@ -247,7 +252,9 @@
       },
       addChance() {
         redirectAddChance(this.$store.state.IS_APP);
-  
+      },
+      openSharePop() {
+        this.$refs.sharepop.open()
       }
     }
   }
@@ -265,6 +272,22 @@
       background: url("../../../assets/images/activity_bg.jpg") no-repeat center center;
       background-size: cover;
     }
+    .code-img {
+      position: absolute;
+      top: 48pr;
+      left: 20pr;;
+        width: 120pr;
+        height: 120pr;
+        background: url('../../../assets/images/test_code.png') no-repeat center;
+        background-size: cover;
+      }
+      .code-tips {
+        position: absolute;
+        top: 168pr;
+        left: 20pr;
+        font-size: 14pr;
+        color: #fff;
+      }
     .invite-img {
       position: absolute;
       top: 48pr;
