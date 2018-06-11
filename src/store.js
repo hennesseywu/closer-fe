@@ -11,7 +11,7 @@ export default new Vuex.Store({
         UA: "",
         IS_APP: false,
         IS_NEW_USER: false,
-        CHANNEL_CODE: "",
+        CHANNEL_CODE: "0",
     },
     modules: {
         index,

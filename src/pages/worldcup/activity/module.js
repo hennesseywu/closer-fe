@@ -50,7 +50,7 @@ export default {
     actions: {
         async checkRecieveChance({ commit }, payload) {
             console.log("checkRecieveChance", payload)
-            if (payload && payload.channelCode && (payload.channelCode == "0" || payload.channelCode == "")) {
+            if (payload.channelCode == "0") {
                 payload = {}
                 console.log(payload)
             } else {
@@ -63,9 +63,9 @@ export default {
             if (data.result) {
                 let result = data.result;
                 // let result = {
-                //     "presentAvailable": false, //-----是否显示新人大礼包字段
+                //     "presentAvailable": true, //-----是否显示新人大礼包字段
                 //     "count": 11, //-----这次获取的次数
-                //     "status": false //-----是否领取成功
+                //     "status": true //-----是否领取成功
                 // }
                 commit({ type: 'updateRecieveChance', result })
             } else {
@@ -122,13 +122,12 @@ export default {
             state.voteInfo = payload
         },
         async checkGuessResult({ commit }, payload) {
-
             let { data } = await getGuessResult(payload).catch(err => {
                     Toast('网络开小差啦，请稍后再试')
                     return;
                 })
                 // let data = { "result": { "totalGuessPerson": 1000, "totalBingoPerson": 10, "totalAwardAmt": 6, "guessMatchList": [{ "matchDate": "2018-06-07 18:00:00", "settleStatus": "pending", "gustTeamId": "4", "matchType": "knockout", "userGuess": { "matchType": "group", "matchResult": "equal", "updateTime": 1528401223000, "guessTimes": 1, "userName": "test", "guessResult": "bingo", "uid": "9cuTjllpID", "createTime": 1528401223000, "phone": "12000000001", "winTeamId": 3, "awardAmt": 101, "guessId": 2, "matchId": 57955751284441333, "status": false }, "matchDesc": "5:4", "matchResult": "win", "updateTime": 1528411754000, "activityId": "1", "matchLongDate": 0, "createTime": 1528251799000, "gustTeam": { "teamName": "乌拉圭", "createTime": 1528343048000, "teamId": 4, "logo": "https://file.tiejin.cn/public/9m1UH3oRS1/uruguay%402x.png", "teamDesc": "A", "updateTime": 1528343048000, "teamStatus": "pending", "status": false }, "winTeamId": "3", "homeTeam": { "teamName": "埃及", "createTime": 1528343048000, "teamId": 3, "logo": "https://file.tiejin.cn/public/9m1DYy63Z2/egypt%402x.png", "teamDesc": "A", "updateTime": 1528343048000, "teamStatus": "pending", "status": false }, "startTime": 1528365600000, "endTime": 1528365600000, "homeTeamId": "3", "matchId": 57955751284441333, "status": false }, { "matchDate": "2018-06-20 15:15:00", "settleStatus": "pending", "gustTeamId": "6", "matchType": "group", "userGuess": { "matchType": "group", "matchResult": "equal", "updateTime": 1528401223000, "guessTimes": 1, "userName": "test", "guessResult": "fail", "uid": "9cuTjllpID", "createTime": 1528401223000, "phone": "12000000001", "winTeamId": 3, "awardAmt": 0, "guessId": 3, "matchId": 58034725532467440, "status": false }, "updateTime": 1528398900000, "activityId": "4", "matchLongDate": 0, "createTime": 1528398900000, "gustTeam": { "teamName": "西班牙", "createTime": 1528343048000, "teamId": 6, "logo": "https://file.tiejin.cn/public/9m1Qukt3TM/spain%402x.png", "teamDesc": "B", "updateTime": 1528343048000, "teamStatus": "pending", "status": false }, "winTeamId": "0", "homeTeam": { "teamName": "秘鲁", "createTime": 1528343048000, "teamId": 11, "logo": "https://file.tiejin.cn/public/9m1L3B9E81/peru%402x.png", "teamDesc": "C", "updateTime": 1528343048000, "teamStatus": "pending", "status": false }, "startTime": 1529478900000, "endTime": 1529478900000, "homeTeamId": "11", "matchId": 58034725532467440, "status": false }], "guessResult": true }, "code": 0 };
-                // commit("updateUserGuessResult", data)
+            commit("updateUserGuessResult", data)
 
         },
         async getUserGuessStatistic({ commit, state }, payload) {

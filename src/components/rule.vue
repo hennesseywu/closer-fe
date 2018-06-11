@@ -5,6 +5,7 @@
         活动规则
         <div class="bottom-line"></div>
       </div>
+      <div class="rule activity">本活动奖金与苹果公司无关</div>
       <div class="rule activity">竞猜机会获取规则：</div>
       <div class="rule-ul">
         <div class="item">
