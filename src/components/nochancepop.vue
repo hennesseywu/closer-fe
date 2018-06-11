@@ -19,13 +19,16 @@
 
 <script>
   import Vue from "vue";
-import {downloadApp} from '../utils/utils'
+  import {
+    downloadApp,
+    redirectAddChance
+  } from '../utils/utils'
   import {
     Popup
   } from "mint-ui";
   Vue.component(Popup.name, Popup);
   
-export default {
+  export default {
     name: "pop",
     components: {},
     props: {
@@ -37,8 +40,7 @@ export default {
         type: Boolean,
         default: true
       },
-      count:Number
-      ,
+      count: Number,
       className: String,
       closeOnClickModal: {
         type: Boolean,
@@ -57,11 +59,11 @@ export default {
       close() {
         this.visible = false;
       },
-      download(){
+      download() {
         downloadApp();
       },
       goTips() {
-        window.location.href = 'http://baidu.com/'
+        redirectAddChance();
       }
     }
   };
@@ -119,7 +121,7 @@ export default {
       }
       .pop-text {
         margin-top: 50pr;
-        > span {
+        >span {
           color: #E7461F;
         }
       }
