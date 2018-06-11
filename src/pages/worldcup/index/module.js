@@ -157,7 +157,7 @@ export default {
                         rootState.isNewUser = data.result.isNewUser;
                     }
                     console.log("push worldcupActivity")
-                    Router.push({ path: "/worldcup/activity/" });
+                    Router.push({ name: "worldcupActivity" });
                 }
             }
         }
