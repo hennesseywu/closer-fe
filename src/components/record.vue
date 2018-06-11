@@ -5,7 +5,7 @@
       <div class="coountry" v-if="item.userGuess.guessResult && item.winTeamId == item.homeTeamId">{{item.homeTeam.teamName}}(W) VS {{item.gustTeam.teamName}}</div>
       <div class="coountry" v-else-if="item.userGuess.guessResult && item.winTeamId == item.gustTeamId">{{item.homeTeam.teamName}} VS {{item.gustTeam.teamName}}(W)</div>
       <div class="coountry" v-else>{{item.homeTeam.teamName}} VS {{item.gustTeam.teamName}} </div>
-      <div class="money" v-if="item.userGuess.guessResult">获得{{toYuan(item.userGuess.awardAmt)}}元</div>
+      <div class="money" v-if="item.userGuess.guessResult">获得{{change(item.userGuess.awardAmt)}}元</div>
       <div class="correct-times" v-if="item.userGuess.guessResult">{{item.userGuess.guessResult === 'bingo' ? '正确' : (item.userGuess.guessResult === 'fail' ? '失败' : '待开奖')}}X{{item.userGuess.guessTimes}}</div> 
       <div class="correct-times" v-else>待开奖</div> 
     </div>
@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import {downloadApp} from '../utils/utils'
+import { downloadApp, toYuan } from '../utils/utils'
 export default {
   name: 'records',
   props: {
@@ -42,8 +42,8 @@ export default {
     console.log(this.userGuessList.length)
   },
   methods: {
-    toYuan: function(money) {
-      return (money / 100 + "").substring(".", (money / 100 + "").indexOf(".") + 3)
+    change(money) {
+      return toYuan(money)
     },
     formataDate(date) {
       if (!date) return

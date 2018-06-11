@@ -16,3 +16,8 @@ export function downloadApp() {
         location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer";
     }
 }
+export function toYuan(money) {
+    console.log(1212121)
+    let yuan = money / 100.0;
+    return yuan.toFixed(2);
+}
