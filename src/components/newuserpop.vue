@@ -11,12 +11,12 @@
       </div>
     </div>
     <div class="pop-body box box-tb box-center-center">
-      <div class="win-img" v-if="newUser"></div>
+      <div class="win-img" v-if="presentAvailable"></div>
       <div class="loser-img" v-else></div>
-      <div class="decs" v-if="newUser">“是时候展示真正的技术了！”</div>
+      <div class="decs" v-if="presentAvailable">“是时候展示真正的技术了！”</div>
       <div class="decs" v-else>“去APP找一找会有更多机会”</div>
-      <div class="app-text" v-if="newUser">还有<span>10</span>元新人大礼哟~</div>
-      <div class="app-desc" v-if="newUser">进入【我的钱包】-【奖励金】中领取</div>
+      <div class="app-text" v-if="presentAvailable">还有<span>10</span>元新人大礼哟~</div>
+      <div class="app-desc" v-if="presentAvailable">进入【我的钱包】-【奖励金】中领取</div>
       <!-- <slot></slot> -->
     </div>
     <div class="pop-footer" v-if="!isApp">
@@ -51,7 +51,8 @@ import {downloadApp} from '../utils/utils'
       closeOnClickModal: {
         type: Boolean,
         default: true
-      }
+      },
+      presentAvailable:Boolean
     },
     data() {
       return {

@@ -56,9 +56,12 @@
     },
     created() {
       this.checkIsApp();
-      this.checkLogin();
 
     },
+    beforeMount(){
+      this.checkLogin();
+    }
+    ,
     data() {
       return {
         phone: "",

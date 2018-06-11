@@ -33,7 +33,7 @@ export default {
                 let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
                 console.log("ua", ua);
                 if (ua.indexOf("closer-ios") > -1) {
-                    console.log("closer-ios", window.WebViewJavascriptBridge);
+                    console.log("module closer-ios", window.WebViewJavascriptBridge);
                     if (window.WebViewJavascriptBridge) {
                         setupWebViewJavascriptBridge(function(bridge) {
                             console.log("ios bridge", bridge)
