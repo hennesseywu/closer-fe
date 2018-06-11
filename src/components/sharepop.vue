@@ -1,14 +1,9 @@
 <template>
   <mt-popup v-model="visible" class="share-pop" :closeOnClickModal="closeOnClickModal">
     <div class="close-icon" @click="close()"></div>
-    <div class="pop-header">
-      <div class="winner">
-        <div class="win-text">分享好友~</div>
-      </div>
-    </div>
     <div class="pop-body box box-tb box-center-center">
-      <div class="pop-text" v-if="isApp">截图分享好友吧，一起瓜分<span>600</span>万</div>
-      <div class="pop-text" v-else>打开浏览器分享，一起瓜分<span>600</span>万</div>
+      <div class="pop-text" v-if="isApp"><span>截图分享好友吧</span><br> 一起瓜分<span class="yellow">600</span>万</div>
+      <div class="pop-text" v-else><span>打开浏览器分享</span><br>一起瓜分<span class="yellow">600</span>万</div>
     </div>
     <div class="pop-footer">
       <div class="confirm-btn" @click="close">确认</div>
@@ -85,20 +80,15 @@ export default {
         transform: translate(-50%, -50%) rotate(45deg);
       }
     }
-    .pop-header {
-      margin-top: 56pr;
-      font-size: 32pr;
-      line-height: 44pr;
-      .winner {
-        margin-top: 62pr;
-      }
-    }
     .pop-body {
       font-size: 28pr;
-      line-height: 40pr;
       margin-top: 60pr;
       .pop-text {
-        > span {
+        > span:first-child {
+          font-size: 48pr;
+        }
+        .yellow {
+          margin-top: 20pr;
           font-size: 60pr;
           color: #E7C90D;
         }

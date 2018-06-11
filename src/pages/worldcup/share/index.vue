@@ -116,8 +116,9 @@ export default {
           height: 62pr;
         }
         .middel-label {
+          text-align: center;
           color: #fddb00;
-          font-size: 48pr;
+          font-size: 34pr;
         }
         .right-ball {
           float: right;
@@ -134,7 +135,7 @@ export default {
           background-size: cover;
         }
         .code-tips {
-          font-size: 18pr;
+          font-size: 24pr;
           color: #fff;
         }
       }
