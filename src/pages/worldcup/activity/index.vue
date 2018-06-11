@@ -30,15 +30,15 @@
                   <div class="country country1 box box-tb">
                     <span>{{item.homeTeam.teamName}}</span>
                     <span class="flag">
-                            <img :src="item.homeTeam.logo" alt="主队logo">
-                          </span>
+                              <img :src="item.homeTeam.logo" alt="主队logo">
+                            </span>
                   </div>
                   <div class="vs-img"></div>
                   <div class="country box box-tb">
                     <span>{{item.gustTeam.teamName}}</span>
                     <span class="flag">
-                            <img :src="item.gustTeam.logo" alt="客队logo">
-                          </span>
+                              <img :src="item.gustTeam.logo" alt="客队logo">
+                            </span>
                   </div>
                   <div class="right-arrow box box-center-center" @click="arrowRight()">
                     <span class="img rotate"></span>
@@ -46,15 +46,15 @@
                 </div>
               </div>
               <div class="result box box-lr">
-                <div class="commonsize winner1" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId!=item.userGuess.winTeamId)? 'gray' : 'yellowbg'"  @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess)">
+                <div class="commonsize winner1" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId!=item.userGuess.winTeamId)? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess)">
                   <div class="winbtn">胜利</div>
                   <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</div>
                 </div>
-                <div class="commonsize tie"  :class="!grayBtn || item.userGuess&&item.userGuess.matchResult!='equal' ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'equal',item.userGuess,item.gustTeam.logo)">
-                 <div class="winbtn">平局</div>
+                <div class="commonsize tie" :class="(item.matchType!='group'||(item.matchType=='group'&&item.userGuess&&item.userGuess.matchResult!='equal')) ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'equal',item.userGuess,item.gustTeam.logo)">
+                  <div class="winbtn">平局</div>
                   <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='equal'">X {{item.userGuess.guessTimes}}</span>
-                  </div>
-                <div class="commonsize yellowbg winner2" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId!=item.userGuess.winTeamId) ? 'gray' : 'yellowbg'"  @click="openVotepop(item.gustTeam.teamName,item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win',item.userGuess)">
+                </div>
+                <div class="commonsize yellowbg winner2" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId!=item.userGuess.winTeamId) ? 'gray' : 'yellowbg'" @click="openVotepop(item.gustTeam.teamName,item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win',item.userGuess)">
                   <div class="winbtn">胜利</div>
                   <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</span>
                 </div>
@@ -73,7 +73,8 @@
     <Votepop ref="votepop" :voteInfo="voteInfo" @guessMatch="guessMatch" :totalChance="userGuessStatistic.totalChance"></Votepop>
     <Record ref="record" :showRecord="showRecord" :userGuessList="userGuessList"></Record>
     <Newuserpop ref="newuserpop" v-if="recieveChanceInfo.presentAvailable" :newUser="recieveChanceInfo.status" :isApp="isApp" :count="recieveChanceInfo.count"></Newuserpop>
-    <Winpop ref="winpop" v-if="typeof(userGuessResult.guessResult)!='undefined'"  @jumpTo="redirectTo" :guessResult="userGuessResult.guessResult" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList" :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
+    <Winpop ref="winpop" v-if="typeof(userGuessResult.guessResult)!='undefined'" @jumpTo="redirectTo" :guessResult="userGuessResult.guessResult" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList"
+      :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
     <Nochancepop ref="nochancepop"></Nochancepop>
   </div>
 </template>
@@ -96,7 +97,9 @@
   import Winpop from '../../../components/winpop.vue'
   import Getapp from '../../../components/getapp.vue'
   import Nochancepop from '../../../components/nochancepop.vue'
-import {redirectAddChance} from '../../../utils/utils';
+  import {
+    redirectAddChance
+  } from '../../../utils/utils';
   
   
   export default {
@@ -136,10 +139,12 @@ import {redirectAddChance} from '../../../utils/utils';
       this.checkUser();
       this.getUserGuessStatistic();
       this.checkGuessResult();
-      this.checkRecieveChance( {channelCode:this.$store.state.CHANNEL_CODE});
+      this.checkRecieveChance({
+        channelCode: this.$store.state.CHANNEL_CODE
+      });
     },
     mounted() {
-      if(this.userGuessStatistic.totalChance == 0) {
+      if (this.userGuessStatistic.totalChance == 0) {
         this.$refs.nochancepop.open()
       }
     },
@@ -156,39 +161,39 @@ import {redirectAddChance} from '../../../utils/utils';
         // 'guessMatch'
         // 'getUserGuessStatistic'
       ]),
-      arrowRight(){
+      arrowRight() {
         this.$refs.swipe.next();
       },
-      arrowLeft(){
+      arrowLeft() {
         this.$refs.swipe.prev();
       },
-      openVotepop(teamName,logo, matchId, winTeamId, matchResult,userGuess,gustTeamLogo) {
-        console.log(winTeamId,"--",matchResult,"---",userGuess)
+      openVotepop(teamName, logo, matchId, winTeamId, matchResult, userGuess, gustTeamLogo) {
+        console.log(winTeamId, "--", matchResult, "---", userGuess)
         console.log(this.userGuessStatistic.totalChance);
-        if(this.userGuessStatistic.totalChance == 0) {
+        if (this.userGuessStatistic.totalChance == 0) {
           this.$refs.nochancepop.open()
           return
         }
-        if(this.userGuessStatistic&&this.userGuessStatistic.totalChance==0){
+        if (this.userGuessStatistic && this.userGuessStatistic.totalChance == 0) {
           console.log("没有机会了");
           return;
         }
         // console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
-        if((userGuess&&userGuess.matchResult=="win"&&(matchResult!="win"||userGuess.winTeamId!=winTeamId))||(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal")){
+        if ((userGuess && userGuess.matchResult == "win" && (matchResult != "win" || userGuess.winTeamId != winTeamId)) || (userGuess && userGuess.matchResult == "equal" && matchResult != "equal")) {
           Toast("只能投注已选队伍");
-            return;
+          return;
         }
-        let guessInfo={
-          logo:logo,
-          matchId:matchId,
-          winTeamId:winTeamId,
-          matchResult:matchResult
+        let guessInfo = {
+          logo: logo,
+          matchId: matchId,
+          winTeamId: winTeamId,
+          matchResult: matchResult
         }
-         if(teamName){
-              guessInfo['teamName']=teamName
+        if (teamName) {
+          guessInfo['teamName'] = teamName
         }
-        if(gustTeamLogo){
-              guessInfo['gustTeamLogo']=gustTeamLogo
+        if (gustTeamLogo) {
+          guessInfo['gustTeamLogo'] = gustTeamLogo
         }
         this.setVoteInfo(guessInfo)
         this.$refs.votepop.open()
@@ -204,7 +209,7 @@ import {redirectAddChance} from '../../../utils/utils';
       getHours(date) {
         if (!date) return
         let hours = date.getHours()
-        let minutes=date.getMinutes();
+        let minutes = date.getMinutes();
         return (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes)
       },
       showRules() {
@@ -223,8 +228,8 @@ import {redirectAddChance} from '../../../utils/utils';
         let userId = ""
         let amount = 0;
         console.log(Cookies.get("totalAwardAmt"))
-        if(Cookies.get("totalAwardAmt")){
-          amount=Cookies.get("totalAwardAmt");
+        if (Cookies.get("totalAwardAmt")) {
+          amount = Cookies.get("totalAwardAmt");
         }
         if (Cookies.get("user")) {
           let user = JSON.parse(Cookies.get("user"))
@@ -232,11 +237,17 @@ import {redirectAddChance} from '../../../utils/utils';
             userId = user.objectID //.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
           }
         }
-        this.$router.push({ name: "worldcupShare" ,params:{userId:userId,amount:amount}});
+        this.$router.push({
+          name: "worldcupShare",
+          params: {
+            userId: userId,
+            amount: amount
+          }
+        });
       },
       addChance() {
         redirectAddChance(this.$store.state.IS_APP);
-
+  
       }
     }
   }
@@ -356,7 +367,7 @@ import {redirectAddChance} from '../../../utils/utils';
             .country {
               margin-top: 28pr;
               font-size: 24pr;
-              > span:first-child {
+              >span:first-child {
                 text-align: center;
               }
               .flag {
