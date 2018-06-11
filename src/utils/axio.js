@@ -15,11 +15,19 @@ axios.interceptors.request.use(
         //     reqUrl = feConfig.serverUrl;
         // }
         config.url = reqUrl;
-        config.headers['Closer-Agent'] = 'Closer-H5';
+        if (!Store.state.IS_APP) {
+            config.headers['Closer-Agent'] = 'Closer-H5';
+        } else {
+            if (Store.state.UA.indexOf("closer-android") > -1) {
+                config.headers['Closer-Agent'] = 'Closer-Ios';
+            } else if (Store.state.UA.indexOf('closer-android') > -1) {
+                config.headers['Closer-Agent'] = 'Closer-Android';
+            }
+        }
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
-        console.log("axio req header", Indicator)
+        console.log("axio req header", config)
         Indicator.open()
         return config;
 

@@ -30,7 +30,7 @@ export default {
     actions: {
         checkLogin({ state, rootState }) {
             if (rootState.IS_APP) { //app内打开 ios补救措施
-                let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
+                let ua = Store.state.UA;
                 console.log("ua", ua);
                 if (ua.indexOf("closer-ios") > -1) {
                     console.log("module closer-ios", window.WebViewJavascriptBridge);
@@ -60,7 +60,8 @@ export default {
         openLoginBox({ state, rootState }) {
             console.log("rootState", rootState)
             if (rootState.IS_APP) { //app内打开
-                let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
+                let ua = navigator.userAgent || window.navigator.userAgent;
+                ua = ua.toLowerCase;
                 console.log("ua", ua);
                 if (ua.indexOf("closer-android") > -1) {
                     console.log("android", typeof window.bridge != "undefined")

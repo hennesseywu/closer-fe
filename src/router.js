@@ -48,8 +48,8 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
         document.title = meta.title ? meta.title : '贴近'
     }, 500)
 
-    let ua = navigator.userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase();
-    Store.state.UA = ua;
+    let ua = navigator.userAgent || window.navigator.userAgent;
+    Store.state.UA = ua.toLowerCase();
     if (ua.indexOf("closer-android") != -1 || ua.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
         console.log("isApp true");
