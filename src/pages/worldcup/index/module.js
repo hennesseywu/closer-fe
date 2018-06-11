@@ -29,6 +29,7 @@ export default {
     },
     actions: {
         checkLogin({ state, rootState }) {
+            console.log("checkLogin");
             if (rootState.IS_APP) { //app内打开 ios补救措施
                 let ua = Store.state.UA;
                 console.log("ua", ua);
