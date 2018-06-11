@@ -11,7 +11,7 @@
       <div class="pop-text">“在贴近app的文章里、酒吧里、<br> 广告牌里寻找<span>机会</span>吧</div>
     </div>
     <div class="pop-footer">
-      <div class="confirm-btn" @click="close">确认</div>
+      <div class="confirm-btn" @click="download()">进入App中使用</div>
       <div class="tips" @click="goTips">增加机会 查看攻略</div>
     </div>
   </mt-popup>
@@ -19,6 +19,7 @@
 
 <script>
   import Vue from "vue";
+import {downloadApp} from '../utils/utils'
   import {
     Popup
   } from "mint-ui";
@@ -55,6 +56,9 @@ export default {
       },
       close() {
         this.visible = false;
+      },
+      download(){
+        downloadApp();
       },
       goTips() {
         window.location.href = 'http://baidu.com/'
@@ -125,7 +129,7 @@ export default {
       line-height: 44pr;
       color: #4B4945;
       .confirm-btn {
-        padding: 20pr 70pr;
+        padding: 20pr 40pr;
         margin: 30pr 160pr 20pr;
         background: #FDDB00;
         border-radius: 50pr;

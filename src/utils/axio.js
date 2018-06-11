@@ -14,10 +14,11 @@ axios.interceptors.request.use(
             reqUrl = feConfig.serverUrl + config.url;
         }
         config.url = reqUrl;
+        console.log("ua---", Store.state.UA)
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
         } else {
-            if (Store.state.UA.indexOf("closer-android") > -1) {
+            if (Store.state.UA.indexOf("closer-ios") > -1) {
                 config.headers['Closer-Agent'] = 'Closer-Ios';
             } else if (Store.state.UA.indexOf('closer-android') > -1) {
                 config.headers['Closer-Agent'] = 'Closer-Android';

@@ -50,7 +50,8 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
 
     let ua = navigator.userAgent || window.navigator.userAgent;
     Store.state.UA = ua.toLowerCase();
-    if (ua.indexOf("closer-android") != -1 || ua.indexOf("closer-ios") != -1) {
+    console.log("ua222xxx", ua);
+    if (ua.indexOf("closer-android") > -1 || ua.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
         console.log("isApp true");
     }
