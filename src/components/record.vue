@@ -9,7 +9,7 @@
       <div class="correct-times" v-if="item.userGuess.guessResult">{{item.userGuess.guessResult === 'bingo' ? '正确' : (item.userGuess.guessResult === 'fail' ? '失败' : '待开奖')}}X{{item.userGuess.guessTimes}}</div> 
       <div class="correct-times" v-else>待开奖</div> 
     </div>
-    <div class="btn-goapp"  v-if="userGuessList.length > 0 && !isApp" @click="goApp">去APP提现</div>
+    <div class="btn-goapp"  v-if="userGuessList.length > 0 && !isApp" @click="goApp">去提现</div>
     <div class="no-record" v-if="userGuessList.length == 0">
       您还没有投注过哦~快去参与拿大奖吧
     </div>
@@ -87,8 +87,8 @@ export default {
     }
   }
   .btn-goapp {
-    margin: 60pr 350pr 40pr;
-    width: 300pr;
+    margin: 60pr 370pr 40pr;
+    width: 280pr;
     height: 80pr;
     line-height: 80pr;
     text-align: center;

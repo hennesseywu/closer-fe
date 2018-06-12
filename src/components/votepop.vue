@@ -141,7 +141,8 @@ export default {
       width: 128pr;
       height: 128pr;
       border-radius: 100%;
-      background: #fff;
+      background: url('../assets/images/flag_bg.png') no-repeat center;
+      background-size: cover;
       > img {
         width: 110pr;
         height: 110pr;
