@@ -268,10 +268,10 @@ export default {
   padding-bottom: 20pr;
   .wrapper {
     border: 1px solid black;
-    height: 1206pr;
+    height: 1418pr;
     padding-top: 1pr;
     padding-bottom: 60pr;
-    background: url("../../../assets/images/activity_bg.jpg") no-repeat center;
+    background: url("../../../assets/images/bg2.png") no-repeat center;
     background-size: cover;
   }
   .code-img {
@@ -306,6 +306,7 @@ export default {
     height: 44pr;
     line-height: 44pr;
     .left {
+      width: 100%;
       font-size: 32pr;
       .chance-box {
         > span {

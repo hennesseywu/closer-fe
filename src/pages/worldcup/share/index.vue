@@ -74,7 +74,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("../../../assets/images/bg.png") no-repeat center center;
+    background: url("../../../assets/images/bg2.png") no-repeat center center;
     background-size: cover;
     .invite-img {
       position: absolute;

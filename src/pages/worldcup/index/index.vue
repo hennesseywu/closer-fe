@@ -115,9 +115,9 @@
     background: #000d01;
     padding-bottom: 8pr;
     .wrapper {
-      height: 1406pr;
+      height: 1440pr;
       padding-top: 1pr;
-      background: url("../../../assets/images/index_bg.jpg") no-repeat center center;
+      background: url("../../../assets/images/bg1.png") no-repeat center center;
       background-size: cover;
       .code-img {
       margin-top: 48pr;
