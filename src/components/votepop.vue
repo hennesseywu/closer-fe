@@ -21,7 +21,7 @@
         </div>
         <span>次机会</span> 
       </div>
-      <div class="add-vote" @click="goTips"><span v-if="showText">{{textTip}}</span> 增加机会 查看攻略</div>
+      <div class="add-vote" @click="addChance"><span v-if="showText">{{textTip}}</span> 增加机会 查看攻略</div>
     </div>
     <div class="pop-footer box box-lr box-center-center">
       <div class="other-btn" @click="close">再想想</div>
@@ -32,6 +32,7 @@
 <script>
 import Vue from "vue";
 import { Popup, Toast } from "mint-ui";
+import { redirectAddChance } from "../utils/utils";
 Vue.component(Popup.name, Popup);
 
 export default {
@@ -127,8 +128,8 @@ export default {
         this.close()
       },500)
     },
-    goTips() {
-      window.location.href = 'http://baidu.com/'
+    addChance() {
+      redirectAddChance(this.$store.state.IS_APP);
     }
   }
 };
