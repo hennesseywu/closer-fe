@@ -16,7 +16,7 @@
         <span>使用</span>
         <div class="vbox">
           <span class="reduce" @click="reduce">-</span>
-          <input class="input" type="text" ref="chance" v-model="chance" @blur="onblur">
+          <input class="input" type="text" ref="chance" v-model="inputChance" @blur="onblur">
           <span class="add" @click="add">+</span>
         </div>
         <span>次机会</span> 
