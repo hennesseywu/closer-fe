@@ -303,10 +303,10 @@ export default {
     margin-top: 248pr;
     text-align: center;
     color: #fff;
-    height: 44pr;
-    line-height: 44pr;
+    height: 104pr;
+    background: url('../../../assets/images/rectangle.png') no-repeat center;
+    background-size: cover;
     .left {
-      width: 100%;
       font-size: 32pr;
       .chance-box {
         > span {
