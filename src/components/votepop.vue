@@ -121,6 +121,7 @@ export default {
         this.showText=true; 
         return;
       }
+      console.log('vote---this.chance', this.chance)
       voteInfo['guessTimes']=this.chance;
       console.log("confirm",voteInfo)
       this.$emit('guessMatch',voteInfo)
