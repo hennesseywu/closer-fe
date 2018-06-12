@@ -77,7 +77,7 @@
         win: false,
         buttonText: '炫耀一下',
         isShow: false,
-        notAccessVisible: true
+        notAccessVisible: false
   
       };
     },
