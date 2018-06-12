@@ -78,7 +78,7 @@ export default {
     },
     checkChance() {
       this.showText = false
-      if(this.inputChance >=this.totalChance || this.chance >= this.totalChance) {
+      if(this.inputChance > this.totalChance || this.chance > this.totalChance) {
         this.showText = true
         this.textTip="机会不足"
       } else {
@@ -92,11 +92,12 @@ export default {
     },
     add() {
       this.checkChance();
-      if(this.chance >=this.totalChance) {
-          this.chance=this.totalChance
-      }else{
-        this.chance++
-      }
+      this.chance++ 
+      if(this.chance > this.totalChance) {
+          this.chance = this.totalChance
+          this.showText = true
+          this.textTip="机会不足"
+        }
     },
     reduce() {
       if(this.chance > 1) {
@@ -105,8 +106,10 @@ export default {
       this.checkChance()
     },
     confirm(voteInfo) {
-      // this.checkChance()
-      if(this.showText) return;
+      if(this.chance = this.totalChance) {
+        this.showText = false
+      }
+      if(this.chance > this.totalChance) return
       if(!(/^[1-9]+[0-9]*]*$/.test(this.chance))){
         this.textTip="请输入正整数";
         this.showText=true; 
@@ -117,7 +120,7 @@ export default {
         this.textTip="投注次数不能为0";
         this.showText=true; 
         return;
-        }
+      }
       voteInfo['guessTimes']=this.chance;
       console.log("confirm",voteInfo)
       this.$emit('guessMatch',voteInfo)
