@@ -67,13 +67,9 @@ export default {
   width: 100%;
   height: 100%;
   .wrapper {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    padding-top: 1pr;
     width: 100%;
-    height: 100%;
+    height: 1418pr;
     background: url("../../../assets/images/bg2.png") no-repeat center center;
     background-size: cover;
     .invite-img {
