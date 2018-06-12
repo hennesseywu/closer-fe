@@ -289,6 +289,7 @@ export default {
     color: #fff;
   }
   .invite-img {
+    z-index: 999;
     position: fixed;
     top: 48pr;
     right: 0;
