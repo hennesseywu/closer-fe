@@ -3,18 +3,12 @@
     <div class="wrapper">
       <div class="invite-img" @click="share"></div>
       <div class="share-box">
-        <div class="title">
-          <span>{{desc}}</span>
-        </div>
         <div class="content">
-          <img class="left-ball" src="../../../assets/images/left_ball.png"> 
-          <div class="middel-label">参与竞猜就有钱拿<br>奖金600万</div>
-          <img class="right-ball" src="../../../assets/images/right_ball.png">
+          <div class="text">你的好友正在参与竞猜</div>
+          <div class="text-yellow">截图分享600万</div>
           <div class="code-img"></div>
-          <div class="code-tips">扫码瓜分600万</div>
-        </div>
-        <div class="bottom">
-          <button class="enter-button" @click="goHome()">{{buttonDesc}}</button>
+          <div class="btn-img" @click="goHome"></div>
+          <div class="text-img">“每天分钱 闷起脑壳发财”</div>
         </div>
       </div>
     </div>
@@ -38,10 +32,6 @@ export default {
   },
   data() {
     return {
-      desc: "",
-      isSelf: false,
-      amount: 0,
-      buttonDesc: "去瓜分600万",
       isApp:false
     };
   },
@@ -49,10 +39,7 @@ export default {
   created() {
     this.isApp=this.$store.state.IS_APP
     if (this.isApp) {
-      Toast({
-        message: "截图分享好友哦",
-        duration: 5000
-      });
+      
     }
   },
   methods: {
@@ -64,8 +51,12 @@ export default {
       });
     },
     share() {
-      console.log("vadfadfadfadfadfadf");
-      this.$refs.sharepop.open();
+      if(this.isApp) {
+        this.$refs.sharepop.open();
+      } else {
+        Toast('点击右上角浏览器打开')
+      }
+      
     }
   }
 };
@@ -94,48 +85,42 @@ export default {
       background: url("../../../assets/images/share.png") no-repeat center;
       background-size: cover;
     }
-    .share-box {
-      left: 2%;
-      width: 96%;
-      top: 536pr;
-      background: #041c4d;
-      position: absolute;
-      border-radius: 12pr;
-      text-align: center;
-      color: #ffffff;
-      .title {
-        margin-top: 60pr;
-        font-size: 14pr;
-      }
+    
       .content {
-        margin: 20pr 0 60pr 0;
-        .left-ball {
-          float: left;
-          margin-left: 39pr;
-          width: 92;
-          height: 62pr;
+        text-align: center;
+        width: 614pr;
+        height: 702pr;
+        margin: 510pr auto 0;
+        background: url("../../../assets/images/share_bg1.png") no-repeat center;
+        background-size: cover;
+        .text {
+          font-size: 48pr;
+          color: #fff;
+          margin-top: 48pr;
         }
-        .middel-label {
-          text-align: center;
-          color: #fddb00;
-          font-size: 34pr;
-        }
-        .right-ball {
-          float: right;
-          margin-right: 39pr;
-          width: 92pr;
-          height: 62pr;
+        .text-yellow {
+          font-size: 72pr;
+          line-height: 100pr;
+          color: #FDDB00;
+          margin-top: 4pr;
         }
         .code-img {
-          margin: 30pr auto;
-          width: 200pr;
-          height: 200pr;
-          background: url("../../../assets/images/test_code.png") no-repeat
-            center;
+          margin: 22pr auto 0;
+          width: 218pr;
+          height: 218pr;
+          background: url('../../../assets/images/test_code.png') no-repeat center;
           background-size: cover;
         }
-        .code-tips {
+        .btn-img {
+          width: 288pr;
+          height: 88pr;
+          margin: 62pr auto 0;
+          background: url('../../../assets/images/share_btn1.png') no-repeat center;
+          background-size: cover;
+        }
+        .text-img {
           font-size: 24pr;
+          margin-top: 12pr;
           color: #fff;
         }
       }
@@ -149,7 +134,7 @@ export default {
           color: #4b4945;
         }
       }
-    }
+    
   }
 }
 </style>

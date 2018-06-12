@@ -99,27 +99,12 @@
         redirectAddChance(this.$store.state.IS_APP);
       },
       openShare() {
-        if(!this.isApp) {
+        if(this.isApp) {
           this.$refs.sharepop.open()
         } else {
           Toast('点击右上角浏览器打开')
         }
       }
-      // redirectTo() {
-      //   let userId = ""
-      //   let amount = 0;
-      //   console.log(Cookies.get("totalAwardAmt"))
-      //   if(Cookies.get("totalAwardAmt")){
-      //     amount=Cookies.get("totalAwardAmt");
-      //   }
-      //   if (Cookies.get("user")) {
-      //     let user = JSON.parse(Cookies.get("user"))
-      //     if (user.objectID) {
-      //       userId = user.objectID //.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
-      //     }
-      //   }
-      //   this.$router.push({ name: "worldcupShare" ,params:{userId:userId,amount:amount}});
-      // }
     }
   
   };
