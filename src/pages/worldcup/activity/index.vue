@@ -50,15 +50,15 @@
               <div class="result box box-lr">
                 <div class="commonsize winner1" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId!=item.userGuess.winTeamId)? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess,false,item.matchType)">
                   <div class="winbtn">胜利</div>
-                  <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</div>
+                  <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">x{{item.userGuess.guessTimes}}</div>
                 </div>
                 <div class="commonsize tie" v-if="item.matchType=='group'" :class="(item.userGuess&&item.userGuess.matchResult!='equal') ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'equal',item.userGuess,item.gustTeam.logo,item.matchType)">
                   <div class="winbtn">平局</div>
-                  <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='equal'">X {{item.userGuess.guessTimes}}</span>
+                  <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='equal'">x{{item.userGuess.guessTimes}}</span>
                 </div>
                 <div class="commonsize ml yellowbg winner2" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId!=item.userGuess.winTeamId) ? 'gray' : 'yellowbg'" @click="openVotepop(item.gustTeam.teamName,item.gustTeam.logo,item.matchId,item.gustTeam.teamId,'win',item.userGuess,false,item.matchType)">
                   <div class="winbtn">胜利</div>
-                  <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId==item.userGuess.winTeamId">X {{item.userGuess.guessTimes}}</span>
+                  <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.gustTeam.teamId==item.userGuess.winTeamId">x{{item.userGuess.guessTimes}}</span>
                 </div>
               </div>
             </div>
@@ -430,16 +430,20 @@ export default {
       .result {
         margin-top: 14pr;
         .commonsize {
+          position: relative;
           font-size: 28pr;
           .times {
             position: absolute;
-            top: -30pr;
-            right: -25pr;
+            top: -25pr;
+            right: -23pr;
             color: #fff;
             font-size: 20pr;
             background: #d7373f;
             border-radius: 100%;
-            padding: 5pr 8pr;
+            padding: 0 9pr;
+            > span {
+              font-size: 14pr;
+            }
           }
         }
         .yellowbg {
