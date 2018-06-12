@@ -435,7 +435,7 @@ export default {
           .times {
             position: absolute;
             top: -25pr;
-            right: -23pr;
+            right: -20pr;
             color: #fff;
             font-size: 20pr;
             background: #d7373f;
