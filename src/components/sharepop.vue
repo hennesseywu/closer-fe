@@ -1,14 +1,8 @@
 <template>
   <mt-popup v-model="visible" class="share-pop" :closeOnClickModal="closeOnClickModal">
     <div class="close-icon" @click="close()"></div>
-    <div class="pop-body box box-tb box-center-center">
-      <div class="pop-text" v-if="isApp"><span>截图分享好友吧</span><br> 一起瓜分<span class="yellow">600</span>万</div>
-      <div class="pop-text" v-else><span>打开浏览器分享</span><br>一起瓜分<span class="yellow">600</span>万</div>
-    </div>
-    <div class="pop-footer">
-      <div class="confirm-btn" @click="close">确认</div>
-      <div class="tips">长按识别二维码就可以参加活动</div>
-    </div>
+    <div class="pop-body box box-tb box-center-center"></div>
+    <div class="pop-footer"></div>
   </mt-popup>
 </template>
 
@@ -51,62 +45,32 @@ export default {
 
 <style lang="less" scoped>
   .share-pop {
-    width: 590pr;
-    border-radius: 10pr;
-    background: #fff;
-    text-align: center;
-    color: #4b4945;
-    padding-bottom: 40pr;
+    width: 618pr;
+    height: 730pr;
+    background: url('../assets/images/share_bg.png') no-repeat center;
+    background-size: cover;
     .close-icon {
       position: absolute;
       right: 20pr;
       top: 20pr;
-      width: 24pr;
-      height: 24pr;
-      &::before,
-      &::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 2px;
-        height: 24pr;
-        background-color: #9b9b9b;
-      }
-      &::before {
-        transform: translate(-50%, -50%) rotate(-45deg);
-      }
-      &::after {
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
+      width: 42pr;
+      height: 42pr;
+      background: url('../assets/images/share_close.png') no-repeat center;
+      background-size: cover;
     }
     .pop-body {
-      font-size: 28pr;
-      margin-top: 60pr;
-      .pop-text {
-        > span:first-child {
-          font-size: 48pr;
-        }
-        .yellow {
-          margin-top: 20pr;
-          font-size: 60pr;
-          color: #E7C90D;
-        }
-      }
+      margin: 274pr auto 0;
+      width: 226pr;
+      height: 226pr;
+      background: url('../assets/images/test_code.png') no-repeat center;
+      background-size: cover;
     }
     .pop-footer {
-      font-size: 24pr;
-      line-height: 44pr;
-      color: #4B4945;
-      .confirm-btn {
-        padding: 20pr 70pr;
-        margin: 30pr 160pr 26pr;
-        background: #FDDB00;
-        border-radius: 50pr;
-      }
-      .tips {
-        color: #E7760D;
-      }
+      margin: 78pr auto 0;
+      width: 306pr;
+      height: 104pr;
+      background: url('../assets/images/share_btn.png') no-repeat center;
+      background-size: cover;
     }
   }
 </style>
