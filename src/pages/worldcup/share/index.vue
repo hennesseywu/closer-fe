@@ -32,14 +32,13 @@ export default {
   },
   data() {
     return {
-      isApp:false
+      isApp: false
     };
   },
   computed: {},
   created() {
-    this.isApp=this.$store.state.IS_APP
+    this.isApp = this.$store.state.IS_APP;
     if (this.isApp) {
-      
     }
   },
   methods: {
@@ -51,12 +50,11 @@ export default {
       });
     },
     share() {
-      if(this.isApp) {
+      if (this.isApp) {
         this.$refs.sharepop.open();
       } else {
-        Toast('点击右上角浏览器打开')
+        Toast("点击右上角浏览器打开");
       }
-      
     }
   }
 };
@@ -65,11 +63,13 @@ export default {
 <style lang="less" scoped>
 .index {
   width: 100%;
-  height: 100%;
   .wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     padding-top: 1pr;
-    width: 100%;
-    height: 1418pr;
     background: url("../../../assets/images/bg2.png") no-repeat center center;
     background-size: cover;
     .invite-img {
@@ -81,56 +81,56 @@ export default {
       background: url("../../../assets/images/share.png") no-repeat center;
       background-size: cover;
     }
-    
-      .content {
-        text-align: center;
-        width: 614pr;
-        height: 702pr;
-        margin: 510pr auto 0;
-        background: url("../../../assets/images/share_bg1.png") no-repeat center;
+
+    .content {
+      text-align: center;
+      width: 614pr;
+      height: 702pr;
+      margin: 470pr auto 0;
+      background: url("../../../assets/images/share_bg1.png") no-repeat center;
+      background-size: cover;
+      .text {
+        font-size: 48pr;
+        color: #fff;
+        padding-top: 48pr;
+      }
+      .text-yellow {
+        font-size: 72pr;
+        line-height: 100pr;
+        color: #fddb00;
+        margin-top: 4pr;
+      }
+      .code-img {
+        margin: 22pr auto 0;
+        width: 218pr;
+        height: 218pr;
+        background: url("../../../assets/images/test_code.png") no-repeat center;
         background-size: cover;
-        .text {
-          font-size: 48pr;
-          color: #fff;
-          margin-top: 48pr;
-        }
-        .text-yellow {
-          font-size: 72pr;
-          line-height: 100pr;
-          color: #FDDB00;
-          margin-top: 4pr;
-        }
-        .code-img {
-          margin: 22pr auto 0;
-          width: 218pr;
-          height: 218pr;
-          background: url('../../../assets/images/test_code.png') no-repeat center;
-          background-size: cover;
-        }
-        .btn-img {
-          width: 288pr;
-          height: 88pr;
-          margin: 62pr auto 0;
-          background: url('../../../assets/images/share_btn1.png') no-repeat center;
-          background-size: cover;
-        }
-        .text-img {
-          font-size: 24pr;
-          margin-top: 12pr;
-          color: #fff;
-        }
       }
-      .bottom {
-        .enter-button {
-          width: 372pr;
-          height: 80pr;
-          margin: 0 87pr 60pr 87pr;
-          background: #fddb00;
-          border-radius: 50pr;
-          color: #4b4945;
-        }
+      .btn-img {
+        width: 288pr;
+        height: 88pr;
+        margin: 62pr auto 0;
+        background: url("../../../assets/images/share_btn1.png") no-repeat
+          center;
+        background-size: cover;
       }
-    
+      .text-img {
+        font-size: 24pr;
+        margin-top: 12pr;
+        color: #fff;
+      }
+    }
+    .bottom {
+      .enter-button {
+        width: 372pr;
+        height: 80pr;
+        margin: 0 87pr 60pr 87pr;
+        background: #fddb00;
+        border-radius: 50pr;
+        color: #4b4945;
+      }
+    }
   }
 }
 </style>
