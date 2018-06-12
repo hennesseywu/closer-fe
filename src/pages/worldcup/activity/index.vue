@@ -428,14 +428,9 @@ export default {
         }
       }
       .result {
-        margin: 34pr;
-        padding-bottom: 40pr;
+        margin-top: 14pr;
         .commonsize {
-          position: relative;
           font-size: 28pr;
-          line-height: 44pr;
-          padding: 18pr 38pr;
-          border-radius: 30pr;
           .times {
             position: absolute;
             top: -30pr;
@@ -449,7 +444,10 @@ export default {
         }
         .yellowbg {
           color: #4b4945;
-          background: rgba(249, 219, 2, 1);
+          height: 118pr;
+          line-height: 68pr;
+          background: url('../../../assets/images/btn_bg.png') no-repeat center;
+          background-size: cover;
         }
         .winner1 {
           margin-left: 70pr;
@@ -459,7 +457,10 @@ export default {
         }
         .gray {
           color: #fff;
-          background: #bfbfbf;
+          height: 118pr;
+          line-height: 68pr;
+          background: url('../../../assets/images/gray_btn.png') no-repeat center;
+          background-size: cover;
         }
         .ml {
           position: absolute;
@@ -492,7 +493,7 @@ export default {
     }
   }
   .rule_record {
-    margin: -150pr 16pr 0 16pr;
+    margin: -300pr 16pr 0 16pr;
     font-size: 28pr;
     line-height: 40pr;
     color: #92b3f8;
