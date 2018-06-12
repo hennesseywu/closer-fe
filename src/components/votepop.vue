@@ -122,7 +122,8 @@ export default {
         return;
       }
       console.log('vote---this.chance', this.chance)
-      voteInfo['guessTimes']=this.chance;
+      console.log('vote---this.inputChance', this.inputChance)
+      voteInfo['guessTimes']=this.inputChance;
       console.log("confirm",voteInfo)
       this.$emit('guessMatch',voteInfo)
       setTimeout(()=>{
