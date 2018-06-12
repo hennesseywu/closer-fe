@@ -92,7 +92,7 @@
         this.notAccessVisible = false;
       },
       jumpToShare: function() {
-        console.log('toshare')
+        console.log('share-pop________=====______toshare')
         this.$router.push({
           name: "worldcupShare"
         })

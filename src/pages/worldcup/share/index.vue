@@ -73,7 +73,8 @@ export default {
     background: url("../../../assets/images/bg2.png") no-repeat center center;
     background-size: cover;
     .invite-img {
-      position: absolute;
+      position: fixed;
+      z-index: 999;
       top: 48pr;
       right: 0;
       width: 128pr;

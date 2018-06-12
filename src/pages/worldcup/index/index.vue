@@ -134,7 +134,8 @@
         color: #fff;
       }
       .invite-img {
-        position: absolute;
+        position: fixed;
+        z-index: 999;;
         top: 48pr;
         right: 0;
         width: 128pr;
