@@ -11,8 +11,8 @@ import axio from './utils/axio'
 import Cookies from 'js-cookie';
 
 // vconsole 调试
-import Vconsole from 'vconsole'
-var vconsole = new Vconsole()
+// import Vconsole from 'vconsole'
+// var vconsole = new Vconsole()
 
 window.axios = axio;
 window.Cookies = Cookies;
