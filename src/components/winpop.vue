@@ -27,7 +27,10 @@
         </div>
         <div class="match">
           <div class="detail-box box box-lr" v-for="(item,index) in matchList" :key="index">
-            <span class="detail">{{item.homeTeam.teamName}} vs {{item.gustTeam.teamName}}</span><span class="guess">{{item.matchDesc}}</span>
+            <span class="detail" v-if="item.matchResult = 'win' && item.winTeamId == item.homeTeamId">{{item.homeTeam.teamName}}(W) vs {{item.gustTeam.teamName}}</span>
+            <span class="detail" v-else-if="item.matchResult = 'win' && item.winTeamId == item.gustTeamId">{{item.homeTeam.teamName}} vs {{item.gustTeam.teamName}}(W)</span>
+            <span class="detail" v-else>{{item.homeTeam.teamName}} vs {{item.gustTeam.teamName}}</span>
+            <span class="guess">{{item.matchDesc}}</span>
           </div>
         </div>
       </div>
@@ -89,6 +92,7 @@
         this.notAccessVisible = false;
       },
       jumpToShare: function() {
+        console.log('toshare')
         this.$router.push({
           name: "worldcupShare"
         })
