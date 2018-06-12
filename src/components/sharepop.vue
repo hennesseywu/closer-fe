@@ -2,7 +2,7 @@
   <mt-popup v-model="visible" class="share-pop" :closeOnClickModal="closeOnClickModal">
     <div class="close-icon" @click="close()"></div>
     <div class="pop-body box box-tb box-center-center"></div>
-    <div class="pop-footer"></div>
+    <div class="pop-footer" @click="close"></div>
   </mt-popup>
 </template>
 

@@ -3,7 +3,7 @@
     <div class="wrapper">
       <div class="code-img"></div>
       <div class="code-tips">扫码瓜分600万</div>
-      <div class="invite-img" @click="openSharePop"></div>
+      <div class="invite-img" @click="openShare"></div>
       <div class="text-desc">
         <span class="desc">扫描寻找二维码，可获得更多竞猜机会</span>
         <span class="tips" @click="redirect2Chance()">查看攻略</span>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  import { Toast } from 'mint-ui'
   import Rule from '../../../components/rule.vue';
   import Loginpop from '../../../components/loginpop.vue';
   import Newuserpop from '../../../components/newuserpop.vue';
@@ -53,6 +54,7 @@
   export default {
     name: 'index',
     components: {
+      Toast,
       Rule,
       Loginpop,
       Newuserpop,
@@ -96,8 +98,12 @@
       },redirect2Chance(){
         redirectAddChance(this.$store.state.IS_APP);
       },
-      openSharePop() {
-        this.$refs.sharepop.open()
+      openShare() {
+        if(!this.isApp) {
+          this.$refs.sharepop.open()
+        } else {
+          Toast('点击右上角浏览器打开')
+        }
       }
       // redirectTo() {
       //   let userId = ""

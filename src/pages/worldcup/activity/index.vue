@@ -3,7 +3,7 @@
     <div class="wrapper">
       <div class="code-img"></div>
       <div class="code-tips">扫码瓜分600万</div>
-      <div class="invite-img" @click="openSharePop"></div>
+      <div class="invite-img" @click="openShare"></div>
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
@@ -251,9 +251,13 @@ export default {
     addChance() {
       redirectAddChance(this.$store.state.IS_APP);
     },
-    openSharePop() {
-      this.$refs.sharepop.open();
-    }
+    openShare() {
+        if(!this.isApp) {
+          this.$refs.sharepop.open()
+        } else {
+          Toast('点击右上角浏览器打开')
+        }
+      }
   }
 };
 </script>
