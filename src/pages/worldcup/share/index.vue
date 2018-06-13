@@ -62,13 +62,13 @@ export default {
     bottom: 0;
     left: 0;
     padding-top: 1pr;
-    background: url("../../../assets/images/bg2.png") no-repeat center center;
+    background: url("../../../assets/images/share_bg.jpg") no-repeat center center;
     background-size: cover;
     .content {
       text-align: center;
       width: 614pr;
-      height: 702pr;
-      margin: 470pr auto 0;
+      height: 692pr;
+      margin: 490pr auto 0;
       background: url("../../../assets/images/share_bg1.png") no-repeat center;
       background-size: cover;
       .text {

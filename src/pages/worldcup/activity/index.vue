@@ -29,14 +29,14 @@
                   <div class="left-arrow box box-center-center" @click="arrowLeft()">
                     <span class="img"></span>
                   </div>
-                  <div class="country country1 box box-tb">
+                  <div class="country left country1 box box-tb box-center-center">
                     <span>{{item.homeTeam.teamName}}</span>
                     <span class="flag">
                               <img :src="item.homeTeam.logo" alt="主队logo">
                             </span>
                   </div>
                   <div class="vs-img"></div>
-                  <div class="country box box-tb">
+                  <div class="country right box box-tb box-center-center">
                     <span>{{item.gustTeam.teamName}}</span>
                     <span class="flag">
                               <img :src="item.gustTeam.logo" alt="客队logo">
@@ -372,6 +372,7 @@ export default {
         width: 100%;
         height: 196pr;
         .info-box {
+          position: relative;
           width: 100%;
           .left-arrow,
           .right-arrow {
@@ -395,9 +396,17 @@ export default {
             top: 0;
             right: 0;
           }
+          .left{
+            position: absolute;
+            left: 110pr;
+          }
+          .right {
+            position: absolute;
+            right: 110pr;
+          }
           .country {
             margin-top: 28pr;
-            font-size: 32pr;
+            font-size: 30pr;
             > span:first-child {
               text-align: center;
             }
@@ -413,11 +422,12 @@ export default {
               }
             }
           }
-          .country1 {
-            margin-left: 60pr;
-          }
           .vs-img {
-            margin: 60pr 46pr 20pr 66pr;
+            position: absolute;
+            top: 10pr;
+            left: 258pr;
+            margin-top: 60pr;
+            margin-left: 16pr;
             width: 192pr;
             height: 114pr;
             background: url("../../../assets/images/vs_img.png") no-repeat
@@ -434,13 +444,16 @@ export default {
           font-weight: bold;
           .times {
             position: absolute;
-            top: -25pr;
+            display: inline-block;
+            height: 50pr;
+            line-height: 40pr;
+            top: -10pr;
             right: -23pr;
             color: #fff;
             font-size: 20pr;
             background: #d7373f;
             border-radius: 100%;
-            padding: 0 9pr;
+            padding:3pr 10pr;
             > span {
               font-size: 14pr;
             }
