@@ -4,6 +4,7 @@
       <div class="code-img"></div>
       <div class="code-tips">扫码瓜分600万</div>
       <div class="invite-img" @click="openShare"></div>
+
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
           <div class="money" v-if="userGuessStatistic.totalAwardAmt > 0">你累积获得了<span>{{userGuessStatistic.totalAwardAmt}}</span>元 </div>
@@ -321,9 +322,9 @@ export default {
     }
     .right {
       position: absolute;
-      top: 0;
+      top: 30pr;
       right: 0;
-      padding: 14pr 44pr;
+      padding: 10pr 36pr;
       font-size: 28pr;
       line-height: 40pr;
       color: #fff;
