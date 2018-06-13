@@ -1,4 +1,4 @@
-import { login, getCode, getUserById, viewCount, getAdcookie } from './service'
+import { login, getCode, getUserById, viewCount, getAdCookies } from './service'
 import { Toast } from 'mint-ui';
 import Router from '../../../router'
 
@@ -12,7 +12,6 @@ export default {
         isApp: false,
         sendCode: "发送验证码",
         countDown: 60,
-        id: '',
         deviceType: '',
         deviceVersion: '',
         adid: ''
@@ -32,14 +31,11 @@ export default {
         },
         viewCount(state, payload) {
             state.id = payload.id
-        },
-        getAdcookie(state, payload) {
-            state.id = payload.id
         }
     },
     actions: {
         async viewCount({ state, commit }, payload) {
-            const { data } = await viewCount(payload).catch(err => {
+            const { data, cookies } = await viewCount(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             })
@@ -47,6 +43,16 @@ export default {
                 type: 'viewCount',
                 data
             })
+        },
+        async getAdCookies({ rootState }, payload) {
+            // const response = await getAdCookies(payload).catch(err => {
+            //     return;
+            // });
+            // console.log("cookies", response);
+            // if(request.response){
+            //     let cookies=request.response;
+            //     cookies= JSON.stringify(cookies);
+            // }
         },
         checkLogin({ state, rootState }) {
             console.log("checkLogin", rootState.IS_APP);

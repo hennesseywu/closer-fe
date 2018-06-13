@@ -4,8 +4,19 @@ import { Toast } from 'mint-ui';
 import feConfig from '../utils/api';
 import Store from '../store'
 
-// http request 拦截器 
-axios.interceptors.request.use(
+
+
+const axio = axios.create({ 
+        baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
+         timeout: 5000, // 请求的超时时间
+          //设置默认请求头，使post请求发送的是formdata格式数据// axios的header默认的Content-Type好像是'application/json;charset=UTF-8',我的项目都是用json格式传输，如果需要更改的话，可以用这种方式修改
+          // headers: { 
+          // "Content-Type": "application/x-www-form-urlencoded"
+          // },
+         withCredentials: true // 允许携带cookie
+    })
+    // http request 拦截器 
+axio.interceptors.request.use(
     config => {
         let reqUrl = feConfig.serverDevUrl + config.url
         if (/sandbox.tiejin/.test(config.url)) {
@@ -23,6 +34,14 @@ axios.interceptors.request.use(
                 config.headers['Closer-Agent'] = 'Closer-Android';
             }
         }
+        if (Cookies.get("closer_udid")) {
+            config.headers['Closer_Udid'] = Cookies.get("closer_udid");
+        }
+
+        if (Cookies.get("closer_adid")) {
+            config.headers['Closer_Adid'] = Cookies.get("closer_adid");
+        }
+
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
@@ -36,7 +55,7 @@ axios.interceptors.request.use(
         return Promise.reject(err);
     });
 // http response 拦截器 
-axios.interceptors.response.use(
+axio.interceptors.response.use(
     response => {
         Indicator.close()
         return response;
@@ -103,4 +122,4 @@ axios.interceptors.response.use(
         Indicator.close()
         return Promise.reject(err)
     });
-export default axios
+export default axio

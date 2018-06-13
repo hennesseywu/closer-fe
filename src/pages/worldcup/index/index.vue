@@ -68,7 +68,6 @@
     },
     mounted(){
       this.checkLogin();
-      // this.viewCount(this.id)
     }
     ,
     data() {
@@ -91,13 +90,14 @@
       })
     },
     methods: {
-      ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin','viewCount']),
+      ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin','getAdCookies']),
       checkIsApp() {
         console.log("isApp", this.$store.state.IS_APP)
         console.log("params",this.$route.params)
         if (this.$route.params.channelCode) {
           this.$store.state.CHANNEL_CODE = this.$route.params.channelCode;
         }
+        this.getAdCookies({adid:this.$store.state.CHANNEL_CODE,webUdid:true});
         this.isApp = this.$store.state.IS_APP;
       },redirect2Chance(){
         redirectAddChance(this.$store.state.IS_APP);

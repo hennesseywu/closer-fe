@@ -133,7 +133,6 @@ export default {
   },
   created() {
     this.getMatchList();
-    // this.getUserGuessList()
     this.checkUser();
     this.getUserGuessStatistic();
     this.checkGuessResult();
@@ -175,9 +174,6 @@ export default {
       gustTeamLogo,
       matchType
     ) {
-      console.log(winTeamId, "--", matchResult, "---", userGuess);
-      console.log(this.userGuessStatistic.totalChance);
-     
       if (this.userGuessStatistic.totalChance == 0) {
         this.$refs.nochancepop.open();
         return;

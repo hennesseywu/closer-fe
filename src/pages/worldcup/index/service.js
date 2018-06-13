@@ -37,6 +37,7 @@ export async function viewCount(payload) {
 /**点击页面内的下载按钮
  * 
  */
-export async function getAdcookie(payload) {
-    return await axios.post(api.statitics.get_adcookie, payload)
+export async function getAdCookies(payload) {
+    console.log(payload)
+    return await axios.get(api.statitics.get_adcookie + "?webUdid=" + payload.webUdid + "&adid=" + payload.adid)
 }

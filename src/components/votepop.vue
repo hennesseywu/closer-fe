@@ -99,13 +99,12 @@
       add() {
         this.checkChance();
         this.chance++;
-        this.inputChance = this.chance;
-        console.log("dddddd", this.chance);
         if (this.chance > this.totalChance) {
           this.chance = this.totalChance
           this.showText = true
           this.textTip = "机会不足"
         }
+        this.inputChance = this.chance;
       },
       reduce() {
         if (this.chance > 1) {
@@ -130,10 +129,10 @@
           this.showText = true;
           return;
         }
-        console.log('vote---this.chance', this.chance)
-        console.log('vote---this.inputChance', this.inputChance)
+        // console.log('vote---this.chance', this.chance)
+        // console.log('vote---this.inputChance', this.inputChance)
         voteInfo['guessTimes'] = this.inputChance;
-        console.log("confirm", voteInfo)
+        // console.log("confirm", voteInfo)
         this.$emit('guessMatch', voteInfo)
         setTimeout(() => {
           this.close()
