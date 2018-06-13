@@ -54,10 +54,10 @@ export default {
             if (data.result) {
                 let result = data.result;
                 if (result.udid) {
-                    Cookies.set("closer_udid", result.udid, { expires: 5 * 365 })
+                    Cookies.set("udid", result.udid, { expires: 30 })
                 }
                 if (result.adid) {
-                    Cookies.set("closer_adid", result.adid, { expires: 5 * 365 })
+                    Cookies.set("adid", result.adid, { expires: 30 })
                 }
             }
         },
