@@ -43,6 +43,7 @@
   import Newuserpop from '../../../components/newuserpop.vue';
   import Getapp from '../../../components/getapp.vue';
   import Sharepop from '../../../components/sharepop.vue';
+  import { getQueryString } from '../../../utils/utils'
    import {
     redirectAddChance
   } from '../../../utils/utils';
@@ -62,11 +63,15 @@
       Sharepop
     },
     created() {
+      this.id = getQueryString()
       this.checkIsApp();
+      this.viewCount(this.id)
 
     },
     mounted(){
       this.checkLogin();
+      console.log('1212313131313131313131',this.id)
+      this.viewCount(this.id)
     }
     ,
     data() {
@@ -75,7 +80,8 @@
         code: "",
         isApp: "",
         showIndexRule: true,
-        channelCode: ""
+        channelCode: "",
+        id: ''
       }
     },
     computed: {
@@ -83,11 +89,12 @@
         'loginSuccess': state => state.loginSuccess,
         'chanceBoxShow': state => state.chanceBoxShow,
         'loginBoxShow': state => state.loginBoxShow,
-        'sendCode': state => state.sendCode
+        'sendCode': state => state.sendCode,
+        // 'id': state => state.id
       })
     },
     methods: {
-      ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin']),
+      ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin','viewCount']),
       checkIsApp() {
         console.log("isApp", this.$store.state.IS_APP)
         console.log("params",this.$route.params)

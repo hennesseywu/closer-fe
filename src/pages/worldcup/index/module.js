@@ -1,4 +1,4 @@
-import { login, getCode, getUserById } from './service'
+import { login, getCode, getUserById, viewCount, getAdcookie } from './service'
 import { Toast } from 'mint-ui';
 import Router from '../../../router'
 
@@ -11,7 +11,11 @@ export default {
         loginBoxShow: false,
         isApp: false,
         sendCode: "发送验证码",
-        countDown: 60
+        countDown: 60,
+        id: '',
+        deviceType: '',
+        deviceVersion: '',
+        adid: ''
     },
     mutations: {
         updateCountDown(state) {
@@ -25,9 +29,28 @@ export default {
                     state.sendCode = "再次发送";
                 }
             }, 1000)
+        },
+        viewCount(state, payload) {
+            console.log('111-viewcount',payload)
+            state.id = payload.id
+        },
+        getAdcookie(state, payload) {
+            console.log('222-getAdcookie',payload)
+            state.id = payload.id
         }
     },
     actions: {
+        async viewCount({state, commit}, payload) {
+            const { data } = await viewCount(payload).catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            })
+            console.log('view-count----111',data)
+            commit({
+                type: 'viewCount',
+                data
+            })
+        },
         checkLogin({ state, rootState }) {
             console.log("checkLogin", rootState.IS_APP);
             if (rootState.IS_APP) { //app内打开 ios补救措施

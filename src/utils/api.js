@@ -68,5 +68,10 @@ export default {
         guess_match: 'activity_worldcup.guess_match',
         receive_chance: 'activity_worldcup.receive_chance',
         check_guess_result: 'activity_worldcup.check_guess_result'
+    },
+    statitics: {
+        // 数据统计接口
+        view_count: 'closer_promotion_activity.view_count',
+        get_adcookie: 'closer_statistics.get_adcookie'
     }
 }
