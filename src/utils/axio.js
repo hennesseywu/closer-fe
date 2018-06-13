@@ -38,7 +38,6 @@ axio.interceptors.request.use(
         if (Cookies.get("uid")) {
             config.headers['X-Udid'] = Cookies.get("uid");
         }
-
         if (Cookies.get("aid")) {
             config.headers['X-Adid'] = Cookies.get("aid");
         }
