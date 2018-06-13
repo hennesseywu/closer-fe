@@ -14,7 +14,6 @@ axios.interceptors.request.use(
             reqUrl = feConfig.serverUrl + config.url;
         }
         config.url = reqUrl;
-        console.log("ua---", Store.state.UA)
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
         } else {
@@ -27,7 +26,7 @@ axios.interceptors.request.use(
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
-        console.log("axio req header", config)
+        // console.log("axio req header", config)
         Indicator.open()
         return config;
 

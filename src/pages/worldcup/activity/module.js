@@ -20,7 +20,6 @@ export default {
     },
     mutations: {
         updateMatchlist(state, payload) {
-            // console.log(1, payload)
             state.matchList = payload.data.result.data
             for (let i = 0, len = state.matchList.length; i < len; i++) {
                 if (state.matchList[i].matchType != 'group') {

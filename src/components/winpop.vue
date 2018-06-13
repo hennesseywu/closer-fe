@@ -102,9 +102,12 @@
         redirectAddChance(this.$store.state.IS_APP);
       },
       jumpToDownload() {
-        downloadApp()
+        if(this.$store.state.IS_APP) {
+          this.guessResult = true
+        } else {
+          downloadApp()
+        } 
       }
-  
     }
   };
 </script>
