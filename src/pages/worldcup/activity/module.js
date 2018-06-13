@@ -59,13 +59,10 @@ export default {
             })
             if (data.result) {
                 let result = data.result;
-                // let result = {
-                //     "presentAvailable": true, //-----是否显示新人大礼包字段
-                //     "count": 11, //-----这次获取的次数
-                //     "status": true //-----是否领取成功
-                // }
                 commit({ type: 'updateRecieveChance', result });
-                await dispatch('getUserGuessStatistic');
+                if (data.result.count && data.result.count > 0) {
+                    await dispatch('getUserGuessStatistic');
+                }
             } else {
                 Toast('网络开小差啦，请稍后再试')
             }
