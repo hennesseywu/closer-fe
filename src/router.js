@@ -51,12 +51,10 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
     let ua = navigator.userAgent || window.navigator.userAgent;
     Store.state.UA = ua.toLowerCase();
     ua = Store.state.UA;
-    console.log("ua222xxx", ua);
     if (Store.state.UA.indexOf("closer-android") > -1 || Store.state.UA.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
         console.log("isApp true");
     }
-    console.log("name", name)
     if (name == "worldcupIndex") {
         if (ua.indexOf("closer-android") > -1) {
             console.log("router android", typeof window.bridge != "undefined")

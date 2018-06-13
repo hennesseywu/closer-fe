@@ -31,21 +31,18 @@ export default {
             }, 1000)
         },
         viewCount(state, payload) {
-            console.log('111-viewcount',payload)
             state.id = payload.id
         },
         getAdcookie(state, payload) {
-            console.log('222-getAdcookie',payload)
             state.id = payload.id
         }
     },
     actions: {
-        async viewCount({state, commit}, payload) {
+        async viewCount({ state, commit }, payload) {
             const { data } = await viewCount(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             })
-            console.log('view-count----111',data)
             commit({
                 type: 'viewCount',
                 data
@@ -55,7 +52,6 @@ export default {
             console.log("checkLogin", rootState.IS_APP);
             if (rootState.IS_APP) { //app内打开 ios补救措施
                 let ua = rootState.UA;
-                console.log("ua", ua);
                 if (ua.indexOf("closer-ios") > -1) {
                     console.log("module closer-ios", window.WebViewJavascriptBridge);
                     if (window.WebViewJavascriptBridge) {
@@ -134,7 +130,7 @@ export default {
             });;
         },
         async getCode({ commit, state, rootState }, phone) {
-            if (!(/^(0|86|17951)?(13[0-9]|15[012356789]|16[012356789|173[678]|18[0-9]|14[57])[0-9]{8}$/.test(phone))) {
+            if (!(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(phone))) {
                 Toast('请输入正确的手机号');
                 return;
             };
@@ -152,7 +148,7 @@ export default {
         // 登录
         async login({ commit, state, rootState }, payLoad) {
             console.log("loginModule", payLoad);
-            if (payLoad.phone && !(/^(0|86|17951)?(12[0-9]|13[0-9]|15[012356789]|16[012356789|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(payLoad.phone))) {
+            if (payLoad.phone && !(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(payLoad.phone))) {
                 Toast('请输入正确的手机号');
                 return;
             };
