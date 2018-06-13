@@ -163,7 +163,7 @@ export default {
                 Toast('请输入正确的手机号');
                 return;
             };
-            if (payLoad.code.length == 0) {
+            if (payLoad.token.length == 0) {
                 Toast("请输入验证码")
                 return;
             }
@@ -175,6 +175,7 @@ export default {
             if (Cookies.get("aid")) {
                 payLoad['adid'] = Cookies.get("aid");
             }
+            payLoad['protocol'] = 'WEB_SOCKET';
             let loginRes = await login(payLoad).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
