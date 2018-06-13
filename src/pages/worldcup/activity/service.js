@@ -13,7 +13,7 @@ export async function getUserGuessList(payload) {
  *  获取比赛竞猜列表
  */
 export async function getMatchList(payload) {
-    // console.log('service', payload)
+    console.log('service', payload)
     return await axios.post(api.activity.get_match_list, payload);
 }
 

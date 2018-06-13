@@ -66,12 +66,14 @@
       this.id = getQueryString()
       this.checkIsApp();
       if(!Cookies.get("closer_udid")){
-      this.getAdCookies();
+      this.getAdCookies({
+            adid:this.$route.params.channelCode
+      });
       }
     },
     mounted(){
       console.log("mounted")
-      this.checkLogin();
+      // this.checkLogin();
     }
     ,
     data() {

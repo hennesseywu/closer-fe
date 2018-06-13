@@ -3,9 +3,6 @@ import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import feConfig from '../utils/api';
 import Store from '../store'
-
-
-
 // const axio = axios.create({ 
 //         baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
 //          timeout: 15000, // 请求的超时时间
@@ -18,6 +15,7 @@ import Store from '../store'
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
+        console.log("xxxxxxx")
         let reqUrl = feConfig.serverDevUrl + config.url
         if (/sandbox.tiejin/.test(config.url)) {
             console.log(req.url)
@@ -26,6 +24,8 @@ axios.interceptors.request.use(
             reqUrl = feConfig.serverUrl + config.url;
         }
         config.url = reqUrl;
+        console.log(config.url)
+
 
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
