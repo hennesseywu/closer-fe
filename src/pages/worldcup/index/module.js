@@ -58,6 +58,7 @@ export default {
                 }
                 if (result.adid) {
                     Cookies.set("aid", result.adid, { expires: 30 })
+                    f5a04728c71beed3e683d197ae9b85835bc0bd96
                 }
             }
         },

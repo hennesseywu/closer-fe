@@ -35,13 +35,13 @@ axio.interceptors.request.use(
                 config.headers['Closer-Agent'] = 'Closer-Android';
             }
         }
-        // if (Cookies.get("uid")) {
-        //     config.headers['X-Udid'] = Cookies.get("uid");
-        // }
+        if (Cookies.get("uid")) {
+            config.headers['X-Udid'] = Cookies.get("uid");
+        }
 
-        // if (Cookies.get("aid")) {
-        //     config.headers[' X-Adid'] = Cookies.get("aid");
-        // }
+        if (Cookies.get("aid")) {
+            config.headers['X-Adid'] = Cookies.get("aid");
+        }
 
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
