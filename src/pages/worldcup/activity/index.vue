@@ -7,7 +7,7 @@
 
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
-          <div class="money" v-if="userGuessStatistic.totalAwardAmt > 0">你累积获得了<span>{{userGuessStatistic.totalAwardAmt}}</span>元 </div>
+          <div class="money" v-if="userGuessStatistic.totalAwardAmt > 0">你累积获得了<span>{{change(userGuessStatistic.totalAwardAmt)}}</span>元 </div>
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
           <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>人参与</div>
         </div>
@@ -98,7 +98,7 @@ import Getapp from "../../../components/getapp.vue";
 import Nochancepop from "../../../components/nochancepop.vue";
 import Sharepop from "../../../components/sharepop.vue";
 import Appusepop from "../../../components/appusepop.vue";
-import { redirectAddChance } from "../../../utils/utils";
+import { redirectAddChance, toYuan } from "../../../utils/utils";
 
 export default {
   name: "index",
@@ -250,8 +250,11 @@ export default {
       redirectAddChance(this.$store.state.IS_APP);
     },
     openShare() {
-        this.$refs.sharepop.open()
-      }
+      this.$refs.sharepop.open()
+    },
+  change(money) {
+      return toYuan(money)
+    }
   }
 };
 </script>

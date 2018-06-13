@@ -29,11 +29,11 @@ export function getQueryString() {
     return str[strLen - 1]
 }
 
-export function getUa() {
+export function getPlatform() {
     var u = navigator.userAgent;
     return {
-        isAndroid: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
-        isIos: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-        isWindows: !!u.match(/windows mobile/i) //windows终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        windows: !!u.match(/windows mobile/i) //windows终端
     }
 }

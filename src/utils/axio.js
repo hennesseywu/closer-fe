@@ -35,11 +35,11 @@ axio.interceptors.request.use(
             }
         }
         if (Cookies.get("closer_udid")) {
-            config.headers['Closer_Udid'] = Cookies.get("closer_udid");
+            config.headers['X-Udid'] = Cookies.get("closer_udid");
         }
 
         if (Cookies.get("closer_adid")) {
-            config.headers['Closer_Adid'] = Cookies.get("closer_adid");
+            config.headers[' X-Adid'] = Cookies.get("closer_adid");
         }
 
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {

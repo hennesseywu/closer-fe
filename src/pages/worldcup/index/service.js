@@ -38,5 +38,5 @@ export async function viewCount(payload) {
  * 
  */
 export async function getAdCookies(payload) {
-    return await axios.get(api.statitics.get_adcookie, payload)
+    return await axios.post(api.statitics.get_adcookie, payload)
 }
