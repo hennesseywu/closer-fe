@@ -74,7 +74,7 @@
     },
     mounted(){
       console.log("mounted")
-      // this.checkLogin();
+      this.checkLogin();
     }
     ,
     data() {
