@@ -70,7 +70,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
         } else if (ua.indexOf("closer-ios") > -1) {
             if (ua.indexOf("closer-ios") > -1) {
                 console.log("router closer-ios", window.setupWebViewJavascriptBridge);
-                setupWebViewJavascriptBridge(function(bridge) {
+                window.setupWebViewJavascriptBridge(function(bridge) {
                     console.log("ios bridge", bridge)
                     if (bridge) {
                         //ios获取用户token 判断登录
