@@ -56,6 +56,11 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
         console.log("isApp true");
     }
     if (name == "worldcupIndex") {
+        console.log("params", params)
+        if (params.channelCode && params.channelCode != "0") {
+            Cookies.set("aid", params.channelCode, { expires: 30 });
+            console.log("set cookies", params.channelCode);
+        }
         if (ua.indexOf("closer-android") > -1) {
             console.log("router android", typeof window.bridge != "undefined")
                 //安卓检查登录状态
