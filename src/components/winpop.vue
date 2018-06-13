@@ -38,7 +38,7 @@
         <span class="wait" @click="close()">等等再说</span>
         <button class="getMoney" @click="jumpToDownload()">去提现</button>
       </div>
-      <div class="tips" v-if="guessResult">进入【我的钱包】-【奖励金】中领取</div>
+      <div class="tips" v-if="isShow">进入【我的钱包】-【奖励金】中领取</div>
     </div>
   </mt-popup>
 </template>
@@ -103,7 +103,7 @@
       },
       jumpToDownload() {
         if(this.$store.state.IS_APP) {
-          this.guessResult = true
+          this.isShow = true
         } else {
           downloadApp()
         } 

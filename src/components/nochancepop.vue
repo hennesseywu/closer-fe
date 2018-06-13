@@ -60,7 +60,11 @@
         this.visible = false;
       },
       download() {
-        downloadApp();
+        if(this.isApp) {
+          this.visible = false
+        } else {
+          downloadApp();
+        }
       },
       goTips() {
         redirectAddChance();
