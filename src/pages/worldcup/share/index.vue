@@ -1,7 +1,6 @@
 <template>
   <div class="index">
     <div class="wrapper">
-      <div class="invite-img" @click="share"></div>
       <div class="share-box">
         <div class="content">
           <div class="text">你的好友正在参与竞猜</div>
@@ -48,9 +47,6 @@ export default {
       this.$router.push({
         name: "worldcupIndex"
       });
-    },
-    share() {
-      this.$refs.sharepop.open();
     }
   }
 };
@@ -68,17 +64,6 @@ export default {
     padding-top: 1pr;
     background: url("../../../assets/images/bg2.png") no-repeat center center;
     background-size: cover;
-    .invite-img {
-      position: fixed;
-      z-index: 999;
-      top: 48pr;
-      right: 0;
-      width: 128pr;
-      height: 148pr;
-      background: url("../../../assets/images/share.png") no-repeat center;
-      background-size: cover;
-    }
-
     .content {
       text-align: center;
       width: 614pr;
