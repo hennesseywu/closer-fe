@@ -67,13 +67,14 @@
       this.checkIsApp();
       if(!Cookies.get("closer_udid")){
       this.getAdCookies({
+            webUdid:true,
             adid:this.$route.params.channelCode
       });
       }
     },
     mounted(){
       console.log("mounted")
-      // this.checkLogin();
+      this.checkLogin();
     }
     ,
     data() {

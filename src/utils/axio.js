@@ -3,30 +3,27 @@ import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import feConfig from '../utils/api';
 import Store from '../store'
-// const axio = axios.create({ 
-//         baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
-//          timeout: 15000, // 请求的超时时间
-//           //设置默认请求头，使post请求发送的是formdata格式数据// axios的header默认的Content-Type好像是'application/json;charset=UTF-8',我的项目都是用json格式传输，如果需要更改的话，可以用这种方式修改
-//           // headers: { 
-//           // "Content-Type": "application/x-www-form-urlencoded"
-//           // },
-//          withCredentials: true // 允许携带cookie
-//     })
-// http request 拦截器 
-axios.interceptors.request.use(
+const axio = axios.create({ 
+        baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
+         timeout: 15000, // 请求的超时时间
+          //设置默认请求头，使post请求发送的是formdata格式数据// axios的header默认的Content-Type好像是'application/json;charset=UTF-8',我的项目都是用json格式传输，如果需要更改的话，可以用这种方式修改
+          // headers: { 
+          // "Content-Type": "application/x-www-form-urlencoded"
+          // },
+        //  withCredentials: true // 允许携带cookie
+    })
+    // http request 拦截器 
+axio.interceptors.request.use(
     config => {
-        console.log("xxxxxxx")
+        console.log(config)
         let reqUrl = feConfig.serverDevUrl + config.url
-        if (/sandbox.tiejin/.test(config.url)) {
-            console.log(req.url)
+        if (/a-sandbox.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverDevUrl + config.url;
-        } else if (/tiejin/.test(config.url)) {
+        } else if (/a.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverUrl + config.url;
         }
+        console.log("requrl", reqUrl)
         config.url = reqUrl;
-        console.log(config.url)
-
-
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
         } else {
@@ -36,12 +33,11 @@ axios.interceptors.request.use(
                 config.headers['Closer-Agent'] = 'Closer-Android';
             }
         }
-        if (Cookies.get("closer_udid")) {
-            config.headers['X-Udid'] = Cookies.get("closer_udid");
+        if (Cookies.get("uid")) {
+            config.headers['X-Udid'] = Cookies.get("uid");
         }
-
-        if (Cookies.get("closer_adid")) {
-            config.headers[' X-Adid'] = Cookies.get("closer_adid");
+        if (Cookies.get("aid")) {
+            config.headers['X-Adid'] = Cookies.get("aid");
         }
 
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
@@ -57,7 +53,7 @@ axios.interceptors.request.use(
         return Promise.reject(err);
     });
 // http response 拦截器 
-axios.interceptors.response.use(
+axio.interceptors.response.use(
     response => {
         Indicator.close()
         return response;
@@ -124,4 +120,4 @@ axios.interceptors.response.use(
         Indicator.close()
         return Promise.reject(err)
     });
-export default axios
+export default axio

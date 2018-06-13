@@ -54,15 +54,14 @@ export default {
             if (data.result) {
                 let result = data.result;
                 if (result.udid) {
-                    Cookies.set("closer_udid", result.udid, { expires: 5 * 365 })
+                    Cookies.set("uid", result.udid, { expires: 30 })
                 }
                 if (result.adid) {
-                    Cookies.set("closer_adid", result.adid, { expires: 5 * 365 })
+                    Cookies.set("aid", result.adid, { expires: 30 })
                 }
             }
         },
         checkLogin({ state, rootState }) {
-            return;
             console.log("checkLogin", rootState.IS_APP);
             if (rootState.IS_APP) { //app内打开 ios补救措施
                 let ua = rootState.UA;
@@ -168,10 +167,19 @@ export default {
                 Toast("请输入验证码")
                 return;
             }
+
+            if (Cookies.get("uid")) {
+                payLoad['udid'] = Cookies.get("uid");
+            }
+
+            if (Cookies.get("aid")) {
+                payLoad['adid'] = Cookies.get("aid");
+            }
             let loginRes = await login(payLoad).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             });
+
             console.log("loginRes", loginRes)
             if (loginRes.data) {
                 let data = loginRes.data;
@@ -179,6 +187,7 @@ export default {
                     Toast(data.result);
                     return;
                 }
+
                 if (data.result && data.result.token) {
                     Cookies.set("GroukAuth", data.result.token, { expires: 7 });
                     if (data.result.user) {
