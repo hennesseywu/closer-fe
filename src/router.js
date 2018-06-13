@@ -68,8 +68,8 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                 }
             }
         } else if (ua.indexOf("closer-ios") > -1) {
-            if (rootState.IS_APP) { //app内打开 ios补救措施
-                let ua = rootState.UA;
+            if (Store.state.IS_APP) { //app内打开 ios补救措施
+                let ua = Store.state.UA;
                 if (ua.indexOf("closer-ios") > -1) {
                     console.log("module closer-ios");
                     setupWebViewJavascriptBridge(function(bridge) {
