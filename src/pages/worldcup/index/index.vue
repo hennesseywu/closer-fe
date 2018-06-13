@@ -67,7 +67,7 @@
       this.checkIsApp();
     },
     mounted(){
-      this.checkLogin();
+      // this.checkLogin();
     }
     ,
     data() {

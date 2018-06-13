@@ -9,7 +9,8 @@ import router from './router'
 import store from './store'
 import axio from './utils/axio'
 import Cookies from 'js-cookie';
-import Vconsole from 'vconsole'
+import Vconsole from 'vconsole';
+import MobileDetect from 'mobile-detect';
 
 if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href)) {
     const vconsole = new Vconsole()
@@ -17,6 +18,7 @@ if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.locat
 
 window.axios = axio;
 window.Cookies = Cookies;
+window.MobileDetect = MobileDetect;
 
 window.setupWebViewJavascriptBridge = function(callback) {
         // console.log(ca llback)
