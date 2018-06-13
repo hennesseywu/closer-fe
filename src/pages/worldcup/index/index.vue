@@ -106,11 +106,7 @@
         redirectAddChance(this.$store.state.IS_APP);
       },
       openShare() {
-        if(this.isApp) {
-          this.$refs.sharepop.open()
-        } else {
-          Toast('点击右上角浏览器打开')
-        }
+        this.$refs.sharepop.open()
       }
     }
   
