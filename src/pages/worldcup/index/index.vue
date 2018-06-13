@@ -65,13 +65,10 @@
     created() {
       this.id = getQueryString()
       this.checkIsApp();
-      this.viewCount(this.id)
-
     },
     mounted(){
       this.checkLogin();
-      console.log('1212313131313131313131',this.id)
-      this.viewCount(this.id)
+      // this.viewCount(this.id)
     }
     ,
     data() {

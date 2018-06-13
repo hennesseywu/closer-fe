@@ -9,10 +9,11 @@ import router from './router'
 import store from './store'
 import axio from './utils/axio'
 import Cookies from 'js-cookie';
+import Vconsole from 'vconsole'
 
-// vconsole 调试
-// import Vconsole from 'vconsole'
-// var vconsole = new Vconsole()
+if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href)) {
+    const vconsole = new Vconsole()
+}
 
 window.axios = axio;
 window.Cookies = Cookies;
