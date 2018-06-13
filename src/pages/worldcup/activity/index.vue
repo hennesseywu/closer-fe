@@ -6,7 +6,7 @@
       <div class="invite-img" @click="openShare"></div>
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
-          <div class="money">你累积获得了<span>{{userGuessStatistic.totalAwardAmt}}</span>元 </div>
+          <div class="money" v-if="userGuessStatistic.totalAwardAmt > 0">你累积获得了<span>{{userGuessStatistic.totalAwardAmt}}</span>元 </div>
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
           <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>人参与</div>
         </div>
