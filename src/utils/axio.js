@@ -3,10 +3,13 @@ import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import feConfig from '../utils/api';
 import Store from '../store'
+import Promise from 'promise-polyfill';
+
 
 // http request 拦截器 
 axios.interceptors.request.use(
     config => {
+        let Promise = require('promise-polyfill').default;
         let reqUrl = feConfig.serverDevUrl + config.url
         if (/sandbox.tiejin/.test(config.url)) {
             reqUrl = feConfig.serverDevUrl + config.url;
@@ -33,7 +36,7 @@ axios.interceptors.request.use(
     },
     err => {
         Indicator.close()
-        return Promise.reject(err);
+        return Promise.reject(err).catch(err);
     });
 // http response 拦截器 
 axios.interceptors.response.use(
@@ -42,6 +45,7 @@ axios.interceptors.response.use(
         return response;
     },
     (err) => {
+        let Promise = require('promise-polyfill').default;
         if (err && err.response) {
             switch (err.response.status) {
                 case 400:
@@ -101,6 +105,6 @@ axios.interceptors.response.use(
             console.warn(err.message)
         }
         Indicator.close()
-        return Promise.reject(err)
+        return Promise.reject(err).catch(err)
     });
 export default axios
