@@ -36,7 +36,7 @@ window.setupWebViewJavascriptBridge = function(callback) {
         setTimeout(function() {
             document.documentElement.removeChild(WVJBIframe);
             window.WVJBCallbacks = [callback];
-        }, 0)
+        }, 500)
     }
     // Vue.use(VueAxios, axios);
 
