@@ -51,7 +51,7 @@
               <div class="result box box-lr">
                 <div class="commonsize winner1" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId!=item.userGuess.winTeamId)? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess,false,item.matchType)">
                   <div class="winbtn">胜利</div>
-                  <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">x{{item.userGuess.guessTimes}}</div>
+                  <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">x{{item.userGuess.guessTimes}}</span>
                 </div>
                 <div class="commonsize tie" v-if="item.matchType=='group'" :class="(item.userGuess&&item.userGuess.matchResult!='equal') ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'equal',item.userGuess,item.gustTeam.logo,item.matchType)">
                   <div class="winbtn">平局</div>
@@ -448,15 +448,17 @@ export default {
           .times {
             position: absolute;
             display: inline-block;
+            min-width: 45pr;
             height: 50pr;
-            line-height: 40pr;
-            top: -10pr;
+            line-height: 50pr;
+            top: -8pr;
             right: -23pr;
             color: #fff;
             font-size: 20pr;
+            text-align: center;
             background: #d7373f;
             border-radius: 100%;
-            padding:3pr 10pr;
+            padding: 0 5pr;
             > span {
               font-size: 14pr;
             }
