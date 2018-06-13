@@ -22,7 +22,6 @@
     methods: {
       ...mapActions('index', ['getAdCookies']),
       download() {
-  
         let deviceType = getPlatform();
         console.log('downloadApp', deviceType)
         for (var type in deviceType) {

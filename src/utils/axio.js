@@ -6,25 +6,26 @@ import Store from '../store'
 
 
 
-const axio = axios.create({ 
-        baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
-         timeout: 5000, // 请求的超时时间
-          //设置默认请求头，使post请求发送的是formdata格式数据// axios的header默认的Content-Type好像是'application/json;charset=UTF-8',我的项目都是用json格式传输，如果需要更改的话，可以用这种方式修改
-          // headers: { 
-          // "Content-Type": "application/x-www-form-urlencoded"
-          // },
-         withCredentials: true // 允许携带cookie
-    })
-    // http request 拦截器 
-axio.interceptors.request.use(
+// const axio = axios.create({ 
+//         baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
+//          timeout: 15000, // 请求的超时时间
+//           //设置默认请求头，使post请求发送的是formdata格式数据// axios的header默认的Content-Type好像是'application/json;charset=UTF-8',我的项目都是用json格式传输，如果需要更改的话，可以用这种方式修改
+//           // headers: { 
+//           // "Content-Type": "application/x-www-form-urlencoded"
+//           // },
+//          withCredentials: true // 允许携带cookie
+//     })
+// http request 拦截器 
+axios.interceptors.request.use(
     config => {
         let reqUrl = feConfig.serverDevUrl + config.url
-        if (/sandbox.tiejin/.test(config.url)) {
-            reqUrl = feConfig.serverDevUrl + config.url;
-        } else if (/tiejin/.test(config.url)) {
-            reqUrl = feConfig.serverUrl + config.url;
-        }
+            // if (/sandbox.tiejin/.test(config.url)) {
+            //     reqUrl = feConfig.serverDevUrl + config.url;
+            // } else if (/tiejin/.test(config.url)) {
+            //     reqUrl = feConfig.serverUrl + config.url;
+            // }
         config.url = reqUrl;
+
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
         } else {
@@ -45,7 +46,7 @@ axio.interceptors.request.use(
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
-        // console.log("axio req header", config)
+        console.log("axio req header", config)
         Indicator.open()
         return config;
 
@@ -55,7 +56,7 @@ axio.interceptors.request.use(
         return Promise.reject(err);
     });
 // http response 拦截器 
-axio.interceptors.response.use(
+axios.interceptors.response.use(
     response => {
         Indicator.close()
         return response;
@@ -122,4 +123,4 @@ axio.interceptors.response.use(
         Indicator.close()
         return Promise.reject(err)
     });
-export default axio
+export default axios

@@ -97,7 +97,7 @@
         if (this.$route.params.channelCode) {
           this.$store.state.CHANNEL_CODE = this.$route.params.channelCode;
         }
-        this.getAdCookies({adid:this.$store.state.CHANNEL_CODE,webUdid:true});
+        // this.getAdCookies({adid:this.$store.state.CHANNEL_CODE,webUdid:true});
         this.isApp = this.$store.state.IS_APP;
       },redirect2Chance(){
         redirectAddChance(this.$store.state.IS_APP);
