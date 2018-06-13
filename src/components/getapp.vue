@@ -22,23 +22,28 @@
     methods: {
       ...mapActions('index', ['getAdCookies']),
       download() {
-        let md = new MobileDetect(this.$store.state.UA);
-        let deviceType = md.os();
-        let deviceVersion = "";
-        if (deviceType == "IOS") {
-          deviceType="ios";
-          deviceVersion = md.os() + md.version('iPhone');
-        } else if (deviceType == "AndroidOS") {
-          deviceType="android";
-          console.log( md.versionStr('android'))
-          deviceVersion = md.version('Android');
+        console.log('channel_cdoe',this.$store.state.CHANNEL_CODE)
+        if (this.$store.state.CHANNEL_CODE != "0") {
+          let md = new MobileDetect(this.$store.state.UA);
+          let deviceType = md.os();
+          let deviceVersion = "";
+          if (deviceType == "iOS") {
+            deviceType = "ios";
+            deviceVersion = md.versionStr('iPhone');
+          } else if (deviceType == "AndroidOS") {
+            deviceType = "android";
+            deviceVersion = md.versionStr('Android');
+            console.log("deviceVersion", deviceVersion)
+            deviceVersion = deviceVersion.replace(/\./g, "_");
+          }
+          console.log(deviceType, "----", deviceVersion)
+          this.getAdCookies({
+            adid: this.$store.state.CHANNEL_CODE,
+            webUdid: true,
+            deviceType: deviceType,
+            deviceVersion: deviceVersion
+          });
         }
-        this.getAdCookies({
-          adid: this.$store.state.CHANNEL_CODE,
-          webUdid: true,
-          deviceType:deviceType,
-          deviceVersion:deviceVersion
-        });
         downloadApp();
       }
     }
