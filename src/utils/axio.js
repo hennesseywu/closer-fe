@@ -22,7 +22,7 @@ axio.interceptors.request.use(
         } else if (/a.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverUrl + config.url;
         }
-        console.log("requrl", reqUrl)
+        // console.log("requrl", reqUrl)
         config.url = reqUrl;
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
