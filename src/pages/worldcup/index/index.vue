@@ -67,6 +67,7 @@
       this.checkIsApp();
       if(!Cookies.get("closer_udid")){
       this.getAdCookies({
+            webUdid:true,
             adid:this.$route.params.channelCode
       });
       }
