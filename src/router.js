@@ -69,25 +69,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
             }
         } else if (ua.indexOf("closer-ios") > -1) {
             if (ua.indexOf("closer-ios") > -1) {
-                console.log("router closer-ios", window.setupWebViewJavascriptBridge);
-                window.setupWebViewJavascriptBridge(function(bridge) {
-                    console.log("ios bridge", bridge)
-                    if (bridge) {
-                        //ios获取用户token 判断登录
-                        bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                            console.log("ios token", token)
-                            if (token) {
-                                Cookies.set("GroukAuth", token, { expires: 7 });
-                                router.push({ name: "worldcupActivity" });
-                            } else {
-                                console.log("ios jumpLogin")
-                                setupWebViewJavascriptBridge(function(bridge) {
-                                    bridge.callHandler("jumpLogin", null);
-                                });
-                            }
-                        });
-                    }
-                })
+                console.log("router closer-ios");
             }
         } else {
             if (Cookies.get("GroukAuth")) {

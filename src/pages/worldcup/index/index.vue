@@ -70,7 +70,8 @@
       }
     },
     mounted(){
-      // this.checkLogin();
+      console.log("mounted")
+      this.checkLogin();
     }
     ,
     data() {
