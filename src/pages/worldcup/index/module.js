@@ -45,14 +45,21 @@ export default {
             })
         },
         async getAdCookies({ rootState }, payload) {
-            // const response = await getAdCookies(payload).catch(err => {
-            //     return;
-            // });
-            // console.log("cookies", response);
-            // if(request.response){
-            //     let cookies=request.response;
-            //     cookies= JSON.stringify(cookies);
-            // }
+            if (payload.adid && payload.adid == "0") {
+                delete payload["adid"];
+            }
+            const { data } = await getAdCookies(payload).catch(err => {
+                return;
+            });
+            if (data.result) {
+                let result = data.result;
+                if (result.udid) {
+                    Cookies.set("closer_udid", result.udid, { expires: 5 * 365 })
+                }
+                if (result.adid) {
+                    Cookies.set("closer_adid", result.adid, { expires: 5 * 365 })
+                }
+            }
         },
         checkLogin({ state, rootState }) {
             console.log("checkLogin", rootState.IS_APP);
