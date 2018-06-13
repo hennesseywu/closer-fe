@@ -1,5 +1,6 @@
 <template>
   <div class="record-box" v-if="showRecord">
+    <div class="record-tips" v-if="isApp">小贴士：进入【设置】-【钱包】中提现</div>
     <div class="record-list box box-lr" v-if="userGuessList.length > 0" v-for="(item, index) in userGuessList" :key="index">
       <div class="time">{{formataDate(new Date(item.startTime))}}</div>
       <div class="coountry" v-if="item.userGuess.guessResult && item.winTeamId == item.homeTeamId">{{item.homeTeam.teamName}}(W) VS {{item.gustTeam.teamName}}</div>
@@ -71,6 +72,10 @@ export default {
   color: #92B3F8;
   background: #041c4d;
   border-radius: 0px 10pr 10pr 10pr;
+  .record-tips {
+    text-align: left;
+    color: #fff;
+  }
   .record-list {
     margin-top: 20pr;
     position: relative;
