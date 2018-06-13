@@ -132,7 +132,7 @@
       margin-left: 20pr;
         width: 120pr;
         height: 120pr;
-        background: url('../../../assets/images/test_code.png') no-repeat center;
+        background: url('../../../assets/images/code_img.jpg') no-repeat center;
         background-size: cover;
       }
       .code-tips {
