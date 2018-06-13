@@ -65,6 +65,9 @@
     created() {
       this.id = getQueryString()
       this.checkIsApp();
+      if(!Cookies.get("closer_udid")){
+      this.getAdCookies();
+      }
     },
     mounted(){
       // this.checkLogin();
