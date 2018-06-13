@@ -16,12 +16,11 @@ const axio = axios.create({ 
 axio.interceptors.request.use(
     config => {
         let reqUrl = feConfig.serverDevUrl + config.url
-            // if (/sandbox.tiejin/.test(config.url)) {
-            //     console.log(req.url)
-            //     reqUrl = feConfig.serverDevUrl + config.url;
-            // } else if (/tiejin/.test(config.url)) {
-            //     reqUrl = feConfig.serverUrl + config.url;
-            // }
+        if (/sandbox.tiejin/.test(config.url)) {
+            reqUrl = feConfig.serverDevUrl + config.url;
+        } else if (/tiejin/.test(config.url)) {
+            reqUrl = feConfig.serverUrl + config.url;
+        }
         config.url = reqUrl;
         console.log(config.url)
 
