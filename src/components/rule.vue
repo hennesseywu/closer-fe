@@ -6,7 +6,7 @@
         <div class="bottom-line"></div>
       </div>
       <div class="rule mt14 activity">本活动奖金与苹果公司无关</div>
-      <div class="rule mt40 activity opacity">竞猜机会获取规则：</div>
+      <div class="rule mt20 activity opacity">竞猜机会获取规则：</div>
       <div class="rule-ul">
         <div class="item">
           <span class="c-img"></span>
@@ -76,22 +76,20 @@ export default {
 <style lang="less" scoped>
   .activity-rule {
     margin: 0 16pr 150pr 16pr;
-    padding-top: 52pr;
+    padding-top: 12pr;
   }
   .index-rule {
     margin: -430pr 40pr 140pr;
   }
   .rule-box {
-    // margin: 40pr;
-    font-size: 26pr;
-    line-height: 36pr;
-    color: rgba(146,179,248,1);
+    font-size: 28pr;
+    line-height: 40pr;
+    color: #92B3F8;
     background:rgba(4,28,77,1);
     padding-bottom: 20pr;
     .rule-title {
       text-align: center;
-      padding-top: 16pr;
-      font-size: 28pr;
+      font-size: 32pr;
       line-height: 44pr;
       .top-line, .bottom-line {
         width: 488pr;
@@ -109,11 +107,15 @@ export default {
     .mt14 {
       margin-top: 14pr;
     }
+    .mt20 {
+      margin-top: 20pr;
+    }
     .mt40 {
       margin-top: 40pr;
     }
     .rule {
-      line-height: 40pr;
+      font-size: 30pr;
+      line-height: 44pr;
     }
     .rule-ul {
       margin-top: 10pr;

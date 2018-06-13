@@ -68,7 +68,7 @@ export default {
   padding:30pr;
   font-size: 24pr;
   line-height: 34pr;
-  color: rgba(146,179,248,0.5);
+  color: #92B3F8;
   background: #041c4d;
   border-radius: 0px 10pr 10pr 10pr;
   .record-list {
