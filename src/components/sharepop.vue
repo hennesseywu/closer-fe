@@ -62,7 +62,7 @@ export default {
       margin: 274pr auto 0;
       width: 226pr;
       height: 226pr;
-      background: url('../assets/images/test_code.png') no-repeat center;
+      background: url('../assets/images/code_img.jpg') no-repeat center;
       background-size: cover;
     }
     .pop-footer {
