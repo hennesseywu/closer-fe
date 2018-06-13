@@ -15,7 +15,7 @@
         <mt-swipe ref="swipe" :continuous="true" :auto="0" :showIndicators="false" v-if="matchList">
           <mt-swipe-item v-for="(item, index) in matchList" :key="index">
             <div class="choose-box">
-              <div class="time-wrapper box box-lr">
+              <div class="time-wrapper box box-lr box-center-center">
                 <div class="left-ball"></div>
                 <div class="time">
                   <span>{{getMonth(new Date(item.startTime))}}</span>月<span>{{getDate(new Date(item.startTime))}}</span>号
@@ -303,7 +303,8 @@ export default {
     background: url('../../../assets/images/rectangle.png') no-repeat center;
     background-size: cover;
     .left {
-      font-size: 32pr;
+      font-size: 36pr;
+      line-height: 50pr;
       .chance-box {
         > span {
           color: #f9db02;
@@ -311,8 +312,8 @@ export default {
       }
       .whole-num {
         margin-top: 2pr;
-        font-size: 28pr;
-        line-height: 32pr;
+        font-size: 32pr;
+        line-height: 36pr;
       }
     }
     .right {
@@ -320,8 +321,8 @@ export default {
       top: 0;
       right: 0;
       padding: 14pr 44pr;
-      font-size: 24pr;
-      line-height: 34pr;
+      font-size: 28pr;
+      line-height: 40pr;
       color: #fff;
       background: linear-gradient(
         -90deg,
@@ -341,24 +342,26 @@ export default {
       background: #041c4d;
       border-radius: 12pr;
       .time-wrapper {
-        padding: 40pr 78pr 52pr 78pr;
+        padding: 28pr 0;
+        // padding: 28pr auto 30pr auto;
         .left-ball {
           width: 90pr;
-          height: 40pr;
+          height: 62pr;
           background: url("../../../assets/images/left_ball.png") no-repeat
             center;
           background-size: cover;
         }
         .time {
-          margin: 0 89pr;
+          margin: 0 75pr;
+          font-size: 32pr;
           > span {
-            font-size: 32pr;
+            font-size: 48pr;
             color: #f9db02;
           }
         }
         .right-ball {
           width: 90pr;
-          height: 40pr;
+          height: 62pr;
           background: url("../../../assets/images/right_ball.png") no-repeat
             center;
           background-size: cover;
@@ -394,7 +397,7 @@ export default {
           }
           .country {
             margin-top: 28pr;
-            font-size: 24pr;
+            font-size: 32pr;
             > span:first-child {
               text-align: center;
             }
@@ -414,9 +417,9 @@ export default {
             margin-left: 60pr;
           }
           .vs-img {
-            margin: 80pr 46pr 20pr 66pr;
-            width: 172pr;
-            height: 94pr;
+            margin: 60pr 46pr 20pr 66pr;
+            width: 192pr;
+            height: 114pr;
             background: url("../../../assets/images/vs_img.png") no-repeat
               center;
             background-size: cover;
@@ -428,6 +431,7 @@ export default {
         .commonsize {
           position: relative;
           font-size: 28pr;
+          font-weight: bold;
           .times {
             position: absolute;
             top: -25pr;
