@@ -18,16 +18,15 @@ export function downloadApp() {
     }
 }
 export function toYuan(money) {
-    console.log(1212121)
     let yuan = money / 100.0;
     return yuan.toFixed(2);
 }
 
 export function getQueryString() {
     let str = window.location.href.split('-')
-    if(!str) return null
+    if (!str) return null
     let strLen = str.length
-    return str[strLen-1]
+    return str[strLen - 1]
 }
 
 export function getUa() {

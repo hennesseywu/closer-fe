@@ -59,7 +59,7 @@ export default {
             if (data.result) {
                 let result = data.result;
                 commit({ type: 'updateRecieveChance', result });
-                if (data.result.count && data.result.count > 0) {
+                if (result.count && result.count > 0) {
                     await dispatch('getUserGuessStatistic');
                 }
             } else {
