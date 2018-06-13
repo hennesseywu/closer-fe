@@ -22,3 +22,19 @@ export function toYuan(money) {
     let yuan = money / 100.0;
     return yuan.toFixed(2);
 }
+
+export function getQueryString() {
+    let str = window.location.href.split('-')
+    if(!str) return null
+    let strLen = str.length
+    return str[strLen-1]
+}
+
+export function getUa() {
+    var u = navigator.userAgent;
+    return {
+        isAndroid: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+        isIos: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        isWindows: !!u.match(/windows mobile/i) //windows终端
+    }
+}

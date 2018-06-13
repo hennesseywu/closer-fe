@@ -77,7 +77,7 @@
     <Newuserpop ref="newuserpop" v-if="recieveChanceInfo.isPopUp" :status="recieveChanceInfo.status" :presentAvailable="recieveChanceInfo.presentAvailable" :isApp="isApp" :count="recieveChanceInfo.count"></Newuserpop>
     <Winpop ref="winpop" v-if="typeof(userGuessResult.guessResult)!='undefined'"  :guessResult="userGuessResult.guessResult" :awardAmt="userGuessResult.totalAwardAmt" :totalGuessPerson="userGuessResult.totalGuessPerson" :matchList="userGuessResult.guessMatchList"
       :totalBingoPerson="userGuessResult.totalBingoPerson"></Winpop>
-    <Nochancepop ref="nochancepop"></Nochancepop>
+    <Nochancepop ref="nochancepop" :isApp="isApp"></Nochancepop>
     <Sharepop ref="sharepop" :isApp="isApp"></Sharepop>
     <Appusepop ref="appusepop"></Appusepop>
   </div>
