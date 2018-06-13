@@ -4,9 +4,10 @@
       <div class="code-img"></div>
       <div class="code-tips">扫码瓜分600万</div>
       <div class="invite-img" @click="openShare"></div>
+
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
-          <div class="money">你累积获得了<span>{{userGuessStatistic.totalAwardAmt}}</span>元 </div>
+          <div class="money" v-if="userGuessStatistic.totalAwardAmt > 0">你累积获得了<span>{{userGuessStatistic.totalAwardAmt}}</span>元 </div>
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
           <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>人参与</div>
         </div>
@@ -51,7 +52,7 @@
               <div class="result box box-lr">
                 <div class="commonsize winner1" :class="(item.userGuess&&item.userGuess.matchResult=='equal') || (item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId!=item.userGuess.winTeamId)? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'win',item.userGuess,false,item.matchType)">
                   <div class="winbtn">胜利</div>
-                  <div class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">x{{item.userGuess.guessTimes}}</div>
+                  <span class="times" v-if="item.userGuess&&item.userGuess.matchResult=='win'&&item.homeTeam.teamId==item.userGuess.winTeamId">x{{item.userGuess.guessTimes}}</span>
                 </div>
                 <div class="commonsize tie" v-if="item.matchType=='group'" :class="(item.userGuess&&item.userGuess.matchResult!='equal') ? 'gray' : 'yellowbg'" @click="openVotepop(item.homeTeam.teamName,item.homeTeam.logo,item.matchId,item.homeTeam.teamId,'equal',item.userGuess,item.gustTeam.logo,item.matchType)">
                   <div class="winbtn">平局</div>
@@ -317,9 +318,9 @@ export default {
     }
     .right {
       position: absolute;
-      top: 0;
+      top: 30pr;
       right: 0;
-      padding: 14pr 44pr;
+      padding: 10pr 36pr;
       font-size: 28pr;
       line-height: 40pr;
       color: #fff;
@@ -444,15 +445,17 @@ export default {
           .times {
             position: absolute;
             display: inline-block;
+            min-width: 45pr;
             height: 50pr;
-            line-height: 40pr;
-            top: -10pr;
+            line-height: 50pr;
+            top: -8pr;
             right: -23pr;
             color: #fff;
             font-size: 20pr;
+            text-align: center;
             background: #d7373f;
             border-radius: 100%;
-            padding:3pr 10pr;
+            padding: 0 5pr;
             > span {
               font-size: 14pr;
             }
