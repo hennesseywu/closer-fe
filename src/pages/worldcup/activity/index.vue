@@ -26,7 +26,6 @@
                 <div class="right-ball"></div>
               </div>
               <div class="swiper-wrapper">
-  
                 <div class="info-box box box-lr">
                   <div class="left-arrow box box-center-center" @click="arrowLeft()">
                     <span class="img"></span>
