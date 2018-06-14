@@ -2,11 +2,11 @@
   <mt-popup v-model="visible" class="appuse-pop" :closeOnClickModal="closeOnClickModal">
     <div class="close-icon" @click="close"></div>
     <div class="pop-header">
-      <div class="text">需要在APP中使用哦</div>
+      <div class="text">还想参与竞猜？</div>
     </div>
     <div class="pop-footer">
       <div class="confirm-btn" @click="goApp">进入APP使用</div>
-      <div class="tips">每日开奖，100%中奖<br> 世界杯瓜分600万</div>
+      <div class="tips">非app内只能投注一次哦</div>
     </div>
   </mt-popup>
 </template>
@@ -94,7 +94,7 @@ export default {
     .tips {
       font-size: 24pr;
       line-height: 34pr;
-      color: #777c90;
+      color: #fc9b22;
       margin-top: 20pr;
     }
   }
