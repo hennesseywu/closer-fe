@@ -1,8 +1,6 @@
 <template>
   <div class="index">
     <div class="wrapper">
-      <div class="code-img"></div>
-      <div class="code-tips">扫码瓜分600万</div>
       <div class="invite-img" @click="openShare"></div>
       <div class="text-desc">
         <span class="desc">扫描寻找二维码，可获得更多竞猜机会</span>
@@ -127,20 +125,6 @@
       padding-top: 1pr;
       background: url("../../../assets/images/bg1.png") no-repeat center center;
       background-size: cover;
-      .code-img {
-      margin-top: 48pr;
-      margin-left: 20pr;
-        width: 120pr;
-        height: 120pr;
-        background: url('../../../assets/images/code_img.png') no-repeat center;
-        background-size: cover;
-      }
-      .code-tips {
-        margin-top: 5pr;
-        margin-left: 20pr;
-        font-size: 18pr;
-        color: #fff;
-      }
       .invite-img {
         position: fixed;
         z-index: 999;;
@@ -152,7 +136,7 @@
         background-size: cover;
       }
       .text-desc {
-        margin: 230pr 40pr 20pr;
+        margin: 440pr 40pr 20pr;
         font-size: 24pr;
         height: 34pr;
         line-height: 34pr;
