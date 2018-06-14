@@ -21,7 +21,7 @@ window.Cookies = Cookies;
 window.MobileDetect = MobileDetect;
 
 window.setupWebViewJavascriptBridge = function(callback) {
-        // console.log(ca llback)
+        // //console.log(ca llback)
         if (window.WebViewJavascriptBridge) {
             return callback(WebViewJavascriptBridge);
         }

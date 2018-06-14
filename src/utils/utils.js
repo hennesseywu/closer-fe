@@ -1,5 +1,5 @@
 export function redirectAddChance(isApp) {
-    console.log("addchance", isApp);
+    //console.log("addchance", isApp);
     if (isApp) {
         location.href = "closer://community/9j9m4gy8sM"
     } else {
@@ -8,7 +8,7 @@ export function redirectAddChance(isApp) {
 }
 
 export function downloadApp() {
-    console.log("downloadApp");
+    //console.log("downloadApp");
     // let ua = navigator.userAgent || window.navigator.userAgent;
     // ua = ua.toLowerCase();
     // if (ua.indexOf('ipad') > -1 || ua.indexOf('iphone') > -1) {

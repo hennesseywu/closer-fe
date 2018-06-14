@@ -5,7 +5,7 @@ import { Toast } from 'mint-ui'
  * 获取用户竞猜比赛记录
  */
 export async function getUserGuessList(payload) {
-    console.log('service', payload)
+    //console.log('service', payload)
     return await axios.post(api.activity.get_user_guess_list, payload);
 }
 
@@ -13,7 +13,7 @@ export async function getUserGuessList(payload) {
  *  获取比赛竞猜列表
  */
 export async function getMatchList(payload) {
-    console.log('service', payload)
+    //console.log('service', payload)
     return await axios.post(api.activity.get_match_list, payload);
 }
 
@@ -28,14 +28,14 @@ export async function getUserGuessStatistic(payload) {
  *  竞猜比赛
  */
 export async function guessMatch(payload) {
-    console.log('service', payload)
+    //console.log('service', payload)
     return await axios.post(api.activity.guess_match, payload);
 }
 
 /**  比赛结果
  */
 export async function getGuessResult(payload) {
-    console.log('service', payload)
+    //console.log('service', payload)
     return await axios.post(api.activity.check_guess_result, payload);
 }
 /**

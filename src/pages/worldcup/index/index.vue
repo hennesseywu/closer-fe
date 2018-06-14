@@ -73,7 +73,7 @@
       }
     },
     mounted(){
-      console.log("mounted")
+      //console.log("mounted")
       this.checkLogin();
     }
     ,
@@ -99,8 +99,8 @@
     methods: {
       ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin','getAdCookies']),
       checkIsApp() {
-        console.log("isApp", this.$store.state.IS_APP)
-        console.log("params",this.$route.params)
+        //console.log("isApp", this.$store.state.IS_APP)
+        //console.log("params",this.$route.params)
         if (this.$route.params.channelCode) {
           this.$store.state.CHANNEL_CODE = this.$route.params.channelCode;
           Cookies.set("aid", this.$route.params.channelCode, { expires: 30 })
@@ -132,7 +132,7 @@
       margin-left: 20pr;
         width: 120pr;
         height: 120pr;
-        background: url('../../../assets/images/code_img.jpg') no-repeat center;
+        background: url('../../../assets/images/code_img.png') no-repeat center;
         background-size: cover;
       }
       .code-tips {

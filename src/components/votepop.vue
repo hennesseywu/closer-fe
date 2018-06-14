@@ -117,7 +117,7 @@
         this.chance= this.inputChance;
         if (this.chance > this.totalChance){
           this.showText = true;
-          console.log("机会不足")
+          //console.log("机会不足")
           return;
         } else{
          this.showText = false
@@ -133,10 +133,10 @@
           this.showText = true;
           return;
         }
-        // console.log('vote---this.chance', this.chance)
-        // console.log('vote---this.inputChance', this.inputChance)
+        // //console.log('vote---this.chance', this.chance)
+        // //console.log('vote---this.inputChance', this.inputChance)
         voteInfo['guessTimes'] = this.inputChance;
-        // console.log("confirm", voteInfo)
+        // //console.log("confirm", voteInfo)
         this.$emit('guessMatch', voteInfo)
         setTimeout(() => {
           this.close()

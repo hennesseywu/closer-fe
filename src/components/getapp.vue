@@ -22,7 +22,7 @@
     methods: {
       ...mapActions('index', ['getAdCookies']),
       download() {
-        console.log('channel_cdoe',this.$store.state.CHANNEL_CODE)
+        //console.log('channel_cdoe',this.$store.state.CHANNEL_CODE)
         if (this.$store.state.CHANNEL_CODE != "0") {
           let md = new MobileDetect(this.$store.state.UA);
           let deviceType = md.os();
@@ -33,10 +33,10 @@
           } else if (deviceType == "AndroidOS") {
             deviceType = "android";
             deviceVersion = md.versionStr('Android');
-            console.log("deviceVersion", deviceVersion)
+            //console.log("deviceVersion", deviceVersion)
             deviceVersion = deviceVersion.replace(/\./g, "_");
           }
-          console.log(deviceType, "----", deviceVersion)
+          //console.log(deviceType, "----", deviceVersion)
           this.getAdCookies({
             adid: this.$store.state.CHANNEL_CODE,
             webUdid: true,
@@ -44,6 +44,7 @@
             deviceVersion: deviceVersion
           });
         }
+        return;
         downloadApp();
       }
     }

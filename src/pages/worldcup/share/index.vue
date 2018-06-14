@@ -43,7 +43,7 @@ export default {
   methods: {
     ...mapActions("index", ["getUserById"]),
     goHome() {
-      console.log("go");
+      //console.log("go");
       this.$router.push({
         name: "worldcupIndex"
       });
@@ -86,7 +86,7 @@ export default {
         margin: 22pr auto 0;
         width: 218pr;
         height: 218pr;
-        background: url("../../../assets/images/code_img.jpg") no-repeat center;
+        background: url("../../../assets/images/code_img.png") no-repeat center;
         background-size: cover;
       }
       .btn-img {

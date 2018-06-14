@@ -184,10 +184,10 @@ export default {
         return
       }
       if (this.userGuessStatistic && this.userGuessStatistic.totalChance == 0) {
-        console.log("没有机会了");
+        //console.log("没有机会了");
         return;
       }
-      // console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
+      // //console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
       if (
         (userGuess &&
           userGuess.matchResult == "win" &&
@@ -275,7 +275,7 @@ export default {
     margin-left: 20pr;
     width: 120pr;
     height: 120pr;
-    background: url("../../../assets/images/code_img.jpg") no-repeat center;
+    background: url("../../../assets/images/code_img.png") no-repeat center;
     background-size: cover;
   }
   .code-tips {

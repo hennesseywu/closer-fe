@@ -62,22 +62,22 @@ export default {
             }
         },
         checkLogin({ state, rootState }) {
-            console.log("checkLogin", rootState.IS_APP);
+            //console.log("checkLogin", rootState.IS_APP);
             if (rootState.IS_APP) { //app内打开 ios补救措施
                 let ua = rootState.UA;
                 if (ua.indexOf("closer-ios") > -1) {
-                    console.log("module closer-ios");
+                    //console.log("module closer-ios");
                     setupWebViewJavascriptBridge(function(bridge) {
-                        console.log("ios bridge", bridge)
+                        //console.log("ios bridge", bridge)
                         if (bridge) {
                             //ios获取用户token 判断登录
                             bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                                console.log("ios token", token)
+                                //console.log("ios token", token)
                                 if (token) {
                                     Cookies.set("GroukAuth", token, { expires: 7 });
                                     Router.push({ name: "worldcupActivity" });
                                 } else {
-                                    console.log("ios jumpLogin")
+                                    //console.log("ios jumpLogin")
                                     setupWebViewJavascriptBridge(function(bridge) {
                                         bridge.callHandler("jumpLogin", null);
                                     });
@@ -89,37 +89,37 @@ export default {
             }
         },
         openLoginBox({ state, rootState }) {
-            console.log("openLoginBox", rootState.IS_APP)
+            //console.log("openLoginBox", rootState.IS_APP)
             if (rootState.IS_APP) { //app内打开
                 let ua = rootState.UA;
                 if (ua.indexOf("closer-android") > -1) {
-                    console.log("android", typeof window.bridge != "undefined")
-                        //安卓检查登录状态
+                    //console.log("android", typeof window.bridge != "undefined")
+                    //安卓检查登录状态
                     if (typeof window.bridge != "undefined") {
                         let token = window.bridge.getUserToken(null);
-                        console.log("android", token)
+                        //console.log("android", token)
                         if (token) {
                             Cookies.set("GroukAuth", token, { expires: 7 });
                             Router.push({ name: "worldcupActivity" });
                         } else {
-                            console.log("android jumpLogin")
+                            //console.log("android jumpLogin")
                             window.bridge.jumpLogin(null);
                         }
                     }
                 } else if (ua.indexOf("closer-ios") > -1) {
-                    console.log("closer-ios", window.WebViewJavascriptBridge);
+                    //console.log("closer-ios", window.WebViewJavascriptBridge);
                     if (window.WebViewJavascriptBridge) {
                         setupWebViewJavascriptBridge(function(bridge) {
-                            console.log("ios bridge", bridge)
+                            //console.log("ios bridge", bridge)
                             if (bridge) {
                                 //ios获取用户token 判断登录
                                 bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                                    console.log("ios token", token)
+                                    //console.log("ios token", token)
                                     if (token) {
                                         Cookies.set("GroukAuth", token, { expires: 7 });
                                         Router.push({ name: "worldcupActivity" });
                                     } else {
-                                        console.log("ios jumpLogin")
+                                        //console.log("ios jumpLogin")
                                         setupWebViewJavascriptBridge(function(bridge) {
                                             bridge.callHandler("jumpLogin", null);
                                         });
@@ -158,7 +158,7 @@ export default {
         },
         // 登录
         async login({ commit, state, rootState }, payLoad) {
-            console.log("loginModule", payLoad);
+            //console.log("loginModule", payLoad);
             if (payLoad.phone && !(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(payLoad.phone))) {
                 Toast('请输入正确的手机号');
                 return;
@@ -181,7 +181,7 @@ export default {
                 return;
             });
 
-            console.log("loginRes", loginRes)
+            //console.log("loginRes", loginRes)
             if (loginRes.data) {
                 let data = loginRes.data;
                 if (data.code && data.code != 0) {
@@ -197,7 +197,7 @@ export default {
                     if (data.result.isNewUser) {
                         rootState.isNewUser = data.result.isNewUser;
                     }
-                    console.log("push worldcupActivity")
+                    //console.log("push worldcupActivity")
                     Router.push({ name: "worldcupActivity" });
                 }
             }
