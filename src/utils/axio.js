@@ -3,15 +3,6 @@ import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import feConfig from '../utils/api';
 import Store from '../store'
-<<<<<<< HEAD
-import Promise from 'promise-polyfill';
-
-
-// http request 拦截器 
-axios.interceptors.request.use(
-    config => {
-        let Promise = require('promise-polyfill').default;
-=======
 const axio = axios.create({ 
         baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
          timeout: 15000, // 请求的超时时间
@@ -25,7 +16,6 @@ const axio = axios.create({ 
 axio.interceptors.request.use(
     config => {
         //console.log(config)
->>>>>>> 0cfed1fc1fe566501424e8287015fd7f77e91bd0
         let reqUrl = feConfig.serverDevUrl + config.url
         if (/a-sandbox.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverDevUrl + config.url;
