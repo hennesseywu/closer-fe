@@ -12,7 +12,7 @@
     </div>
     <div class="btn-goapp"  v-if="userGuessList.length > 0 && !isApp" @click="goApp">去提现</div>
     <div class="no-record" v-if="userGuessList.length == 0">
-      您还没有投注过哦~快去参与拿大奖吧
+      您还没有竞猜过哦~快去参与拿大奖吧
     </div>
   </div>
 </template>

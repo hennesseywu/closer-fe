@@ -68,7 +68,7 @@
     <Getapp ref="getapp" v-if="!isApp"></Getapp>
     <div class="rule_record box box-lr">
       <div class="rule" :class="showRule ? 'checkbg' : 'uncheckbg'" @click="showRules">规则说明</div>
-      <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">投注记录</div>
+      <div class="record" :class="showRecord ? 'checkbg' : 'uncheckbg'" @click="showRecords">竞猜记录</div>
     </div>
     <Rule ref="rule" :showRule="showRule"></Rule>
     <Votepop ref="votepop" :voteInfo="voteInfo" @guessMatch="guessMatch" :totalChance="userGuessStatistic.totalChance"></Votepop>
@@ -194,7 +194,7 @@ export default {
           userGuess.matchResult == "equal" &&
           matchResult != "equal")
       ) {
-        Toast("只能投注已选队伍");
+        Toast("只能竞猜已选队伍");
         return;
       }
       let guessInfo = {
