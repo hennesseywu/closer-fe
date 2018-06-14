@@ -50,7 +50,7 @@ axio.interceptors.request.use(
     },
     err => {
         Indicator.close()
-        return Promise.reject(err);
+        return Promise.reject(err).catch(err);
     });
 // http response 拦截器 
 axio.interceptors.response.use(
@@ -59,6 +59,7 @@ axio.interceptors.response.use(
         return response;
     },
     (err) => {
+        let Promise = require('promise-polyfill').default;
         if (err && err.response) {
             switch (err.response.status) {
                 case 400:
@@ -118,6 +119,6 @@ axio.interceptors.response.use(
             console.warn(err.message)
         }
         Indicator.close()
-        return Promise.reject(err)
+        return Promise.reject(err).catch(err)
     });
 export default axio

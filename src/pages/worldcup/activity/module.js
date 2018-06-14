@@ -103,7 +103,7 @@ export default {
             });
             //console.log(data)
             if (data && data.code == 0) {
-                Toast("投注成功");
+                Toast("竞猜成功");
                 await dispatch('getUserGuessStatistic');
                 await dispatch('getMatchList');
                 await dispatch('getUserGuessList');

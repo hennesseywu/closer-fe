@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="pop-body box box-tb box-center-center">
-      <div class="vote-resule" v-if="voteInfo.matchResult=='equal'">投注平局</div>
+      <div class="vote-resule" v-if="voteInfo.matchResult=='equal'">竞猜平局</div>
       <div class="vote-resule" v-else>投给{{voteInfo.teamName}}</div>
       <div class="rest-times">还剩{{totalChance}}次机会</div>
       <div class="vote-box box box-lr box-center-center">
@@ -59,7 +59,7 @@
       },
       voteResult: {
         type: String,
-        default: '投注胜利'
+        default: '竞猜胜利'
       },
       totalChance: Number
     },
@@ -129,7 +129,7 @@
         }
   
         if (this.chance == 0) {
-          this.textTip = "投注次数不能为0";
+          this.textTip = "竞猜次数不能为0";
           this.showText = true;
           return;
         }
