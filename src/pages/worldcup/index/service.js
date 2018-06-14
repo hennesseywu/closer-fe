@@ -11,13 +11,9 @@ export async function getCode(phone) {
 /**
  * 登录/注册 验证码
  */
-export async function login({ phone, code }) {
-    let params = {
-        phone: phone,
-        token: code,
-        protocol: 'WEB_SOCKET'
-    }
-    return await axios.post(api.admin.closeruser_regist, params)
+export async function login(payload) {
+
+    return await axios.post(api.admin.closeruser_regist, payload)
 
 }
 /**获取用户信息
@@ -37,6 +33,6 @@ export async function viewCount(payload) {
 /**点击页面内的下载按钮
  * 
  */
-export async function getAdcookie(payload) {
+export async function getAdCookies(payload) {
     return await axios.post(api.statitics.get_adcookie, payload)
 }

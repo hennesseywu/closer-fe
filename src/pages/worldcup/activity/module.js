@@ -31,7 +31,7 @@ export default {
         },
         updateUserGuesslist(state, payload) {
             state.userGuessList = payload.data.result.data
-            console.log('userGuessList', state.userGuessList)
+                //console.log('userGuessList', state.userGuessList)
         },
         updateUserGuessStatistic(state, payload) {
             state.userGuessStatistic = payload.data.result
@@ -45,10 +45,10 @@ export default {
     },
     actions: {
         async checkRecieveChance({ dispatch, commit }, payload) {
-            console.log("checkRecieveChance", payload)
+            //console.log("checkRecieveChance", payload)
             if (payload.channelCode == "0") {
                 payload = {}
-                console.log(payload)
+                    //console.log(payload)
             } else {
                 payload["type"] = "other";
             }
@@ -58,13 +58,10 @@ export default {
             })
             if (data.result) {
                 let result = data.result;
-                // let result = {
-                //     "presentAvailable": true, //-----是否显示新人大礼包字段
-                //     "count": 11, //-----这次获取的次数
-                //     "status": true //-----是否领取成功
-                // }
                 commit({ type: 'updateRecieveChance', result });
-                await dispatch('getUserGuessStatistic');
+                if (result.count && result.count > 0) {
+                    await dispatch('getUserGuessStatistic');
+                }
             } else {
                 Toast('网络开小差啦，请稍后再试')
             }
@@ -99,12 +96,12 @@ export default {
             })
         },
         async guessMatch({ dispatch, commit, state }, payload) {
-            console.log("guessMatch", payload)
+            //console.log("guessMatch", payload)
             const { data } = await guessMatch(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             });
-            console.log(data)
+            //console.log(data)
             if (data && data.code == 0) {
                 Toast("投注成功");
                 await dispatch('getUserGuessStatistic');
@@ -115,7 +112,7 @@ export default {
             }
         },
         setVoteInfo({ state }, payload) {
-            console.log("setVoteInfo", payload)
+            //console.log("setVoteInfo", payload)
             state.voteInfo = payload
         },
         async checkGuessResult({ commit }, payload) {

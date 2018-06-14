@@ -1,13 +1,11 @@
 <template>
   <div class="activity">
     <div class="wrapper">
-      <div class="code-img"></div>
-      <div class="code-tips">扫码瓜分600万</div>
       <div class="invite-img" @click="openShare"></div>
 
       <div class="text-box box box-lr box-center-center">
         <div class="left box box-tb">
-          <div class="money" v-if="userGuessStatistic.totalAwardAmt > 0">你累积获得了<span>{{userGuessStatistic.totalAwardAmt}}</span>元 </div>
+          <div class="money" v-if="userGuessStatistic.totalAwardAmt > 0">你累积获得了<span>{{change(userGuessStatistic.totalAwardAmt)}}</span>元 </div>
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
           <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>人参与</div>
         </div>
@@ -26,7 +24,6 @@
                 <div class="right-ball"></div>
               </div>
               <div class="swiper-wrapper">
-  
                 <div class="info-box box box-lr">
                   <div class="left-arrow box box-center-center" @click="arrowLeft()">
                     <span class="img"></span>
@@ -98,7 +95,7 @@ import Getapp from "../../../components/getapp.vue";
 import Nochancepop from "../../../components/nochancepop.vue";
 import Sharepop from "../../../components/sharepop.vue";
 import Appusepop from "../../../components/appusepop.vue";
-import { redirectAddChance } from "../../../utils/utils";
+import { redirectAddChance, toYuan } from "../../../utils/utils";
 
 export default {
   name: "index",
@@ -135,7 +132,6 @@ export default {
   },
   created() {
     this.getMatchList();
-    // this.getUserGuessList()
     this.checkUser();
     this.getUserGuessStatistic();
     this.checkGuessResult();
@@ -177,9 +173,6 @@ export default {
       gustTeamLogo,
       matchType
     ) {
-      console.log(winTeamId, "--", matchResult, "---", userGuess);
-      console.log(this.userGuessStatistic.totalChance);
-     
       if (this.userGuessStatistic.totalChance == 0) {
         this.$refs.nochancepop.open();
         return;
@@ -189,10 +182,10 @@ export default {
         return
       }
       if (this.userGuessStatistic && this.userGuessStatistic.totalChance == 0) {
-        console.log("没有机会了");
+        //console.log("没有机会了");
         return;
       }
-      // console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
+      // //console.log("-----",(userGuess&&userGuess.matchResult=="equal"&&matchResult!="equal"))
       if (
         (userGuess &&
           userGuess.matchResult == "win" &&
@@ -254,8 +247,11 @@ export default {
       redirectAddChance(this.$store.state.IS_APP);
     },
     openShare() {
-        this.$refs.sharepop.open()
-      }
+      this.$refs.sharepop.open()
+    },
+  change(money) {
+      return toYuan(money)
+    }
   }
 };
 </script>
@@ -272,20 +268,6 @@ export default {
     background: url("../../../assets/images/bg2.png") no-repeat center;
     background-size: cover;
   }
-  .code-img {
-    margin-top: 48pr;
-    margin-left: 20pr;
-    width: 120pr;
-    height: 120pr;
-    background: url("../../../assets/images/test_code.png") no-repeat center;
-    background-size: cover;
-  }
-  .code-tips {
-    margin-top: 5pr;
-    margin-left: 20pr;
-    font-size: 18pr;
-    color: #fff;
-  }
   .invite-img {
     z-index: 999;
     position: fixed;
@@ -298,7 +280,7 @@ export default {
   }
   .text-box {
     position: relative;
-    margin-top: 248pr;
+    margin-top: 460pr;
     text-align: center;
     color: #fff;
     height: 104pr;

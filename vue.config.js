@@ -1,3 +1,7 @@
 module.exports = {
-  lintOnSave: false
+    lintOnSave: false,
+    devServer: {
+        open: process.platform === 'darwin',
+        port: 8888
+    }
 }

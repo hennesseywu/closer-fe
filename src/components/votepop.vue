@@ -92,20 +92,19 @@
         }
       },
       onblur() {
-        this.inputChance = this.$refs.chance.value
+        this.inputChance = this.$refs.chance.value;
         this.showText = false
         this.checkChance()
       },
       add() {
         this.checkChance();
         this.chance++;
-        this.inputChance = this.chance;
-        console.log("dddddd", this.chance);
         if (this.chance > this.totalChance) {
           this.chance = this.totalChance
           this.showText = true
           this.textTip = "机会不足"
         }
+        this.inputChance = this.chance;
       },
       reduce() {
         if (this.chance > 1) {
@@ -115,10 +114,14 @@
         this.checkChance()
       },
       confirm(voteInfo) {
-        if (this.chance = this.totalChance) {
-          this.showText = false
+        this.chance= this.inputChance;
+        if (this.chance > this.totalChance){
+          this.showText = true;
+          //console.log("机会不足")
+          return;
+        } else{
+         this.showText = false
         }
-        if (this.chance > this.totalChance) return
         if (!(/^[1-9]+[0-9]*]*$/.test(this.chance))) {
           this.textTip = "请输入正整数";
           this.showText = true;
@@ -130,10 +133,10 @@
           this.showText = true;
           return;
         }
-        console.log('vote---this.chance', this.chance)
-        console.log('vote---this.inputChance', this.inputChance)
+        // //console.log('vote---this.chance', this.chance)
+        // //console.log('vote---this.inputChance', this.inputChance)
         voteInfo['guessTimes'] = this.inputChance;
-        console.log("confirm", voteInfo)
+        // //console.log("confirm", voteInfo)
         this.$emit('guessMatch', voteInfo)
         setTimeout(() => {
           this.close()

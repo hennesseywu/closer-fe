@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "serve": "vue-cli-service serve --open",
+        "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint"
     },
@@ -11,6 +11,10 @@
         "axios": "^0.18.0",
         "js-cookie": "^2.2.0",
         "mint-ui": "^2.2.13",
+<<<<<<< HEAD
+=======
+        "mobile-detect": "^1.4.2",
+>>>>>>> 0cfed1fc1fe566501424e8287015fd7f77e91bd0
         "promise-polyfill": "^8.0.0",
         "vconsole": "^3.2.0",
         "vue": "^2.5.16",

@@ -6,7 +6,7 @@
     </div>
     <div class="pop-footer">
       <div class="confirm-btn" @click="goApp">进入APP使用</div>
-      <div class="tips">每日开奖，100%中奖<br> 决赛瓜分600万</div>
+      <div class="tips">每日开奖，100%中奖<br> 世界杯瓜分600万</div>
     </div>
   </mt-popup>
 </template>

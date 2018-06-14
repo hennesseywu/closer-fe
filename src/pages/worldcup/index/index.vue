@@ -1,8 +1,6 @@
 <template>
   <div class="index">
     <div class="wrapper">
-      <div class="code-img"></div>
-      <div class="code-tips">扫码瓜分600万</div>
       <div class="invite-img" @click="openShare"></div>
       <div class="text-desc">
         <span class="desc">扫描寻找二维码，可获得更多竞猜机会</span>
@@ -25,7 +23,7 @@
             <input type="text" v-model="code" placeholder="请输入手机验证码">
             <span class="code" v-on:click="getCode(phone)">{{sendCode}}</span>
           </div>
-          <div class="get-btn" v-on:click="login({phone,code})"></div>
+          <div class="get-btn" v-on:click="login({phone,token:code})"></div>
           <div class="text"></div>
         </div>
       </div>
@@ -65,10 +63,16 @@
     created() {
       this.id = getQueryString()
       this.checkIsApp();
+      if(!Cookies.get("closer_udid")){
+      this.getAdCookies({
+            webUdid:true,
+            adid:this.$route.params.channelCode
+      });
+      }
     },
     mounted(){
+      //console.log("mounted")
       this.checkLogin();
-      // this.viewCount(this.id)
     }
     ,
     data() {
@@ -91,13 +95,15 @@
       })
     },
     methods: {
-      ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin','viewCount']),
+      ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin','getAdCookies']),
       checkIsApp() {
-        console.log("isApp", this.$store.state.IS_APP)
-        console.log("params",this.$route.params)
+        //console.log("isApp", this.$store.state.IS_APP)
+        //console.log("params",this.$route.params)
         if (this.$route.params.channelCode) {
           this.$store.state.CHANNEL_CODE = this.$route.params.channelCode;
+          Cookies.set("aid", this.$route.params.channelCode, { expires: 30 })
         }
+        // this.getAdCookies({adid:this.$store.state.CHANNEL_CODE,webUdid:true});
         this.isApp = this.$store.state.IS_APP;
       },redirect2Chance(){
         redirectAddChance(this.$store.state.IS_APP);
@@ -119,20 +125,6 @@
       padding-top: 1pr;
       background: url("../../../assets/images/bg1.png") no-repeat center center;
       background-size: cover;
-      .code-img {
-      margin-top: 48pr;
-      margin-left: 20pr;
-        width: 120pr;
-        height: 120pr;
-        background: url('../../../assets/images/test_code.png') no-repeat center;
-        background-size: cover;
-      }
-      .code-tips {
-        margin-top: 5pr;
-        margin-left: 20pr;
-        font-size: 18pr;
-        color: #fff;
-      }
       .invite-img {
         position: fixed;
         z-index: 999;;
@@ -144,7 +136,7 @@
         background-size: cover;
       }
       .text-desc {
-        margin: 230pr 40pr 20pr;
+        margin: 440pr 40pr 20pr;
         font-size: 24pr;
         height: 34pr;
         line-height: 34pr;

@@ -3,6 +3,7 @@ import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import feConfig from '../utils/api';
 import Store from '../store'
+<<<<<<< HEAD
 import Promise from 'promise-polyfill';
 
 
@@ -10,12 +11,28 @@ import Promise from 'promise-polyfill';
 axios.interceptors.request.use(
     config => {
         let Promise = require('promise-polyfill').default;
+=======
+const axio = axios.create({ 
+        baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
+         timeout: 15000, // 请求的超时时间
+          //设置默认请求头，使post请求发送的是formdata格式数据// axios的header默认的Content-Type好像是'application/json;charset=UTF-8',我的项目都是用json格式传输，如果需要更改的话，可以用这种方式修改
+          // headers: { 
+          // "Content-Type": "application/x-www-form-urlencoded"
+          // },
+        //  withCredentials: true // 允许携带cookie
+    })
+    // http request 拦截器 
+axio.interceptors.request.use(
+    config => {
+        //console.log(config)
+>>>>>>> 0cfed1fc1fe566501424e8287015fd7f77e91bd0
         let reqUrl = feConfig.serverDevUrl + config.url
-        if (/sandbox.tiejin/.test(config.url)) {
+        if (/a-sandbox.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverDevUrl + config.url;
-        } else if (/tiejin/.test(config.url)) {
+        } else if (/a.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverUrl + config.url;
         }
+        // //console.log("requrl", reqUrl)
         config.url = reqUrl;
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
@@ -26,10 +43,17 @@ axios.interceptors.request.use(
                 config.headers['Closer-Agent'] = 'Closer-Android';
             }
         }
+        if (Cookies.get("uid")) {
+            config.headers['X-Udid'] = Cookies.get("uid");
+        }
+        if (Cookies.get("aid")) {
+            config.headers['X-Adid'] = Cookies.get("aid");
+        }
+
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
-        // console.log("axio req header", config)
+        //console.log("axio req header", config)
         Indicator.open()
         return config;
 
@@ -39,7 +63,7 @@ axios.interceptors.request.use(
         return Promise.reject(err).catch(err);
     });
 // http response 拦截器 
-axios.interceptors.response.use(
+axio.interceptors.response.use(
     response => {
         Indicator.close()
         return response;
@@ -107,4 +131,4 @@ axios.interceptors.response.use(
         Indicator.close()
         return Promise.reject(err).catch(err)
     });
-export default axios
+export default axio

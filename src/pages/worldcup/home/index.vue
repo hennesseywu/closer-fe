@@ -34,7 +34,7 @@ export default {
           let pwdReg = /^\w+$/;
               this.getCode(this.user.phone);
             // if(!nameReg.test(this.userLogin.userName)) {
-            //     console.log(this.userLogin.userName)
+            //     //console.log(this.userLogin.userName)
             //     alert('请输入正确的姓名')
             //     return
             // }

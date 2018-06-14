@@ -42,7 +42,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.userGuessList.length)
+    //console.log(this.userGuessList.length)
   },
   methods: {
     change(money) {
