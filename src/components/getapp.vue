@@ -44,7 +44,6 @@
             deviceVersion: deviceVersion
           });
         }
-        return;
         downloadApp();
       }
     }
