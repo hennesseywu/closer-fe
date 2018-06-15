@@ -184,6 +184,10 @@ export default {
                         Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
                     }
                     Router.push({ name: "worldcupActivity" });
+                } else {
+                    if (data.result) {
+                        Toast(data.result)
+                    }
                 }
             } else {
                 Toast('网络开小差啦，请稍后再试')
