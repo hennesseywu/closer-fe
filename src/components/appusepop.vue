@@ -94,7 +94,7 @@ export default {
     .tips {
       font-size: 24pr;
       line-height: 34pr;
-      color: #fc9b22;
+      color: #fba14f;
       margin-top: 20pr;
     }
   }
