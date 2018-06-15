@@ -56,9 +56,10 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
         //console.log("isApp true");
     }
     if (name == "worldcupIndex") {
-        //console.log("params", params)
+        console.log("params", params)
         if (params.channelCode && params.channelCode != "0") {
             Cookies.set("aid", params.channelCode, { expires: 30 });
+            Store.state.CHANNEL_CODE = params.channelCode;
             //console.log("set cookies", params.channelCode);
         }
         if (ua.indexOf("closer-android") > -1) {
