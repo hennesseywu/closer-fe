@@ -43,8 +43,13 @@
             deviceType: deviceType,
             deviceVersion: deviceVersion
           });
-        }
+          setTimeout(()=>{
+              downloadApp();
+          },500)
+        }else{
         downloadApp();
+        }
+        
       }
     }
   };
