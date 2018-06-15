@@ -47,7 +47,6 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
     setTimeout(() => {
         document.title = meta.title ? meta.title : '贴近'
     }, 500)
-
     let ua = navigator.userAgent || window.navigator.userAgent;
     Store.state.UA = ua.toLowerCase();
     ua = Store.state.UA;
