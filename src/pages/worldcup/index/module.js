@@ -56,9 +56,6 @@ export default {
                 if (result.udid) {
                     Cookies.set("uid", result.udid, { expires: 30 })
                 }
-                if (result.adid) {
-                    Cookies.set("aid", result.adid, { expires: 30 })
-                }
             }
         },
         checkLogin({ state, rootState }) {
@@ -176,31 +173,28 @@ export default {
                 payLoad['adid'] = Cookies.get("aid");
             }
             payLoad['protocol'] = 'WEB_SOCKET';
-            let loginRes = await login(payLoad).catch(err => {
+            let { data } = await login(payLoad).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             });
-
-            //console.log("loginRes", loginRes)
-            if (loginRes.data) {
-                let data = loginRes.data;
-                if (data.code && data.code != 0) {
-                    Toast(data.result);
-                    return;
-                }
-
+            if (typeof(data.code) != "undefined") {
                 if (data.result && data.result.token) {
-                    Cookies.set("GroukAuth", data.result.token, { expires: 7 });
+                    Cookies.set("GroukAuth", data.result.token, { expires: 60 });
                     if (data.result.user) {
-                        Cookies.set("user", JSON.stringify(data.result.user), { expires: 7 });
+                        Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
                     }
-                    if (data.result.isNewUser) {
-                        rootState.isNewUser = data.result.isNewUser;
-                    }
-                    //console.log("push worldcupActivity")
                     Router.push({ name: "worldcupActivity" });
+                } else {
+                    if (data.result) {
+                        Toast(data.result)
+                    }
                 }
+            } else {
+                Toast('网络开小差啦，请稍后再试')
+                return;
             }
+
+
         }
     }
 }

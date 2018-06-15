@@ -135,9 +135,7 @@ export default {
     this.checkUser();
     this.getUserGuessStatistic();
     this.checkGuessResult();
-    this.checkRecieveChance({
-      channelCode: this.$store.state.CHANNEL_CODE
-    });
+    this.checkRecieveChance();
   },
   mounted() {
     if (this.userGuessStatistic.totalChance == 0) {

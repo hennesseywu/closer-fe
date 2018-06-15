@@ -46,21 +46,24 @@ export default {
     actions: {
         async checkRecieveChance({ dispatch, commit }, payload) {
             //console.log("checkRecieveChance", payload)
-            if (payload.channelCode == "0") {
-                payload = {}
-                    //console.log(payload)
-            } else {
-                payload["type"] = "other";
+            let params = {};
+            if (Cookies.get("aid") != "0") {
+                params["channelCode"] = Cookies.get("aid")
+                params["type"] = "other"
             }
-            let { data } = await checkRecieveChance(payload).catch(err => {
+            let { data } = await checkRecieveChance(params).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             })
-            if (data.result) {
-                let result = data.result;
-                commit({ type: 'updateRecieveChance', result });
-                if (result.count && result.count > 0) {
-                    await dispatch('getUserGuessStatistic');
+            if (typeof(data.code) != "undefined") {
+                if (data.code == 0) {
+                    let result = data.result;
+                    commit({ type: 'updateRecieveChance', result });
+                    if (result.count && result.count > 0) {
+                        await dispatch('getUserGuessStatistic');
+                    }
+                } else {
+                    Cookies.set("aid", "illegalAid", { expires: 30 })
                 }
             } else {
                 Toast('网络开小差啦，请稍后再试')

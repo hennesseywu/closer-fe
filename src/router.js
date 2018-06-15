@@ -47,19 +47,16 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
     setTimeout(() => {
         document.title = meta.title ? meta.title : '贴近'
     }, 500)
-
     let ua = navigator.userAgent || window.navigator.userAgent;
     Store.state.UA = ua.toLowerCase();
     ua = Store.state.UA;
     if (Store.state.UA.indexOf("closer-android") > -1 || Store.state.UA.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
-        //console.log("isApp true");
     }
     if (name == "worldcupIndex") {
-        //console.log("params", params)
+        Cookies.set("aid", "0", { expires: 30 })
         if (params.channelCode && params.channelCode != "0") {
-            Cookies.set("aid", params.channelCode, { expires: 30 });
-            //console.log("set cookies", params.channelCode);
+            Cookies.set("aid", params.channelCode, { expires: 30 }); //console.log("set cookies", params.channelCode);
         }
         if (ua.indexOf("closer-android") > -1) {
             //console.log("router android", typeof window.bridge != "undefined")
@@ -101,7 +98,7 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
             if (Cookies.get("GroukAuth")) {
                 //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
                 if (params && params.channelCode) {
-                    Store.state.CHANNEL_CODE = params.channelCode;
+                    Cookies.set("aid", params.channelCode, { expires: 30 });
                 }
                 router.push({ name: "worldcupActivity" });
             }
