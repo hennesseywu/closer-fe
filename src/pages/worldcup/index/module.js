@@ -179,9 +179,9 @@ export default {
             });
             if (typeof(data.code) != "undefined") {
                 if (data.result && data.result.token) {
-                    Cookies.set("GroukAuth", data.result.token, { expires: 7 });
+                    Cookies.set("GroukAuth", data.result.token, { expires: 60 });
                     if (data.result.user) {
-                        Cookies.set("user", JSON.stringify(data.result.user), { expires: 7 });
+                        Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
                     }
                     Router.push({ name: "worldcupActivity" });
                 }
