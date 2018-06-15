@@ -56,9 +56,6 @@ export default {
                 if (result.udid) {
                     Cookies.set("uid", result.udid, { expires: 30 })
                 }
-                if (result.adid) {
-                    Cookies.set("aid", result.adid, { expires: 30 })
-                }
             }
         },
         checkLogin({ state, rootState }) {
