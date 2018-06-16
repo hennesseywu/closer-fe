@@ -173,15 +173,15 @@
       margin-top: 38pr;
       text-align: center;
       .result-img {
-        width: 348pr;
-        height: 320pr;
-        background: url('../assets/images/result_wrong.png') no-repeat center;
+        width: 280pr;
+        height: 280pr;
+        background: url('../assets/images/code_img.png') no-repeat center;
         background-size: cover;
       }
       .result-win {
-        width: 452pr;
-        height: 228pr;
-        background: url('../assets/images/result_win.png') no-repeat center;
+        width: 280pr;
+        height: 280pr;
+        background: url('../assets/images/code_img.png') no-repeat center;
         background-size: cover;
       }
       .share {
