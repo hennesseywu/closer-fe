@@ -14,9 +14,10 @@
       </div>
       <div class="content box box-tb box-center-center">
         <div :class="guessResult ? 'result-win':'result-img'"></div>
+        <div class="text-tips">{{guessResult ? '截图炫耀一下' : '截图邀请好友'}}</div>
         <div class="share" @click="jumpToShare()">
           <button class="button" v-if="guessResult">炫耀一下</button>
-          <button class="button" v-else>邀请好友一起赚钱</button>
+          <button class="button" v-else>邀请好友 一起赚钱</button>
         </div>
         <div class="guide">
           <a class="href" @click="jumpToAddChance()">增加机会 查看攻略</a>
@@ -173,16 +174,21 @@
       margin-top: 38pr;
       text-align: center;
       .result-img {
-        width: 280pr;
-        height: 280pr;
+        width: 240pr;
+        height: 240pr;
         background: url('../assets/images/code_img.png') no-repeat center;
         background-size: cover;
       }
       .result-win {
-        width: 280pr;
-        height: 280pr;
+        width: 240pr;
+        height: 240pr;
         background: url('../assets/images/code_img.png') no-repeat center;
         background-size: cover;
+      }
+      .text-tips {
+        font-size: 24pr;
+        color: #4b4945;
+        margin-top: 5pr;
       }
       .share {
         margin-top: 48pr;
