@@ -10,7 +10,7 @@ const axio = axios.create({ 
           // headers: { 
           // "Content-Type": "application/x-www-form-urlencoded"
           // },
-        //  withCredentials: true // 允许携带cookie
+         withCredentials: true // 允许携带cookie
     })
     // http request 拦截器 
 axio.interceptors.request.use(

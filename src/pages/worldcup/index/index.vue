@@ -29,7 +29,7 @@
           </div>
           <div class="code-box login-commen">
             <input type="text" v-model="code" placeholder="请输入手机验证码">
-            <span class="code" v-on:click="getCode({phone,imgCode})">{{sendCode}}</span> </div>
+            <span class="code" v-on:click="getCode({phone,grouk_captcha_value:imgCode})">{{sendCode}}</span> </div>
           <div class="get-btn" v-on:click="login({phone,token:code})"></div>
           <div class="text"></div>
         </div>

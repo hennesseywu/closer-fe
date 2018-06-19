@@ -142,20 +142,30 @@ export default {
                 Toast('请输入正确的手机号');
                 return;
             };
-            if (payload.imgCode.length == 0) {
+            if (payload.grouk_captcha_value.length == 0) {
                 Toast('请输入验证码');
                 return;
             };
 
             if (state.countDown == 60) {
-                let codeRes = await getCode(payload).catch(err => {
+                let { data, status } = await getCode(payload).catch(err => {
                     Toast('网络开小差啦，请稍后再试')
                     return;
                 });
-                if (codeRes.status && codeRes.status == 200) {
+                if (status && status == 200) {
+                    if (data) {
+                        if (data.code == 0) {
+                            commit('updateCountDown');
+                            Toast("验证码发送成功")
+                        } else {
+                            if (data.result) {
+                                Toast(data.result)
+                            }
 
-                    commit('updateCountDown');
-                    Toast("验证码发送成功")
+                        }
+                    }
+                } else {
+                    Toast('网络开小差啦，请稍后再试')
                 }
             }
         },
