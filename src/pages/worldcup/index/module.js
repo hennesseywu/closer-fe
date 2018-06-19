@@ -165,7 +165,9 @@ export default {
                             commit('updateCountDown');
                             Toast("验证码发送成功")
                         } else {
-                            commit("updateTimestamp");
+                            if (data.code != 3003) {
+                                commit("updateTimestamp");
+                            }
                             if (data.result) {
                                 Toast(data.result)
                             }
