@@ -19,9 +19,13 @@
           <div class="phone-box login-commen">
             <input class="ml-24" type="text" v-model="phone" maxlength="11" placeholder="请输入领奖手机号码">
           </div>
+           <div class="code-box login-commen">
+            <input type="text" v-model="code" placeholder="请输入图形验证码">
+            <span class="code" v-on:click="getCode(phone)">{{sendCode}}</span>
+          </div>
           <div class="code-box login-commen">
             <input type="text" v-model="code" placeholder="请输入手机验证码">
-            <span class="code" v-on:click="getCode(phone)">{{sendCode}}</span>
+            <img class="code" v-on:click="getCode(phone)" src=""/>
           </div>
           <div class="get-btn" v-on:click="login({phone,token:code})"></div>
           <div class="text"></div>
@@ -35,17 +39,22 @@
 </template>
 
 <script>
-  import { Toast } from 'mint-ui'
+  import {
+    Toast
+  } from 'mint-ui'
   import Rule from '../../../components/rule.vue';
   import Loginpop from '../../../components/loginpop.vue';
   import Newuserpop from '../../../components/newuserpop.vue';
   import Getapp from '../../../components/getapp.vue';
   import Sharepop from '../../../components/sharepop.vue';
-  import { getQueryString } from '../../../utils/utils'
-   import {
+  import Imagepop from '../../../components/imagecodepop.vue';
+  import {
+    getQueryString
+  } from '../../../utils/utils'
+  import {
     redirectAddChance
   } from '../../../utils/utils';
-
+  
   import {
     mapActions,
     mapState
@@ -58,23 +67,23 @@
       Loginpop,
       Newuserpop,
       Getapp,
-      Sharepop
+      Sharepop,
+      Imagepop
     },
     created() {
       this.id = getQueryString()
       this.checkIsApp();
-      if(!Cookies.get("closer_udid")){
-      this.getAdCookies({
-            webUdid:true,
-            adid:this.$route.params.channelCode
-      });
+      if (!Cookies.get("closer_udid")) {
+        this.getAdCookies({
+          webUdid: true,
+          adid: this.$route.params.channelCode
+        });
       }
     },
-    mounted(){
+    mounted() {
       //console.log("mounted")
       this.checkLogin();
-    }
-    ,
+    },
     data() {
       return {
         phone: "",
@@ -95,10 +104,11 @@
       })
     },
     methods: {
-      ...mapActions('index', ['getCode', 'login','openLoginBox','checkLogin','getAdCookies']),
+      ...mapActions('index', ['getCode', 'login', 'openLoginBox', 'checkLogin', 'getAdCookies']),
       checkIsApp() {
         this.isApp = this.$store.state.IS_APP;
-      },redirect2Chance(){
+      },
+      redirect2Chance() {
         redirectAddChance(this.$store.state.IS_APP);
       },
       openShare() {
@@ -120,7 +130,8 @@
       background-size: cover;
       .invite-img {
         position: fixed;
-        z-index: 999;;
+        z-index: 999;
+        ;
         top: 48pr;
         right: 0;
         width: 128pr;
@@ -214,7 +225,6 @@
             width: 100%;
             line-height: 80pr;
             margin-top: 30pr;
-            
             >input {
               width: 60%;
             }
@@ -227,7 +237,6 @@
               color: rgba(255, 255, 255, 0.5);
               border-left: 1px solid #25B1EC;
               justify-content: center;
-
             }
           }
           .get-btn {
