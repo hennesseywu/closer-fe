@@ -14,7 +14,7 @@
       </div>
       <div class="content box box-tb box-center-center">
         <div :class="isDev ? 'result-dev' : 'result-online'"></div>
-        <div class="text-tips">{{guessResult ? '截图炫耀一下' : '截图邀请好友'}}</div>
+        <div class="text-tips">{{tipsText}}</div>
         <div class="share" @click="jumpToShare()">
           <button class="button" v-if="guessResult">炫耀一下</button>
           <button class="button" v-else>邀请好友 一起赚钱</button>
@@ -79,11 +79,21 @@
         win: false,
         buttonText: '炫耀一下',
         isShow: false,
-        notAccessVisible: true
-  
+        notAccessVisible: true,
+        tipsText: '截图炫耀一下'
       };
     },
+    created() {
+        this.showTips()
+    },
     methods: {
+      showTips() {
+        if(this.guessResult) {
+          this.tipsText = '截图炫耀一下'
+        } else {
+          this.tipsText = '截图邀请好友'
+        }
+      },
       change(money) {
         return toYuan(money)
       },
