@@ -1,5 +1,5 @@
 <template>
-  <div class="rule-box activity-rule" :class="showIndexRule ? 'index-rule' : ''" v-if="showRule || showIndexRule">
+  <div class="rule-box activity-rule" :class="chanceBoxShow ? 'index-rule' : (loginBoxShow ? 'login-rule' : '')" v-if="showRule || showIndexRule">
     <div class="rule-title box box-tb box-center-center" v-if="showIndexRule">
       <div class="top-line"></div>
       活动规则
@@ -66,6 +66,14 @@
       showIndexRule: {
         type: Boolean,
         default: false
+      },
+      loginBoxShow: {
+        type: Boolean,
+        default: false
+      },
+      chanceBoxShow: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -86,9 +94,13 @@
   }
   
   .index-rule {
-    margin: -430pr 40pr 140pr;
+    margin: -410pr 40pr 140pr;
   }
   
+  .login-rule {
+    margin: -320pr 40pr 140pr;
+  }
+
   .rule-box {
     font-size: 28pr;
     line-height: 40pr;

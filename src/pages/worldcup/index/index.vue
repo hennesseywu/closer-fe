@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <Rule ref="rule" :showIndexRule="showIndexRule"></Rule>
+    <Rule ref="rule" :showIndexRule="showIndexRule" :loginBoxShow="loginBoxShow" :chanceBoxShow="chanceBoxShow"></Rule>
     <Getapp ref='getapp' v-if="!isApp"></Getapp>
     <Sharepop ref="sharepop" :isApp="isApp" :isDev="isDev"></Sharepop>
   </div>
