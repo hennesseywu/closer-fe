@@ -14,7 +14,8 @@ export default {
         countDown: 60,
         deviceType: '',
         deviceVersion: '',
-        adid: ''
+        adid: '',
+        timestampNow: 0
     },
     mutations: {
         updateCountDown(state) {
@@ -31,9 +32,15 @@ export default {
         },
         viewCount(state, payload) {
             state.id = payload.id
+        },
+        updateTimestamp(state, payload) {
+            state.timestampNow = Date.now();
         }
     },
     actions: {
+        updateTimestamp({ commit }) {
+            commit("updateTimestamp")
+        },
         async viewCount({ state, commit }, payload) {
             const { data, cookies } = await viewCount(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
@@ -153,7 +160,8 @@ export default {
                     return;
                 });
                 if (status && status == 200) {
-                    if (data) {
+                    commit("updateTimestamp");
+                    if (typeof(data.code) != 'undefined') {
                         if (data.code == 0) {
                             commit('updateCountDown');
                             Toast("验证码发送成功")
@@ -176,6 +184,10 @@ export default {
                 Toast('请输入正确的手机号');
                 return;
             };
+            if (payload.imgCode.length == 0) {
+                Toast("请输入图形验证码")
+                return;
+            }
             if (payload.token.length == 0) {
                 Toast("请输入验证码")
                 return;

@@ -23,14 +23,14 @@
             <div class="img-put login-commen">
               <input type="text" v-model="imgCode" placeholder="请输入图形验证码">
             </div>
-            <div class="img-code" @click="changeImg()">
-              <img class="code" :src="isDev ? 'http://file-sandbox.tiejin.cn/captcha/image?'+imageParam:'http://file.tiejin.cn/captcha/image?'+imageParam" />
+            <div class="img-code" @click="updateTimestamp()">
+              <img class="code" :src="isDev ? 'http://file-sandbox.tiejin.cn/captcha/image?'+timestampNow:'http://file.tiejin.cn/captcha/image?'+timestampNow" />
             </div>
           </div>
           <div class="code-box login-commen">
             <input type="text" v-model="code" placeholder="请输入手机验证码">
             <span class="code" v-on:click="getCode({phone,grouk_captcha_value:imgCode})">{{sendCode}}</span> </div>
-          <div class="get-btn" v-on:click="login({phone,token:code})"></div>
+          <div class="get-btn" v-on:click="login({phone,token:code,imgCode})"></div>
           <div class="text"></div>
         </div>
       </div>
@@ -98,8 +98,7 @@
         isDev: false,
         showIndexRule: true,
         channelCode: "",
-        id: '',
-        imageParam:0
+        id: ''
       }
     },
     computed: {
@@ -108,11 +107,12 @@
         'chanceBoxShow': state => state.chanceBoxShow,
         'loginBoxShow': state => state.loginBoxShow,
         'sendCode': state => state.sendCode,
+        'timestampNow':state=>state.timestampNow
         // 'id': state => state.id
       })
     },
     methods: {
-      ...mapActions('index', ['getCode', 'login', 'openLoginBox', 'checkLogin', 'getAdCookies']),
+      ...mapActions('index', ['getCode', 'login', 'openLoginBox', 'checkLogin', 'getAdCookies','updateTimestamp']),
       checkIsApp() {
         this.isApp = this.$store.state.IS_APP;
       },
