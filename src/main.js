@@ -11,9 +11,11 @@ import axio from './utils/axio'
 import Cookies from 'js-cookie';
 import Vconsole from 'vconsole';
 import MobileDetect from 'mobile-detect';
-
+console.log(/sandbox.tiejin/.test(window.location.href))
 if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /10.3.0.5/.test(window.location.href)) {
     const vconsole = new Vconsole()
+    store.state.IS_DEV = true
+    console.log('isDev', store.state.IS_DEV)
 }
 
 window.axios = axio;

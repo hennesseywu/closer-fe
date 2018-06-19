@@ -47,9 +47,6 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
     setTimeout(() => {
         document.title = meta.title ? meta.title : '贴近'
     }, 500)
-    if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /10.3.0.5/.test(window.location.href)) {
-        Store.state.IS_DEV = true
-    }
     let ua = navigator.userAgent || window.navigator.userAgent;
     Store.state.UA = ua.toLowerCase();
     ua = Store.state.UA;

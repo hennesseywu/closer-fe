@@ -244,6 +244,8 @@ export default {
     },
     checkEnv() {
       this.isDev = this.$store.state.IS_DEV
+            console.log(this.isDev)
+
     },
     addChance() {
       redirectAddChance(this.$store.state.IS_APP);
