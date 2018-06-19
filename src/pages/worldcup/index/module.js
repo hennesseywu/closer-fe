@@ -160,16 +160,15 @@ export default {
                     return;
                 });
                 if (status && status == 200) {
-                    commit("updateTimestamp");
                     if (typeof(data.code) != 'undefined') {
                         if (data.code == 0) {
                             commit('updateCountDown');
                             Toast("验证码发送成功")
                         } else {
+                            commit("updateTimestamp");
                             if (data.result) {
                                 Toast(data.result)
                             }
-
                         }
                     }
                 } else {
