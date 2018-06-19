@@ -4,8 +4,8 @@ import { Toast } from 'mint-ui'
 /**
  * get code 手机登录获取验证码
  */
-export async function getCode(phone) {
-    return await axios.post(api.admin.get_code_by_phone, { phone: phone });
+export async function getCode(payload) {
+    return await axios.post(api.admin.get_code_by_phone, payload);
 }
 
 /**

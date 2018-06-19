@@ -137,43 +137,49 @@ export default {
                 return;
             });;
         },
-        async getCode({ commit, state, rootState }, phone) {
-            if (!(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(phone))) {
+        async getCode({ commit, state, rootState }, payload) {
+            if (!(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(payload.phone))) {
                 Toast('请输入正确的手机号');
                 return;
             };
+            if (payload.imgCode.length == 0) {
+                Toast('请输入验证码');
+                return;
+            };
+
             if (state.countDown == 60) {
-                let codeRes = await getCode(phone).catch(err => {
+                let codeRes = await getCode(payload).catch(err => {
                     Toast('网络开小差啦，请稍后再试')
                     return;
                 });
                 if (codeRes.status && codeRes.status == 200) {
+
                     commit('updateCountDown');
                     Toast("验证码发送成功")
                 }
             }
         },
         // 登录
-        async login({ commit, state, rootState }, payLoad) {
-            //console.log("loginModule", payLoad);
-            if (payLoad.phone && !(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(payLoad.phone))) {
+        async login({ commit, state, rootState }, payload) {
+            //console.log("loginModule", payload);
+            if (payload.phone && !(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(payload.phone))) {
                 Toast('请输入正确的手机号');
                 return;
             };
-            if (payLoad.token.length == 0) {
+            if (payload.token.length == 0) {
                 Toast("请输入验证码")
                 return;
             }
 
             if (Cookies.get("uid")) {
-                payLoad['udid'] = Cookies.get("uid");
+                payload['udid'] = Cookies.get("uid");
             }
 
             if (Cookies.get("aid")) {
-                payLoad['adid'] = Cookies.get("aid");
+                payload['adid'] = Cookies.get("aid");
             }
-            payLoad['protocol'] = 'WEB_SOCKET';
-            let { data } = await login(payLoad).catch(err => {
+            payload['protocol'] = 'WEB_SOCKET';
+            let { data } = await login(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             });

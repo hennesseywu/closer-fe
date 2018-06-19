@@ -13,7 +13,7 @@
         <span class="desc">{{totalGuessPerson}}人参与，{{totalBingoPerson}}答对</span>
       </div>
       <div class="content box box-tb box-center-center">
-        <div :class="guessResult ? 'result-win':'result-img'"></div>
+        <div :class="isDev ? 'result-dev' : 'result-online'"></div>
         <div class="text-tips">{{guessResult ? '截图炫耀一下' : '截图邀请好友'}}</div>
         <div class="share" @click="jumpToShare()">
           <button class="button" v-if="guessResult">炫耀一下</button>
@@ -64,6 +64,7 @@
       totalBingoPerson: Number,
       totalGuessPerson: Number,
       guessResult: Boolean,
+      isDev: Boolean,
       awardAmt: {
         type: Number,
         default: 0
@@ -71,7 +72,7 @@
       matchList: {
         type: Array,
         defaut: []
-      },
+      }
     },
     data() {
       return {
@@ -173,15 +174,15 @@
     .content {
       margin-top: 38pr;
       text-align: center;
-      .result-img {
-        width: 240pr;
-        height: 240pr;
-        background: url('../assets/images/code_img.png') no-repeat center;
+      .result-dev {
+        width: 226pr;
+        height: 226pr;
+        background: url('../assets/images/test_code.png') no-repeat center;
         background-size: cover;
       }
-      .result-win {
-        width: 240pr;
-        height: 240pr;
+      .result-online {
+        width: 226pr;
+        height: 226pr;
         background: url('../assets/images/code_img.png') no-repeat center;
         background-size: cover;
       }

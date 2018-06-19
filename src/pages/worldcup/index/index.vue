@@ -19,14 +19,17 @@
           <div class="phone-box login-commen">
             <input class="ml-24" type="text" v-model="phone" maxlength="11" placeholder="请输入领奖手机号码">
           </div>
-           <div class="code-box login-commen">
-            <input type="text" v-model="code" placeholder="请输入图形验证码">
-            <span class="code" v-on:click="getCode(phone)">{{sendCode}}</span>
+          <div class="img-box  box box-lr">
+            <div class="img-put login-commen">
+              <input type="text" v-model="imgCode" placeholder="请输入图形验证码">
+            </div>
+            <div class="img-code" @click="changeImg()">
+              <img class="code" :src="isDev ? 'http://file-sandbox.tiejin.cn/captcha/image?'+imageParam:'http://file.tiejin.cn/captcha/image?'+imageParam" />
+            </div>
           </div>
           <div class="code-box login-commen">
             <input type="text" v-model="code" placeholder="请输入手机验证码">
-            <img class="code" v-on:click="getCode(phone)" src=""/>
-          </div>
+            <span class="code" v-on:click="getCode({phone,imgCode})">{{sendCode}}</span> </div>
           <div class="get-btn" v-on:click="login({phone,token:code})"></div>
           <div class="text"></div>
         </div>
@@ -34,7 +37,7 @@
     </div>
     <Rule ref="rule" :showIndexRule="showIndexRule"></Rule>
     <Getapp ref='getapp' v-if="!isApp"></Getapp>
-    <Sharepop ref="sharepop" :isApp="isApp"></Sharepop>
+    <Sharepop ref="sharepop" :isApp="isApp" :isDev="isDev"></Sharepop>
   </div>
 </template>
 
@@ -73,6 +76,8 @@
     created() {
       this.id = getQueryString()
       this.checkIsApp();
+  
+      this.checkEnv();
       if (!Cookies.get("closer_udid")) {
         this.getAdCookies({
           webUdid: true,
@@ -87,11 +92,14 @@
     data() {
       return {
         phone: "",
+        imgCode:"",
         code: "",
         isApp: "",
+        isDev: false,
         showIndexRule: true,
         channelCode: "",
-        id: ''
+        id: '',
+        imageParam:0
       }
     },
     computed: {
@@ -112,7 +120,13 @@
         redirectAddChance(this.$store.state.IS_APP);
       },
       openShare() {
-        this.$refs.sharepop.open()
+        this.$refs.sharepop.open();
+      },
+      checkEnv() {
+        this.isDev = this.$store.state.IS_DEV
+      },
+      changeImg(){
+        this.imageParam=Date.now();
       }
     }
   
@@ -237,6 +251,26 @@
               color: rgba(255, 255, 255, 0.5);
               border-left: 1px solid #25B1EC;
               justify-content: center;
+            }
+          }
+          .img-box {
+            width: 100%;
+            line-height: 80pr;
+            margin-top: 30pr;
+            .img-put {
+              width: 60%;
+              border: 1px solid #25B1EC;
+              >input {
+                width: 90%;
+              }
+            }
+            .img-code {
+              margin-left: 10pr;
+              width: 40%;
+              .code {
+                width: 100%;
+                height: 100%;
+              }
             }
           }
           .get-btn {

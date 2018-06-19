@@ -5,14 +5,14 @@
         <div class="content">
           <div class="text">你的好友正在参与竞猜</div>
           <div class="text-yellow">截图分享600万</div>
-          <div class="code-img"></div>
+          <div class="code-img" :class="isDev ? 'env-dev' : 'env-online'"></div>
           <div class="btn-img" @click="goHome"></div>
           <div class="text-img">“每天分钱 闷起脑壳发财”</div>
         </div>
       </div>
     </div>
         <Getapp ref='getapp' v-if="!isApp"></Getapp>
-        <Sharepop ref="sharepop" :isApp="isApp"></Sharepop>
+        <Sharepop ref="sharepop" :isApp="isApp" :isDev="isDev"></Sharepop>
   </div>
 </template>
 
@@ -31,11 +31,13 @@ export default {
   },
   data() {
     return {
-      isApp: false
+      isApp: false,
+      isDev: false
     };
   },
   computed: {},
   created() {
+    this.checkEnv()
     this.isApp = this.$store.state.IS_APP;
     if (this.isApp) {
     }
@@ -47,7 +49,10 @@ export default {
       this.$router.push({
         name: "worldcupIndex"
       });
-    }
+    },
+    checkEnv() {
+      this.isDev = this.$store.state.IS_DEV
+    },
   }
 };
 </script>
@@ -84,9 +89,17 @@ export default {
       }
       .code-img {
         margin: 22pr auto 0;
+      }
+      .env-dev {
         width: 218pr;
         height: 218pr;
-        background: url("../../../assets/images/code_img.png") no-repeat center;
+        background: url('../../../assets/images/test_code.png') no-repeat center;
+        background-size: cover;
+      }
+      .env-online {
+        width: 218pr;
+        height: 218pr;
+        background: url('../../../assets/images/code_img.png') no-repeat center;
         background-size: cover;
       }
       .btn-img {
