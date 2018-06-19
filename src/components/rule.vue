@@ -22,7 +22,7 @@
       </div>
       <div class="item">
         <span class="c-img"></span>
-        <span class="right"> 4、每个用户每日投注累计上限为50次。</span>
+        <span class="right"> 4. 每个用户每日投注累计上限为50次。</span>
       </div>
     </div>
     <div class="rule mt40 opacity">竞猜规则：</div>
