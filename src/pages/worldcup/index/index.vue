@@ -30,7 +30,7 @@
     </div>
     <Rule ref="rule" :showIndexRule="showIndexRule"></Rule>
     <Getapp ref='getapp' v-if="!isApp"></Getapp>
-    <Sharepop ref="sharepop" :isApp="isApp"></Sharepop>
+    <Sharepop ref="sharepop" :isApp="isApp" :isDev="isDev"></Sharepop>
   </div>
 </template>
 
@@ -63,6 +63,7 @@
     created() {
       this.id = getQueryString()
       this.checkIsApp();
+      this.checkEnv()
       if(!Cookies.get("closer_udid")){
       this.getAdCookies({
             webUdid:true,
@@ -80,6 +81,7 @@
         phone: "",
         code: "",
         isApp: "",
+        isDev: false,
         showIndexRule: true,
         channelCode: "",
         id: ''
@@ -103,7 +105,10 @@
       },
       openShare() {
         this.$refs.sharepop.open()
-      }
+      },
+      checkEnv() {
+        this.isDev = this.$store.state.IS_DEV
+      },
     }
   
   };

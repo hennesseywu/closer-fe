@@ -1,7 +1,7 @@
 <template>
   <mt-popup v-model="visible" class="share-pop" :closeOnClickModal="closeOnClickModal">
     <div class="close-icon" @click="close()"></div>
-    <div class="pop-body box box-tb box-center-center"></div>
+    <div class="pop-body box box-tb box-center-center" :class="isDev ? 'env-dev' : 'env-online'"></div>
     <div class="pop-footer" @click="close"></div>
   </mt-popup>
 </template>
@@ -25,7 +25,8 @@ export default {
       closeOnClickModal: {
         type: Boolean,
         default: true
-      }
+      },
+      isDev: Boolean
     },
     data() {
       return {
@@ -60,6 +61,14 @@ export default {
     }
     .pop-body {
       margin: 274pr auto 0;
+    }
+    .env-dev {
+      width: 226pr;
+      height: 226pr;
+      background: url('../assets/images/test_code.png') no-repeat center;
+      background-size: cover;
+    }
+    .env-online {
       width: 226pr;
       height: 226pr;
       background: url('../assets/images/code_img.png') no-repeat center;
