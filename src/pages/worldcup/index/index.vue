@@ -248,7 +248,7 @@
               width: 160pr;
               text-align: center;
               font-size: 28pr;
-              color: rgba(255, 255, 255, 0.5);
+              color: #fff;
               border-left: 1px solid #25B1EC;
               justify-content: center;
             }
