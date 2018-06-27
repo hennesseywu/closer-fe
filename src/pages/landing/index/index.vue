@@ -1,7 +1,7 @@
 <template>
   <div class="landing">
     <div id="pages">
-      <div class="page page1 box box-tb box-pack-between">
+      <div class="page page1 box box-tb box-pack-around">
         <div class="page1-img">
           <img src="../assets/images/zxsq3@2x.png" alt=""> 
         </div>
@@ -46,12 +46,12 @@ export default {
 .landing {
   #pages {
     .page {
-      height: 100vh;
       overflow: hidden;
       text-align: center;
     }
     .page1 {
       background: #f5f5f5;
+      height: 100vh;
       .page1-img > img {
         width: 100%;
         height: auto;
@@ -73,8 +73,8 @@ export default {
     .page2 > img,
     .page3 > img,
     .page4 > img {
-      width: auto;
-      height: 100vh;
+      width: 100%;
+      height: auto;
     }
   }
 }
