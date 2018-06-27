@@ -10,6 +10,9 @@ const Activity = () =>
 const Share = () =>
     import ('@/pages/worldcup/share')
 
+// landing 页
+const Landing = () =>
+    import ('@/pages/landing/index')
 
 Vue.use(Router)
 
@@ -38,11 +41,24 @@ const router = new Router({
             meta: {
                 title: '贴近世界杯 瓜分600万'
             }
+        },
+        {
+            path: '/landing',
+            name: 'landing',
+            component: Landing,
+            meta: {
+                title: '贴近Closer'
+            }
         }
     ]
 
 })
-router.beforeEach(({ meta, path, name, params }, from, next) => {
+router.beforeEach(({
+    meta,
+    path,
+    name,
+    params
+}, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
     setTimeout(() => {
         document.title = meta.title ? meta.title : '贴近'
@@ -54,9 +70,13 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
         Store.state.IS_APP = true;
     }
     if (name == "worldcupIndex") {
-        Cookies.set("aid", "0", { expires: 30 })
+        Cookies.set("aid", "0", {
+            expires: 30
+        })
         if (params.channelCode && params.channelCode != "0") {
-            Cookies.set("aid", params.channelCode, { expires: 30 }); //console.log("set cookies", params.channelCode);
+            Cookies.set("aid", params.channelCode, {
+                expires: 30
+            }); //console.log("set cookies", params.channelCode);
         }
         if (ua.indexOf("closer-android") > -1) {
             //console.log("router android", typeof window.bridge != "undefined")
@@ -65,8 +85,12 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                 let token = window.bridge.getUserToken(null);
                 //console.log("android", token)
                 if (token) {
-                    Cookies.set("GroukAuth", token, { expires: 7 });
-                    router.push({ name: "worldcupActivity" });
+                    Cookies.set("GroukAuth", token, {
+                        expires: 7
+                    });
+                    router.push({
+                        name: "worldcupActivity"
+                    });
                 }
             }
         } else if (ua.indexOf("closer-ios") > -1) {
@@ -74,18 +98,22 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
                 let ua = Store.state.UA;
                 if (ua.indexOf("closer-ios") > -1) {
                     //console.log("module closer-ios");
-                    setupWebViewJavascriptBridge(function(bridge) {
+                    setupWebViewJavascriptBridge(function (bridge) {
                         //console.log("ios bridge", bridge)
                         if (bridge) {
                             //ios获取用户token 判断登录
-                            bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                            bridge.callHandler("getUserToken", null, function (token, responseCallback) {
                                 //console.log("ios token", token)
                                 if (token) {
-                                    Cookies.set("GroukAuth", token, { expires: 7 });
-                                    router.push({ name: "worldcupActivity" });
+                                    Cookies.set("GroukAuth", token, {
+                                        expires: 7
+                                    });
+                                    router.push({
+                                        name: "worldcupActivity"
+                                    });
                                 } else {
                                     //console.log("ios jumpLogin")
-                                    setupWebViewJavascriptBridge(function(bridge) {
+                                    setupWebViewJavascriptBridge(function (bridge) {
                                         bridge.callHandler("jumpLogin", null);
                                     });
                                 }
@@ -98,16 +126,25 @@ router.beforeEach(({ meta, path, name, params }, from, next) => {
             if (Cookies.get("GroukAuth")) {
                 //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
                 if (params && params.channelCode) {
-                    Cookies.set("aid", params.channelCode, { expires: 30 });
+                    Cookies.set("aid", params.channelCode, {
+                        expires: 30
+                    });
                 }
-                router.push({ name: "worldcupActivity" });
+                router.push({
+                    name: "worldcupActivity"
+                });
             }
         }
 
     }
 
     if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
-        router.push({ name: "worldcupIndex", params: { channelCode: 0 } })
+        router.push({
+            name: "worldcupIndex",
+            params: {
+                channelCode: 0
+            }
+        })
     }
     next()
 })
