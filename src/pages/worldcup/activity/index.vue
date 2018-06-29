@@ -11,8 +11,8 @@
         </div>
         <div class="right" @click="addChance">增加机会</div>
       </div>
-      <div class="swipe">
-        <mt-swipe ref="swipe" :continuous="true" :auto="0" :showIndicators="false" v-if="matchList">
+      <div class="swipe" v-if="matchList.length > 0">
+        <mt-swipe ref="swipe" :continuous="true" :auto="0" :showIndicators="false">
           <mt-swipe-item v-for="(item, index) in matchList" :key="index">
             <div class="choose-box">
               <div class="time-wrapper box box-lr box-center-center">
@@ -63,6 +63,12 @@
             </div>
           </mt-swipe-item>
         </mt-swipe>
+      </div>
+      <!-- 无比赛 -->
+      <div class="nomatch-wrapper" v-if="matchList.length == 0">
+        <div class="text1">比赛竞猜马上呈现</div>
+        <div class="text">稍后更精彩...</div>
+        <div class="nomatch-btn" @click="addChance"></div>
       </div>
     </div>
     <Getapp ref="getapp" v-if="!isApp"></Getapp>
@@ -248,6 +254,7 @@ export default {
 
     },
     addChance() {
+      console.log('addchance')
       redirectAddChance(this.$store.state.IS_APP);
     },
     openShare() {
@@ -501,6 +508,26 @@ export default {
       }
     }
   }
+  .nomatch-wrapper {
+        margin: 0pr 14pr;
+        height: 518pr;
+        color: #92B3F8;
+        background: #041c4d;
+        font-size: 36pr;
+        line-height: 60pr;
+        text-align: center;
+        .text1 {
+          padding-top: 127pr;
+        }
+        .nomatch-btn {
+          margin: 120pr auto 30pr auto;
+          width: 206pr;
+          height: 78pr;
+          background: url("../../../assets/images/btn-adchance.png") no-repeat center;
+          background-size: cover;
+        }
+      }
+  
   .rule_record {
     margin: -300pr 16pr 0 16pr;
     font-size: 28pr;
