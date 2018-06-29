@@ -79,10 +79,6 @@ export default {
                 Toast(data.result)
                 return
             }
-            if (data.result.data && data.result.data.length == 0) {
-                Toast("没有比赛数据")
-                return;
-            }
             commit({
                 type: 'updateMatchlist',
                 data

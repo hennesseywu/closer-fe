@@ -509,8 +509,8 @@ export default {
     }
   }
   .nomatch-wrapper {
-        margin: 0pr 14pr;
-        height: 518pr;
+        margin: 20pr 14pr 0pr 14pr;
+        height: 488pr;
         color: #92B3F8;
         background: #041c4d;
         font-size: 36pr;
@@ -520,7 +520,7 @@ export default {
           padding-top: 127pr;
         }
         .nomatch-btn {
-          margin: 120pr auto 30pr auto;
+          margin: 110pr auto 30pr auto;
           width: 206pr;
           height: 78pr;
           background: url("../../../assets/images/btn-adchance.png") no-repeat center;
