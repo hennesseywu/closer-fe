@@ -4,7 +4,7 @@ import { Toast } from 'mint-ui'
 export default {
     namespaced: true,
     state: {
-        matchList: [],
+        matchList: "",
         userGuessList: [],
         userGuessStatistic: {},
         recieveChanceInfo: {},

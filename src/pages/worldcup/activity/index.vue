@@ -11,7 +11,14 @@
         </div>
         <div class="right" @click="addChance">增加机会</div>
       </div>
-      <div class="swipe" v-if="matchList.length > 0">
+
+       <!-- 无比赛 -->
+      <div class="nomatch-wrapper" v-if="typeof(matchList)!='string'&&matchList.length ==0">
+        <div class="text1">比赛竞猜马上呈现</div>
+        <div class="text">稍后更精彩...</div>
+        <div class="nomatch-btn" @click="addChance"></div>
+      </div>
+      <div class="swipe" v-else>
         <mt-swipe ref="swipe" :continuous="true" :auto="0" :showIndicators="false">
           <mt-swipe-item v-for="(item, index) in matchList" :key="index">
             <div class="choose-box">
@@ -64,12 +71,7 @@
           </mt-swipe-item>
         </mt-swipe>
       </div>
-      <!-- 无比赛 -->
-      <div class="nomatch-wrapper" v-if="matchList.length == 0">
-        <div class="text1">比赛竞猜马上呈现</div>
-        <div class="text">稍后更精彩...</div>
-        <div class="nomatch-btn" @click="addChance"></div>
-      </div>
+     
     </div>
     <Getapp ref="getapp" v-if="!isApp"></Getapp>
     <div class="rule_record box box-lr">
