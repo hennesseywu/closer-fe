@@ -36,6 +36,7 @@ export default {
   },
   methods: {
     download() {
+      // 下载app
       downloadApp();
     }
   }
