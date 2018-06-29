@@ -13,7 +13,7 @@
       </div>
 
        <!-- 无比赛 -->
-      <div class="nomatch-wrapper" v-if="typeof(matchList)!='string'&&matchList.length ==0">
+      <div class="nomatch-wrapper" v-if="typeof(matchList)!='string' && matchList.length == 0">
         <div class="text1">比赛竞猜马上呈现</div>
         <div class="text">稍后更精彩...</div>
         <div class="nomatch-btn" @click="addChance"></div>
