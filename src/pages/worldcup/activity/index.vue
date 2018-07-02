@@ -162,8 +162,6 @@ export default {
       "checkGuessResult",
       "checkRecieveChance",
       "getUserGuessList"
-      // 'guessMatch'
-      // 'getUserGuessStatistic'
     ]),
     arrowRight() {
       this.$refs.swipe.next();
@@ -252,11 +250,8 @@ export default {
     },
     checkEnv() {
       this.isDev = this.$store.state.IS_DEV
-            console.log(this.isDev)
-
     },
     addChance() {
-      console.log('addchance')
       redirectAddChance(this.$store.state.IS_APP);
     },
     openShare() {

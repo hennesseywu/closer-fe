@@ -76,8 +76,9 @@ router.beforeEach(({
         if (params.channelCode && params.channelCode != "0") {
             Cookies.set("aid", params.channelCode, {
                 expires: 30
-            }); //console.log("set cookies", params.channelCode);
+            });
         }
+        console.log("----closer----")
         if (ua.indexOf("closer-android") > -1) {
             //console.log("router android", typeof window.bridge != "undefined")
             //安卓检查登录状态
@@ -98,11 +99,11 @@ router.beforeEach(({
                 let ua = Store.state.UA;
                 if (ua.indexOf("closer-ios") > -1) {
                     //console.log("module closer-ios");
-                    setupWebViewJavascriptBridge(function (bridge) {
+                    setupWebViewJavascriptBridge(function(bridge) {
                         //console.log("ios bridge", bridge)
                         if (bridge) {
                             //ios获取用户token 判断登录
-                            bridge.callHandler("getUserToken", null, function (token, responseCallback) {
+                            bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                                 //console.log("ios token", token)
                                 if (token) {
                                     Cookies.set("GroukAuth", token, {
@@ -113,7 +114,7 @@ router.beforeEach(({
                                     });
                                 } else {
                                     //console.log("ios jumpLogin")
-                                    setupWebViewJavascriptBridge(function (bridge) {
+                                    setupWebViewJavascriptBridge(function(bridge) {
                                         bridge.callHandler("jumpLogin", null);
                                     });
                                 }
