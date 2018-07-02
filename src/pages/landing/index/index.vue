@@ -48,10 +48,12 @@ export default {
 </script>
 <style lang="less" scoped>
 .landing {
+  background: #f5f5f5;
   #pages {
     .page {
       overflow: hidden;
       text-align: center;
+      margin-bottom: 50pr;
     }
     .page1 {
       background: #f5f5f5;
@@ -79,6 +81,9 @@ export default {
     .page4 > img {
       width: 100%;
       height: auto;
+    }
+    .page4 {
+      margin-bottom: 0;
     }
   }
 }
