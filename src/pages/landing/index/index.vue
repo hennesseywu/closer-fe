@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-import { downloadApp, getPlatform } from "../../../utils/utils";
+import { downloadApp, noShare } from "../../../utils/utils";
 import tjButton from "../components/tjbutton";
 import tjInput from "../components/tjinput";
 export default {
@@ -39,6 +39,10 @@ export default {
       // 下载app
       downloadApp();
     }
+  },
+  mounted() {
+    // 禁用微信分享
+    noShare();
   }
 };
 </script>

@@ -37,3 +37,26 @@ export function getPlatform() {
         windows: !!u.match(/windows mobile/i) //windows终端
     }
 }
+
+// 禁用微信分享功能
+export function noShare() {
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                // 通过下面这个API隐藏右上角按钮
+                WeixinJSBridge.call('hideOptionMenu');
+            });
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', function onBridgeReady() {
+                // 通过下面这个API隐藏右上角按钮
+                WeixinJSBridge.call('hideOptionMenu');
+            });
+            document.attachEvent('onWeixinJSBridgeReady', function onBridgeReady() {
+                // 通过下面这个API隐藏右上角按钮
+                WeixinJSBridge.call('hideOptionMenu');
+            });
+        }
+    } else {
+        WeixinJSBridge.call('hideOptionMenu');
+    }
+}
