@@ -64,6 +64,7 @@ export default {
                     Cookies.set("uid", result.udid, { expires: 30 })
                 }
             }
+            return null;
         },
         checkLogin({ state, rootState }) {
             //console.log("checkLogin", rootState.IS_APP);
