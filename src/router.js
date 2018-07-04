@@ -78,7 +78,6 @@ router.beforeEach(({
                 expires: 30
             });
         }
-        console.log("----closer----")
         if (ua.indexOf("closer-android") > -1) {
             //console.log("router android", typeof window.bridge != "undefined")
             //安卓检查登录状态
@@ -125,7 +124,8 @@ router.beforeEach(({
             }
         } else {
             if (Cookies.get("GroukAuth")) {
-                //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
+                console.log("----closer----", params.channelCode)
+                    //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
                 if (params && params.channelCode) {
                     Cookies.set("aid", params.channelCode, {
                         expires: 30
