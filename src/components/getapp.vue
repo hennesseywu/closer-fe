@@ -36,7 +36,7 @@
             deviceVersion = deviceVersion.replace(/\./g, "_");
           }
         let res= await this.getAdCookies({
-            adid: this.$store.state.CHANNEL_CODE,
+            adid: Cookies.get("aid"),
             webUdid: true,
             deviceType: deviceType,
             deviceVersion: deviceVersion
