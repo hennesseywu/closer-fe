@@ -21,7 +21,7 @@
     name: "getapp",
     methods: {
       ...mapActions('index', ['getAdCookies']),
-      download() {
+    async  download() {
         //console.log('channel_cdoe',this.$store.state.CHANNEL_CODE)
         if (this.$store.state.CHANNEL_CODE != "0") {
           let md = new MobileDetect(this.$store.state.UA);
@@ -33,19 +33,15 @@
           } else if (deviceType == "AndroidOS") {
             deviceType = "android";
             deviceVersion = md.versionStr('Android');
-            //console.log("deviceVersion", deviceVersion)
             deviceVersion = deviceVersion.replace(/\./g, "_");
           }
-          //console.log(deviceType, "----", deviceVersion)
-          this.getAdCookies({
+        let res= await this.getAdCookies({
             adid: this.$store.state.CHANNEL_CODE,
             webUdid: true,
             deviceType: deviceType,
             deviceVersion: deviceVersion
           });
-          setTimeout(()=>{
-              downloadApp();
-          },500)
+           downloadApp();
         }else{
         downloadApp();
         }
