@@ -4,6 +4,8 @@ export default {
     subdevserverUrl: 'http://oms-sandbox.tiejin.cn/command',
     serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
+    wxLoginDevUrl: "http://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://127.0.0.1:8888/teabar/login",
+    wxLoginUrl: "https://a.tiejin.cn/teabar/login",
     file: '/file/upload/public',
     admin: {
         // 微信授权获取code
