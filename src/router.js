@@ -14,7 +14,8 @@ const Share = () =>
 const Landing = () =>
     import ('@/pages/landing/index')
 
-const TeabarLogin = () =>
+// teabar activity页 
+const Tblogin = () =>
     import ('@/pages/teabar/login')
 
 Vue.use(Router)
@@ -54,11 +55,11 @@ const router = new Router({
             }
         },
         {
-            path: "/teabar/login",
-            name: 'teabarLogin',
-            component: TeabarLogin,
+            path: '/login',
+            name: 'Tblogin',
+            component: Tblogin,
             meta: {
-                title: ""
+                title: '贴近Closer'
             }
         }
     ]
