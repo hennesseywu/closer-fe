@@ -21,6 +21,9 @@
 
       <!-- part info -->
       <!-- <info-wrapper ref="info"></info-wrapper> -->
+
+      <!-- part prize -->
+      <!-- <Prize ref="prize"></Prize> -->
     </div>
 
     <!-- part rule -->
@@ -31,6 +34,7 @@
 <script>
   import Rule from '../components/rule.vue'
   import InfoWrapper from '../components/info.vue'
+  import Prize from '../components/prize.vue'
 
    import {
     Swipe,
@@ -50,7 +54,8 @@
     name: "login",
     components: {
       Rule,
-      InfoWrapper
+      InfoWrapper,
+      Prize
     },
     data() {
       return {
@@ -87,7 +92,7 @@
   .login {
     width: 100%;
     background: #020C25;
-    padding-bottom: 40pr;
+    // padding-bottom: 40pr;
     .index-wrapper {
       height: 1334pr;
       background: url('../assets/images/index_bg.png') no-repeat center;
