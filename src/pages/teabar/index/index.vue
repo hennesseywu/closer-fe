@@ -97,6 +97,12 @@
           expires: 7
         });
       }
+  
+    },
+    beforeMount() {
+      // this.getAuthPath();
+    },
+    mounted() {
       if (this.$store.state.IS_APP) {
         setTimeout(() => {
           let res = this.checkLogin(async(res) => {
@@ -109,11 +115,8 @@
       } else {
         this.doWaterAction()
       }
+  
     },
-    beforeMount() {
-      // this.getAuthPath();
-    },
-    mounted() {},
     computed: {
       ...mapState("index", {
         'timestampNow': state => state.timestampNow,
