@@ -141,7 +141,7 @@
           Cookies.set("user", JSON.stringify(user), {
             expires: 60
           });
-          checkCurrentState(user);
+          this.checkCurrentState(user);
         }
       },
   
