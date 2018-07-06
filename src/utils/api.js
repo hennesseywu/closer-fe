@@ -4,8 +4,8 @@ export default {
     subdevserverUrl: 'http://oms-sandbox.tiejin.cn/command',
     serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
-    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=https://a-sandbox.tiejin.cn/teabar/water-9d3foyvita",
-    wxLoginUrl: "https://a.tiejin.cn/teabar/login",
+    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=https://127.0.0.1:8888/teabar/water-9d3foyvita",
+    wxLoginUrl: "https://h5.tiejin.cn/redirect?redirectUrl=https://a.tiejin.cn/teabar/water-9d3foyvita",
     file: '/file/upload/public',
     admin: {
         // 微信授权获取code

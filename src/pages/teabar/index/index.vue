@@ -97,34 +97,19 @@
           expires: 7
         });
       }
-  
-      setTimeout(() => {
-        let res = this.checkLogin(async(res) => {
-          console.log("checkLogin res",res);
-          if (res) {
-            if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
-              let user = JSON.parse(Cookies.get("user"))
-              this.checkCurrentState(user);
-            } else { //未登录 非app状态
-              if (!this.$store.state.IS_APP && this.$route.query.code) {
-                let wxUser = await this.loginWithWechat(this.$route.query.code);
-                if (wxUser) {
-                  if (wxUser.user) {
-                    Cookies.set("GroukAuth", wxUser.token, {
-                      expires: 60
-                    });
-                    let user = wxUser.user;
-                    Cookies.set("user", JSON.stringify(user), {
-                      expires: 7
-                    });
-                    this.checkCurrentState(user);
-                  }
-                }
-              }
+      if (this.$store.state.IS_APP) {
+        setTimeout(() => {
+          let res = this.checkLogin(async(res) => {
+            console.log("checkLogin res", res);
+            if (res) {
+              this.doWaterAction()
             }
-          }
-        });
-      }, 1000)
+          });
+        }, 1500)
+      } else {
+        this.doWaterAction()
+      }
+  
   
   
   
@@ -159,6 +144,30 @@
           checkCurrentState(user);
         }
       },
+  
+      async doWaterAction() {
+        if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
+          let user = JSON.parse(Cookies.get("user"))
+          this.checkCurrentState(user);
+        } else { //未登录 非app状态
+          if (!this.$store.state.IS_APP && this.$route.query.code) {
+            let wxUser = await this.loginWithWechat(this.$route.query.code);
+            if (wxUser) {
+              if (wxUser.user) {
+                Cookies.set("GroukAuth", wxUser.token, {
+                  expires: 60
+                });
+                let user = wxUser.user;
+                Cookies.set("user", JSON.stringify(user), {
+                  expires: 7
+                });
+                this.checkCurrentState(user);
+              }
+            }
+          }
+        }
+      },
+  
       async checkCurrentState(user) { //判断前状态
         console.log("checkCurrentState", user)
         if (user.phones == "") {
