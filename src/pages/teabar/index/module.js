@@ -85,8 +85,8 @@ export default {
                                 })
                                 console.log("ios", data.result);
                                 if (data.result) {
-                                    cb(true)
                                     Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                    cb(true)
                                 } else {
                                     cb()
                                 }
