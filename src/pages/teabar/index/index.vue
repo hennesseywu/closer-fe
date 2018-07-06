@@ -144,7 +144,7 @@
       },
   
       async doWaterAction() {
-        console.log("doAction",typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined")
+        console.log(Cookies.get("GroukAuth") && Cookies.get("user"))
         if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
           let user = JSON.parse(Cookies.get("user"));
           console.log("cookies exist", user)

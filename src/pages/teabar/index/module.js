@@ -78,7 +78,7 @@ export default {
                         bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
                             console.log("ios token", token)
                             if (token) {
-                                Cookies.set("GroukAuth", token, { expires: 7 });
+                                Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
                                 let { data } = await axios.post(api.admin.user_show).catch(err => {
                                     Toast('网络开小差啦，请稍后再试')
                                     return;
