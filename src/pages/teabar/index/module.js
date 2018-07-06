@@ -67,17 +67,17 @@ export default {
         },
 
         async checkLogin({ state, rootState }) {
-            //console.log("checkLogin", rootState.IS_APP);
+            console.log("checkLogin", rootState.IS_APP);
             if (rootState.IS_APP) { //app内打开 ios补救措施
                 let ua = rootState.UA;
                 if (ua.indexOf("closer-ios") > -1) {
-                    //console.log("module closer-ios");
+                    console.log("module closer-ios");
                     setupWebViewJavascriptBridge(function(bridge) {
-                        //console.log("ios bridge", bridge)
+                        console.log("ios bridge", bridge)
                         if (bridge) {
                             //ios获取用户token 判断登录
                             bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
-                                //console.log("ios token", token)
+                                console.log("ios token", token)
                                 if (token) {
                                     Cookies.set("GroukAuth", token, { expires: 7 });
                                     let { data } = await axios.post(api.admin.user_show, params).catch(err => {
@@ -90,7 +90,7 @@ export default {
                                     }
                                     return;
                                 } else {
-                                    //console.log("ios jumpLogin")
+                                    console.log("ios jumpLogin")
                                     setupWebViewJavascriptBridge(function(bridge) {
                                         bridge.callHandler("jumpLogin", null);
                                     });
@@ -129,12 +129,12 @@ export default {
                 'protocol': 'WEB_SOCKET'
             }
             params['code'] = code;
-            console.log("loginWithWechat", params)
             let { data } = await loginWithWechat(params).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             })
             if (typeof(data.code) != "undefined" && data.code == 0) {
+                console.log("loginWithWechat", data.result)
                 return data.result;
             } else {
                 Toast('微信认证异常');

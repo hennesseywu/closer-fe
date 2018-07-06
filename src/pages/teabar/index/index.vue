@@ -146,10 +146,10 @@
         if (bindRes) {
           let user = JSON.parse(Cookies.get("user"));
           user.phones = this.phone;
-          user.phone = "+86" + this.phone;
           Cookies.set("user", JSON.stringify(user), {
             expires: 60
           });
+          checkCurrentState(user);
         }
       },
       async checkCurrentState(user) { //判断前状态
