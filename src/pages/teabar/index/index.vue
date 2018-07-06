@@ -105,13 +105,13 @@
     mounted() {
       if (this.$store.state.IS_APP) {
         setTimeout(() => {
-          let res = this.checkLogin(async(res) => {
+          this.checkLogin(async(res) => {
             console.log("checkLogin res", res);
             if (res) {
               this.doWaterAction()
             }
           });
-        }, 1500)
+        }, 2000)
       } else {
         this.doWaterAction()
       }
