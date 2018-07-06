@@ -100,6 +100,7 @@
   
       setTimeout(async() => {
         let res = await this.checkLogin();
+        console.log("checkLogin",res);
         if (res) {
           if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
             let user = JSON.parse(Cookies.get("user"))
