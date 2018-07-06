@@ -3,12 +3,24 @@
     <div class="icon-img"></div>
     <div class="prize-text">恭喜您已领取奖励！</div>
     <div class="prize-tips">去首页看看吧，有更多惊喜～</div>
-    <div class="prize-btn">去首页看看</div>
+    <div class="prize-btn btn-common ischecked" @click="gohome">去首页看看</div>
   </div>
 </template>
 
 <script>
-  export default {}
+  export default {
+    data() {
+      return {
+
+      }
+    },
+    methods: {
+      gohome() {
+        // 跳转APP首页
+        location.href = 'https://www.baidu.com'
+      }
+    }
+  }
 </script>
 
 <style lang="less" scoped>
@@ -36,15 +48,6 @@
     }
     .prize-btn {
       margin: 60pr auto 40pr auto;
-      width: 100%;
-      height: 96pr;
-      font-size: 36pr;
-      line-height: 96pr;
-      color: #333;
-      text-align: center;
-      background: linear-gradient(180deg, rgba(249, 236, 123, 1), rgba(255, 213, 24, 1));
-      box-shadow: 0px -4pr 0px 0px rgba(230, 190, 14, 1), 0px 6pr 0px 0px rgba(255, 244, 158, 1), 0px 2p2 0px 0px rgba(255, 254, 244, 1);
-      border-radius: 48pr;
     }
   }
 </style>

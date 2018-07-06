@@ -2,13 +2,12 @@
   <div class="login">
     <div class="index-wrapper">
       <!-- part login -->
-      <div class="login-wrapper">
+      <div class="login-wrapper" v-if="true">
         <div class="login-title">登录即可领取奖励</div>
         <div class="phone-box common-height common-bg">
           <input type="text" class="phone" placeholder="请输入手机号">
         </div>
         <div class="imgcode-box common-height">
-          <!-- <div class=""></div> -->
           <input type="text" class="img-code common-bg" placeholder="请输入图形验证码">
           <span class="img common-bg">MKNK</span>
         </div>
@@ -16,7 +15,7 @@
           <input type="text" class="sms-code" placeholder="请输入手机验证码">
           <span class="send-code">重新发送 59s</span>
         </div>
-        <div class="login-btn">登录领取奖励</div>
+        <div class="btn-common login-btn" :class="true ? 'ischecked' : 'uncheck'">登录领取奖励</div>
       </div>
 
       <!-- part info -->
@@ -111,27 +110,13 @@
         border-radius: 28pr;
         .login-title {
           color: #105DB3;
-          font-size: 48pr;
+          font-size: 40pr;
           line-height: 66pr;
           text-align: center;
-        }
-        .common-height {
-          height: 80pr;
-          line-height: 80pr;
-          margin-top: 40pr;
-          >input {
-            padding-left: 40pr;
-            background: #FFFDE4;
-          }
-        }
-        .common-bg {
-          border-radius: 48pr;
-          background: #FFFDE4;
-          border: 1px solid #FFF49E;
+          font-weight: bold;
         }
         .phone-box {
           width: 100%;
-          border-radius: 48pr;
           color: #105DB3;
         }
         .imgcode-box {
@@ -145,7 +130,7 @@
             right: 0;
             margin-left: 20pr;
             width: 37.5%;
-            border-radius: 0;
+            border-radius: 6pr;
           }
         }
         .smscode-box {
@@ -165,16 +150,8 @@
         }
         .login-btn {
           margin-top: 60pr;
-          width: 100%;
-          height: 96pr;
-          font-size: 36pr;
-          line-height: 96pr;
-          color: #333;
-          text-align: center;
-          background: linear-gradient(180deg, rgba(249, 236, 123, 1), rgba(255, 213, 24, 1));
-          box-shadow: 0px -4pr 0px 0px rgba(230, 190, 14, 1), 0px 6pr 0px 0px rgba(255, 244, 158, 1), 0px 2p2 0px 0px rgba(255, 254, 244, 1);
-          border-radius: 48pr;
         }
+        
       }
     }
   }
