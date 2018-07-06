@@ -66,7 +66,7 @@ export default {
 
         },
 
-        async checkLogin({ state, rootState }, cb) {
+        async checkLogin({ state, rootState }, payload, cb) {
             console.log("checkLogin", rootState.IS_APP);
             let ua = rootState.UA;
             if (ua.indexOf("closer-ios") > -1) {

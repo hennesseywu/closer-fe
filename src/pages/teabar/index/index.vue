@@ -98,8 +98,8 @@
         });
       }
   
-      setTimeout(async() => {
-        let res = this.checkLogin((res) => {
+      setTimeout(() => {
+        let res = this.checkLogin(async(res) => {
           console.log("checkLogin res",res);
           if (res) {
             if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
@@ -124,8 +124,6 @@
             }
           }
         });
-  
-  
       }, 1000)
   
   
