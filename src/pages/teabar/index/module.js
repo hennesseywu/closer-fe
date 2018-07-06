@@ -1,4 +1,4 @@
-import { getAuthPath, loginWithWechat, bindPhone, waterChance } from './service'
+import { getAuthPath, loginWithWechat, bindPhone, waterChance, waterUpdate } from './service'
 import { Toast } from 'mint-ui'
 import api from '../../../utils/api'
 import Router from 'vue-router';
@@ -134,7 +134,7 @@ export default {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             })
-            if (typeof(data.code) != undefined && data.code == 0) {
+            if (typeof(data.code) != "undefined" && data.code == 0) {
                 return data.result;
             } else {
                 Toast('微信认证异常');
@@ -147,10 +147,31 @@ export default {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             })
-            if (typeof(data.code) != undefined && data.code == 0) {
+            if (typeof(data.code) != "undefined" && data.code == 0) {
                 return data.result;
             } else {
-                Toast('微信认证异常')
+                Toast('网络开小差啦，请稍后再试')
+                return false;
+            }
+        },
+        async waterUpdate({}, payload) {
+            if (payload.name.length == 0) {
+                Toast("请输入真实姓名")
+                return;
+            }
+
+            if (payload.address.length == 0) {
+                Toast("请输入收获地址")
+                return;
+            }
+            let { data } = await waterUpdate(payload).catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            })
+            if (typeof(data.code) != "undefined" && data.code == 0) {
+                return data.result;
+            } else {
+                Toast('网络开小差啦，请稍后再试')
                 return false;
             }
         }

@@ -2,22 +2,65 @@
   <div class="prize-wrapper box box-tb box-center-center">
     <div class="icon-img"></div>
     <div class="prize-text">恭喜您已领取奖励！</div>
-    <div class="prize-tips">去首页看看吧，有更多惊喜～</div>
-    <div class="prize-btn btn-common ischecked" @click="gohome">去首页看看</div>
+    <div class="prize-tips">{{tips}}</div>
+    <div class="prize-btn btn-common ischecked" @click="redirectTo()">{{buttonDesc}}</div>
   </div>
 </template>
 
 <script>
+  import {
+    downloadApp
+  } from '../../../utils/utils'
+  
+  import {
+    mapActions
+  } from "vuex";
   export default {
     data() {
       return {
-
+        tips: "",
+        buttonDesc: ""
+      }
+    },
+    mounted() {
+      if (this.$store.state.IS_APP) {
+        this.tips = "去首页看看吧，有更多惊喜~";
+        this.buttonDesc = "去首页看看";
+      } else {
+        this.buttonDesc = "去下载app";
+        this.tips = "下载app，填写收货地址，领取奖品";
       }
     },
     methods: {
-      gohome() {
-        // 跳转APP首页
-        location.href = 'https://www.baidu.com'
+      ...mapActions('index', ['getAdCookies']),
+      async redirectTo() {
+        if (this.$store.state.IS_APP) {
+          // 跳转APP首页
+          location.href = 'https://www.baidu.com'
+        } else {
+          if (this.$store.state.CHANNEL_CODE != "0") {
+            let md = new MobileDetect(this.$store.state.UA);
+            let deviceType = md.os();
+            let deviceVersion = "";
+            if (deviceType == "iOS") {
+              deviceType = "ios";
+              deviceVersion = md.versionStr('iPhone');
+            } else if (deviceType == "AndroidOS") {
+              deviceType = "android";
+              deviceVersion = md.versionStr('Android');
+              deviceVersion = deviceVersion.replace(/\./g, "_");
+            }
+            let res = await this.getAdCookies({
+              adid: Cookies.get("aid"),
+              webUdid: true,
+              deviceType: deviceType,
+              deviceVersion: deviceVersion
+            });
+            downloadApp();
+          } else {
+            downloadApp();
+          }
+        }
       }
     }
   }

@@ -16,16 +16,27 @@
           <input type="text" class="sms-code" v-model="code" placeholder="请输入手机验证码">
           <span class="send-code" @click="getCode({phone,grouk_captcha_value:imgCode,push:true})">{{sendCode}}</span>
         </div>
-        <div class="login-btn" @click="tbLogin()">登录领取奖励</div>=======
-        <div class="btn-common login-btn" @click="tbLogin()"  :class="true ? 'ischecked' : 'uncheck'">登录领取奖励</div>
+        <div class="btn-common login-btn" @click="tbLogin()" :class="true ? 'ischecked' : 'uncheck'">登录领取奖励</div>
       </div>
-  
       <!-- part info -->
-      <info-wrapper ref="info" v-if="isRecieveShow"></info-wrapper>
-      <!-- <info-wrapper ref="info"></info-wrapper> -->
-
+      <div class="info-wrapper" v-if="isRecieveShow">
+        <div class="info-title">填写信息</div>
+        <div class="name-info common-height box box-lr">
+          <span class="name">姓名</span>
+          <div class="name-input common-bg">
+            <input type="text" placeholder="请输入您的真实姓名" v-model="name">
+          </div>
+        </div>
+        <div class="addr-info common-height box box-lr">
+          <span class="address">地址</span>
+          <div class="addr-input common-bg">
+            <textarea name="address" v-model="address" cols="30" rows="5" placeholder="请输入您的收货地址"></textarea>
+          </div>
+        </div>
+        <div class="info-btn btn-common" @click="submitInfo()" :class="true ? 'ischecked' : 'uncheck'">提交领取奖励</div>
+      </div>
       <!-- part prize -->
-      <!-- <Prize ref="prize"></Prize> -->
+      <Prize ref="prize" v-if="isOkShow"></Prize>
     </div>
   
     <!-- part rule -->
@@ -37,8 +48,8 @@
   import Rule from '../components/rule.vue'
   import InfoWrapper from '../components/info.vue'
   import Prize from '../components/prize.vue'
-
-   import {
+  
+  import {
     Swipe,
     SwipeItem,
     Toast
@@ -63,10 +74,13 @@
       return {
         isLoginShow: false,
         isRecieveShow: false,
+        isOkShow: false,
         phone: "12000000000",
         imgCode: "1",
         code: "180706",
-        isDev: this.$store.state.IS_DEV
+        isDev: this.$store.state.IS_DEV,
+        name: "",
+        address: ""
       };
     },
   
@@ -76,7 +90,14 @@
           webUdid: true,
           adid: this.$route.params.channelCode
         });
+  
       }
+      if (this.$route.params.channelCode) {
+        Cookies.set("aid", this.$route.params.channelCode, {
+          expires: 7
+        });
+      }
+  
       await this.checkLogin();
       console.log("checklogin", typeof(Cookies.get("GroukAuth")))
       if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
@@ -107,14 +128,13 @@
     },
     mounted() {},
     computed: {
-  
       ...mapState("index", {
         'timestampNow': state => state.timestampNow,
         'sendCode': state => state.sendCode
       })
     },
     methods: {
-      ...mapActions("tbLogin", ["getAuthPath", "loginWithWechat", "checkLogin", "bindPhone", "waterChance"]),
+      ...mapActions("tbLogin", ["getAuthPath", "loginWithWechat", "checkLogin", "bindPhone", "waterChance", "waterUpdate"]),
       ...mapActions('index', ['getCode', 'login', 'updateTimestamp', 'getAdCookies']),
       async tbLogin() {
         console.log("tblogin")
@@ -133,27 +153,59 @@
         }
       },
       async checkCurrentState(user) { //判断前状态
-      console.log("checkCurrentState",user)
+        console.log("checkCurrentState", user)
         if (user.phones == "") {
-          this.isLogin = false;
+          this.isRecieveShow = false;
+          this.isOkShow = false;
+          this.isLoginShow = true;
         } else {
           let state = await this.waterChance();
-          console.log(state)
-          switch (state){
-          case 0 :
-          this.isLoginShow=false;
-          this.isRecieveShow=true;
-          break;
-
-          case 1:
-          break;
-          
-          case 2 :
-          break;  
-
-          }
+          console.log("state", state)
+          // state=1;
+          switch (state) {
+            case 0: //未参与当前活动
+              this.isLoginShow = false;
+              this.isRecieveShow = false;
+              this.isOkShow = true;
+              break;
+  
+            case 1: //参与了活动未提交个人信息
+              this.$store.IS_APP = true;
+              if (this.$store.IS_APP) {
+                this.isLoginShow = false;
+                this.isRecieveShow = true;
+                this.isOkShow = false;
+              } else {
+                this.isLoginShow = false;
+                this.isRecieveShow = false;
+                this.isOkShow = true;
+              }
+              break;
+            case 2: //已经参与活动并且已完成个人信息提交
+              if (this.$store.IS_APP) {
+                this.isLoginShow = false;
+                this.isRecieveShow = true;
+                this.isOkShow = false;
+              } else {
+                this.isLoginShow = false;
+                this.isRecieveShow = false;
+                this.isOkShow = true;
+              }
+              break;
+  
           }
         }
+      },
+      async submitInfo() {
+        let waterRes = await this.waterUpdate({
+          name: this.name,
+          address: this.address
+        })
+        if (typeof(waterRes) != "undefined" && waterRes == 0) {
+          console.log("waterRes", waterRes)
+          this.checkCurrentState(Cookies.get("user"));
+        }
+      }
     }
   };
 </script>
@@ -222,7 +274,45 @@
         .login-btn {
           margin-top: 60pr;
         }
-        
+      }
+    }
+    .info-wrapper {
+      margin-top: 578pr;
+      background: #F0FBFF;
+      border-radius: 28pr;
+      padding: 40pr 50pr 38pr 50pr;
+      .info-title {
+        font-weight: bold;
+        font-size: 40pr;
+        color: #105DB3;
+        text-align: center;
+      }
+      .name-input,
+      .addr-input {
+        width: 81.5%;
+        margin-left: 36pr;
+      }
+      .addr-info {
+        height: 256pr;
+        .addr-input {
+          height: 256pr;
+          overflow: hidden;
+          // border: 1px solid red;
+          >textarea {
+            // padding-left: 36pr;
+            padding: 18pr 40pr;
+            width: 100%;
+            height: 256pr;
+            background: #FFFDE4;
+            // white-space: word-break;
+            word-break: break-all;
+            word-wrap: break-word;
+            // border: 1px solid red;
+          }
+        }
+      }
+      .info-btn {
+        margin: 60pr auto 40pr auto;
       }
     }
   }

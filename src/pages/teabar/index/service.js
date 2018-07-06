@@ -15,3 +15,6 @@ export async function bindPhone(payload) {
 export async function waterChance(payload) {
     return await axios.post(api.activity.activity_water_chance, payload);
 }
+export async function waterUpdate(payload) {
+    return await axios.post(api.activity.activity_water_update, payload);
+}
