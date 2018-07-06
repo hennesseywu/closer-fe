@@ -109,11 +109,6 @@
       } else {
         this.doWaterAction()
       }
-  
-  
-  
-  
-  
     },
     beforeMount() {
       // this.getAuthPath();
@@ -126,7 +121,7 @@
       })
     },
     methods: {
-      ...mapActions("tbLogin", ["getAuthPath", "loginWithWechat", "checkLogin", "bindPhone", "waterChance", "waterUpdate"]),
+      ...mapActions("tbLogin", ["getAuthPath", "loginWithWechat", "checkLogin", "bindPhone", "waterChance", "waterUpdate","waterJoin"]),
       ...mapActions('index', ['getCode', 'login', 'updateTimestamp', 'getAdCookies']),
       async tbLogin() {
         console.log("tblogin")
@@ -175,6 +170,9 @@
           this.isOkShow = false;
           this.isLoginShow = true;
         } else {
+          console.log("user",user)
+          let joinRes=await  this.waterJoin({phone:user.phones,adid:Cookies.get("aid")});
+          console.log("joinRes",joinRes)
           let state = await this.waterChance();
           console.log("state", state)
           // state=1;
@@ -184,7 +182,6 @@
               this.isRecieveShow = false;
               this.isOkShow = true;
               break;
-  
             case 1: //参与了活动未提交个人信息
               this.$store.IS_APP = true;
               if (this.$store.IS_APP) {

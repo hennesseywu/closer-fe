@@ -72,7 +72,8 @@ export default {
         receive_chance: 'activity_worldcup.receive_chance',
         check_guess_result: 'activity_worldcup.check_guess_result',
         activity_water_chance: "activity_water.chance",
-        activity_water_update: "activity_water.update"
+        activity_water_update: "activity_water.update",
+        activity_water_join: "closer_account.water_join"
     },
     statitics: {
         // 数据统计接口

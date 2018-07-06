@@ -18,3 +18,7 @@ export async function waterChance(payload) {
 export async function waterUpdate(payload) {
     return await axios.post(api.activity.activity_water_update, payload);
 }
+
+export async function waterJoin(payload) {
+    return await axios.post(api.activity.activity_water_join, payload);
+}

@@ -39,9 +39,11 @@ axio.interceptors.request.use(
         if (Cookies.get("aid")) {
             config.headers['X-Adid'] = Cookies.get("aid");
         }
-        if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1 || Cookies.get("GroukAuth") && config.url.indexOf("closer_account.bind_phone") != -1) {
+        if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1 || Cookies.get("GroukAuth") && config.url.indexOf("closer_account.bind_phone") != -1 || Cookies.get("GroukAuth") && config.url.indexOf("closer_account.water_join") != -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
+
+
         //console.log("axio req header", config)
         Indicator.open()
         return config;

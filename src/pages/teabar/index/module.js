@@ -1,4 +1,4 @@
-import { getAuthPath, loginWithWechat, bindPhone, waterChance, waterUpdate } from './service'
+import { getAuthPath, loginWithWechat, bindPhone, waterChance, waterUpdate, waterJoin } from './service'
 import { Toast } from 'mint-ui'
 import api from '../../../utils/api'
 import Router from 'vue-router';
@@ -106,8 +106,6 @@ export default {
             }
         },
 
-
-
         async getAuthPath({ rootState, state }, payload) {
             console.log("getAUth")
             let params = {
@@ -124,7 +122,7 @@ export default {
                 location.href = data.result;
             }
         },
-        async loginWithWechat({ rootState }, code) {
+        async loginWithWechat({ rootState, dispatch }, code) {
             let params = {
                 'plateform': 2,
                 'protocol': 'WEB_SOCKET'
@@ -139,7 +137,7 @@ export default {
                 return data.result;
             } else {
                 Toast('微信认证异常');
-                location.href = api.wxLoginDevUrl;
+                await dispatch("getAuthPath");
                 return false;
             }
         },
@@ -170,12 +168,24 @@ export default {
                 return;
             })
             if (typeof(data.code) != "undefined" && data.code == 0) {
+                return true;
+            } else {
+                Toast('网络开小差啦，请稍后再试')
+                return false;
+            }
+        },
+        async waterJoin({}, payload) {
+            let { data } = await waterJoin(payload).catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            })
+            if (typeof(data.code) != "undefined" && data.code == 0) {
                 return data.result;
             } else {
                 Toast('网络开小差啦，请稍后再试')
                 return false;
             }
-        }
+        },
 
     }
 }

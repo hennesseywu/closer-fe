@@ -166,13 +166,13 @@ router.beforeEach(async({
                     Cookies.set("GroukAuth", token, {
                         expires: 7
                     });
-                    let { data } = await axios.post(api.admin.user_show, params).catch(err => {
+                    let { data } = await axios.post(api.admin.user_show).catch(err => {
                         Toast('网络开小差啦，请稍后再试')
                         return;
                     })
-                    console.log("android", data.result.user);
-                    if (data.result.user) {
-                        Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
+                    console.log("android", data.result);
+                    if (data.result) {
+                        Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
                         next();
                     }
                 } else {
