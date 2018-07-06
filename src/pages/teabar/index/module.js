@@ -87,7 +87,7 @@ export default {
                                 if (data.result.user) {
                                     Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
                                 }
-                                return;
+                                return true;
                             } else {
                                 console.log("ios jumpLogin")
                                 setupWebViewJavascriptBridge(function(bridge) {
