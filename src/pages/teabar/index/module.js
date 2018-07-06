@@ -66,7 +66,7 @@ export default {
 
         },
 
-        async checkLogin({ state, rootState }) {
+        async checkLogin({ state, rootState }, cb) {
             console.log("checkLogin", rootState.IS_APP);
             let ua = rootState.UA;
             if (ua.indexOf("closer-ios") > -1) {
@@ -85,21 +85,24 @@ export default {
                                 })
                                 console.log("ios", data.result);
                                 if (data.result) {
+                                    cb(true)
                                     Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                } else {
+                                    cb()
                                 }
-                                return true;
+
                             } else {
                                 console.log("ios jumpLogin")
                                 setupWebViewJavascriptBridge(function(bridge) {
                                     bridge.callHandler("jumpLogin", null);
                                 });
-                                return;
+                                cb();
                             }
                         });
                     }
                 })
             } else {
-                return;
+                cb()
             }
         },
 
