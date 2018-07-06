@@ -79,7 +79,7 @@ export default {
                             console.log("ios token", token)
                             if (typeof(token) != "undefined") {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
-                                let { data } = await axios.post(api.admin.user_show, params).catch(err => {
+                                let { data } = await axios.post(api.admin.user_show).catch(err => {
                                     Toast('网络开小差啦，请稍后再试')
                                     return;
                                 })
