@@ -10,11 +10,10 @@
     <div class="addr-info common-height box box-lr">
       <span class="address">地址</span>
       <div class="addr-input common-bg">
-        <input type="text" placeholder="请输入您的收货地址">
+        <textarea name="address" id="address" cols="30" rows="5" placeholder="请输入您的收货地址"></textarea>
       </div>
-  
     </div>
-    <div class="info-btn">提交领取奖励</div>
+    <div class="info-btn btn-common" :class="true ? 'ischecked' : 'uncheck'">提交领取奖励</div>
   </div>
 </template>
 
@@ -29,49 +28,37 @@
     border-radius: 28pr;
     padding: 40pr 50pr 38pr 50pr;
     .info-title {
-      font-size: 48pr;
+      font-weight: bold;
+      font-size: 40pr;
       color: #105DB3;
       text-align: center;
     }
-    .common-height {
-      font-size: 32pr;
-      height: 80pr;
-      line-height: 80pr;
-      margin-top: 40pr;
-      >span {
-        color: #105DB3;
-        font-size: 32pr;
-        line-height: 80pr;
-      }
-    }
-    .common-bg {
+    .name-input, .addr-input {
       width: 81.5%;
       margin-left: 36pr;
-      border-radius: 48pr;
-      background: #FFFDE4;
-      border: 1px solid #FFF49E;
-      >input {
-        padding-left: 40pr;
-        background: #FFFDE4;
-        border-radius: 48px;
-      }
     }
-    .addr-input {
-      >input {
+    .addr-info {
+      height: 256pr;
+      .addr-input {
+      height: 256pr;
+      overflow: hidden;
+      // border: 1px solid red;
+      >textarea {
+        // padding-left: 36pr;
+        padding: 18pr 40pr;
         width: 100%;
+        height: 256pr;
+        background: #FFFDE4;
+        // white-space: word-break;
+        word-break: break-all;
+        word-wrap:break-word;
+        // border: 1px solid red;
       }
     }
+    }
+    
     .info-btn {
-      text-align: center;
-      font-size: 36pr;
-      height: 96pr;
-      line-height: 96pr;
-      color: rgba(51, 51, 51, 0.5);
       margin: 60pr auto 40pr auto;
-      background: linear-gradient(180deg, rgba(249, 236, 123, 1), rgba(255, 213, 24, 1));
-      box-shadow: 0px -4pr 0px 0px rgba(230, 190, 14, 1), 0px 6pr 0px 0px rgba(255, 244, 158, 1), 0px 2p2 0px 0px rgba(255, 254, 244, 1);
-      border-radius: 48pr;
-      opacity: 0.7;
     }
   }
 </style>
