@@ -212,6 +212,9 @@ export default {
                     Cookies.set("GroukAuth", data.result.token, { expires: 60 });
                     if (data.result.user) {
                         Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
+                        if (payload.push) {
+                            return data.result.user;
+                        }
                     }
                     Router.push({ name: "worldcupActivity" });
                 } else {

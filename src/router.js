@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Store from './store'
+import api from './utils/api';
+import Store from './store';
 
 const Index = () =>
     import ('@/pages/worldcup/index')
@@ -16,7 +17,7 @@ const Landing = () =>
 
 // teabar activity页 
 const Tblogin = () =>
-    import ('@/pages/teabar/login')
+    import ('@/pages/teabar/index')
 
 Vue.use(Router)
 
@@ -55,7 +56,7 @@ const router = new Router({
             }
         },
         {
-            path: '/login',
+            path: '/teabar/:channelCode',
             name: 'Tblogin',
             component: Tblogin,
             meta: {
@@ -65,19 +66,17 @@ const router = new Router({
     ]
 
 })
-router.beforeEach(({
+router.beforeEach(async({
     meta,
     path,
     name,
-    params
+    params,
+    query
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
-    setTimeout(() => {
-        document.title = meta.title ? meta.title : '贴近'
-    }, 500)
     let ua = navigator.userAgent || window.navigator.userAgent;
-    Store.state.UA = ua.toLowerCase();
-    ua = Store.state.UA;
+    ua = ua.toLowerCase();
+    Store.state.UA = ua;
     if (Store.state.UA.indexOf("closer-android") > -1 || Store.state.UA.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
@@ -103,8 +102,11 @@ router.beforeEach(({
                     router.push({
                         name: "worldcupActivity"
                     });
+                } else {
+                    window.bridge.jumpLogin(null);
                 }
             }
+            next()
         } else if (ua.indexOf("closer-ios") > -1) {
             if (Store.state.IS_APP) { //app内打开 ios补救措施
                 let ua = Store.state.UA;
@@ -134,10 +136,11 @@ router.beforeEach(({
                     })
                 }
             }
+            next()
+
         } else {
             if (Cookies.get("GroukAuth")) {
-                console.log("----closer----", params.channelCode)
-                    //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
+                //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
                 if (params && params.channelCode) {
                     Cookies.set("aid", params.channelCode, {
                         expires: 30
@@ -146,6 +149,82 @@ router.beforeEach(({
                 router.push({
                     name: "worldcupActivity"
                 });
+            }
+            next()
+
+        }
+    } else if (name = "tbLogin") {
+        console.log("getAUth")
+        if (ua.indexOf("closer-android") > -1) {
+            console.log("router android", typeof window.bridge != "undefined")
+                //安卓检查登录状态
+            if (typeof window.bridge != "undefined") {
+                let token = window.bridge.getUserToken(null);
+                console.log("android", token)
+                if (token) {
+                    Cookies.set("GroukAuth", token, {
+                        expires: 7
+                    });
+                    let { data } = await axios.post(api.admin.user_show, params).catch(err => {
+                        Toast('网络开小差啦，请稍后再试')
+                        return;
+                    })
+                    console.log("android", data.result.user);
+                    if (data.result.user) {
+                        Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
+                        next();
+                    }
+                } else {
+                    console.log("android jumpLogin")
+                    window.bridge.jumpLogin(null);
+                }
+            }
+        } else if (ua.indexOf("closer-ios") > -1) {
+            setupWebViewJavascriptBridge(function(bridge) {
+                console.log("ios bridge", bridge)
+                if (bridge) {
+                    //ios获取用户token 判断登录
+                    bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
+                        console.log("ios token", token)
+                        if (token) {
+                            Cookies.set("GroukAuth", token, {
+                                expires: 7
+                            });
+                            let { data } = await axios.post(api.admin.user_show, params).catch(err => {
+                                Toast('网络开小差啦，请稍后再试')
+                                return;
+                            })
+                            console.log("ios", data.result.user);
+                            if (data.result.user) {
+                                Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
+                                next();
+                            }
+                        } else {
+                            console.log("ios jumpLogin")
+                            setupWebViewJavascriptBridge(function(bridge) {
+                                bridge.callHandler("jumpLogin", null);
+                            });
+                        }
+                    });
+                }
+            })
+        } else {
+            if (query.code) {
+                next();
+                return;
+            }
+            let params = {
+                path: api.wxLoginUrl
+            };
+            // if (Store.IS_DEV) {
+            params.path = api.wxLoginDevUrl
+                // }
+            let { data } = await axios.post(api.admin.get_auth_path, params).catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            })
+            if (typeof(data.code) != undefined && data.code == 0) {
+                location.href = data.result;
             }
         }
 
@@ -158,8 +237,9 @@ router.beforeEach(({
                 channelCode: 0
             }
         })
+        next()
+
     }
-    next()
 })
 
 export default router

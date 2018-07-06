@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 import index from './pages/worldcup/index/module'
 import activity from './pages/worldcup/activity/module'
-import tbLogin from './pages/teabar/login/module'
+import tbLogin from './pages/teabar/index/module'
 
 Vue.use(Vuex)
 

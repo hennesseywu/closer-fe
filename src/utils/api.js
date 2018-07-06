@@ -4,7 +4,7 @@ export default {
     subdevserverUrl: 'http://oms-sandbox.tiejin.cn/command',
     serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
-    wxLoginDevUrl: "http://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://127.0.0.1:8888/teabar/login",
+    wxLoginDevUrl: "http://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://127.0.0.1:8888/teabar/xxx",
     wxLoginUrl: "https://a.tiejin.cn/teabar/login",
     file: '/file/upload/public',
     admin: {
@@ -18,6 +18,7 @@ export default {
         info: 'closer_user.info',
         // 用户详情
         user_show: 'closer_user.show',
+        bind_phone: 'closer_account.bind_phone',
         // 点赞
         like: 'closer_reply.like',
         // 回复 评论
@@ -69,7 +70,8 @@ export default {
         get_user_guess_statistic: 'activity_worldcup.get_user_guess_statistic',
         guess_match: 'activity_worldcup.guess_match',
         receive_chance: 'activity_worldcup.receive_chance',
-        check_guess_result: 'activity_worldcup.check_guess_result'
+        check_guess_result: 'activity_worldcup.check_guess_result',
+        activity_water_chance: "activity_water.chance"
     },
     statitics: {
         // 数据统计接口

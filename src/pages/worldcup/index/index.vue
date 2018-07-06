@@ -78,7 +78,7 @@
       this.checkIsApp();
   
       this.checkEnv();
-      if (!Cookies.get("closer_udid")) {
+      if (!Cookies.get("uid")) {
         this.getAdCookies({
           webUdid: true,
           adid: this.$route.params.channelCode
