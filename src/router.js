@@ -197,7 +197,6 @@ router.beforeEach(async({
                             console.log("ios", data.result.user);
                             if (data.result.user) {
                                 Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
-                                next();
                             }
                         } else {
                             console.log("ios jumpLogin")
@@ -206,6 +205,8 @@ router.beforeEach(async({
                             });
                         }
                     });
+                } else {
+                    next();
                 }
             })
         } else {
