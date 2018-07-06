@@ -77,13 +77,13 @@ export default {
                         //ios获取用户token 判断登录
                         bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
                             console.log("ios token", token)
-                            if (typeof(token) != "undefined") {
+                            if (token) {
                                 Cookies.set("GroukAuth", token, { expires: 7 });
                                 let { data } = await axios.post(api.admin.user_show).catch(err => {
                                     Toast('网络开小差啦，请稍后再试')
                                     return;
                                 })
-                                console.log("ios", cb);
+                                console.log("ios", data.result);
                                 if (data.result) {
                                     cb(true)
                                     Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
