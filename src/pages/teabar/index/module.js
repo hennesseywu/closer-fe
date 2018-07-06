@@ -66,7 +66,7 @@ export default {
 
         },
 
-        async checkLogin({ state, rootState }, payload, cb) {
+        async checkLogin({ state, rootState }, cb) {
             console.log("checkLogin", rootState.IS_APP);
             let ua = rootState.UA;
             if (ua.indexOf("closer-ios") > -1) {
@@ -83,7 +83,7 @@ export default {
                                     Toast('网络开小差啦，请稍后再试')
                                     return;
                                 })
-                                console.log("ios", data.result);
+                                console.log("ios", cb);
                                 if (data.result) {
                                     cb(true)
                                     Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
