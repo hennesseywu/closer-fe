@@ -83,9 +83,9 @@ export default {
                                     Toast('网络开小差啦，请稍后再试')
                                     return;
                                 })
-                                console.log("ios", data.result.user);
-                                if (data.result.user) {
-                                    Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
+                                console.log("ios", data.result);
+                                if (data.result) {
+                                    Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
                                 }
                                 return true;
                             } else {
