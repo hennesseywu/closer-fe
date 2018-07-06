@@ -90,7 +90,6 @@ export default {
                                 } else {
                                     cb()
                                 }
-
                             } else {
                                 console.log("ios jumpLogin")
                                 setupWebViewJavascriptBridge(function(bridge) {

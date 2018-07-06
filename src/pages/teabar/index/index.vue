@@ -121,7 +121,7 @@
       })
     },
     methods: {
-      ...mapActions("tbLogin", ["getAuthPath", "loginWithWechat", "checkLogin", "bindPhone", "waterChance", "waterUpdate","waterJoin"]),
+      ...mapActions("tbLogin", ["getAuthPath", "loginWithWechat", "checkLogin", "bindPhone", "waterChance", "waterUpdate", "waterJoin"]),
       ...mapActions('index', ['getCode', 'login', 'updateTimestamp', 'getAdCookies']),
       async tbLogin() {
         console.log("tblogin")
@@ -142,7 +142,8 @@
   
       async doWaterAction() {
         if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
-          let user = JSON.parse(Cookies.get("user"))
+          let user = JSON.parse(Cookies.get("user"));
+          console.log("cookies exist", user)
           this.checkCurrentState(user);
         } else { //未登录 非app状态
           if (!this.$store.state.IS_APP && this.$route.query.code) {
@@ -170,9 +171,12 @@
           this.isOkShow = false;
           this.isLoginShow = true;
         } else {
-          console.log("user",user)
-          let joinRes=await  this.waterJoin({phone:user.phones,adid:Cookies.get("aid")});
-          console.log("joinRes",joinRes)
+          console.log("user", user)
+          let joinRes = await this.waterJoin({
+            phone: user.phones,
+            adid: Cookies.get("aid")
+          });
+          console.log("joinRes", joinRes)
           let state = await this.waterChance();
           console.log("state", state)
           // state=1;
