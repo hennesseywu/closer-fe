@@ -90,7 +90,6 @@
           webUdid: true,
           adid: this.$route.params.channelCode
         });
-  
       }
       if (this.$route.params.channelCode) {
         Cookies.set("aid", this.$route.params.channelCode, {
@@ -107,8 +106,10 @@
         setTimeout(() => {
           this.checkLogin(async(res) => {
             console.log("checkLogin res", res);
-            if (res) {
-              await this.doWaterAction()
+            if (res&&this.store.state.UA.indexof("closer-ios")>-1) {
+              await this.doWaterAction();
+            }else{
+             await this.doWaterAction();
             }
           });
         }, 2000)
@@ -144,10 +145,10 @@
       },
   
       async doWaterAction() {
-        console.log("doAction",Cookies.get("GroukAuth"))
+        console.log("doAction", Cookies.get("GroukAuth"))
         if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
           let user = JSON.parse(Cookies.get("user"));
-          console.log("cookies exist", user)
+          console.log("cookies exist")
           this.checkCurrentState(user);
         } else { //未登录 非app状态
           if (!this.$store.state.IS_APP && this.$route.query.code) {
@@ -212,6 +213,8 @@
                 this.isRecieveShow = false;
                 this.isOkShow = true;
               }
+              break;
+            default:
               break;
   
           }

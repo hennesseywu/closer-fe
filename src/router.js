@@ -179,37 +179,36 @@ router.beforeEach(async({
                 }
             }
         } else if (ua.indexOf("closer-ios") > -1) {
-            console.log("closer-ios")
-            next();
-            // setupWebViewJavascriptBridge(function(bridge) {
-            //     console.log("ios bridge", bridge)
-            //     if (bridge) {
-            //         //ios获取用户token 判断登录
-            //         bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
-            //             console.log("ios token", token)
-            //             if (token) {
-            //                 Cookies.set("GroukAuth", token, {
-            //                     expires: 7
-            //                 });
-            //                 let { data } = await axios.post(api.admin.user_show, params).catch(err => {
-            //                     Toast('网络开小差啦，请稍后再试')
-            //                     return;
-            //                 })
-            //                 console.log("ios", data.result.user);
-            //                 if (data.result.user) {
-            //                     Cookies.set("user", JSON.stringify(data.result.user), { expires: 60 });
-            //                 }
-            //             } else {
-            //                 console.log("ios jumpLogin")
-            //                 setupWebViewJavascriptBridge(function(bridge) {
-            //                     bridge.callHandler("jumpLogin", null);
-            //                 });
-            //             }
-            //         });
-            //     } else {
-            //         next();
-            //     }
-            // })
+            console.log("router closer-ios")
+            setupWebViewJavascriptBridge(function(bridge) {
+                console.log("ios bridge", bridge)
+                if (bridge) {
+                    //ios获取用户token 判断登录
+                    bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
+                        console.log("ios token", token)
+                        if (token) {
+                            Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
+                            let { data } = await axios.post(api.admin.user_show).catch(err => {
+                                Toast('网络开小差啦，请稍后再试')
+                                return;
+                            })
+                            console.log("ios", data.result);
+                            if (data.result) {
+                                Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                next();
+                            } else {
+                                console.log("no token");
+                                next();
+                            }
+                        } else {
+                            setupWebViewJavascriptBridge(function(bridge) {
+                                bridge.callHandler("jumpLogin", null);
+                                next();
+                            });
+                        }
+                    });
+                }
+            })
         } else {
             if (query.code) {
                 next();
