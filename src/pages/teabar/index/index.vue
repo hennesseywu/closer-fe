@@ -16,7 +16,7 @@
           <input type="text" class="sms-code" v-model="code" placeholder="请输入手机验证码">
           <span class="send-code" @click="getCode({phone,grouk_captcha_value:imgCode,push:true})">{{sendCode}}</span>
         </div>
-        <div class="btn-common login-btn" @click="tbLogin()" :class="true ? 'ischecked' : 'uncheck'">登录领取奖励</div>
+        <div class="btn-common login-btn" @click="tbLogin()" :class="code!=''&&imgCode!=''&&phone!='' ? 'ischecked' : 'uncheck'">登录领取奖励</div>
       </div>
       <!-- part info -->
       <div class="info-wrapper" v-if="isRecieveShow">

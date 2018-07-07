@@ -34,6 +34,7 @@
     methods: {
       ...mapActions('index', ['getAdCookies']),
       async redirectTo() {
+         console.log("redirect",this.$store.state.IS_APP)
         if (this.$store.state.IS_APP) {
           // 跳转APP首页
           location.href = 'closer://jump/to/home'
