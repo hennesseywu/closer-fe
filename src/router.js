@@ -82,157 +82,160 @@ router.beforeEach(async({
     if (Store.state.UA.indexOf("closer-android") > -1 || Store.state.UA.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
-    if (name == "worldcupIndex") {
-        Cookies.set("aid", "0", {
-            expires: 30
+
+    if (name == "tbLogin" && ua.indexOf("closer-ios") > -1) {
+        console.log("router closer-ios")
+        setupWebViewJavascriptBridge(function(bridge) {
+            console.log("ios bridge", bridge)
+            if (bridge) {
+                //ios获取用户token 判断登录
+                bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
+                    console.log("ios token", token)
+                    if (token) {
+                        Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
+                        let { data } = await axios.post(api.admin.user_show).catch(err => {
+                            Toast('网络开小差啦，请稍后再试')
+                            return;
+                        })
+                        console.log("ios", data.result);
+                        if (data.result) {
+                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                        } else {
+                            console.log("no token");
+                        }
+                        next();
+                    } else {
+                        setupWebViewJavascriptBridge(function(bridge) {
+                            bridge.callHandler("jumpLogin", null);
+                        });
+                    }
+                });
+            }
         })
-        if (params.channelCode && params.channelCode != "0") {
-            Cookies.set("aid", params.channelCode, {
+    } else {
+        if (name == "worldcupIndex") {
+            Cookies.set("aid", "0", {
                 expires: 30
-            });
-        }
-        console.log("----closer----")
-        if (ua.indexOf("closer-android") > -1) {
-            //console.log("router android", typeof window.bridge != "undefined")
-            //安卓检查登录状态
-            if (typeof window.bridge != "undefined") {
-                let token = window.bridge.getUserToken(null);
-                //console.log("android", token)
-                if (token) {
-                    Cookies.set("GroukAuth", token, {
-                        expires: 7
-                    });
+            })
+            if (params.channelCode && params.channelCode != "0") {
+                Cookies.set("aid", params.channelCode, {
+                    expires: 30
+                });
+            }
+            console.log("----closer----")
+            if (ua.indexOf("closer-android") > -1) {
+                //console.log("router android", typeof window.bridge != "undefined")
+                //安卓检查登录状态
+                if (typeof window.bridge != "undefined") {
+                    let token = window.bridge.getUserToken(null);
+                    //console.log("android", token)
+                    if (token) {
+                        Cookies.set("GroukAuth", token, {
+                            expires: 7
+                        });
+                        router.push({
+                            name: "worldcupActivity"
+                        });
+                    }
+                }
+
+            } else if (ua.indexOf("closer-ios") > -1) {
+                if (Store.state.IS_APP) { //app内打开 ios补救措施
+                    let ua = Store.state.UA;
+                    if (ua.indexOf("closer-ios") > -1) {
+                        //console.log("module closer-ios");
+                        setupWebViewJavascriptBridge(function(bridge) {
+                            //console.log("ios bridge", bridge)
+                            if (bridge) {
+                                //ios获取用户token 判断登录
+                                bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                                    //console.log("ios token", token)
+                                    if (token) {
+                                        Cookies.set("GroukAuth", token, {
+                                            expires: 7
+                                        });
+                                        router.push({
+                                            name: "worldcupActivity"
+                                        });
+                                    } else {
+                                        //console.log("ios jumpLogin")
+                                        setupWebViewJavascriptBridge(function(bridge) {
+                                            bridge.callHandler("jumpLogin", null);
+                                        });
+                                    }
+                                });
+                            }
+                        })
+                    }
+                }
+            } else {
+                if (Cookies.get("GroukAuth")) {
+                    //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
+                    if (params && params.channelCode) {
+                        Cookies.set("aid", params.channelCode, {
+                            expires: 30
+                        });
+                    }
                     router.push({
                         name: "worldcupActivity"
                     });
                 }
             }
-        } else if (ua.indexOf("closer-ios") > -1) {
-            if (Store.state.IS_APP) { //app内打开 ios补救措施
-                let ua = Store.state.UA;
-                if (ua.indexOf("closer-ios") > -1) {
-                    //console.log("module closer-ios");
-                    setupWebViewJavascriptBridge(function(bridge) {
-                        //console.log("ios bridge", bridge)
-                        if (bridge) {
-                            //ios获取用户token 判断登录
-                            bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                                //console.log("ios token", token)
-                                if (token) {
-                                    Cookies.set("GroukAuth", token, {
-                                        expires: 7
-                                    });
-                                    router.push({
-                                        name: "worldcupActivity"
-                                    });
-                                } else {
-                                    //console.log("ios jumpLogin")
-                                    setupWebViewJavascriptBridge(function(bridge) {
-                                        bridge.callHandler("jumpLogin", null);
-                                    });
-                                }
-                            });
-                        }
-                    })
-                }
-            }
-        } else {
-            if (Cookies.get("GroukAuth")) {
-                //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
-                if (params && params.channelCode) {
-                    Cookies.set("aid", params.channelCode, {
-                        expires: 30
-                    });
-                }
-                router.push({
-                    name: "worldcupActivity"
-                });
-            }
-        }
 
-    } else if (name == "tbLogin") {
-        console.log("getAUth")
-        if (ua.indexOf("closer-android") > -1) {
-            console.log("closer-android")
-            console.log("router android", typeof window.bridge != "undefined")
-                //安卓检查登录状态
-            if (typeof window.bridge != "undefined") {
-                let token = window.bridge.getUserToken(null);
-                console.log("android", token)
-                if (token) {
-                    Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
-                    let { data } = await axios.post(api.admin.user_show).catch(err => {
-                        Toast('网络开小差啦，请稍后再试')
-                        return;
-                    })
-                    console.log("android", data.result);
-                    if (data.result) {
-                        Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                        next();
+        } else if (name == "tbLogin") {
+            console.log("getAUth")
+            if (ua.indexOf("closer-android") > -1) {
+                console.log("closer-android")
+                console.log("router android", typeof window.bridge != "undefined")
+                    //安卓检查登录状态
+                if (typeof window.bridge != "undefined") {
+                    let token = window.bridge.getUserToken(null);
+                    console.log("android", token)
+                    if (token) {
+                        Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
+                        let { data } = await axios.post(api.admin.user_show).catch(err => {
+                            Toast('网络开小差啦，请稍后再试')
+                            return;
+                        })
+                        console.log("android", data.result);
+                        if (data.result) {
+                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                        }
+                    } else {
+                        console.log("android jumpLogin")
+                        window.bridge.jumpLogin(null);
                     }
-                } else {
-                    console.log("android jumpLogin")
-                    window.bridge.jumpLogin(null);
+                }
+            } else {
+                if (query.code) {
+                    return;
+                }
+                let params = {
+                    path: api.wxLoginUrl
+                };
+                if (Cookies.get("IS_DEV")) {
+                    params.path = api.wxLoginDevUrl
+                }
+                let { data } = await axios.post(api.admin.get_auth_path, params).catch(err => {
+                    Toast('网络开小差啦，请稍后再试')
+                    return;
+                })
+                if (typeof(data.code) != "undefined" && data.code == 0) {
+                    location.href = data.result;
                 }
             }
-        } else if (ua.indexOf("closer-ios") > -1) {
-            console.log("router closer-ios")
-            setupWebViewJavascriptBridge(function(bridge) {
-                console.log("ios bridge", bridge)
-                if (bridge) {
-                    //ios获取用户token 判断登录
-                    bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
-                        console.log("ios token", token)
-                        if (token) {
-                            Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
-                            let { data } = await axios.post(api.admin.user_show).catch(err => {
-                                Toast('网络开小差啦，请稍后再试')
-                                return;
-                            })
-                            console.log("ios", data.result);
-                            if (data.result) {
-                                Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                            } else {
-                                console.log("no token");
-                            }
-                        } else {
-                            setupWebViewJavascriptBridge(function(bridge) {
-                                bridge.callHandler("jumpLogin", null);
-                            });
-                        }
-                    });
-                } else {}
-            })
-        } else {
-            if (query.code) {
-                return;
-            }
-            let params = {
-                path: api.wxLoginUrl
-            };
-            if (Cookies.get("IS_DEV")) {
-                params.path = api.wxLoginDevUrl
-            }
-            let { data } = await axios.post(api.admin.get_auth_path, params).catch(err => {
-                Toast('网络开小差啦，请稍后再试')
-                return;
-            })
-            if (typeof(data.code) != "undefined" && data.code == 0) {
-                location.href = data.result;
-            }
+
         }
-
+        if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
+            router.push({
+                name: "worldcupIndex",
+                params: {
+                    channelCode: 0
+                }
+            })
+        }
+        next()
     }
-    if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
-        router.push({
-            name: "worldcupIndex",
-            params: {
-                channelCode: 0
-            }
-        })
-    }
-    next();
-
 })
 
 export default router

@@ -63,7 +63,6 @@ export default {
                 Toast('网络开小差啦，请稍后再试')
                 return false;
             }
-
         },
 
         async checkLogin({ state, rootState }, cb) {
