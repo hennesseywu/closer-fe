@@ -38,6 +38,7 @@
         if (this.$store.state.IS_APP) {
           // 跳转APP首页
           if (this.$store.state.UA.indexOf("closer-ios") > -1) {
+            console.log("close")
             window.close()
           } else {
             location.href = 'closer://jump/to/home'
