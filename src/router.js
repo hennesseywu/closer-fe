@@ -58,7 +58,7 @@ const router = new Router({
         {
             path: '/teabar/:channelCode',
             name: 'tblogin',
-            component: tblogin,
+            component: Tblogin,
             meta: {
                 title: '贴近Closer'
             }
