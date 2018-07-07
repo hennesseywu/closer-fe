@@ -129,7 +129,6 @@ router.beforeEach(async({
                                     //console.log("ios jumpLogin")
                                     setupWebViewJavascriptBridge(function(bridge) {
                                         bridge.callHandler("jumpLogin", null);
-                                        next();
                                     });
                                 }
                             });
@@ -174,7 +173,6 @@ router.beforeEach(async({
                 } else {
                     console.log("android jumpLogin")
                     window.bridge.jumpLogin(null);
-                    next();
                 }
             }
         } else if (ua.indexOf("closer-ios") > -1) {
@@ -203,10 +201,8 @@ router.beforeEach(async({
                             });
                         }
                     });
-                }
+                } else {}
             })
-            next();
-
         } else {
             if (query.code) {
                 return;
@@ -234,8 +230,8 @@ router.beforeEach(async({
                 channelCode: 0
             }
         })
-        next();
     }
+    next();
 
 })
 
