@@ -113,7 +113,7 @@
              await this.doWaterAction();
             }
           });
-        }, 2000)
+        }, 500)
       } else {
         this.doWaterAction()
       }
