@@ -181,7 +181,6 @@ router.beforeEach(async({
                     });
                 }
             }
-
         } else if (name == "tbLogin") {
             console.log("getAUth")
             if (ua.indexOf("closer-android") > -1) {
