@@ -30,7 +30,7 @@
         <div class="addr-info common-height box box-lr">
           <span class="address">地址</span>
           <div class="addr-input common-bg">
-            <textarea name="address" v-model="address" cols="30" rows="5" placeholder="请输入您的收货地址"></textarea>
+            <textarea name="address" v-model="address" cols="30" rows="5" placeholder="请输入您的详细收货地址       例：xx省xx市xx区(县)xx街道"></textarea>
           </div>
         </div>
         <div class="info-btn btn-common" @click="submitInfo()" :class="true ? 'ischecked' : 'uncheck'">提交领取奖励</div>
@@ -187,6 +187,8 @@
           console.log("joinRes", joinRes)
           let state = await this.waterChance();
           console.log("state", state)
+          state=1;
+          this.$store.state.IS_APP=true;
           switch (state) {
             case 0: //未参与当前活动
               this.isLoginShow = false;

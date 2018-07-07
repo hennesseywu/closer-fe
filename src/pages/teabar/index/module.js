@@ -153,6 +153,7 @@ export default {
             }
         },
         async waterUpdate({}, payload) {
+            console.log("info", payload)
             if (payload.name.length == 0) {
                 Toast("请输入真实姓名")
                 return;
@@ -160,6 +161,9 @@ export default {
 
             if (payload.address.length == 0) {
                 Toast("请输入收获地址")
+                return;
+            } else if (payload.address.length < 12) {
+                Toast("收获地址不少于12字")
                 return;
             }
             let { data } = await waterUpdate(payload).catch(err => {
