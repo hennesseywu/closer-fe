@@ -164,6 +164,8 @@
                 this.checkCurrentState(user);
               }
             }
+          }else{
+            this.getAuthPath();
           }
         }
       },
