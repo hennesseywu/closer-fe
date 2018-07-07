@@ -222,6 +222,14 @@ router.beforeEach(async({
         }
 
     }
+    if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
+        router.push({
+            name: "worldcupIndex",
+            params: {
+                channelCode: 0
+            }
+        })
+    }
     next();
 
 })
