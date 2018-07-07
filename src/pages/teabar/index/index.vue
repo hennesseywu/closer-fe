@@ -75,9 +75,9 @@
         isLoginShow: false,
         isRecieveShow: false,
         isOkShow: false,
-        phone: "12000000000",
-        imgCode: "1",
-        code: "180706",
+        phone: "",
+        imgCode: "",
+        code: "",
         isDev: this.$store.state.IS_DEV,
         name: "",
         address: ""
@@ -143,7 +143,6 @@
           this.checkCurrentState(user);
         }
       },
-  
       async doWaterAction() {
         console.log("doAction", Cookies.get("GroukAuth"))
         if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 

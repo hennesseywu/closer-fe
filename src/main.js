@@ -15,6 +15,7 @@ import MobileDetect from 'mobile-detect';
 if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /10.3.0.333/.test(window.location.href)) {
     const vconsole = new Vconsole()
     store.state.IS_DEV = true
+    Cookies.set("IS_DEV", true, { expires: 60 });
 }
 
 window.axios = axio;
