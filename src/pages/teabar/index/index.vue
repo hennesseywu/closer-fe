@@ -133,7 +133,8 @@
         let bindRes = await this.bindPhone({
           phone: this.phone,
           code: this.code,
-          imgCode: this.imgCode
+          imgCode: this.imgCode,
+          type:"bind"
         });
         if (bindRes) {
           let user = JSON.parse(Cookies.get("user"));
