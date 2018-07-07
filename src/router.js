@@ -227,8 +227,10 @@ router.beforeEach(async({
                 Toast('网络开小差啦，请稍后再试')
                 return;
             })
-            if (typeof(data.code) != undefined && data.code == 0) {
+            if (typeof(data.code) != "undefined" && data.code == 0) {
                 location.href = data.result;
+            } else {
+                next();
             }
         }
 
