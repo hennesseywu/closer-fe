@@ -154,7 +154,6 @@ router.beforeEach(async({
                         channelCode: 0
                     }
                 })
-                next()
             }
         }
     } else if (name == "tbLogin") {
@@ -175,7 +174,6 @@ router.beforeEach(async({
                     console.log("android", data.result);
                     if (data.result) {
                         Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                        next();
                     }
                 } else {
                     console.log("android jumpLogin")
@@ -199,26 +197,19 @@ router.beforeEach(async({
                             console.log("ios", data.result);
                             if (data.result) {
                                 Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                                next();
                             } else {
                                 console.log("no token");
-                                next();
                             }
                         } else {
                             setupWebViewJavascriptBridge(function(bridge) {
                                 bridge.callHandler("jumpLogin", null);
-                                next();
                             });
                         }
                     });
-                } else {
-                    next();
-                }
+                } else {}
             })
-            next();
         } else {
             if (query.code) {
-                next();
                 return;
             }
             let params = {
@@ -233,13 +224,12 @@ router.beforeEach(async({
             })
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 location.href = data.result;
-            } else {
-                next();
             }
         }
 
     }
 
+    next();
 
 })
 
