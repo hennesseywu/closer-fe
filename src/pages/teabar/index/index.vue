@@ -194,8 +194,7 @@
               this.isOkShow = true;
               break;
             case 1: //参与了活动未提交个人信息
-              this.$store.IS_APP = true;
-              if (this.$store.IS_APP) {
+              if (this.$store.state.IS_APP) {
                 this.isLoginShow = false;
                 this.isRecieveShow = true;
                 this.isOkShow = false;
@@ -206,7 +205,7 @@
               }
               break;
             case 2: //已经参与活动并且已完成个人信息提交
-              if (this.$store.IS_APP) {
+              if (this.$store.state.IS_APP) {
                 this.isLoginShow = false;
                 this.isRecieveShow = false;
                 this.isOkShow = true;
