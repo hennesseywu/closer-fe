@@ -186,7 +186,7 @@
           console.log("joinRes", joinRes)
           let state = await this.waterChance();
           console.log("state", state)
-          // state=1;
+                      state=1;
           switch (state) {
             case 0: //未参与当前活动
               this.isLoginShow = false;
@@ -194,6 +194,7 @@
               this.isOkShow = true;
               break;
             case 1: //参与了活动未提交个人信息
+            this.$store.state.IS_APP=true;
               if (this.$store.state.IS_APP) {
                 this.isLoginShow = false;
                 this.isRecieveShow = true;
@@ -247,7 +248,7 @@
       padding: 1pr 40pr 0 40pr;
        ::-webkit-input-placeholder {
         color: rgba(16, 93, 179, 0.5);
-        font-size: 32pr;
+        font-size: 28pr;
       }
       // part login
       .login-wrapper {
