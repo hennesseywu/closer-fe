@@ -173,7 +173,7 @@ export default {
                 return false;
             }
         },
-        async waterJoin({}, payload) {
+        async waterJoin({ dispatch }, payload) {
             let { data } = await waterJoin(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
@@ -181,7 +181,7 @@ export default {
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 return data.result;
             } else {
-                Toast('网络开小差啦，请稍后再试')
+                // await dispatch("getAuthPath");
                 return false;
             }
         },

@@ -4,7 +4,7 @@ export default {
     subdevserverUrl: 'http://oms-sandbox.tiejin.cn/command',
     serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
-    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=https://a-sandbox.tiejin.cn/teabar/water-9d3foyvita",
+    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://127.0.0.1:8888/teabar/water-9d3foyvita",
     wxLoginUrl: "https://h5.tiejin.cn/redirect?redirectUrl=https://a.tiejin.cn/teabar/water-9d3foyvita",
     file: '/file/upload/public',
     admin: {
@@ -73,7 +73,7 @@ export default {
         check_guess_result: 'activity_worldcup.check_guess_result',
         activity_water_chance: "activity_water.chance",
         activity_water_update: "activity_water.update",
-        activity_water_join: "closer_account.water_join"
+        activity_water_join: "activity_water.join"
     },
     statitics: {
         // 数据统计接口

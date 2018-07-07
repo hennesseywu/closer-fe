@@ -176,11 +176,13 @@
           this.isOkShow = false;
           this.isLoginShow = true;
         } else {
-          console.log("user", user)
-          let joinRes = await this.waterJoin({
-            phone: user.phones,
-            adid: Cookies.get("aid")
-          });
+          let params={adid: Cookies.get("aid")};
+          if(this.$route.query.code){
+              params["code"]=this.$route.query.code
+          }else{
+            params["phone"]= user.phones
+          }
+          let joinRes = await this.waterJoin(params);
           console.log("joinRes", joinRes)
           let state = await this.waterChance();
           console.log("state", state)
@@ -225,7 +227,7 @@
           name: this.name,
           address: this.address
         })
-        if (typeof(waterRes) != "undefined" && waterRes == 0) {
+        if (waterRes) {
           console.log("waterRes", waterRes)
           this.checkCurrentState(Cookies.get("user"));
         }
