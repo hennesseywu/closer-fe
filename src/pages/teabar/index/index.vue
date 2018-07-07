@@ -208,8 +208,8 @@
             case 2: //已经参与活动并且已完成个人信息提交
               if (this.$store.IS_APP) {
                 this.isLoginShow = false;
-                this.isRecieveShow = true;
-                this.isOkShow = false;
+                this.isRecieveShow = false;
+                this.isOkShow = true;
               } else {
                 this.isLoginShow = false;
                 this.isRecieveShow = false;
