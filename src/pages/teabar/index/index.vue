@@ -253,7 +253,7 @@
       // part login
       .login-wrapper {
         font-size: 32pr;
-        margin-top: 578pr;
+        margin-top: 570pr;
         padding: 40pr 50pr;
         background: #F0FBFF;
         border-radius: 28pr;
@@ -303,7 +303,7 @@
       }
     }
     .info-wrapper {
-      margin-top: 578pr;
+      margin-top: 570pr;
       background: #F0FBFF;
       border-radius: 28pr;
       padding: 40pr 50pr 38pr 50pr;
