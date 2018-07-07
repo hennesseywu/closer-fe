@@ -96,7 +96,6 @@
           expires: 7
         });
       }
-  
     },
     beforeMount() {
       // this.getAuthPath();
@@ -146,12 +145,12 @@
       },
       async doWaterAction() {
         console.log("doAction", Cookies.get("GroukAuth"))
-        if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined") { //已登录 
+        if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined"&&this.$store.state.IS_APP) { //已登录 
           let user = JSON.parse(Cookies.get("user"));
           console.log("cookies exist")
           this.checkCurrentState(user);
         } else { //未登录 非app状态
-          if (!this.$store.state.IS_APP && this.$route.query.code) {
+          if (this.$route.query.code) {
             let wxUser = await this.loginWithWechat(this.$route.query.code);
             if (wxUser) {
               if (wxUser.user) {
