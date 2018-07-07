@@ -14,7 +14,7 @@
         </div>
         <div class="smscode-box common-height common-bg">
           <input type="text" class="sms-code" v-model="code" placeholder="请输入手机验证码">
-          <span class="send-code" @click="getCode({phone,grouk_captcha_value:imgCode,push:true})">{{sendCode}}</span>
+          <span class="send-code" @click="getCode({phone,grouk_captcha_value:imgCode,type:'bind'})">{{sendCode}}</span>
         </div>
         <div class="btn-common login-btn" @click="tbLogin()" :class="code!=''&&imgCode!=''&&phone!='' ? 'ischecked' : 'uncheck'">登录领取奖励</div>
       </div>
@@ -133,8 +133,7 @@
         let bindRes = await this.bindPhone({
           phone: this.phone,
           code: this.code,
-          imgCode: this.imgCode,
-          type:"bind"
+          imgCode: this.imgCode
         });
         if (bindRes) {
           let user = JSON.parse(Cookies.get("user"));
