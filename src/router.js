@@ -211,6 +211,7 @@ router.beforeEach(async({
                     next();
                 }
             })
+            next();
         } else {
             if (query.code) {
                 next();
