@@ -106,7 +106,7 @@
         setTimeout(() => {
           this.checkLogin(async(res) => {
             console.log("checkLogin res", res);
-            if (res&&this.store.state.UA.indexof("closer-ios")>-1) {
+            if (res&&this.$store.state.UA.indexof("closer-ios")>-1) {
               await this.doWaterAction();
             }else{
              await this.doWaterAction();
