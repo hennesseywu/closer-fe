@@ -207,6 +207,8 @@ router.beforeEach(async({
                             });
                         }
                     });
+                } else {
+                    next();
                 }
             })
         } else {
