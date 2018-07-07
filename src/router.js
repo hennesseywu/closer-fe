@@ -70,17 +70,18 @@ router.beforeEach(async({
     meta,
     path,
     name,
-    params,
-    query
+    params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
+    setTimeout(() => {
+        document.title = meta.title ? meta.title : '贴近'
+    }, 500)
     let ua = navigator.userAgent || window.navigator.userAgent;
-    ua = ua.toLowerCase();
-    Store.state.UA = ua;
+    Store.state.UA = ua.toLowerCase();
+    ua = Store.state.UA;
     if (Store.state.UA.indexOf("closer-android") > -1 || Store.state.UA.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
-
     if (name == "worldcupIndex") {
         Cookies.set("aid", "0", {
             expires: 30
@@ -90,6 +91,7 @@ router.beforeEach(async({
                 expires: 30
             });
         }
+        console.log("----closer----")
         if (ua.indexOf("closer-android") > -1) {
             //console.log("router android", typeof window.bridge != "undefined")
             //安卓检查登录状态
@@ -103,8 +105,6 @@ router.beforeEach(async({
                     router.push({
                         name: "worldcupActivity"
                     });
-                } else {
-                    window.bridge.jumpLogin(null);
                 }
             }
         } else if (ua.indexOf("closer-ios") > -1) {
@@ -138,6 +138,7 @@ router.beforeEach(async({
             }
         } else {
             if (Cookies.get("GroukAuth")) {
+                //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
                 if (params && params.channelCode) {
                     Cookies.set("aid", params.channelCode, {
                         expires: 30
@@ -146,16 +147,9 @@ router.beforeEach(async({
                 router.push({
                     name: "worldcupActivity"
                 });
-            } else {
-                console.log("已登录，直接进活动首页", params) //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
-                router.push({
-                    name: "worldcupIndex",
-                    params: {
-                        channelCode: 0
-                    }
-                })
             }
         }
+
     } else if (name == "tbLogin") {
         console.log("getAUth")
         if (ua.indexOf("closer-android") > -1) {
@@ -228,7 +222,6 @@ router.beforeEach(async({
         }
 
     }
-
     next();
 
 })
