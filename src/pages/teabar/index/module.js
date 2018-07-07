@@ -163,7 +163,10 @@ export default {
                 Toast("请输入收获地址")
                 return;
             } else if (payload.address.length < 12) {
-                Toast("收获地址不少于12字")
+                Toast("收货地址不少于12字")
+                return;
+            } else if (payload.address.length > 50) {
+                Toast("收货地址太长，最多50字")
                 return;
             }
             let { data } = await waterUpdate(payload).catch(err => {
