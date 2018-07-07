@@ -187,8 +187,8 @@
           console.log("joinRes", joinRes)
           let state = await this.waterChance();
           console.log("state", state)
-          state=1;
-          this.$store.state.IS_APP=true;
+          // state=1;
+          // this.$store.state.IS_APP=true;
           switch (state) {
             case 0: //未参与当前活动
               this.isLoginShow = false;
