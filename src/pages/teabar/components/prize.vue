@@ -34,10 +34,14 @@
     methods: {
       ...mapActions('index', ['getAdCookies']),
       async redirectTo() {
-         console.log("redirect",this.$store.state.IS_APP)
+        console.log("redirect", this.$store.state.IS_APP)
         if (this.$store.state.IS_APP) {
           // 跳转APP首页
-          location.href = 'closer://jump/to/home'
+          if (this.$store.state.UA.indexOf("closer-ios") > -1) {
+            window.close()
+          } else {
+            location.href = 'closer://jump/to/home'
+          }
         } else {
           if (this.$store.state.CHANNEL_CODE != "0") {
             let md = new MobileDetect(this.$store.state.UA);
