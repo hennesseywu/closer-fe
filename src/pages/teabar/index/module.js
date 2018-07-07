@@ -67,6 +67,7 @@ export default {
 
         async checkLogin({ state, rootState }, cb) {
             console.log("checkLogin", rootState.IS_APP);
+            Cookies.remove('user');
             let ua = rootState.UA;
             if (ua.indexOf("closer-ios") > -1) {
                 console.log("module closer-ios");
