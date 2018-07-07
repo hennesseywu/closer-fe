@@ -138,7 +138,6 @@ router.beforeEach(async({
                         });
                     }
                 }
-
             } else if (ua.indexOf("closer-ios") > -1) {
                 if (Store.state.IS_APP) { //app内打开 ios补救措施
                     let ua = Store.state.UA;
@@ -181,6 +180,8 @@ router.beforeEach(async({
                     });
                 }
             }
+            next()
+
         } else if (name == "tbLogin") {
             console.log("getAUth")
             if (ua.indexOf("closer-android") > -1) {
@@ -200,6 +201,7 @@ router.beforeEach(async({
                         if (data.result) {
                             Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
                         }
+                        next()
                     } else {
                         console.log("android jumpLogin")
                         window.bridge.jumpLogin(null);
@@ -232,8 +234,9 @@ router.beforeEach(async({
                     channelCode: 0
                 }
             })
+            next()
+
         }
-        next()
     }
 })
 
