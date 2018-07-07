@@ -100,6 +100,30 @@ export default {
                         });
                     }
                 })
+            } else if (ua.indexOf("closer-android") > -1) {
+                console.log("closer-android")
+                console.log("router android", typeof window.bridge != "undefined")
+                    //安卓检查登录状态
+                if (typeof window.bridge != "undefined") {
+                    let token = window.bridge.getUserToken(null);
+                    console.log("android", token)
+                    if (token) {
+                        Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
+                        let { data } = await axios.post(api.admin.user_show).catch(err => {
+                            Toast('网络开小差啦，请稍后再试')
+                            return;
+                        })
+                        console.log("android", data.result);
+                        if (data.result) {
+                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                            cb(true)
+                        }
+                    } else {
+                        console.log("android jumpLogin")
+                        window.bridge.jumpLogin(null);
+                        cb()
+                    }
+                }
             } else {
                 cb()
             }
