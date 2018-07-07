@@ -80,6 +80,7 @@ router.beforeEach(async({
     if (Store.state.UA.indexOf("closer-android") > -1 || Store.state.UA.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
+
     if (name == "worldcupIndex") {
         Cookies.set("aid", "0", {
             expires: 30
@@ -106,7 +107,6 @@ router.beforeEach(async({
                     window.bridge.jumpLogin(null);
                 }
             }
-            next()
         } else if (ua.indexOf("closer-ios") > -1) {
             if (Store.state.IS_APP) { //app内打开 ios补救措施
                 let ua = Store.state.UA;
@@ -136,11 +136,8 @@ router.beforeEach(async({
                     })
                 }
             }
-            next()
-
         } else {
             if (Cookies.get("GroukAuth")) {
-                //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
                 if (params && params.channelCode) {
                     Cookies.set("aid", params.channelCode, {
                         expires: 30
@@ -149,11 +146,18 @@ router.beforeEach(async({
                 router.push({
                     name: "worldcupActivity"
                 });
+            } else {
+                console.log("已登录，直接进活动首页", params) //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
+                router.push({
+                    name: "worldcupIndex",
+                    params: {
+                        channelCode: 0
+                    }
+                })
+                next()
             }
-            next()
-
         }
-    } else if (name = "tbLogin") {
+    } else if (name == "tbLogin") {
         console.log("getAUth")
         if (ua.indexOf("closer-android") > -1) {
             console.log("closer-android")
@@ -236,16 +240,7 @@ router.beforeEach(async({
 
     }
 
-    if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
-        router.push({
-            name: "worldcupIndex",
-            params: {
-                channelCode: 0
-            }
-        })
-        next()
 
-    }
 })
 
 export default router
