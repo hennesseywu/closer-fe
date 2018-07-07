@@ -228,7 +228,7 @@ router.beforeEach(async({
                 return;
             })
             if (typeof(data.code) != "undefined" && data.code == 0) {
-                // location.href = data.result;
+                location.href = data.result;
             } else {
                 next();
             }
