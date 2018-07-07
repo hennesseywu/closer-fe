@@ -79,17 +79,19 @@ export default {
                             console.log("ios token", token)
                             if (token) {
                                 Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
-                                let { data } = await axios.post(api.admin.user_show).catch(err => {
-                                    Toast('网络开小差啦，请稍后再试')
-                                    return;
-                                })
-                                console.log("ios", data.result);
-                                if (data.result) {
-                                    Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                                    cb(true)
-                                } else {
-                                    cb()
-                                }
+                                setTimeout(() => {
+                                    let { data } = await axios.post(api.admin.user_show).catch(err => {
+                                        Toast('网络开小差啦，请稍后再试')
+                                        return;
+                                    })
+                                    console.log("ios", data.result);
+                                    if (data.result) {
+                                        Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                        cb(true)
+                                    } else {
+                                        cb();
+                                    }
+                                }, 1000)
                             } else {
                                 console.log("ios jumpLogin")
                                 setupWebViewJavascriptBridge(function(bridge) {
@@ -109,15 +111,19 @@ export default {
                     console.log("android", token)
                     if (token) {
                         Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
-                        let { data } = await axios.post(api.admin.user_show).catch(err => {
-                            Toast('网络开小差啦，请稍后再试')
-                            return;
-                        })
-                        console.log("android", data.result);
-                        if (data.result) {
-                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                            cb(true)
-                        }
+                        setTimeout(() => {
+                            let { data } = await axios.post(api.admin.user_show).catch(err => {
+                                Toast('网络开小差啦，请稍后再试')
+                                return;
+                            })
+                            console.log("android", data.result);
+                            if (data.result) {
+                                Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                cb(true)
+                            } else {
+                                cb();
+                            }
+                        }, 1000)
                     } else {
                         console.log("android jumpLogin")
                         window.bridge.jumpLogin(null);
