@@ -7,7 +7,7 @@
         <div class="left box box-tb">
           <div class="money" v-if="userGuessStatistic.totalAwardAmt > 0">你累积获得了<span>{{change(userGuessStatistic.totalAwardAmt)}}</span>元 </div>
           <div class="chance-box">您还有<span>{{userGuessStatistic.totalChance}}</span>次机会喔</div>
-          <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>次参与</div>
+          <div class="whole-num"><span>{{userGuessStatistic.totalGuessPerson}}</span>次竞猜参与</div>
         </div>
         <div class="right" @click="addChance">增加机会</div>
       </div>
