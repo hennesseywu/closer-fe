@@ -31,7 +31,7 @@ export default {
             commit("updateTimestamp")
         },
 
-        async bindPhone({ commit, state, rootState }, payad) {
+        async bindPhone({ commit, state, rootState }, payload) {
             console.log("bindPhone", payload);
             if (payload.phone && !(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(payload.phone))) {
                 Toast('请输入正确的手机号');
