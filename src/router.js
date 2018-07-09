@@ -153,25 +153,31 @@ router.beforeEach(async({
             }
         }
     } else if (name == "tblogin") {
-        console.log("getAUth")
-        if (query.code) {
+        console.log("tblogin")
+        if (ua.indexOf("closer-ios") > -1 || ua.indexOf("closer-android") > -1) {
+            console.log("closer device")
             next();
-        }
-        let params = {
-            path: api.wxLoginUrl
-        };
-        if (Cookies.get("IS_DEV")) {
-            params.path = api.wxLoginDevUrl
-        }
-        let { data } = await axios.post(api.admin.get_auth_path, params).catch(err => {
-            Toast('网络开小差啦，请稍后再试')
-            return;
-        })
-        if (typeof(data.code) != "undefined" && data.code == 0) {
-            location.href = data.result;
         } else {
-            next()
+            if (query.code) {
+                next();
+            }
+            let params = {
+                path: api.wxLoginUrl
+            };
+            if (Cookies.get("IS_DEV")) {
+                params.path = api.wxLoginDevUrl
+            }
+            let { data } = await axios.post(api.admin.get_auth_path, params).catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            })
+            if (typeof(data.code) != "undefined" && data.code == 0) {
+                location.href = data.result;
+            } else {
+                next()
+            }
         }
+
     } else {
         next();
     }
