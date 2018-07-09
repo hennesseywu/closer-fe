@@ -161,6 +161,7 @@ router.beforeEach(async({
         } else {
             if (query.code) {
                 next();
+                return;
             }
             let params = {
                 path: api.wxLoginUrl

@@ -165,9 +165,7 @@
               }
             }
           }else{
-            if(!this.$store.state.IS_APP){
             this.getAuthPath();
-            }
           }
         }
       },
