@@ -72,7 +72,7 @@
     },
     data() {
       return {
-        isLoginShow: true,
+        isLoginShow: false,
         isRecieveShow: false,
         isOkShow: false,
         phone: "",
