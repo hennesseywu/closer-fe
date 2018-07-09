@@ -149,6 +149,8 @@ router.beforeEach(async({
                 router.push({
                     name: "worldcupActivity"
                 });
+            } else {
+                next();
             }
         }
     } else if (name == "tblogin") {

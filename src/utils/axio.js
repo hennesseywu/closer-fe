@@ -43,8 +43,6 @@ axio.interceptors.request.use(
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
 
-
-        //console.log("axio req header", config)
         Indicator.open()
         return config;
 
