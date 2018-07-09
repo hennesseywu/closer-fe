@@ -83,7 +83,6 @@ router.beforeEach(async({
     if (ua.indexOf("closer-android") > -1 || ua.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
-    console.log(Store.state.IS_APP)
     if (name == "worldcupIndex") {
         Cookies.set("aid", "0", {
             expires: 30

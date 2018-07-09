@@ -77,9 +77,6 @@ export default {
                         bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                             console.log("ios token", token)
                             if (token) {
-                                // if (token.indexOf('GroukAuth') > -1) {
-                                //     token = token.replace(/\s+/g, "").substring(9)
-                                // }
                                 Cookies.set("GroukAuth", token, { expires: 7 });
                                 setTimeout(() => {
                                     axios.post(api.admin.user_show).then(({ data }) => {
@@ -114,9 +111,6 @@ export default {
                     let token = window.bridge.getUserToken(null);
                     console.log("android", token)
                     if (token) {
-                        // if (token.indexOf('GroukAuth') > -1) {
-                        //     token = token.replace(/\s+/g, "").substring(9)
-                        // }
                         Cookies.set("GroukAuth", token, { expires: 7 });
                         setTimeout(() => {
                             axios.post(api.admin.user_show).then(({ data }) => {
