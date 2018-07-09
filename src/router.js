@@ -93,7 +93,6 @@ router.beforeEach(async({
                 expires: 30
             });
         }
-        console.log("----closer----")
         if (ua.indexOf("closer-android") > -1) {
             //console.log("router android", typeof window.bridge != "undefined")
             //安卓检查登录状态
@@ -111,9 +110,7 @@ router.beforeEach(async({
             }
 
         } else if (ua.indexOf("closer-ios") > -1) {
-            console.log("module closer-ios");
             setupWebViewJavascriptBridge(function(bridge) {
-                console.log("ios bridge", bridge)
                 if (bridge) {
                     //ios获取用户token 判断登录
                     bridge.callHandler("getUserToken", null, function(token, responseCallback) {
@@ -134,6 +131,7 @@ router.beforeEach(async({
                     });
                 }
             })
+            next();
         } else {
             if (Cookies.get("GroukAuth")) {
                 //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
