@@ -79,21 +79,19 @@ export default {
                                 console.log("ios token", token)
                                 if (token) {
                                     Cookies.set("GroukAuth", token, { expires: 7 });
-                                    setTimeout(() => {
-                                        axios.post(api.admin.user_show).then(({ data }) => {
-                                            console.log("ios", data.result);
-                                            if (data.result) {
-                                                Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                                                cb(true)
-                                            } else {
-                                                cb();
-                                            }
-                                        }).catch(err => {
-                                            Toast('网络开小差啦，请稍后再试')
-                                            return;
-                                        })
-
-                                    }, 1000)
+                                    // setTimeout(() => {
+                                    axios.post(api.admin.user_show).then(({ data }) => {
+                                        console.log("ios", data.result);
+                                        if (data.result) {
+                                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                            cb(true)
+                                        } else {
+                                            cb();
+                                        }
+                                    }).catch(err => {
+                                        Toast('网络开小差啦，请稍后再试')
+                                        return;
+                                    })
                                 } else {
                                     console.log("ios jumpLogin")
                                     setupWebViewJavascriptBridge(function(bridge) {
@@ -105,7 +103,6 @@ export default {
                         }
                     })
                 }, 500)
-
             } else if (ua.indexOf("closer-android") > -1) {
                 console.log("closer-android")
                 console.log("module android", typeof window.bridge != "undefined")
