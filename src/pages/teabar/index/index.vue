@@ -128,7 +128,7 @@
       ...mapActions("tbLogin", ["getAuthPath", "loginWithWechat", "checkLogin", "bindPhone", "waterChance", "waterUpdate", "waterJoin"]),
       ...mapActions('index', ['getCode', 'login', 'updateTimestamp', 'getAdCookies']),
       async tbLogin() {
-        console.log("tblogin")
+        console.log("bindPhone")
         let bindRes = await this.bindPhone({
           phone: this.phone,
           code: this.code,

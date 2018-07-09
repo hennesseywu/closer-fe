@@ -156,6 +156,7 @@ router.beforeEach(async({
         console.log("tblogin")
         if (ua.indexOf("closer-ios") > -1 || ua.indexOf("closer-android") > -1) {
             console.log("closer device")
+            Cookies.remove('user'); //app端user完全依赖APP
             next();
         } else {
             if (query.code) {
