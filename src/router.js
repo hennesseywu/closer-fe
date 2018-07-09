@@ -107,6 +107,7 @@ router.beforeEach(({
                     });
                 }
             }
+            next();
 
         } else if (ua.indexOf("closer-ios") > -1) {
             setupWebViewJavascriptBridge(function(bridge) {
@@ -142,6 +143,7 @@ router.beforeEach(({
                 router.push({
                     name: "worldcupActivity"
                 });
+                next();
             } else {
                 next();
             }
