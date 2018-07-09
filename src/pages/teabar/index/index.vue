@@ -72,7 +72,7 @@
     },
     data() {
       return {
-        isLoginShow: false,
+        isLoginShow: true,
         isRecieveShow: false,
         isOkShow: false,
         phone: "",
@@ -224,7 +224,7 @@
             case 0: //未参与当前活动
               this.isLoginShow = false;
               this.isRecieveShow = false;
-              this.isOkShow = true;
+              this.isOkShow = false;
               break;
             case 1: //参与了活动未提交个人信息
               if (this.$store.state.IS_APP) {
