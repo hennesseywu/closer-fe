@@ -152,11 +152,14 @@
           imgCode: this.imgCode
         });
         if (bindRes) {
-          if (ua.indexOf("closer-ios") > -1) {
+          if (this.$store.state.UA.indexOf("closer-ios") > -1) {
+            console.log("ios bind")
             setupWebViewJavascriptBridge(function(bridge) {
+              console.log("ios bind success", bridge)
               bridge.callHandler("updateUser", null);
             });
-          } else if (ua.indexOf("closer-android") > -1) {
+          } else if (this.$store.state.UA.indexOf("closer-android") > -1) {
+            console.log("android bind");
             window.bridge.updateUser(null);
           }
           let user = JSON.parse(Cookies.get("user"));
