@@ -163,7 +163,7 @@ router.beforeEach(({
             if (Cookies.get("IS_DEV")) {
                 params.path = api.wxLoginDevUrl
             }
-            axios.post(api.admin.get_auth_path, params).then((data) => {
+            axios.post(api.admin.get_auth_path, params).then(({ data }) => {
                 if (typeof(data.code) != "undefined" && data.code == 0) {
                     location.href = data.result;
                 } else {
