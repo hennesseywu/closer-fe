@@ -66,7 +66,7 @@ const router = new Router({
     ]
 
 })
-router.beforeEach(async({
+router.beforeEach(({
     meta,
     path,
     query,
@@ -163,15 +163,17 @@ router.beforeEach(async({
             if (Cookies.get("IS_DEV")) {
                 params.path = api.wxLoginDevUrl
             }
-            let { data } = await axios.post(api.admin.get_auth_path, params).catch(err => {
+            axios.post(api.admin.get_auth_path, params).then((data) => {
+                if (typeof(data.code) != "undefined" && data.code == 0) {
+                    location.href = data.result;
+                } else {
+                    next()
+                }
+            }).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             })
-            if (typeof(data.code) != "undefined" && data.code == 0) {
-                location.href = data.result;
-            } else {
-                next()
-            }
+
         }
     } else {
         next();
