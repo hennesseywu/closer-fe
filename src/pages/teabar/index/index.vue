@@ -35,12 +35,14 @@
         </div>
         <div class="info-btn btn-common" @click="submitInfo()" :class="true ? 'ischecked' : 'uncheck'">提交领取奖励</div>
       </div>
+      <Tologin ref="tologin" v-if="isAppLogin"></Tologin>
       <!-- part prize -->
       <Prize ref="prize" v-if="isOkShow"></Prize>
     </div>
   
     <!-- part rule -->
     <Rule ref="rule"></Rule>
+  
   </div>
 </template>
 
@@ -48,7 +50,7 @@
   import Rule from '../components/rule.vue'
   import InfoWrapper from '../components/info.vue'
   import Prize from '../components/prize.vue'
-  
+  import Tologin from '../components/tologin.vue'
   import {
     Swipe,
     SwipeItem,
@@ -64,17 +66,19 @@
   } from "../../../utils/utils";
   
   export default {
-    name: "login",
+    name: "index",
     components: {
       Rule,
       InfoWrapper,
-      Prize
+      Prize,
+      Tologin
     },
     data() {
       return {
         isLoginShow: false,
         isRecieveShow: false,
         isOkShow: false,
+        isAppLogin: false,
         phone: "",
         imgCode: "",
         code: "",
@@ -131,7 +135,7 @@
           }
         });
       } else {
-        this.doWaterAction()
+        // this.doWaterAction()
       }
   
     },
@@ -194,6 +198,8 @@
           } else {
             if (!this.$store.state.IS_APP) {
               this.getAuthPath();
+            } else {
+              this.isAppLogin = true;
             }
           }
         }

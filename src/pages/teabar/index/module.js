@@ -192,7 +192,7 @@ export default {
             }
 
             if (payload.address.length == 0) {
-                Toast("请输入收获地址")
+                Toast("请输入收货地址")
                 return;
             } else if (payload.address.length < 12) {
                 Toast("收货地址不少于12字")
