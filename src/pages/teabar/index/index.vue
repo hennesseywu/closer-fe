@@ -106,10 +106,10 @@
           this.checkLogin(async(res) => {
             console.log("checkLogin res", res);
             console.log(this.$store.state.UA)
-            if (res&&this.$store.state.UA.indexOf("closer-ios")>-1) {
+            if (res && this.$store.state.UA.indexOf("closer-ios") > -1) {
               await this.doWaterAction();
-            }else{
-             await this.doWaterAction();
+            } else {
+              await this.doWaterAction();
             }
           });
         }, 500)
@@ -145,7 +145,7 @@
       },
       async doWaterAction() {
         console.log("doAction", Cookies.get("GroukAuth"))
-        if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined"&&this.$store.state.IS_APP) { //已登录 
+        if (typeof(Cookies.get("GroukAuth")) != "undefined" && typeof(Cookies.get("user")) != "undefined" && this.$store.state.IS_APP) { //已登录 
           let user = JSON.parse(Cookies.get("user"));
           console.log("cookies exist")
           this.checkCurrentState(user);
@@ -164,8 +164,10 @@
                 this.checkCurrentState(user);
               }
             }
-          }else{
-            this.getAuthPath();
+          } else {
+            if (!this.$store.state.IS_APP) {
+              this.getAuthPath();
+            }
           }
         }
       },
@@ -177,11 +179,13 @@
           this.isOkShow = false;
           this.isLoginShow = true;
         } else {
-          let params={adid: Cookies.get("aid")};
-          if(this.$route.query.code){
-              params["code"]=this.$route.query.code
-          }else{
-            params["phone"]= user.phones
+          let params = {
+            adid: Cookies.get("aid")
+          };
+          if (this.$route.query.code) {
+            params["code"] = this.$route.query.code
+          } else {
+            params["phone"] = user.phones
           }
           let joinRes = await this.waterJoin(params);
           console.log("joinRes", joinRes)

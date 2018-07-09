@@ -78,12 +78,11 @@ router.beforeEach(async({
         document.title = meta.title ? meta.title : '贴近'
     }, 500)
     let ua = navigator.userAgent || window.navigator.userAgent;
-    Store.state.UA = ua.toLowerCase();
-    ua = Store.state.UA;
-    if (Store.state.UA.indexOf("closer-android") > -1 || Store.state.UA.indexOf("closer-ios") != -1) {
+    ua = ua.toLowerCase();
+    Store.state.UA = ua;
+    if (ua.indexOf("closer-android") > -1 || ua.indexOf("closer-ios") != -1) {
         Store.state.IS_APP = true;
     }
-
     if (name == "worldcupIndex") {
         Cookies.set("aid", "0", {
             expires: 30
@@ -179,7 +178,6 @@ router.beforeEach(async({
                 next()
             }
         }
-
     } else {
         next();
     }
