@@ -17,7 +17,7 @@
       address: String
     },
     methods: {
-      toLogin() {
+      jumpLogin() {
         if (this.$store.state.UA.indexOf("closer-ios") > -1) {
           console.log("ios jumpLogin")
           setupWebViewJavascriptBridge(function(bridge) {
