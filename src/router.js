@@ -151,10 +151,11 @@ router.beforeEach(async({
                 });
             }
         }
+        next();
     } else if (name == "tblogin") {
         console.log("getAUth")
         if (query.code) {
-            return;
+            next();
         }
         let params = {
             path: api.wxLoginUrl
@@ -168,6 +169,8 @@ router.beforeEach(async({
         })
         if (typeof(data.code) != "undefined" && data.code == 0) {
             location.href = data.result;
+        } else {
+            next()
         }
 
     }
@@ -179,7 +182,6 @@ router.beforeEach(async({
             }
         })
     }
-    next()
 
 })
 
