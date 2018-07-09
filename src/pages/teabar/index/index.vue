@@ -101,16 +101,35 @@
       // this.getAuthPath();
     },
     mounted() {
+      //    wx.config({
+      //   debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      //   "signature": "b9e6e3b26e74c080ac37a5329e7c3e973b2637eb",
+      //   "appId": "wx0077d52252baa2cd",
+      //   "nonceStr": "sdukafnDdakljdAx",
+      //   "timestamp": 1531119953,
+      //   jsApiList: [] // 必填，需要使用的JS接口列表
+      // });
+      // wx.ready(function() {
+      //   console.log("ready")
+      //   // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+      // });
+  
+      // wx.error(function(res) {
+      //   console.log("error", res)
+      //   // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+      // });
+  
+  
       if (this.$store.state.IS_APP) {
-          this.checkLogin(async(res) => {
-            console.log("checkLogin res", res);
-            console.log(this.$store.state.UA)
-            if (res && this.$store.state.UA.indexOf("closer-ios") > -1) {
-              await this.doWaterAction();
-            } else {
-              await this.doWaterAction();
-            }
-          });
+        this.checkLogin(async(res) => {
+          console.log("checkLogin res", res);
+          console.log(this.$store.state.UA)
+          if (res && this.$store.state.UA.indexOf("closer-ios") > -1) {
+            await this.doWaterAction();
+          } else {
+            await this.doWaterAction();
+          }
+        });
       } else {
         this.doWaterAction()
       }
@@ -133,6 +152,13 @@
           imgCode: this.imgCode
         });
         if (bindRes) {
+          if (ua.indexOf("closer-ios") > -1) {
+            setupWebViewJavascriptBridge(function(bridge) {
+              bridge.callHandler("updateUser", null);
+            });
+          } else if (ua.indexOf("closer-android") > -1) {
+            window.bridge.updateUser(null);
+          }
           let user = JSON.parse(Cookies.get("user"));
           user.phones = this.phone;
           Cookies.set("user", JSON.stringify(user), {

@@ -12,16 +12,18 @@ import axio from './utils/axio'
 import Cookies from 'js-cookie';
 import Vconsole from 'vconsole';
 import MobileDetect from 'mobile-detect';
+import wx from 'weixin-js-sdk';
+
 if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /10.3.0.333/.test(window.location.href)) {
     const vconsole = new Vconsole()
     store.state.IS_DEV = true
     Cookies.set("IS_DEV", true, { expires: 60 });
 }
 
+window.wx = wx;
 window.axios = axio;
 window.Cookies = Cookies;
 window.MobileDetect = MobileDetect;
-
 window.setupWebViewJavascriptBridge = function(callback) {
         // //console.log(ca llback)
         if (window.WebViewJavascriptBridge) {

@@ -105,6 +105,8 @@ router.beforeEach(({
                     router.push({
                         name: "worldcupActivity"
                     });
+                } else {
+                    window.bridge.jumpLogin(null);
                 }
             }
             next();

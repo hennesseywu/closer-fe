@@ -44,7 +44,8 @@ export default {
         // 富评论下的子评论
         replys: 'closer_reply.replys',
         // 举报列表
-        reportType: 'closer_report.get_report_types'
+        reportType: 'closer_report.get_report_types',
+        wechat_config: 'closer_share.wechat_config'
     },
     community: {
         // 栏目实体
