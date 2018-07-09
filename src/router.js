@@ -69,6 +69,7 @@ const router = new Router({
 router.beforeEach(async({
     meta,
     path,
+    query,
     name,
     params
 }, from, next) => {
@@ -151,7 +152,6 @@ router.beforeEach(async({
                 });
             }
         }
-        next();
     } else if (name == "tblogin") {
         console.log("getAUth")
         if (query.code) {
@@ -172,7 +172,8 @@ router.beforeEach(async({
         } else {
             next()
         }
-
+    } else {
+        next();
     }
     if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
         router.push({
