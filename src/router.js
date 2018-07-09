@@ -66,7 +66,7 @@ const router = new Router({
     ]
 
 })
-router.beforeEach(async({
+router.beforeEach(({
     meta,
     path,
     name,
@@ -83,27 +83,29 @@ router.beforeEach(async({
         Store.state.IS_APP = true;
     }
 
-    if (name == "tbLogin" && ua.indexOf("closer-ios") > -1) {
+    if (name == "tblogin" && ua.indexOf("closer-ios") > -1) {
         console.log("router closer-ios")
         setupWebViewJavascriptBridge(function(bridge) {
             console.log("ios bridge", bridge)
             if (bridge) {
                 //ios获取用户token 判断登录
-                bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
+                bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                     console.log("ios token", token)
                     if (token) {
                         Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
-                        let { data } = await axios.post(api.admin.user_show).catch(err => {
+                        axios.post(api.admin.user_show).then(({ data }) => {
+                            console.log("ios", data.result);
+                            if (data.result) {
+                                Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                            } else {
+                                console.log("no token");
+                            }
+                            next();
+                        }).catch(err => {
                             Toast('网络开小差啦，请稍后再试')
                             return;
                         })
-                        console.log("ios", data.result);
-                        if (data.result) {
-                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                        } else {
-                            console.log("no token");
-                        }
-                        next();
+
                     } else {
                         setupWebViewJavascriptBridge(function(bridge) {
                             bridge.callHandler("jumpLogin", null);
@@ -181,7 +183,7 @@ router.beforeEach(async({
                     });
                 }
             }
-        } else if (name == "tbLogin") {
+        } else if (name == "tblogin") {
             console.log("getAUth")
             if (ua.indexOf("closer-android") > -1) {
                 console.log("closer-android")
@@ -192,14 +194,16 @@ router.beforeEach(async({
                     console.log("android", token)
                     if (token) {
                         Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
-                        let { data } = await axios.post(api.admin.user_show).catch(err => {
+                        axios.post(api.admin.user_show).then(({ data }) => {
+                            console.log("android", data.result);
+                            if (data.result) {
+                                Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                            }
+                        }).catch(err => {
                             Toast('网络开小差啦，请稍后再试')
                             return;
                         })
-                        console.log("android", data.result);
-                        if (data.result) {
-                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                        }
+
                     } else {
                         console.log("android jumpLogin")
                         window.bridge.jumpLogin(null);
@@ -215,13 +219,15 @@ router.beforeEach(async({
                 if (Cookies.get("IS_DEV")) {
                     params.path = api.wxLoginDevUrl
                 }
-                let { data } = await axios.post(api.admin.get_auth_path, params).catch(err => {
+                axios.post(api.admin.get_auth_path, params).then(({ data }) => {
+                    if (typeof(data.code) != "undefined" && data.code == 0) {
+                        location.href = data.result;
+                    }
+                }).catch(err => {
                     Toast('网络开小差啦，请稍后再试')
                     return;
                 })
-                if (typeof(data.code) != "undefined" && data.code == 0) {
-                    location.href = data.result;
-                }
+
             }
 
         }

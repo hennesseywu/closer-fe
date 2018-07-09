@@ -65,7 +65,7 @@ export default {
             }
         },
 
-        async checkLogin({ state, rootState }, cb) {
+        checkLogin({ state, rootState }, cb) {
             console.log("checkLogin", rootState.IS_APP);
             Cookies.remove('user');
             let ua = rootState.UA;
@@ -75,22 +75,24 @@ export default {
                     console.log("ios bridge", bridge)
                     if (bridge) {
                         //ios获取用户token 判断登录
-                        bridge.callHandler("getUserToken", null, async function(token, responseCallback) {
+                        bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                             console.log("ios token", token)
                             if (token) {
                                 Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
                                 setTimeout(() => {
-                                    let { data } = await axios.post(api.admin.user_show).catch(err => {
+                                    axios.post(api.admin.user_show).then(({ data }) => {
+                                        console.log("ios", data.result);
+                                        if (data.result) {
+                                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                            cb(true)
+                                        } else {
+                                            cb();
+                                        }
+                                    }).catch(err => {
                                         Toast('网络开小差啦，请稍后再试')
                                         return;
                                     })
-                                    console.log("ios", data.result);
-                                    if (data.result) {
-                                        Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                                        cb(true)
-                                    } else {
-                                        cb();
-                                    }
+
                                 }, 1000)
                             } else {
                                 console.log("ios jumpLogin")
@@ -104,7 +106,7 @@ export default {
                 })
             } else if (ua.indexOf("closer-android") > -1) {
                 console.log("closer-android")
-                console.log("router android", typeof window.bridge != "undefined")
+                console.log("module android", typeof window.bridge != "undefined")
                     //安卓检查登录状态
                 if (typeof window.bridge != "undefined") {
                     let token = window.bridge.getUserToken(null);
@@ -112,17 +114,19 @@ export default {
                     if (token) {
                         Cookies.set("GroukAuth", token.substring(10), { expires: 7 });
                         setTimeout(() => {
-                            let { data } = await axios.post(api.admin.user_show).catch(err => {
+                            axios.post(api.admin.user_show).then(({ data }) => {
+                                console.log("android", data.result);
+                                if (data.result) {
+                                    Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                    cb(true)
+                                } else {
+                                    cb();
+                                }
+                            }).catch(err => {
                                 Toast('网络开小差啦，请稍后再试')
                                 return;
                             })
-                            console.log("android", data.result);
-                            if (data.result) {
-                                Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
-                                cb(true)
-                            } else {
-                                cb();
-                            }
+
                         }, 1000)
                     } else {
                         console.log("android jumpLogin")
