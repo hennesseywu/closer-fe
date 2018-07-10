@@ -167,7 +167,7 @@ export default {
                 console.log("loginWithWechat", data.result)
                 return data.result;
             } else {
-                Toast('微信认证异常');
+                // Toast('微信认证异常');
                 await dispatch("getAuthPath");
                 return;
             }
