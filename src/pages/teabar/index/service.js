@@ -22,3 +22,7 @@ export async function waterUpdate(payload) {
 export async function waterJoin(payload) {
     return await axios.post(api.activity.activity_water_join, payload);
 }
+
+export async function wechatConfig(payload) {
+    return await axios.post(api.admin.wechat_config, payload);
+}

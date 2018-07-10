@@ -1,4 +1,4 @@
-import { getAuthPath, loginWithWechat, bindPhone, waterChance, waterUpdate, waterJoin } from './service'
+import { getAuthPath, loginWithWechat, bindPhone, waterChance, waterUpdate, waterJoin, wechatConfig } from './service'
 import { Toast } from 'mint-ui'
 import api from '../../../utils/api'
 import Router from 'vue-router';
@@ -78,12 +78,12 @@ export default {
                             bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                                 console.log("ios token", token)
                                 if (token) {
-                                    Cookies.set("GroukAuth", token, { expires: 7 });
+                                    Cookies.set("GroukAuth", token, { expires: 30 });
                                     // setTimeout(() => {
                                     axios.post(api.admin.user_show).then(({ data }) => {
                                         console.log("ios", data.result);
                                         if (data.result) {
-                                            Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                            Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
                                             cb(true)
                                         } else {
                                             cb();
@@ -111,12 +111,12 @@ export default {
                     let token = window.bridge.getUserToken(null);
                     console.log("android", token)
                     if (token) {
-                        Cookies.set("GroukAuth", token, { expires: 7 });
+                        Cookies.set("GroukAuth", token, { expires: 30 });
                         setTimeout(() => {
                             axios.post(api.admin.user_show).then(({ data }) => {
                                 console.log("android", data.result);
                                 if (data.result) {
-                                    Cookies.set("user", JSON.stringify(data.result), { expires: 60 });
+                                    Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
                                     cb(true)
                                 } else {
                                     cb();
@@ -169,7 +169,7 @@ export default {
             } else {
                 Toast('微信认证异常');
                 await dispatch("getAuthPath");
-                return false;
+                return;
             }
         },
         async waterChance({}, payload) {
@@ -181,7 +181,7 @@ export default {
                 return data.result;
             } else {
                 Toast('网络开小差啦，请稍后再试')
-                return false;
+                return;
             }
         },
         async waterUpdate({}, payload) {
@@ -209,7 +209,7 @@ export default {
                 return true;
             } else {
                 Toast('网络开小差啦，请稍后再试')
-                return false;
+                return;
             }
         },
         async waterJoin({ dispatch }, payload) {
@@ -224,6 +224,24 @@ export default {
                 return false;
             }
         },
+
+        async wechatConfig({ rootState }, payload) {
+            let params = {
+                url: location.href
+            };
+            // if (rootState.IS_DEV) {
+            //     params.url = api.wxLoginDevUrl
+            // }
+            let { data } = await wechatConfig(params).catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            })
+            if (typeof(data.code) != "undefined" && data.code == 0) {
+                return data.result;
+            } else {
+                return;
+            }
+        }
 
     }
 }

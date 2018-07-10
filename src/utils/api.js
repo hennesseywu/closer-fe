@@ -25,7 +25,8 @@ export default {
         // 回复 评论
         add_reply: 'closer_reply.add_reply',
         // 邀请人书
-        invite_counts: 'closer_user.invite_counts'
+        invite_counts: 'closer_user.invite_counts',
+        wechat_config: 'closer_share.wechat_config'
     },
     command: {
         // 贴子详情
@@ -45,8 +46,7 @@ export default {
         // 富评论下的子评论
         replys: 'closer_reply.replys',
         // 举报列表
-        reportType: 'closer_report.get_report_types',
-        wechat_config: 'closer_share.wechat_config'
+        reportType: 'closer_report.get_report_types'
     },
     community: {
         // 栏目实体

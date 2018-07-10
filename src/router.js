@@ -100,7 +100,7 @@ router.beforeEach(({
                 //console.log("android", token)
                 if (token) {
                     Cookies.set("GroukAuth", token, {
-                        expires: 7
+                        expires: 30
                     });
                     router.push({
                         name: "worldcupActivity"
@@ -110,7 +110,6 @@ router.beforeEach(({
                 }
             }
             next();
-
         } else if (ua.indexOf("closer-ios") > -1) {
             setupWebViewJavascriptBridge(function(bridge) {
                 if (bridge) {
@@ -119,7 +118,7 @@ router.beforeEach(({
                         console.log("ios token", token)
                         if (token) {
                             Cookies.set("GroukAuth", token, {
-                                expires: 7
+                                expires: 30
                             });
                             router.push({
                                 name: "worldcupActivity"
