@@ -17,7 +17,7 @@ import wx from 'weixin-js-sdk';
 if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /10.3.0.333/.test(window.location.href)) {
     const vconsole = new Vconsole()
     store.state.IS_DEV = true
-    Cookies.set("IS_DEV", true, { expires: 60 });
+    Cookies.set("IS_DEV", true, { expires: 1 });
 }
 
 window.wx = wx;
@@ -25,25 +25,22 @@ window.axios = axio;
 window.Cookies = Cookies;
 window.MobileDetect = MobileDetect;
 window.setupWebViewJavascriptBridge = function(callback) {
-        // //console.log(ca llback)
-        if (window.WebViewJavascriptBridge) {
-            return callback(WebViewJavascriptBridge);
-        }
-        if (window.WVJBCallbacks) {
-            return window.WVJBCallbacks.push(callback);
-        }
-        window.WVJBCallbacks = [callback];
-        var WVJBIframe = document.createElement('iframe');
-        WVJBIframe.style.display = 'none';
-        WVJBIframe.src = 'https://__bridge_loaded__';
-        document.documentElement.appendChild(WVJBIframe);
-        setTimeout(function() {
-            document.documentElement.removeChild(WVJBIframe);
-            window.WVJBCallbacks = [callback];
-        }, 500)
+    if (window.WebViewJavascriptBridge) {
+        return callback(WebViewJavascriptBridge);
     }
-    // Vue.use(VueAxios, axios);
-
+    if (window.WVJBCallbacks) {
+        return window.WVJBCallbacks.push(callback);
+    }
+    window.WVJBCallbacks = [callback];
+    var WVJBIframe = document.createElement('iframe');
+    WVJBIframe.style.display = 'none';
+    WVJBIframe.src = 'https://__bridge_loaded__';
+    document.documentElement.appendChild(WVJBIframe);
+    setTimeout(function() {
+        document.documentElement.removeChild(WVJBIframe);
+        window.WVJBCallbacks = [callback];
+    }, 500)
+}
 
 Vue.config.productionTip = false
 

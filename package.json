@@ -36,7 +36,6 @@
         "postcss-pr": "^1.1.0",
         "postcss-pxtorem": "^4.0.1",
         "serve": "^6.5.8",
-        "vue-cli-plugin-vconsole": "^1.0.1",
         "vue-template-compiler": "^2.5.16"
     },
     "eslintConfig": {

@@ -30,7 +30,6 @@ export default {
         updateTimestamp({ commit }) {
             commit("updateTimestamp")
         },
-
         async bindPhone({ commit, state, rootState }, payload) {
             console.log("bindPhone", payload);
             if (payload.phone && !(/^(0|86|17951)?(1[23456789][0-9])[0-9]{8}$/.test(payload.phone))) {
