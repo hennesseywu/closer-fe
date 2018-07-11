@@ -12,7 +12,7 @@
         <div class="right" @click="addChance">增加机会</div>
       </div>
       <!-- 比赛结束 -->
-      <div class="end-wrapper nomatch-wrapper" v-if="isWorldCupEnd">
+      <div class="end-wrapper nomatch-wrapper" v-if="userGuessStatistic.isWorldCupEnd">
         <div class="text1">竞猜结束</div>
         <div class="text">快去领取您的奖金吧~</div>
       </div>
@@ -144,7 +144,6 @@
         showRecord: false,
         isApp: false,
         isDev: false,
-        isWorldCupEnd:false
       };
     },
     computed: {
