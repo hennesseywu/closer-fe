@@ -37,7 +37,7 @@
           }
         let res= await this.getAdCookies({
             adid: Cookies.get("aid"),
-            webUdid: true,
+            webUdid: false,
             deviceType: deviceType,
             deviceVersion: deviceVersion
           });
