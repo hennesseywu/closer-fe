@@ -23,7 +23,7 @@
       ...mapActions('index', ['getAdCookies']),
     async  download() {
         //console.log('channel_cdoe',this.$store.state.CHANNEL_CODE)
-        if (this.$store.state.CHANNEL_CODE != "0") {
+        if (Cookies.get("aid") != "0") {
           let md = new MobileDetect(this.$store.state.UA);
           let deviceType = md.os();
           let deviceVersion = "";
