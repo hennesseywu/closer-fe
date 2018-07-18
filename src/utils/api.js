@@ -64,7 +64,8 @@ export default {
         share_group: 'closer_share.outer_group'
     },
     activity: {
-        // 世界杯活动接口
+        // 活动接口
+        get_activity: 'closer_activity.get_activity',
         add_channel: 'activity_worldcup.add_channel',
         check_guess_result: 'activity_worldcup.check_guess_result',
         get_match_list: 'activity_worldcup.get_match_list',

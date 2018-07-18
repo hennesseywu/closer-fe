@@ -60,3 +60,28 @@ export function noShare() {
         WeixinJSBridge.call('hideOptionMenu');
     }
 }
+
+// 辅助函数
+export function rem2px(v) {
+    var val = parseFloat(v) * this.dpr * this.baseFontSize;
+    if (typeof v === "string" && v.match(/rem$/)) {
+        val += "px";
+    }
+    return val;
+}
+
+export function px2rem(v) {
+    var val = parseFloat(v) * this.dpr / this.baseFontSize;
+    if (typeof v === "string" && v.match(/px$/)) {
+        val += "rem";
+    }
+    return val;
+}
+
+export function px2px(v) {
+    var val = parseFloat(v) * this.dpr;
+    if (typeof v === "string" && v.match(/px$/)) {
+        val += "px";
+    }
+    return val;
+}

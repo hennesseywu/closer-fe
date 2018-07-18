@@ -19,6 +19,9 @@ const Landing = () =>
 const Tblogin = () =>
     import ('@/pages/teabar/index')
 
+const ActivityOver = () =>
+    import ('@/pages/over/index')
+
 Vue.use(Router)
 
 const router = new Router({
@@ -62,7 +65,15 @@ const router = new Router({
             meta: {
                 title: '贴近Closer'
             }
+        }, {
+            path: '/over',
+            name: 'activityOver',
+            component: ActivityOver,
+            meta: {
+                title: '贴近Closer'
+            }
         }
+
     ]
 
 })
@@ -84,71 +95,87 @@ router.beforeEach(({
         Store.state.IS_APP = true;
     }
     if (name == "worldcupIndex") {
-        Cookies.set("aid", "0", {
-            expires: 30
-        })
-        if (params.channelCode && params.channelCode != "0") {
-            Cookies.set("aid", params.channelCode, {
-                expires: 30
-            });
-        }
-        if (ua.indexOf("closer-android") > -1) {
-            //console.log("router android", typeof window.bridge != "undefined")
-            //安卓检查登录状态
-            if (typeof window.bridge != "undefined") {
-                let token = window.bridge.getUserToken(null);
-                //console.log("android", token)
-                if (token) {
-                    Cookies.set("GroukAuth", token, {
-                        expires: 30
+        axios.post(api.activity.get_activity).then(({ data }) => {
+            if (typeof(data.code) != "undefined" && data.code == 0) {
+                if (data.result.enabled) {
+                    router.push({
+                        name: "activityOver"
                     });
+                }
+            } else {
+                doIndexAction();
+            }
+        }).catch(err => {
+            doIndexAction();
+        })
+
+        function doIndexAction() {
+            Cookies.set("aid", "0", {
+                expires: 30
+            })
+            if (params.channelCode && params.channelCode != "0") {
+                Cookies.set("aid", params.channelCode, {
+                    expires: 30
+                });
+            }
+            if (ua.indexOf("closer-android") > -1) {
+                //安卓检查登录状态
+                if (typeof window.bridge != "undefined") {
+                    let token = window.bridge.getUserToken(null);
+                    //console.log("android", token)
+                    if (token) {
+                        Cookies.set("GroukAuth", token, {
+                            expires: 30
+                        });
+                        router.push({
+                            name: "worldcupActivity"
+                        });
+                    } else {
+                        window.bridge.jumpLogin(null);
+                    }
+                }
+                next();
+            } else if (ua.indexOf("closer-ios") > -1) {
+                setupWebViewJavascriptBridge(function(bridge) {
+                    if (bridge) {
+                        //ios获取用户token 判断登录
+                        bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                            console.log("ios token", token)
+                            if (token) {
+                                Cookies.set("GroukAuth", token, {
+                                    expires: 30
+                                });
+                                router.push({
+                                    name: "worldcupActivity"
+                                });
+                            } else {
+                                //console.log("ios jumpLogin")
+                                setupWebViewJavascriptBridge(function(bridge) {
+                                    bridge.callHandler("jumpLogin", null);
+                                });
+                            }
+                        });
+                    }
+                })
+                next();
+            } else {
+                if (Cookies.get("GroukAuth")) {
+                    //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
+                    if (params && params.channelCode) {
+                        Cookies.set("aid", params.channelCode, {
+                            expires: 30
+                        });
+                    }
                     router.push({
                         name: "worldcupActivity"
                     });
+                    next();
                 } else {
-                    window.bridge.jumpLogin(null);
+                    next();
                 }
-            }
-            next();
-        } else if (ua.indexOf("closer-ios") > -1) {
-            setupWebViewJavascriptBridge(function(bridge) {
-                if (bridge) {
-                    //ios获取用户token 判断登录
-                    bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                        console.log("ios token", token)
-                        if (token) {
-                            Cookies.set("GroukAuth", token, {
-                                expires: 30
-                            });
-                            router.push({
-                                name: "worldcupActivity"
-                            });
-                        } else {
-                            //console.log("ios jumpLogin")
-                            setupWebViewJavascriptBridge(function(bridge) {
-                                bridge.callHandler("jumpLogin", null);
-                            });
-                        }
-                    });
-                }
-            })
-            next();
-        } else {
-            if (Cookies.get("GroukAuth")) {
-                //console.log("已登录，直接进活动首页") //1.d64db76d966f377795a7940e06c6283889b3e3fa3b58f3796260a32c7f4377bc
-                if (params && params.channelCode) {
-                    Cookies.set("aid", params.channelCode, {
-                        expires: 30
-                    });
-                }
-                router.push({
-                    name: "worldcupActivity"
-                });
-                next();
-            } else {
-                next();
             }
         }
+
     } else if (name == "tblogin") {
         console.log("tblogin")
         if (ua.indexOf("closer-ios") > -1 || ua.indexOf("closer-android") > -1) {
@@ -178,17 +205,17 @@ router.beforeEach(({
             })
 
         }
-    } else {
-        next();
-    }
-    if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
+    } else if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
         router.push({
             name: "worldcupIndex",
             params: {
                 channelCode: 0
             }
         })
+    } else {
+        next();
     }
+
 
 })
 
