@@ -170,14 +170,13 @@
         let ua = this.$store.state.UA;
         console.log("inviteFriends", ua)
         if (ua.indexOf("closer-ios") > -1) {
-          if (window.WebViewJavascriptBridge) {
-            this.$com.setupWebViewJavascriptBridge(function(bridge) {
-              bridge.callHandler("inviteUser", null);
-            });
-          } else {
-            // 兼容 老版本
-            location.href = "closer_invite_guys_raise_cash";
-          }
+          setupWebViewJavascriptBridge(function(bridge) {
+            console.log("toShare ios bridge", bridge)
+            if (bridge) {
+              //ios获取用户token 判断登录
+              bridge.callHandler("inviteUser", null, function(data, responseCallback) {})
+            }
+          })
         } else if (ua.indexOf("closer-android") > -1) {
           if (typeof window.bridge != "undefined") {
             window.bridge.inviteUser(null);
