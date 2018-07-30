@@ -96,11 +96,16 @@
         loginUsers: []
       }
     },
-    async beforeMount() {
+    async mounted() {
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
-          console.log("checkLogin res", res);
-  
+          console.log("checkLogin res");
+          await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
+          let {
+            data
+          } = await this.getInviteUserList();
+          this.loginUsers = data;
         })
       } else {
         // Cookies.set("GroukAuth", "1.cd29b035dff0af5a6d76738d9ffe4999483cf9b37d4be9a01b56d292aa70f832", {

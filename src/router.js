@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import api from './utils/api';
 import Store from './store';
+import { Toast } from 'mint-ui'
+
 
 const Index = () =>
     import ('@/pages/worldcup/index')

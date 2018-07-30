@@ -39,7 +39,7 @@ window.setupWebViewJavascriptBridge = function(callback) {
     setTimeout(function() {
         document.documentElement.removeChild(WVJBIframe);
         window.WVJBCallbacks = [callback];
-    }, 500)
+    }, 0)
 }
 
 Vue.config.productionTip = false
