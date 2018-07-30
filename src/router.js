@@ -22,6 +22,14 @@ const Tblogin = () =>
 const ActivityOver = () =>
     import ('@/pages/over/index')
 
+const PullNewIndex = () =>
+    import ('@/pages/pullnew/index')
+
+
+const PullNewRule = () =>
+    import ('@/pages/pullnew/rule')
+
+
 Vue.use(Router)
 
 const router = new Router({
@@ -69,6 +77,21 @@ const router = new Router({
             path: '/over',
             name: 'activityOver',
             component: ActivityOver,
+            meta: {
+                title: '贴近Closer'
+            }
+        }, {
+            path: '/pullnew',
+            name: 'pullNew',
+            component: PullNewIndex,
+            meta: {
+                title: '贴近Closer'
+            }
+        },
+        {
+            path: '/pullNew/rule',
+            name: 'pullNewRule',
+            component: PullNewRule,
             meta: {
                 title: '贴近Closer'
             }

@@ -76,7 +76,11 @@ export default {
         check_guess_result: 'activity_worldcup.check_guess_result',
         activity_water_chance: "activity_water.chance",
         activity_water_update: "activity_water.update",
-        activity_water_join: "activity_water.join"
+        activity_water_join: "activity_water.join",
+        get_invite_statistic: "closer_invite.get_statistic",
+        get_invite_user_login_page_list: "closer_invite.get_invitee_page_list",
+        get_yesterday_award_amt: "closer_invite.get_yesterday_award_amt",
+        remind_login: "closer_invite.remind_login"
     },
     statitics: {
         // 数据统计接口
