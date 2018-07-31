@@ -129,9 +129,23 @@
           this.loginUsers = data;
         })
       } else {
-        this.$router.push({
-          name: "activityOver"
+        this.checkLogin(async(res) => {
+          console.log("checkLogin res");
+          await this.getPullNewInfo();
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pagenum
+          });
+          this.pagesize = pagesize;
+          this.loginCount = count;
+          this.loginUsers = data;
         })
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
       }
     },
     computed: {
@@ -144,8 +158,12 @@
       ...mapActions("pullNew", ["checkLogin", "getInviteUserList", "getPullNewInfo", "remindLogin", "getYesterdayAwardAmt"]),
       async loadBottom() {
         console.log("loading")
-        // this.allLoaded = true;
-        pagenum++
+        if (this.pagenum == this.pagesize) {
+          this.allLoaded = true;
+          this.bottomPullText=""
+          return;
+        }
+        this.pagenum++;
         let {
           data,
           pagesize,
@@ -155,10 +173,16 @@
         });
         this.pagesize = pagesize;
         this.loginCount = count;
+        console.log(data)
         for (var a in data) {
           this.loginUsers.push(data[a]);
         }
         this.$refs.loadmore.onBottomLoaded();
+        console.log(this.pagenum, "----", this.pagesize)
+        if (this.pagenum == this.pagesize) {
+          this.allLoaded = true;
+          this.bottomPullText=""
+        }
       },
       remind(invitee) {
         this.remindLogin({

@@ -10,7 +10,7 @@ export async function getYesterdayAwardAmt(payload) {
 }
 
 export async function getInviteUserLoginPageList(payload) {
-    return await axios.post(api.activity.get_invite_user_login_page_list, payload);
+    return await axios.post(api.activity.get_invitee_page_list, payload);
 }
 
 export async function remindLogin(payload) {
