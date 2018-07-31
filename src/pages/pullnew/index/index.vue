@@ -117,28 +117,21 @@
         this.checkLogin(async(res) => {
           console.log("checkLogin res");
           await this.getPullNewInfo();
-          await this.getYesterdayAwardAmt();
           let {
-            data
-          } = await this.getInviteUserList();
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pagenum
+          });
+          this.pagesize = pagesize;
+          this.loginCount = count;
           this.loginUsers = data;
         })
       } else {
-        // Cookies.set("GroukAuth", "1.cd29b035dff0af5a6d76738d9ffe4999483cf9b37d4be9a01b56d292aa70f832", {
-        //   expires: 30
-        // })
-        await this.getPullNewInfo();
-        await this.getYesterdayAwardAmt();
-        let {
-          data,
-          pagesize,
-          count
-        } = await this.getInviteUserList();
-        this.loginCount = count;
-  
-        this.loginUsers = data;
-        this.pagesize = pagesize;
-        console.log('11111----loginusers', this.loginUsers)
+        this.$router.push({
+          name: "activityOver"
+        })
       }
     },
     computed: {
@@ -162,13 +155,10 @@
         });
         this.pagesize = pagesize;
         this.loginCount = count;
-  
-        console.log("data", data)
         for (var a in data) {
           this.loginUsers.push(data[a]);
         }
         this.$refs.loadmore.onBottomLoaded();
-        console.log(this.loginUsers)
       },
       remind(invitee) {
         this.remindLogin({
