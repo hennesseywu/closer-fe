@@ -12,11 +12,11 @@
       <div class="content-desc">之后每邀请1位奖励2元，如果您邀请了7位好友，那么第7位奖励您10元</div>
       <div class="progress-bg" v-if="pullNewStatic.invitedUsers&&pullNewStatic.invitedUsers.length==0">
         <div class="progress icon1 grey"><span class="progress-text">2</span>元</div>
-        <div class="progress icon grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon grey"><span class="progress-text">10</span>元</div>
+        <div class="progress icon2 grey"><span class="progress-text">10</span>元</div>
+        <div class="progress icon3 grey"><span class="progress-text">10</span>元</div>
+        <div class="progress icon4 grey"><span class="progress-text">10</span>元</div>
+        <div class="progress icon5 grey"><span class="progress-text">10</span>元</div>
+        <div class="progress icon6 grey"><span class="progress-text">10</span>元</div>
         <div class="progress icon7 grey"><span class="progress-text">10</span>元</div>
       </div>
       <div class="progress-bg" v-else>
