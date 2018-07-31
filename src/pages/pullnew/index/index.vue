@@ -46,9 +46,10 @@
         <div class="remind-title">
           您有3位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
         </div>
-        <mt-loadmore style="overflow:auto" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
-          <ul class="remind-content">
-            <li class="friend" v-for="(value,key) in loginUsers" :key="key">
+        <!-- <div> -->
+        <mt-loadmore class="loadmore" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomDistance="bottomDistance" ref="loadmore">
+          <div class="remind-content" v-if="loginUsers.length > 0">
+            <div class="friend" v-for="(value,key) in loginUsers" :key="key">
               <img src="../assets/images/timeline.png" class="headphoto">
               <div class="info">
                 <div class="name">{{value.inviteeUser.fullname}}</div>
@@ -59,9 +60,11 @@
                 <img src="../assets/images/reminded.png" v-if="value.reminded" class="action">
                 <img src="../assets/images/remind-login.png" @click="remind(value.inviteeUser.objectID)" v-else class="action">
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </mt-loadmore>
+        <!-- </div> -->
+  
   
       </div>
     </div>
@@ -90,6 +93,8 @@
     },
     data() {
       return {
+        bottomDistance: 100,
+        bottomLoadingText: '加载中',
         redbagVisiable: false,
         allLoaded: false,
         inviteUsers: [],
@@ -112,9 +117,15 @@
           data
         } = await this.getInviteUserList();
         this.loginUsers = data;
+        console.log('11111----loginusers', this.loginUsers)
   
       }
     },
+    //     created() {
+    //       document.body.addEventListener('touchmove', function(e) { 
+    //     e.preventDefault(); 
+    // });
+    // },
     computed: {
       ...mapState("pullNew", {
         pullNewStatic: state => state.pullNewStatic,
@@ -190,39 +201,36 @@
 <style lang="less" scoped>
   .pullnew {
     background: url("../assets/images/bg.png") no-repeat center;
-    width: 750pr;
     height: 1680pr;
     background-size: cover;
-    position: absolute;
-    top: 0;
+    padding-top: 126pr;
     .rule-button {
       background: url("../assets/images/rule-button.png") no-repeat center;
       width: 176pr;
       height: 70pr;
       background-size: cover;
-      position: absolute;
-      right: 0;
-      top: 60pr;
       padding: 10pr 0 0 27pr;
-      font-size: 32pr;
+      font-size: 30pr;
       color: #ffffff;
+      float: right;
+      margin-top: -70pr;
     }
     .title {
       background: url("../assets/images/title.png") no-repeat center;
       width: 464pr;
       height: 83pr;
-      margin: 126pr 142pr 24pr 142pr;
+      margin: 0 auto;
       background-size: cover;
     }
     .share-button {
       background: url("../assets/images/share-button.png") no-repeat center;
       width: 341pr;
       height: 109pr;
-      margin: 0 199pr 14pr 208pr;
+      margin: 24px auto 14pr auto;
       background-size: cover;
     }
     .content {
-      width: 710pr;
+      position: relative;
       height: 673pr;
       border: 6pr solid #000000;
       background: #ffffff;
@@ -235,8 +243,8 @@
         width: 50pr;
         height: 70pr;
         position: absolute;
-        left: 45pr;
-        top: 381pr;
+        left: 28pr;
+        top: 25pr;
       }
       .right-top-icon {
         background: url("../assets/images/icon2.png") no-repeat center;
@@ -244,8 +252,8 @@
         width: 50pr;
         height: 70pr;
         position: absolute;
-        right: 48pr;
-        top: 381pr;
+        right: 28pr;
+        top: 25pr;
       }
       .left-bottom-icon {
         background: url("../assets/images/icon3.png") no-repeat center;
@@ -253,8 +261,8 @@
         width: 50pr;
         height: 70pr;
         position: absolute;
-        left: 45pr;
-        top: 952pr;
+        left: 28pr;
+        bottom: 9pr;
       }
       .right-bottom-icon {
         background: url("../assets/images/icon4.png") no-repeat center;
@@ -262,8 +270,8 @@
         width: 50pr;
         height: 70pr;
         position: absolute;
-        right: 48pr;
-        top: 952pr;
+        right: 28pr;
+        bottom: 9pr;
       }
       .content-title {
         font-size: 36pr;
@@ -280,7 +288,7 @@
         background-size: cover;
         width: 668pr;
         height: 82pr;
-        margin: 0 21pr 18pr 21pr;
+        margin: 0 auto;
         display: flex;
         font-size: 16pr;
         flex-direction: row;
@@ -293,27 +301,21 @@
         }
         .icon1 {
           margin: 9pr 35pr 9pr 9pr;
-          // background-color: #dcdcdc
         }
         .icon2 {
           margin: 9pr 35pr 9pr 0;
-          // background-color: #dcdcdc
         }
         .icon3 {
           margin: 9pr 35pr 9pr 0;
-          // background-color: #dcdcdc
         }
         .icon4 {
           margin: 9pr 35pr 9pr 0;
-          // background-color: #dcdcdc
         }
         .icon5 {
           margin: 9pr 35pr 9pr 0;
-          // background-color: #dcdcdc
         }
         .icon6 {
           margin: 9pr 35pr 9pr 0;
-          // background-color: #dcdcdc
         }
         .icon7 {
           margin: 9pr 8pr 9pr 0;
@@ -330,22 +332,19 @@
         }
       }
       .progress-desc {
-        display: -webkit-box;
+        display: flex;
         flex-direction: row;
+        justify-content: center;
         color: #454545;
         font-size: 26pr;
-        margin: 18pr 38pr 0 39pr;
-        .progress-desc-text1 {
-          width: 50pr;
-          height: 50pr;
-          line-height: 50pr;
-          margin-right: 55pr;
+        margin: 18pr 21pr 40pr 21pr;
+        text-align: center;
+        >div {
+          width: 64pr;
+          margin-left: 35pr;
         }
-        .progress-desc-text {
-          width: 50pr;
-          height: 50pr;
-          line-height: 50pr;
-          margin-right: 48pr;
+        .progress-desc-text1 {
+          margin-left: 0;
         }
         .progress-ren {
           font-size: 20pr;
@@ -366,9 +365,10 @@
         }
       }
       .share {
-        margin: 23pr 92pr 38pr 90pr;
-        display: -webkit-box;
+        margin-top: 23pr;
+        display: flex;
         flex-direction: row;
+        justify-content: center;
         .timeline {
           background: url("../assets/images/timeline.png") no-repeat center;
           background-size: cover;
@@ -398,9 +398,10 @@
         }
       }
       .balance {
-        display: -webkit-box;
+        display: flex;
         flex-direction: row;
-        margin: 0 91pr 0 100pr;
+        justify-content: center;
+        margin-top: 60pr;
         .remain-money {
           color: #212121;
           font-size: 32pr;
@@ -411,6 +412,7 @@
           background-size: cover;
           width: 197pr;
           height: 78pr;
+          margin-left: 32pr;
         }
       }
     }
@@ -418,16 +420,12 @@
       background-color: #025182;
       padding-bottom: 48pr;
       .friends-list {
-        background-color: #DC214C;
-        width: 710pr;
         border: 6pr solid #000000;
         border-radius: 10pr;
         margin: 0 17pr 0 21pr;
-        overflow: scroll;
         .remind-title {
-          padding: 10pr 63pr 0 59pr;
           width: 100%;
-          height: 132pr;
+          padding: 24pr 63pr 27pr 59pr;
           background-color: #1570A9;
           border-bottom: 6pr solid #000000;
           border-radius: 10pr;
@@ -436,38 +434,46 @@
           line-height: 50pr;
           color: #ffffff;
         }
-        .remind-content {
-          padding: 53pr 0 0 0;
-          .friend {
-            margin: 0 18pr 0 23pr;
-            display: -webkit-box;
-            flex-direction: row;
-            margin-bottom: 25pr;
-            color: #ffffff;
-            .headphoto {
-              width: 87pr;
-              height: 87pr;
-              margin-right: 30pr;
-            }
-            .info {
+        .loadmore {
+          background-color: #DC214C;
+          overflow: scroll;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 83pr;
+          .remind-content {
+            .friend {
+              position: relative;
               display: flex;
-              flex-direction: column;
-              width: 300pr;
-              .name {
-                font-size: 28pr;
-                margin-right: 20pr;
+              flex-direction: row;
+              margin-top: 41pr;
+              height: 100pr;
+              color: #ffffff;
+              .headphoto {
+                width: 87pr;
+                height: 87pr;
+                margin-left: 23pr;
               }
-            }
-            .amount {
-              width: 225pr;
-              height: 96pr;
-              text-align: center;
-              font-size: 32pr;
-              margin-top: 25pr;
-            }
-            .action {
-              width: 225pr;
-              height: 96pr;
+              .info {
+                display: flex;
+                flex-direction: column;
+                margin-left: 20pr;
+                .name {
+                  font-size: 28pr;
+                  margin-right: 20pr;
+                }
+              }
+              .amount {
+                width: 225pr;
+                height: 96pr;
+                text-align: center;
+                font-size: 32pr;
+                margin-top: 25pr;
+              }
+              .action {
+                position: absolute;
+                width: 225pr;
+                height: 96pr;
+                right: 18pr;
+              }
             }
           }
         }
