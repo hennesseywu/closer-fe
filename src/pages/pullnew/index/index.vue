@@ -43,12 +43,12 @@
     </div>
     <div class="bottom">
       <div class="friends-list">
-        <div class="remind-title">
-          您有3位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
+        <div class="remind-title" v-if="loginCount > 0">
+          您有{{loginCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
         </div>
         <!-- <div> -->
-        <mt-loadmore class="loadmore" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomDistance="bottomDistance" ref="loadmore">
-          <div class="remind-content" v-if="loginUsers.length > 0">
+        <mt-loadmore class="loadmore"  v-if="loginUsers.length > 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance" ref="loadmore">
+          <div class="remind-content">
             <div class="friend" v-for="(value,key) in loginUsers" :key="key">
               <img src="../assets/images/timeline.png" class="headphoto">
               <div class="info">
@@ -93,12 +93,16 @@
     },
     data() {
       return {
-        bottomDistance: 100,
+        bottomDistance: 50,
+        bottomPullText: '上拉加载更多',
         bottomLoadingText: '加载中',
         redbagVisiable: false,
         allLoaded: false,
         inviteUsers: [],
-        loginUsers: []
+        loginUsers: [],
+        pagenum: 1,
+        pagesize: 0,
+        loginCount:null
       }
     },
     async mounted() {
@@ -119,18 +123,17 @@
         await this.getPullNewInfo();
         await this.getYesterdayAwardAmt();
         let {
-          data
+          data,
+          pagesize,
+          count
         } = await this.getInviteUserList();
-        this.loginUsers = data;
-        console.log('11111----loginusers', this.loginUsers)
+        this.loginCount = count;
   
+        this.loginUsers = data;
+        this.pagesize = pagesize;
+        console.log('11111----loginusers', this.loginUsers)
       }
     },
-    //     created() {
-    //       document.body.addEventListener('touchmove', function(e) { 
-    //     e.preventDefault(); 
-    // });
-    // },
     computed: {
       ...mapState("pullNew", {
         pullNewStatic: state => state.pullNewStatic,
@@ -142,9 +145,17 @@
       async loadBottom() {
         console.log("loading")
         // this.allLoaded = true;
+        pagenum++
         let {
-          data
-        } = await this.getInviteUserList();
+          data,
+          pagesize,
+          count
+        } = await this.getInviteUserList({
+          pagenum: this.pagenum
+        });
+        this.pagesize = pagesize;
+        this.loginCount = count;
+  
         console.log("data", data)
         for (var a in data) {
           this.loginUsers.push(data[a]);
@@ -440,8 +451,6 @@
         }
         .loadmore {
           background-color: #DC214C;
-          overflow: scroll;
-          -webkit-overflow-scrolling: touch;
           padding-bottom: 83pr;
           .remind-content {
             .friend {

@@ -150,7 +150,7 @@ export default {
             }
         },
         async getInviteUserList({ commit }, payload) {
-            // let { data } = await getInviteUserLoginPageList();
+            // let { data } = await getInviteUserLoginPageList(payload);
             let data = {
                 "result": {
                     "data": [
