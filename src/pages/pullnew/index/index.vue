@@ -53,7 +53,7 @@
               <img src="../assets/images/timeline.png" class="headphoto">
               <div class="info">
                 <div class="name">{{value.inviteeUser.fullname}}</div>
-                <div class="name">2018-07-25</div>
+                <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
               </div>
               <div class="amount" v-if="value.loginAmount">+0.2元</div>
               <div v-else>
@@ -79,6 +79,11 @@
   import {
     Loadmore
   } from 'mint-ui';
+
+  import {
+    dateFormat
+  } from "../../../utils/utils";
+  
   
   Vue.component(Loadmore.name, Loadmore);
   
@@ -195,6 +200,9 @@
             location.href = "closer_invite_guys_raise_cash";
           }
         }
+      },
+      formateDate(date){
+       return dateFormat(date)
       }
   
     }

@@ -85,3 +85,24 @@ export function px2px(v) {
     }
     return val;
 }
+
+/**
+ * yyyy-dd-mm
+ * 
+ */
+export function dateFormat(time) {
+    let d = new Date(time);
+    let year = d.getFullYear();
+    let month = d.getMonth() + 1;
+    let day = d.getDate();
+    let hours = d.getHours();
+    let minutes = d.getMinutes();
+    let second = d.getSeconds();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    return year + "-" + month + "-" + day;
+}
