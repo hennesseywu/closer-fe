@@ -101,11 +101,16 @@
         loginUsers: []
       }
     },
-    async beforeMount() {
+    async mounted() {
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
-          console.log("checkLogin res", res);
-  
+          console.log("checkLogin res");
+          await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
+          let {
+            data
+          } = await this.getInviteUserList();
+          this.loginUsers = data;
         })
       } else {
         // Cookies.set("GroukAuth", "1.cd29b035dff0af5a6d76738d9ffe4999483cf9b37d4be9a01b56d292aa70f832", {
@@ -176,14 +181,13 @@
         let ua = this.$store.state.UA;
         console.log("inviteFriends", ua)
         if (ua.indexOf("closer-ios") > -1) {
-          if (window.WebViewJavascriptBridge) {
-            this.$com.setupWebViewJavascriptBridge(function(bridge) {
-              bridge.callHandler("inviteUser", null);
-            });
-          } else {
-            // 兼容 老版本
-            location.href = "closer_invite_guys_raise_cash";
-          }
+          setupWebViewJavascriptBridge(function(bridge) {
+            console.log("toShare ios bridge", bridge)
+            if (bridge) {
+              //ios获取用户token 判断登录
+              bridge.callHandler("inviteUser", null, function(data, responseCallback) {})
+            }
+          })
         } else if (ua.indexOf("closer-android") > -1) {
           if (typeof window.bridge != "undefined") {
             window.bridge.inviteUser(null);
