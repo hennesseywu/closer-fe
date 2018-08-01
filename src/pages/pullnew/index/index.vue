@@ -10,7 +10,7 @@
       <div class="right-bottom-icon"></div>
       <div class="content-title">首次邀请好友即奖励10元现金</div>
       <div class="content-desc">之后每邀请1位奖励2元，如果您邀请了7位好友，那么第7位奖励您10元</div>
-      <div class="progress-bg" v-if="pullNewStatic.invitedUsers&&pullNewStatic.invitedUsers.length==0">
+      <!-- <div class="progress-bg" v-if="pullNewStatic.inviteUserTotalCount&&pullNewStatic.inviteUserTotalCount==0">
         <div class="progress icon1 grey"><span class="progress-text">2</span>元</div>
         <div class="progress icon2 grey"><span class="progress-text">10</span>元</div>
         <div class="progress icon3 grey"><span class="progress-text">10</span>元</div>
@@ -18,8 +18,8 @@
         <div class="progress icon5 grey"><span class="progress-text">10</span>元</div>
         <div class="progress icon6 grey"><span class="progress-text">10</span>元</div>
         <div class="progress icon7 grey"><span class="progress-text">10</span>元</div>
-      </div>
-      <div class="progress-bg" v-else>
+      </div> -->
+      <div class="progress-bg">
         <div v-for="(item,key,index) in pullNewStatic.invitedUsers" :key="key" :class="item.isGrey?'progress grey icon'+(index+1):'progress yellow icon'+(index+1)">
           <span class="progress-text">{{item.amount/100}}</span>元
         </div>
@@ -135,7 +135,7 @@
         })
       } else {
         // this.checkLogin(async(res) => {
-        //   console.log("checkLogin res");
+        //   console.log("checkLoginxxx res");
         //   await this.getPullNewInfo();
         //   let {
         //     data,
@@ -162,7 +162,6 @@
     methods: {
       ...mapActions("pullNew", ["checkLogin", "getInviteUserList", "getPullNewInfo", "remindLogin", "getYesterdayAwardAmt"]),
       async loadBottom() {
-        console.log("loading")
         if (this.pagenum == this.pagesize) {
           this.allLoaded = true;
           this.bottomPullText=""

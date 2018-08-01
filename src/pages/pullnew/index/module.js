@@ -10,7 +10,6 @@ export default {
     },
     mutations: {
         updatePullNewStatic(state, payload) {
-            console.log("updatePullNewStatic", payload)
             state.pullNewStatic = payload;
         },
         updateAwardAmt(state, payload) {
@@ -99,46 +98,92 @@ export default {
             }
         },
         async getPullNewInfo({ commit }, payload) {
-            let { data } = await getInviteStatistic();
+            // let { data } = await getInviteStatistic();
 
-            // let data = { "result": { "awardTotalAmt": 0, "inviteUserTotalCount": 2, "invitedUsers": [] }, "code": 0 }
-            // let data = { "result": { "awardTotalAmt": 0, "awardEnd": false, "inviteUserTotalCount": 0, "invitedUsers": [{ "amount": 200, "remindTime": 1532659481220, "create_time": 1531299414724, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576465247175075", "invitee": "9Bw5d2unBX" }, { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }], "todayNotLoginUserCount": 2 }, "code": 0 }
+            let data = {
+                "result": {
+                    "awardTotalAmt": 0,
+                    "awardEnd": true,
+                    "inviteUserTotalCount": 0,
+                    "invitedUsers": [
+                        // { "amount": 200, "remindTime": 1532659481220, "create_time": 1531299414724, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576465247175075", "invitee": "9Bw5d2unBX" },
+                        // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" },
+                        // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" },
+                        // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }
+                    ],
+                    "todayNotLoginUserCount": 2
+                },
+                "code": 0
+            }
             if (typeof(data.code) != "undefined" && data.code == 0) {
-                if (data.result.invitedUsers && data.result.invitedUsers.length < 8 && data.result.invitedUsers.length > 0) {
-                    let len = 7 - data.result.invitedUsers.length;
-                    let invitedUsers = {};
-                    let normalUsers = [];
-                    if (len > 2) {
-                        for (var j = 0; j < data.result.invitedUsers.length; j++) {
-                            invitedUsers[j + 1] = data.result.invitedUsers[j];
-                        }
-                        let userLen = Object.keys(invitedUsers).length
-                        for (var i = 1; i <= len; i++) {
-                            let key = userLen + i;
-                            if (key % 7 == 0) {
-                                invitedUsers[key] = { amount: 1000, isGrey: true }
+                // if (data.result.invitedUsers && data.result.invitedUsers.length < 8 && data.result.invitedUsers.length > 0) {
+                //     let len = 7 - data.result.invitedUsers.length;
+                //     let invitedUsers = {};
+                //     let normalUsers = [];
+                //     if (len > 2) {
+                //         for (var j = 0; j < data.result.invitedUsers.length; j++) {
+                //             invitedUsers[j + 1] = data.result.invitedUsers[j];
+                //         }
+                //         let userLen = Object.keys(invitedUsers).length
+                //         for (var i = 1; i <= len; i++) {
+                //             let key = userLen + i;
+                //             if (key % 7 == 0) {
+                //                 invitedUsers[key] = { amount: 1000, isGrey: true }
+                //             } else {
+                //                 invitedUsers[key] = { amount: 200, isGrey: true }
+                //             }
+                //         }
+                //     } else {
+                //         for (var j = data.result.invitedUsers.length - 4; j < data.result.invitedUsers.length; j++) {
+                //             invitedUsers[j + 1] = data.result.invitedUsers[j];
+                //         }
+                // for (var i = 0; i < 3; i++) {
+                //     let key = data.result.invitedUsers.length + 1 + i;
+                //     if (key % 7 == 0) {
+                //         invitedUsers[key] = { amount: 1000, isGrey: true }
+                //     } else {
+                //         invitedUsers[key] = { amount: 200, isGrey: true }
+                //     }
+                // }
+                // }
+                //     data.result.normalUsers = normalUsers;
+                //     data.result.invitedUsers = invitedUsers;
+                // }
+                if (typeof(data.result.inviteUserTotalCount) != "undefined") {
+                    let newUsers = {}
+                    let inviteUserTotalCount = data.result.inviteUserTotalCount;
+                    let invitedUsers = data.result.invitedUsers;
+                    if (inviteUserTotalCount < 4) {
+                        for (var i = 0; i < 7; i++) {
+                            if (invitedUsers[i]) {
+                                newUsers[i + 1] = invitedUsers[i];
                             } else {
-                                invitedUsers[key] = { amount: 200, isGrey: true }
+                                let amount = 200;
+                                if ((i + 1) % 7 == 0) {
+                                    amount = 1000;
+                                }
+                                newUsers[i + 1] = { amount: amount, isGrey: true }
                             }
                         }
                     } else {
-                        for (var j = data.result.invitedUsers.length - 4; j < data.result.invitedUsers.length; j++) {
-                            invitedUsers[j + 1] = data.result.invitedUsers[j];
-                        }
-                        for (var i = 0; i < 3; i++) {
-                            let key = data.result.invitedUsers.length + 1 + i;
-                            if (key % 7 == 0) {
-                                invitedUsers[key] = { amount: 1000, isGrey: true }
+                        for (var i = 0; i < 7; i++) {
+                            if (invitedUsers[i]) {
+                                newUsers[inviteUserTotalCount - 3 + i] = invitedUsers[i];
                             } else {
-                                invitedUsers[key] = { amount: 200, isGrey: true }
+                                let amount = 200;
+                                if ((inviteUserTotalCount - 3 + i) % 7 == 0) {
+                                    amount = 1000;
+                                }
+                                newUsers[inviteUserTotalCount - 3 + i] = { amount: amount, isGrey: true }
                             }
                         }
                     }
-                    data.result.normalUsers = normalUsers;
-                    data.result.invitedUsers = invitedUsers;
+                    console.log("newUsersxxx", newUsers)
+                    data.result.invitedUsers = newUsers;
+                    commit("updatePullNewStatic", data.result);
+                } else {
 
                 }
-                commit("updatePullNewStatic", data.result);
             }
         },
         async getYesterdayAwardAmt({ commit }, payload) {
@@ -178,7 +223,7 @@ export default {
             let { data } = await remindLogin(payload);
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 Toast("提醒成功喽~");
-                dispatch("getInviteUserList")
+                dispatch("getInviteUserList", { pagenum: 1 })
             }
         }
 
