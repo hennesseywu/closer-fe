@@ -37,7 +37,7 @@
         <div class="save-img" @click="toShare('inviteNewGuyActionSavePicture')"></div>
       </div>
       <div class="balance">
-        <div class="remain-money">奖金已到账 {{formateMoney(pullNewStatic.awardTotalAmt)}}元</div>
+        <div class="remain-money">奖金已到账 {{formateMoney(pullNewStatic.awardTotalAmt/100)}}元</div>
         <div class="drawing" @click="toShare('inviteNewGuyActionWithdraw')"></div>
       </div>
     </div>
@@ -133,24 +133,24 @@
           this.loginUsers = data;
         })
       } else {
-        // this.checkLogin(async(res) => {
-        //   console.log("checkLoginxxx res");
-        //   await this.getPullNewInfo();
-        //   await this.getYesterdayAwardAmt();
-        //   let {
-        //     data,
-        //     pagesize,
-        //     count
-        //   } = await this.getInviteUserList({
-        //     pagenum: this.pagenum
-        //   });
-        //   this.pagesize = pagesize;
-        //   this.loginCount = count;
-        //   this.loginUsers = data;
-        // })
-        this.$router.push({
-          name: "activityOver"
+        this.checkLogin(async(res) => {
+          console.log("checkLoginxxx res");
+          await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pagenum
+          });
+          this.pagesize = pagesize;
+          this.loginCount = count;
+          this.loginUsers = data;
         })
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
       }
     },
     computed: {
