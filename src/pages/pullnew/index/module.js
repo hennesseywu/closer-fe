@@ -22,40 +22,42 @@ export default {
             let ua = rootState.UA;
             console.log("checkLogin")
             if (ua.indexOf("closer-ios") > -1) {
-                setupWebViewJavascriptBridge(function(bridge) {
-                    console.log("ios bridge", bridge)
-                    if (bridge) {
-                        //ios获取用户token 判断登录
-                        bridge.callHandler("getUserToken", null, function(token, responseCallback) {
-                            console.log("ios token", token)
-                            if (token) {
-                                Cookies.set("GroukAuth", token, { expires: 30 });
-                                axios.post(api.admin.user_show).then(({ data }) => {
-                                    console.log("android", data.result);
-                                    if (data.result) {
-                                        Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
-                                        cb(true)
-                                    } else {
-                                        Cookies.remove('user'); //app端user完全依赖APP
-                                        Cookies.remove('GroukAuth'); //app端user完全依赖APP
-                                        cb();
-                                    }
-                                }).catch(err => {
-                                    Toast('网络开小差啦，请稍后再试')
-                                    return;
-                                })
-                            } else {
-                                console.log("ios jumpLogin")
-                                Cookies.remove('user'); //app端user完全依赖APP
-                                Cookies.remove('GroukAuth'); //app端user完全依赖APP
-                                setupWebViewJavascriptBridge(function(bridge) {
-                                    bridge.callHandler("jumpLogin", null);
-                                });
-                                cb();
-                            }
-                        });
-                    }
-                })
+                setTimeout(() => {
+                    setupWebViewJavascriptBridge(function(bridge) {
+                        console.log("ios bridge", bridge)
+                        if (bridge) {
+                            //ios获取用户token 判断登录
+                            bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+                                console.log("ios token", token)
+                                if (token) {
+                                    Cookies.set("GroukAuth", token, { expires: 30 });
+                                    axios.post(api.admin.user_show).then(({ data }) => {
+                                        console.log("android", data.result);
+                                        if (data.result) {
+                                            Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
+                                            cb(true)
+                                        } else {
+                                            Cookies.remove('user'); //app端user完全依赖APP
+                                            Cookies.remove('GroukAuth'); //app端user完全依赖APP
+                                            cb();
+                                        }
+                                    }).catch(err => {
+                                        Toast('网络开小差啦，请稍后再试')
+                                        return;
+                                    })
+                                } else {
+                                    console.log("ios jumpLogin")
+                                    Cookies.remove('user'); //app端user完全依赖APP
+                                    Cookies.remove('GroukAuth'); //app端user完全依赖APP
+                                    setupWebViewJavascriptBridge(function(bridge) {
+                                        bridge.callHandler("jumpLogin", null);
+                                    });
+                                    cb();
+                                }
+                            });
+                        }
+                    })
+                }, 500)
             } else if (ua.indexOf("closer-android") > -1) {
                 console.log("closer-android")
                 console.log("module android", typeof window.bridge != "undefined")

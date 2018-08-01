@@ -2,7 +2,7 @@
   <mt-popup v-model="popupVisible"  class="red-bag">
     <div class="money"><span class="num">{{amount}}</span><span class="txt">元</span></div>
     <div class="own-money-yesterday">昨日现金收入</div>
-    <div class="get-money"></div>
+    <div class="get-money" @click="close"></div>
     <div class="close-bag" @click="close"></div>
   </mt-popup>
 </template>

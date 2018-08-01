@@ -142,9 +142,9 @@
         //   this.loginUsers = data;
           
         // })
-        this.$router.push({
-          name: "activityOver"
-        })
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
       }
     },
     computed: {
