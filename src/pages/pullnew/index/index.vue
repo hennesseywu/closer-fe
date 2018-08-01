@@ -11,14 +11,14 @@
       <div class="content-title">首次邀请好友即奖励10元现金</div>
       <div class="content-desc">之后每邀请1位奖励2元，如果您邀请了7位好友，那么第7位奖励您10元</div>
       <!-- <div class="progress-bg" v-if="pullNewStatic.inviteUserTotalCount&&pullNewStatic.inviteUserTotalCount==0">
-        <div class="progress icon1 grey"><span class="progress-text">2</span>元</div>
-        <div class="progress icon2 grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon3 grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon4 grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon5 grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon6 grey"><span class="progress-text">10</span>元</div>
-        <div class="progress icon7 grey"><span class="progress-text">10</span>元</div>
-      </div> -->
+            <div class="progress icon1 grey"><span class="progress-text">2</span>元</div>
+            <div class="progress icon2 grey"><span class="progress-text">10</span>元</div>
+            <div class="progress icon3 grey"><span class="progress-text">10</span>元</div>
+            <div class="progress icon4 grey"><span class="progress-text">10</span>元</div>
+            <div class="progress icon5 grey"><span class="progress-text">10</span>元</div>
+            <div class="progress icon6 grey"><span class="progress-text">10</span>元</div>
+            <div class="progress icon7 grey"><span class="progress-text">10</span>元</div>
+          </div> -->
       <div class="progress-bg">
         <div v-for="(item,key,index) in pullNewStatic.invitedUsers" :key="key" :class="item.isGrey?'progress grey icon'+(index+1):'progress yellow icon'+(index+1)">
           <span class="progress-text">{{item.amount/100}}</span>元
@@ -45,16 +45,15 @@
       <div class="friends-list">
         <div v-if="pullNewStatic.inviteUserTotalCount > 0">
           <div class="remind-title" v-if="pullNewStatic.awardEnd">
-          已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧
-        </div>
-        <div class="remind-title" v-else >
-          您有{{pullNewStatic.todayNotLoginUserCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
-        </div>
+            已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧
+          </div>
+          <div class="remind-title" v-else>
+            您有{{pullNewStatic.todayNotLoginUserCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
+          </div>
         </div>
         <div class="remind-title" v-else>
           您还没有好友哦，快去邀请好友赚钱吧！
         </div>
-        <!-- <div> -->
         <mt-loadmore class="loadmore" v-if="loginUsers.length > 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance" ref="loadmore">
           <div class="remind-content">
             <div class="friend" v-for="(value,key) in loginUsers" :key="key">
@@ -64,16 +63,10 @@
                 <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
               </div>
               <div class="amount" v-if="value.loginAmount">+0.2元</div>
-              <div v-else>
-                <img src="../assets/images/reminded.png" v-if="value.reminded" class="action">
-                <img src="../assets/images/remind-login.png" @click="remind(value.inviteeUser.objectID)" v-else class="action">
-              </div>
+              <div v-else :class="value.reminded ? 'reminded':'remind-login'"  @click="remind(value.inviteeUser.objectID,value.reminded)"></div>
             </div>
           </div>
         </mt-loadmore>
-        <!-- </div> -->
-  
-  
       </div>
     </div>
     <Redbag v-if="awardAmt>0" :amount="awardAmt"></Redbag>
@@ -84,7 +77,7 @@
   import Vue from "vue";
   import Redbag from "../components/redbag";
   import {
-    Loadmore
+    Loadmore,Toast
   } from 'mint-ui';
   
   import {
@@ -134,23 +127,23 @@
           this.loginUsers = data;
         })
       } else {
-        // this.checkLogin(async(res) => {
-        //   console.log("checkLoginxxx res");
-        //   await this.getPullNewInfo();
-        //   let {
-        //     data,
-        //     pagesize,
-        //     count
-        //   } = await this.getInviteUserList({
-        //     pagenum: this.pagenum
-        //   });
-        //   this.pagesize = pagesize;
-        //   this.loginCount = count;
-        //   this.loginUsers = data;
-        // })
-        this.$router.push({
-          name: "activityOver"
+        this.checkLogin(async(res) => {
+          console.log("checkLoginxxx res");
+          await this.getPullNewInfo();
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pagenum
+          });
+          this.pagesize = pagesize;
+          this.loginCount = count;
+          this.loginUsers = data;
         })
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
       }
     },
     computed: {
@@ -164,7 +157,7 @@
       async loadBottom() {
         if (this.pagenum == this.pagesize) {
           this.allLoaded = true;
-          this.bottomPullText=""
+          this.bottomPullText = ""
           return;
         }
         this.pagenum++;
@@ -185,13 +178,29 @@
         console.log(this.pagenum, "----", this.pagesize)
         if (this.pagenum == this.pagesize) {
           this.allLoaded = true;
-          this.bottomPullText=""
+          this.bottomPullText = ""
         }
       },
-      remind(invitee) {
-        this.remindLogin({
+    async  remind(invitee,reminded) {
+      if(reminded){
+        Toast("已经提醒过啦~")
+        return;
+      }
+       let backData=await this.remindLogin({
           invitee: invitee
         });
+        if(backData){
+            let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pagenum
+          });
+          this.pagesize = pagesize;
+          this.loginCount = count;
+          this.loginUsers = data;
+        }
       },
       toShare(type) {
         console.log("toShare", type)
@@ -509,11 +518,21 @@
                 font-size: 32pr;
                 margin-top: 25pr;
               }
-              .action {
+              .reminded {
                 position: absolute;
                 width: 225pr;
                 height: 96pr;
                 right: 18pr;
+                background: url("../assets/images/reminded.png") no-repeat center;
+                background-size: cover;
+              }
+              .remind-login {
+                position: absolute;
+                width: 225pr;
+                height: 96pr;
+                right: 18pr;
+                background: url("../assets/images/remind-login.png") no-repeat center;
+                background-size: cover;
               }
             }
           }

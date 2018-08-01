@@ -98,23 +98,23 @@ export default {
             }
         },
         async getPullNewInfo({ commit }, payload) {
-            // let { data } = await getInviteStatistic();
+            let { data } = await getInviteStatistic();
 
-            let data = {
-                "result": {
-                    "awardTotalAmt": 0,
-                    "awardEnd": true,
-                    "inviteUserTotalCount": 0,
-                    "invitedUsers": [
-                        // { "amount": 200, "remindTime": 1532659481220, "create_time": 1531299414724, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576465247175075", "invitee": "9Bw5d2unBX" },
-                        // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" },
-                        // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" },
-                        // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }
-                    ],
-                    "todayNotLoginUserCount": 2
-                },
-                "code": 0
-            }
+            // let data = {
+            //     "result": {
+            //         "awardTotalAmt": 0,
+            //         "awardEnd": true,
+            //         "inviteUserTotalCount": 0,
+            //         "invitedUsers": [
+            //             // { "amount": 200, "remindTime": 1532659481220, "create_time": 1531299414724, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576465247175075", "invitee": "9Bw5d2unBX" },
+            //             // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" },
+            //             // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" },
+            //             // { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }
+            //         ],
+            //         "todayNotLoginUserCount": 2
+            //     },
+            //     "code": 0
+            // }
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 // if (data.result.invitedUsers && data.result.invitedUsers.length < 8 && data.result.invitedUsers.length > 0) {
                 //     let len = 7 - data.result.invitedUsers.length;
@@ -223,7 +223,7 @@ export default {
             let { data } = await remindLogin(payload);
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 Toast("提醒成功喽~");
-                dispatch("getInviteUserList", { pagenum: 1 })
+                return true;
             }
         }
 
