@@ -1,5 +1,8 @@
 <template>
   <div class="rule">
+    <div class="back" @click="back">
+      <span class="arrow"></span>返回
+    </div>
     <div class="rule-title">
       <span class="rule-text">贴近奖励金发放和提取规则</span>
     </div>
@@ -55,20 +58,37 @@
 
 <script>
   export default {
-  
+    methods:{
+      back(){
+        this.$router.push({name:"pullNew"})
+      }
+    }
   }
 </script>
 
 <style lang="less" scoped>
   .rule {
     background: url("../assets/images/bg.png") no-repeat center;
-    width: 750pr;
-    height: 1680pr;
     background-size: cover;
-    position: absolute;
-    top: 0;
+    height: 2776pr;
+    padding-top: 76pr;
+    .back {
+      margin-left: 40pr;
+      color: #ffffff;
+      width: 120pr;
+      .arrow:after {
+        content: '';
+        display: inline-block;
+        width: 24pr;
+        height: 24pr;
+        border-top: 3pr solid #ffffff;
+        border-right: 3pr solid #ffffff;
+        transform: rotate(225deg);
+        -webkit-transform: rotate(225deg);
+      }
+    }
     .rule-title {
-      margin: 167pr 60pr 77pr 60pr;
+      margin: 58pr 60pr 77pr 60pr;
       height: 1px;
       border-top: 1px solid #FCF2EE;
       text-align: center;
@@ -88,6 +108,7 @@
     .rule-content {
       background: #025182;
       padding-bottom: 54pr;
+      position: relative;
       .left-top-icon {
         background: url("../assets/images/icon2.png") no-repeat center;
         background-size: cover;
@@ -95,7 +116,7 @@
         height: 52pr;
         position: absolute;
         left: 46pr;
-        top: 271pr;
+        top: 10pr;
       }
       .right-top-icon {
         background: url("../assets/images/icon2.png") no-repeat center;
@@ -104,7 +125,7 @@
         width: 44pr;
         height: 52pr;
         right: 46pr;
-        top: 271pr;
+        top: 10pr;
       }
       .left-bottom-icon {
         background: url("../assets/images/icon3.png") no-repeat center;
@@ -113,7 +134,7 @@
         height: 52pr;
         position: absolute;
         left: 46pr;
-        top: 2617pr;
+        bottom: 70pr;
       }
       .right-bottom-icon {
         background: url("../assets/images/icon4.png") no-repeat center;
@@ -122,7 +143,7 @@
         height: 52pr;
         position: absolute;
         right: 46pr;
-        top: 2617pr;
+        bottom: 70pr;
       }
       .rule-text {
         width: 710pr;
