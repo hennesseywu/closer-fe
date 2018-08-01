@@ -43,10 +43,15 @@
     </div>
     <div class="bottom">
       <div class="friends-list">
-        <div class="remind-title" v-if="loginCount > 0">
-          您有{{loginCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
+        <div v-if="pullNewStatic.inviteUserTotalCount > 0">
+          <div class="remind-title" v-if="pullNewStatic.awardEnd">
+          已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧
         </div>
-        <div class="remind-title" v-if="loginCount == 0">
+        <div class="remind-title" v-else >
+          您有{{pullNewStatic.todayNotLoginUserCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
+        </div>
+        </div>
+        <div class="remind-title" v-else>
           您还没有好友哦，快去邀请好友赚钱吧！
         </div>
         <!-- <div> -->
@@ -129,23 +134,23 @@
           this.loginUsers = data;
         })
       } else {
-        this.checkLogin(async(res) => {
-          console.log("checkLogin res");
-          await this.getPullNewInfo();
-          let {
-            data,
-            pagesize,
-            count
-          } = await this.getInviteUserList({
-            pagenum: this.pagenum
-          });
-          this.pagesize = pagesize;
-          this.loginCount = count;
-          this.loginUsers = data;
-        })
-        // this.$router.push({
-        //   name: "activityOver"
+        // this.checkLogin(async(res) => {
+        //   console.log("checkLogin res");
+        //   await this.getPullNewInfo();
+        //   let {
+        //     data,
+        //     pagesize,
+        //     count
+        //   } = await this.getInviteUserList({
+        //     pagenum: this.pagenum
+        //   });
+        //   this.pagesize = pagesize;
+        //   this.loginCount = count;
+        //   this.loginUsers = data;
         // })
+        this.$router.push({
+          name: "activityOver"
+        })
       }
     },
     computed: {

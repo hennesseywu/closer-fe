@@ -100,8 +100,9 @@ export default {
         },
         async getPullNewInfo({ commit }, payload) {
             let { data } = await getInviteStatistic();
+
             // let data = { "result": { "awardTotalAmt": 0, "inviteUserTotalCount": 2, "invitedUsers": [] }, "code": 0 }
-            // let data = { "result": { "awardTotalAmt": 0, "inviteUserTotalCount": 2, "invitedUsers": [{ "amount": 200, "remindTime": 0, "create_time": 1531299414724, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576465247175075", "invitee": "9Bw5d2unBX" }, { "amount": 1000, "remindTime": 0, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }] }, "code": 0 }
+            // let data = { "result": { "awardTotalAmt": 0, "awardEnd": false, "inviteUserTotalCount": 0, "invitedUsers": [{ "amount": 200, "remindTime": 1532659481220, "create_time": 1531299414724, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576465247175075", "invitee": "9Bw5d2unBX" }, { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }], "todayNotLoginUserCount": 2 }, "code": 0 }
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 if (data.result.invitedUsers && data.result.invitedUsers.length < 8 && data.result.invitedUsers.length > 0) {
                     let len = 7 - data.result.invitedUsers.length;
