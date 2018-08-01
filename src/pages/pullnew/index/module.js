@@ -159,7 +159,7 @@ export default {
                                 newUsers[i + 1] = invitedUsers[i];
                             } else {
                                 let amount = 200;
-                                if ((i + 1) % 7 == 0) {
+                                if ((i + 1) % 7 == 0 || i == 0) {
                                     amount = 1000;
                                 }
                                 newUsers[i + 1] = { amount: amount, isGrey: true }
