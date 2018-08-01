@@ -14,7 +14,7 @@ import Vconsole from 'vconsole';
 import MobileDetect from 'mobile-detect';
 import wx from 'weixin-js-sdk';
 
-if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /10.3.0.18/.test(window.location.href)) {
+if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /10.3.0.107/.test(window.location.href)) {
     const vconsole = new Vconsole()
     store.state.IS_DEV = true
     Cookies.set("IS_DEV", true, { expires: 1 });

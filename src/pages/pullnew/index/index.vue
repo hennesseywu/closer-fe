@@ -48,7 +48,7 @@
         <mt-loadmore class="loadmore" v-if="loginUsers.length > 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance" ref="loadmore">
           <div class="remind-content">
             <div class="friend" v-for="(value,key) in loginUsers" :key="key">
-              <img src="../assets/images/timeline.png" class="headphoto">
+              <img :src="value.inviteeUser.avatar" class="headphoto">
               <div class="info">
                 <div class="name">{{value.inviteeUser.fullname}}</div>
                 <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
@@ -127,8 +127,8 @@
       } else {
         // this.checkLogin(async(res) => {
         //   console.log("checkLoginxxx res");
-        //   await this.getPullNewInfo();
-        //   await this.getYesterdayAwardAmt();
+        //   // await this.getPullNewInfo();
+        //   // await this.getYesterdayAwardAmt();
         //   let {
         //     data,
         //     pagesize,
@@ -142,9 +142,9 @@
         //   this.loginUsers = data;
           
         // })
-        // this.$router.push({
-        //   name: "activityOver"
-        // })
+        this.$router.push({
+          name: "activityOver"
+        })
       }
     },
     computed: {
@@ -512,6 +512,7 @@
                 margin-left: 23pr;
               }
               .info {
+                width: 300pr;
                 display: flex;
                 flex-direction: column;
                 margin-left: 20pr;
