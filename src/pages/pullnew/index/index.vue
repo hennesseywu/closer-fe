@@ -11,14 +11,14 @@
       <div class="content-title">首次邀请好友即奖励10元现金</div>
       <div class="content-desc">之后每邀请1位奖励2元，如果您邀请了7位好友，那么第7位奖励您10元</div>
       <!-- <div class="progress-bg" v-if="pullNewStatic.inviteUserTotalCount&&pullNewStatic.inviteUserTotalCount==0">
-            <div class="progress icon1 grey"><span class="progress-text">2</span>元</div>
-            <div class="progress icon2 grey"><span class="progress-text">10</span>元</div>
-            <div class="progress icon3 grey"><span class="progress-text">10</span>元</div>
-            <div class="progress icon4 grey"><span class="progress-text">10</span>元</div>
-            <div class="progress icon5 grey"><span class="progress-text">10</span>元</div>
-            <div class="progress icon6 grey"><span class="progress-text">10</span>元</div>
-            <div class="progress icon7 grey"><span class="progress-text">10</span>元</div>
-          </div> -->
+              <div class="progress icon1 grey"><span class="progress-text">2</span>元</div>
+              <div class="progress icon2 grey"><span class="progress-text">10</span>元</div>
+              <div class="progress icon3 grey"><span class="progress-text">10</span>元</div>
+              <div class="progress icon4 grey"><span class="progress-text">10</span>元</div>
+              <div class="progress icon5 grey"><span class="progress-text">10</span>元</div>
+              <div class="progress icon6 grey"><span class="progress-text">10</span>元</div>
+              <div class="progress icon7 grey"><span class="progress-text">10</span>元</div>
+            </div> -->
       <div class="progress-bg">
         <div v-for="(item,key,index) in pullNewStatic.invitedUsers" :key="key" :class="item.isGrey?'progress grey icon'+(index+1):'progress yellow icon'+(index+1)">
           <span class="progress-text">{{item.amount/100}}</span>元
@@ -37,7 +37,7 @@
         <div class="save-img" @click="toShare('inviteNewGuyActionSavePicture')"></div>
       </div>
       <div class="balance">
-        <div class="remain-money">奖金已到账 {{pullNewStatic.awardTotalAmt}}元</div>
+        <div class="remain-money">奖金已到账 {{formateMoney(pullNewStatic.awardTotalAmt)}}元</div>
         <div class="drawing" @click="toShare('inviteNewGuyActionWithdraw')"></div>
       </div>
     </div>
@@ -63,13 +63,13 @@
                 <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
               </div>
               <div class="amount" v-if="value.loginAmount">+0.2元</div>
-              <div v-else :class="value.reminded ? 'reminded':'remind-login'"  @click="remind(value.inviteeUser.objectID,value.reminded)"></div>
+              <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded)"></div>
             </div>
           </div>
         </mt-loadmore>
       </div>
     </div>
-    <Redbag v-if="awardAmt>0" :amount="awardAmt"></Redbag>
+    <Redbag v-if="awardAmt>0" :amount="formateMoney(awardAmt)"></Redbag>
   </div>
 </template>
 
@@ -77,7 +77,8 @@
   import Vue from "vue";
   import Redbag from "../components/redbag";
   import {
-    Loadmore,Toast
+    Loadmore,
+    Toast
   } from 'mint-ui';
   
   import {
@@ -86,7 +87,6 @@
   
   
   Vue.component(Loadmore.name, Loadmore);
-  
   import {
     mapActions,
     mapState
@@ -107,14 +107,17 @@
         loginUsers: [],
         pagenum: 1,
         pagesize: 0,
-        loginCount: null
+        loginCount: null,
+        isLogin: false
       }
     },
     async mounted() {
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
           console.log("checkLogin res");
+          this.isLogin = true;
           await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
           let {
             data,
             pagesize,
@@ -122,6 +125,7 @@
           } = await this.getInviteUserList({
             pagenum: this.pagenum
           });
+  
           this.pagesize = pagesize;
           this.loginCount = count;
           this.loginUsers = data;
@@ -130,6 +134,7 @@
         this.checkLogin(async(res) => {
           console.log("checkLoginxxx res");
           await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
           let {
             data,
             pagesize,
@@ -181,16 +186,16 @@
           this.bottomPullText = ""
         }
       },
-    async  remind(invitee,reminded) {
-      if(reminded){
-        Toast("已经提醒过啦~")
-        return;
-      }
-       let backData=await this.remindLogin({
+      async remind(invitee, reminded) {
+        if (reminded) {
+          Toast("已经提醒过啦~")
+          return;
+        }
+        let backData = await this.remindLogin({
           invitee: invitee
         });
-        if(backData){
-            let {
+        if (backData) {
+          let {
             data,
             pagesize,
             count
@@ -203,6 +208,10 @@
         }
       },
       toShare(type) {
+        if (!this.isLogin) {
+          this.checkLogin(async(res) => {})
+          return;
+        }
         console.log("toShare", type)
         let ua = this.$store.state.UA;
         console.log("ua", ua);
@@ -223,6 +232,10 @@
   
       },
       inviteFriends() {
+        if (!this.isLogin) {
+          this.checkLogin(async(res) => {})
+          return;
+        }
         let ua = this.$store.state.UA;
         console.log("inviteFriends", ua)
         if (ua.indexOf("closer-ios") > -1) {
@@ -243,7 +256,11 @@
       },
       formateDate(date) {
         return dateFormat(date)
+      },
+      formateMoney(money) {
+        return (Math.round(money * 100) / 100).toFixed(2)
       }
+  
   
     }
   

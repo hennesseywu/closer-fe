@@ -13,6 +13,7 @@ export default {
             state.pullNewStatic = payload;
         },
         updateAwardAmt(state, payload) {
+            console.log("warit")
             state.awardAmt = payload;
         }
     },

@@ -1,6 +1,6 @@
 <template>
   <mt-popup v-model="popupVisible"  class="red-bag">
-    <div class="money"><span class="num">{{(Math.round(amount*100)/100).toFixed(2)}}</span><span class="txt">元</span></div>
+    <div class="money"><span class="num">{{amount}}</span><span class="txt">元</span></div>
     <div class="own-money-yesterday">昨日现金收入</div>
     <div class="get-money"></div>
     <div class="close-bag"></div>
