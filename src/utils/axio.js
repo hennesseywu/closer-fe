@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import feConfig from '../utils/api';
 import Store from '../store'
@@ -42,18 +43,18 @@ axio.interceptors.request.use(
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
 
-        // Indicator.open()
+        Indicator.open()
         return config;
 
     },
     err => {
-        // Indicator.close()
+        Indicator.close()
         return Promise.reject(err).catch(err);
     });
 // http response 拦截器 
 axio.interceptors.response.use(
     response => {
-        // Indicator.close()
+        Indicator.close()
         return response;
     },
     (err) => {
@@ -116,7 +117,7 @@ axio.interceptors.response.use(
         } else {
             console.warn(err.message)
         }
-        // Indicator.close()
+        Indicator.close()
         return Promise.reject(err).catch(err)
     });
 export default axio
