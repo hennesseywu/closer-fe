@@ -464,14 +464,13 @@
         .remain-money {
           color: #212121;
           font-size: 32pr;
-          margin: 15pr 32pr 0 0;
+          margin: 15pr 20pr 0 0;
         }
         .drawing {
           background: url("../assets/images/drawing.png") no-repeat center;
           background-size: cover;
           width: 197pr;
           height: 78pr;
-          margin-left: 32pr;
         }
       }
     }
