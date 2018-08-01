@@ -141,7 +141,7 @@
         //   this.pagesize = pagesize;
         //   this.loginCount = count;
         //   this.loginUsers = data;
-          
+  
         // })
         this.$router.push({
           name: "activityOver"
@@ -157,6 +157,7 @@
     methods: {
       ...mapActions("pullNew", ["checkLogin", "getInviteUserList", "getPullNewInfo", "remindLogin", "getYesterdayAwardAmt"]),
       async loadBottom() {
+         Indicator.open();
         if (this.pagenum == this.pagesize) {
           this.allLoaded = true;
           this.bottomPullText = ""
@@ -182,8 +183,10 @@
           this.allLoaded = true;
           this.bottomPullText = ""
         }
+         Indicator.close();
       },
       async remind(invitee, reminded) {
+        Indicator.open();
         if (reminded) {
           Toast("已经提醒过啦~")
           return;
@@ -203,6 +206,8 @@
           this.loginCount = count;
           this.loginUsers = data;
         }
+        Indicator.close();
+  
       },
       toShare(type) {
         if (!this.isLogin) {
