@@ -209,7 +209,9 @@
       },
       toShare(type) {
         if (!this.isLogin) {
-          this.checkLogin(async(res) => {})
+          console.log("toLogin")
+          this.checkLogin(async(res) => {
+          })
           return;
         }
         console.log("toShare", type)
@@ -233,6 +235,7 @@
       },
       inviteFriends() {
         if (!this.isLogin) {
+          console.log("toLogin")
           this.checkLogin(async(res) => {})
           return;
         }

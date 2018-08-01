@@ -23,12 +23,7 @@ export default {
             console.log("checkLogin")
             axios.post(api.admin.user_show).then(({ data }) => {
                 console.log("ios", data.result);
-                if (data.result) {
-                    Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
-                    cb(true)
-                } else {
-                    cb();
-                }
+                cb();
             }).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
@@ -42,20 +37,7 @@ export default {
                             bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                                 console.log("ios token", token)
                                 if (token) {
-                                    Cookies.set("GroukAuth", token, { expires: 30 });
-                                    // setTimeout(() => {
-                                    axios.post(api.admin.user_show).then(({ data }) => {
-                                        console.log("ios", data.result);
-                                        if (data.result) {
-                                            Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
-                                            cb(true)
-                                        } else {
-                                            cb();
-                                        }
-                                    }).catch(err => {
-                                        Toast('网络开小差啦，请稍后再试')
-                                        return;
-                                    })
+                                    cb();
                                 } else {
                                     console.log("ios jumpLogin")
                                     setupWebViewJavascriptBridge(function(bridge) {
