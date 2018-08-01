@@ -21,13 +21,6 @@ export default {
         checkLogin({ state, rootState }, cb) {
             let ua = rootState.UA;
             console.log("checkLogin")
-            axios.post(api.admin.user_show).then(({ data }) => {
-                console.log("ios", data.result);
-                cb();
-            }).catch(err => {
-                Toast('网络开小差啦，请稍后再试')
-                return;
-            })
             if (ua.indexOf("closer-ios") > -1) {
                 setTimeout(() => {
                     setupWebViewJavascriptBridge(function(bridge) {
@@ -37,13 +30,29 @@ export default {
                             bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                                 console.log("ios token", token)
                                 if (token) {
-                                    cb(true);
+                                    Cookies.set("GroukAuth", token, { expires: 30 });
+                                    axios.post(api.admin.user_show).then(({ data }) => {
+                                        console.log("android", data.result);
+                                        if (data.result) {
+                                            Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
+                                            cb(true)
+                                        } else {
+                                            Cookies.remove('user'); //app端user完全依赖APP
+                                            Cookies.remove('GroukAuth'); //app端user完全依赖APP
+                                            cb();
+                                        }
+                                    }).catch(err => {
+                                        Toast('网络开小差啦，请稍后再试')
+                                        return;
+                                    })
                                 } else {
                                     console.log("ios jumpLogin")
+                                    Cookies.remove('user'); //app端user完全依赖APP
+                                    Cookies.remove('GroukAuth'); //app端user完全依赖APP
                                     setupWebViewJavascriptBridge(function(bridge) {
                                         bridge.callHandler("jumpLogin", null);
                                     });
-                                    cb(false);
+                                    cb();
                                 }
                             });
                         }
@@ -64,7 +73,9 @@ export default {
                                 Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
                                 cb(true)
                             } else {
-                                cb(false);
+                                Cookies.remove('user'); //app端user完全依赖APP
+                                Cookies.remove('GroukAuth'); //app端user完全依赖APP
+                                cb();
                             }
                         }).catch(err => {
                             Toast('网络开小差啦，请稍后再试')
@@ -72,8 +83,10 @@ export default {
                         })
                     } else {
                         console.log("android jumpLogin")
+                        Cookies.remove('user'); //app端user完全依赖APP
+                        Cookies.remove('GroukAuth'); //app端user完全依赖APP
                         window.bridge.jumpLogin(null);
-                        cb(false);
+                        cb()
                     }
                 }
             } else {
