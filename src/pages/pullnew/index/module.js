@@ -37,13 +37,13 @@ export default {
                             bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                                 console.log("ios token", token)
                                 if (token) {
-                                    cb();
+                                    cb(true);
                                 } else {
                                     console.log("ios jumpLogin")
                                     setupWebViewJavascriptBridge(function(bridge) {
                                         bridge.callHandler("jumpLogin", null);
                                     });
-                                    cb();
+                                    cb(false);
                                 }
                             });
                         }
@@ -64,7 +64,7 @@ export default {
                                 Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
                                 cb(true)
                             } else {
-                                cb();
+                                cb(false);
                             }
                         }).catch(err => {
                             Toast('网络开小差啦，请稍后再试')
@@ -73,7 +73,7 @@ export default {
                     } else {
                         console.log("android jumpLogin")
                         window.bridge.jumpLogin(null);
-                        cb()
+                        cb(false);
                     }
                 }
             } else {
