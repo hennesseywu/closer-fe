@@ -69,7 +69,7 @@
         </mt-loadmore>
       </div>
     </div>
-    <Redbag v-if="awardAmt>0" :amount="formateMoney(awardAmt)"></Redbag>
+    <Redbag v-if="awardAmt>0" :amount="formateMoney(awardAmt/100)"></Redbag>
   </div>
 </template>
 
@@ -133,24 +133,24 @@
           this.loginUsers = data;
         })
       } else {
-        this.checkLogin(async(res) => {
-          console.log("checkLoginxxx res");
-          await this.getPullNewInfo();
-          await this.getYesterdayAwardAmt();
-          let {
-            data,
-            pagesize,
-            count
-          } = await this.getInviteUserList({
-            pagenum: this.pagenum
-          });
-          this.pagesize = pagesize;
-          this.loginCount = count;
-          this.loginUsers = data;
-        })
-        // this.$router.push({
-        //   name: "activityOver"
+        // this.checkLogin(async(res) => {
+        //   console.log("checkLoginxxx res");
+        //   await this.getPullNewInfo();
+        //   await this.getYesterdayAwardAmt();
+        //   let {
+        //     data,
+        //     pagesize,
+        //     count
+        //   } = await this.getInviteUserList({
+        //     pagenum: this.pagenum
+        //   });
+        //   this.pagesize = pagesize;
+        //   this.loginCount = count;
+        //   this.loginUsers = data;
         // })
+        this.$router.push({
+          name: "activityOver"
+        })
       }
     },
     computed: {
@@ -211,13 +211,10 @@
       },
       toShare(type) {
         if (!this.isLogin) {
-          console.log("toLogin")
           this.checkLogin(async(res) => {})
           return;
         }
-        console.log("toShare", type)
         let ua = this.$store.state.UA;
-        console.log("ua", ua);
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
             console.log("toShare ios bridge", bridge)
@@ -236,12 +233,10 @@
       },
       inviteFriends() {
         if (!this.isLogin) {
-          console.log("toLogin")
           this.checkLogin(async(res) => {})
           return;
         }
         let ua = this.$store.state.UA;
-        console.log("inviteFriends", ua)
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
             console.log("toShare ios bridge", bridge)
