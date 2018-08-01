@@ -69,7 +69,8 @@
   import Redbag from "../components/redbag";
   import {
     Loadmore,
-    Toast
+    Toast,
+    Indicator
   } from 'mint-ui';
   
   import {
@@ -104,6 +105,7 @@
     },
     async mounted() {
       if (this.$store.state.IS_APP) {
+        Indicator.open();
         this.checkLogin(async(res) => {
           console.log("checkLogin res");
           if (res) {
@@ -118,30 +120,32 @@
           } = await this.getInviteUserList({
             pagenum: this.pagenum
           });
-  
+          Indicator.close();
           this.pagesize = pagesize;
           this.loginCount = count;
           this.loginUsers = data;
         })
       } else {
-        this.checkLogin(async(res) => {
-          console.log("checkLoginxxx res");
-          await this.getPullNewInfo();
-          await this.getYesterdayAwardAmt();
-          let {
-            data,
-            pagesize,
-            count
-          } = await this.getInviteUserList({
-            pagenum: this.pagenum
-          });
-          this.pagesize = pagesize;
-          this.loginCount = count;
-          this.loginUsers = data;
-        })
-        // this.$router.push({
-        //   name: "activityOver"
+        // this.checkLogin(async(res) => {
+        //   console.log("checkLoginxxx res");
+        //   await this.getPullNewInfo();
+        //   await this.getYesterdayAwardAmt();
+        //   let {
+        //     data,
+        //     pagesize,
+        //     count
+        //   } = await this.getInviteUserList({
+        //     pagenum: this.pagenum
+        //   });
+        //   Indicator.close();
+        //   this.pagesize = pagesize;
+        //   this.loginCount = count;
+        //   this.loginUsers = data;
+          
         // })
+        this.$router.push({
+          name: "activityOver"
+        })
       }
     },
     computed: {
