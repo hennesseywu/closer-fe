@@ -497,7 +497,6 @@
         border: 6pr solid #000000;
         border-radius: 10pr;
         margin: 0 17pr 0 21pr;
-        text-align: center;
         .remind-title {
           width: 100%;
           padding: 24pr 63pr 27pr 27pr;
