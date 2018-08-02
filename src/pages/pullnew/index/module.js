@@ -150,6 +150,7 @@ export default {
             let { data } = await remindLogin(payload);
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 Toast("提醒成功喽~");
+                dispatch("getPullNewInfo")
                 return true;
             }
         }
