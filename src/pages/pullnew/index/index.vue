@@ -36,8 +36,9 @@
       <div class="friends-list">
         <div v-if="pullNewStatic.inviteUserTotalCount > 0">
           <div class="remind-title" v-if="pullNewStatic.awardEnd">
-            已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧
-          </div>
+           恭喜你，奖金全部解冻了，再接再厉去邀请哦~
+          </div> 
+          <!-- 已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧 -->
           <div class="remind-title" v-else>
             您有{{pullNewStatic.todayNotLoginUserCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
           </div>
@@ -45,7 +46,7 @@
         <div class="remind-title" v-else>
           您还没有好友哦，快去邀请好友赚钱吧！
         </div>
-        <mt-loadmore class="loadmore" v-if="loginUsers.length > 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance" ref="loadmore">
+        <mt-loadmore class="loadmore" v-if=!pullNewStatic.awardEnd&&loginUsers.length > 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance" ref="loadmore">
           <div class="remind-content">
             <div class="friend" v-for="(value,key) in loginUsers" :key="key">
               <img :src="fileUrl+value.inviteeUser.avatar" class="headphoto">
