@@ -48,7 +48,7 @@
         <mt-loadmore class="loadmore" v-if="loginUsers.length > 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance" ref="loadmore">
           <div class="remind-content">
             <div class="friend" v-for="(value,key) in loginUsers" :key="key">
-              <img :src="value.inviteeUser.avatar" class="headphoto">
+              <img :src="fileUrl+value.inviteeUser.avatar" class="headphoto">
               <div class="info">
                 <div class="name">{{value.inviteeUser.fullname}}</div>
                 <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
@@ -73,6 +73,7 @@
     Indicator
   } from 'mint-ui';
   
+  import feConfig from '../../../utils/api';
   import {
     dateFormat
   } from "../../../utils/utils";
@@ -100,10 +101,14 @@
         pagenum: 1,
         pagesize: 0,
         loginCount: null,
-        isLogin: false
+        isLogin: false,
+        fileUrl: feConfig.fileUrl
       }
     },
     async mounted() {
+      if (this.$store.state.IS_DEV) {
+        this.fileUrl = feConfig.fileDevURL;
+      }
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
           console.log("checkLogin res");
@@ -125,26 +130,26 @@
           this.loginUsers = data;
         })
       } else {
-        // this.checkLogin(async(res) => {
-        //   console.log("checkLoginxxx res");
-        //   // await this.getPullNewInfo();
-        //   // await this.getYesterdayAwardAmt();
-        //   let {
-        //     data,
-        //     pagesize,
-        //     count
-        //   } = await this.getInviteUserList({
-        //     pagenum: this.pagenum
-        //   });
-        //   Indicator.close();
-        //   this.pagesize = pagesize;
-        //   this.loginCount = count;
-        //   this.loginUsers = data;
-          
-        // })
-        this.$router.push({
-          name: "activityOver"
+        this.checkLogin(async(res) => {
+          console.log("checkLoginxxx res");
+          await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pagenum
+          });
+          Indicator.close();
+          this.pagesize = pagesize;
+          this.loginCount = count;
+          this.loginUsers = data;
+  
         })
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
       }
     },
     computed: {
@@ -486,7 +491,7 @@
         margin: 0 17pr 0 21pr;
         .remind-title {
           width: 100%;
-          padding: 24pr 63pr 27pr 59pr;
+          padding: 24pr 63pr 27pr 27pr;
           background-color: #1570A9;
           border-bottom: 6pr solid #000000;
           border-radius: 10pr;
