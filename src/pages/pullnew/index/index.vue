@@ -220,7 +220,7 @@
             if (!isBridge) {
               Toast("请升级最新版本客户端")
             }
-          }, 500)
+          }, 1000)
           setupWebViewJavascriptBridge(function(bridge) {
             isBridge = true;
             if (bridge) {
