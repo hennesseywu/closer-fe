@@ -348,7 +348,7 @@
       .content-desc {
         font-size: 28pr;
         color: #454545;
-        margin: 0 57pr 38pr 58pr;
+        margin: 0 30pr 38pr 30pr;
       }
       .progress-bg {
         background: url("../assets/images/progress-bg.png") no-repeat center;
@@ -489,6 +489,7 @@
         border: 6pr solid #000000;
         border-radius: 10pr;
         margin: 0 17pr 0 21pr;
+        text-align: center;
         .remind-title {
           width: 100%;
           padding: 24pr 63pr 27pr 27pr;
