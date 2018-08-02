@@ -53,7 +53,7 @@
                 <div class="name">{{value.inviteeUser.fullname}}</div>
                 <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
               </div>
-              <div class="amount" v-if="value.loginAmount">+{{loginAmount}}</div>
+              <div class="amount" v-if="value.loginAmount">+{{value.loginAmount}}</div>
               <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded)"></div>
             </div>
           </div>
