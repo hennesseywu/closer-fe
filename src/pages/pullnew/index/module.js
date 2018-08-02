@@ -5,7 +5,40 @@ import { getInviteStatistic, getYesterdayAwardAmt, getInviteUserLoginPageList, r
 export default {
     namespaced: true,
     state: {
-        pullNewStatic: { awardTotalAmt: 0, invitedUsers: [] },
+        pullNewStatic: {
+            awardTotalAmt: 0,
+            invitedUsers: {
+                "1": {
+                    amount: 1000,
+                    isGrey: true
+                },
+                "2": {
+                    amount: 200,
+                    isGrey: true
+                },
+                "3": {
+                    amount: 200,
+                    isGrey: true
+                },
+                "4": {
+                    amount: 200,
+                    isGrey: true
+                },
+                "5": {
+                    amount: 200,
+                    isGrey: true
+                },
+                "6": {
+                    amount: 200,
+                    isGrey: true
+                },
+                "7": {
+                    amount: 1000,
+                    isGrey: true
+                }
+            }
+
+        },
         awardAmt: 0
     },
     mutations: {
@@ -93,7 +126,10 @@ export default {
             }
         },
         async getPullNewInfo({ commit }, payload) {
-            let { data } = await getInviteStatistic();
+            let { data } = await getInviteStatistic().catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            });
             // let data = { "result": { "awardTotalAmt": 0, "awardEnd": true, "inviteUserTotalCount": 0, "invitedUsers": [{ "amount": 200, "remindTime": 1532659481220, "create_time": 1531299414724, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576465247175075", "invitee": "9Bw5d2unBX" }, { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }, { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }, { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }], "todayNotLoginUserCount": 2 }, "code": 0 }
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 if (typeof(data.result.inviteUserTotalCount) != "undefined") {
@@ -128,26 +164,33 @@ export default {
                     console.log("newUsersxxx", newUsers)
                     data.result.invitedUsers = newUsers;
                     commit("updatePullNewStatic", data.result);
-                } else {
-
                 }
             }
         },
         async getYesterdayAwardAmt({ commit }, payload) {
-            let { data } = await getYesterdayAwardAmt();
+            let { data } = await getYesterdayAwardAmt().catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            });
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 commit("updateAwardAmt", data.result);
             }
         },
         async getInviteUserList({ commit }, payload) {
-            let { data } = await getInviteUserLoginPageList(payload);
+            let { data } = await getInviteUserLoginPageList(payload).catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            });
             // let data = { "result": { "data": [ { "inviteeUser": { "role": "NORMAL", "gender": "NONE", "bot": false, "displayName": "CL_7684865424", "phones": "12321212121", "updateTime": 1531299378100, "avat
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 return data.result;
             }
         },
         async remindLogin({ dispatch }, payload) {
-            let { data } = await remindLogin(payload);
+            let { data } = await remindLogin(payload).catch(err => {
+                Toast('网络开小差啦，请稍后再试')
+                return;
+            });
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 Toast("提醒成功喽~");
                 dispatch("getPullNewInfo")
