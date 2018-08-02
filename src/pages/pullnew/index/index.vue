@@ -215,24 +215,24 @@
         }
         let ua = this.$store.state.UA;
         if (ua.indexOf("closer-ios") > -1) {
-          let isBridge = false;
-          setTimeout(() => {
-            if (!isBridge) {
-              Toast("请升级最新版本客户端")
-            }
-          }, 500)
+  
           setupWebViewJavascriptBridge(function(bridge) {
-            isBridge = true;
             if (bridge) {
               //ios获取用户token 判断登录
-              bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {})
+              try {
+                bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {})
+              } catch (e) {
+                Toast("请升级最新版本客户端")
+              }
             }
           })
         } else if (ua.indexOf("closer-android") > -1) {
           if (typeof window.bridge != "undefined") {
-            window.bridge.inviteNewGuyAction(type);
-          } else {
-            Toast("请升级最新版本客户端")
+            try {
+              window.bridge.inviteNewGuyAction(type);
+            } catch (e) {
+              Toast("请升级最新版本客户端")
+            }
           }
         }
   
