@@ -219,11 +219,10 @@
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
               //ios获取用户token 判断登录
-              try {
-                bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {})
-              } catch (e) {
+              bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {
+                console.log(data, "----", responseCallback)
                 Toast("请升级最新版本客户端")
-              }
+              })
             }
           })
         } else if (ua.indexOf("closer-android") > -1) {
