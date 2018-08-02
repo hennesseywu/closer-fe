@@ -219,6 +219,7 @@
   
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
+              console.log("test ios ")
               //ios获取用户token 判断登录
               bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {
                 console.log(data, "----", responseCallback)
