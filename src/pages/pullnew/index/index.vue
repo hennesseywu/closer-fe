@@ -221,10 +221,17 @@
         }
         let ua = this.$store.state.UA;
         if (ua.indexOf("closer-ios") > -1) {
+          let isOK=false;
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
               //ios获取用户token 判断登录
-              bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {})
+              setTimeout(()=>{
+                console.log("isOK",isOK)
+              },1000)
+              bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {
+                isOK=true;
+                console.log("ios back",data,"---",responseCallback)
+              })
             }
           })
         } else if (ua.indexOf("closer-android") > -1) {
