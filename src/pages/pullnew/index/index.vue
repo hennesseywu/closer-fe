@@ -215,8 +215,8 @@
             pagenum: this.pageNum,
             pagesize: this.pageSize
           });
-          this.pagesize = pagesize;
-          this.loginCount = count;
+          this.totalPageNum = Math.ceil(count / pagesize)
+          this.bottomPullText = "上拉加载更多"
           this.loginUsers = data;
         }
       },
@@ -273,7 +273,7 @@
       formateMoney(money) {
         return (Math.round(money * 100) / 100).toFixed(2)
       },
-      toRule(){
+      toRule() {
         this.$router.push({
           name: "pullNewRule"
         })
@@ -414,7 +414,6 @@
         .progress-text {
           color: #222222;
           font-size: 20pr;
-          
         }
       }
       .progress-desc {
