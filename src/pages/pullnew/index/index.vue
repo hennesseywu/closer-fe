@@ -1,7 +1,7 @@
 <template>
   <div class="pullnew">
-    <div class="rule-button" @click="toRule()">
-    活动说明
+    <div class="rule-button" @click="toRule">
+      活动说明
     </div>
     <div class="title"></div>
     <div class="share-button" @click="inviteFriends"></div>
@@ -267,8 +267,8 @@
           }
         }
       },
-      toRule(){
-         this.$router.push({
+      toRule() {
+        this.$router.push({
           name: "pullNewRule"
         })
       },
@@ -288,7 +288,7 @@
     background: url("../assets/images/bg.png") no-repeat center;
     height: 1680pr;
     background-size: cover;
-    padding-top: 126pr;
+    padding-top: 176pr;
     .rule-button {
       background: url("../assets/images/rule-button.png") no-repeat center;
       width: 176pr;
