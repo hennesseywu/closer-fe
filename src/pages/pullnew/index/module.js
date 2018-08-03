@@ -52,7 +52,7 @@ export default {
     actions: {
         checkLogin({ state, rootState }, cb) {
             let ua = rootState.UA;
-            console.log("checkLogin")
+            //console.log("checkLogin")
             if (ua.indexOf("closer-ios") > -1) {
                 setTimeout(() => {
                     setupWebViewJavascriptBridge(function(bridge) {
@@ -152,7 +152,7 @@ export default {
                             }
                         }
                     }
-                    console.log("newUsersxxx", newUsers)
+                    //console.log("newUsersxxx", newUsers)
                     data.result.invitedUsers = newUsers;
                     commit("updatePullNewStatic", data.result);
                 }

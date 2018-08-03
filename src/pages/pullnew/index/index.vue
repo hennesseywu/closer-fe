@@ -117,8 +117,8 @@
       }
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
-          if(res){
-            this.isLogin=true;
+          if (res) {
+            this.isLogin = true;
           }
           await this.getPullNewInfo();
           await this.getYesterdayAwardAmt();
@@ -138,7 +138,7 @@
           }
         })
       } else {
-        // console.log("activity")
+        // //console.log("activity")
         // this.checkLogin(async(res) => {
         //   await this.getPullNewInfo();
         //   await this.getYesterdayAwardAmt();
@@ -157,7 +157,9 @@
         //     this.bottomPullText = ""
         //   }
         // })
-      this.$router.push({name:"activityOver"})
+        this.$router.push({
+          name: "activityOver"
+        })
       }
     },
     computed: {
@@ -203,7 +205,7 @@
           invitee: invitee
         });
         if (backData) {
-          this.pageNum=1;
+          this.pageNum = 1;
           let {
             data,
             pagesize,
@@ -224,17 +226,11 @@
         }
         let ua = this.$store.state.UA;
         if (ua.indexOf("closer-ios") > -1) {
-          let isOK=false;
+          let isOK = false;
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
               //ios获取用户token 判断登录
-              setTimeout(()=>{
-                console.log("isOK",isOK)
-              },1000)
-              bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {
-                isOK=true;
-                console.log("ios back",data,"---",responseCallback)
-              })
+              bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {})
             }
           })
         } else if (ua.indexOf("closer-android") > -1) {
@@ -256,7 +252,7 @@
         let ua = this.$store.state.UA;
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
-            console.log("toShare ios bridge", bridge)
+            //console.log("toShare ios bridge", bridge)
             if (bridge) {
               //ios获取用户token 判断登录
               bridge.callHandler("inviteUser", null, function(data, responseCallback) {})
