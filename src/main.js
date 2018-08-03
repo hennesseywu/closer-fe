@@ -24,34 +24,24 @@ window.wx = wx;
 window.axios = axio;
 window.Cookies = Cookies;
 window.MobileDetect = MobileDetect;
+
 window.setupWebViewJavascriptBridge = function(callback) {
-    if (window.WebViewJavascriptBridge) {
-        return callback(WebViewJavascriptBridge);
-    }
-    if (window.WVJBCallbacks) {
-        return window.WVJBCallbacks.push(callback);
-    }
+    if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+    if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
     window.WVJBCallbacks = [callback];
     var WVJBIframe = document.createElement('iframe');
     WVJBIframe.style.display = 'none';
     WVJBIframe.src = 'https://__bridge_loaded__';
     document.documentElement.appendChild(WVJBIframe);
-    setTimeout(function() {
-        document.documentElement.removeChild(WVJBIframe);
-        window.WVJBCallbacks = [callback];
-    }, 0)
+    setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
 }
 
 Vue.config.productionTip = false
-
 Vue.use(MintUI)
 
 // 运行时动态设置
 pageResize()
 window.onresize = pageResize;
-
-
-
 
 function pageResize() {
     let fontSize = Math.min(screen.width, document.documentElement.getBoundingClientRect().width) / 375 * 16

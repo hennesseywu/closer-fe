@@ -1,6 +1,8 @@
 <template>
   <div class="pullnew">
-    <router-link class="rule-button" :to="{name:'pullNewRule'}">活动说明 </router-link>
+    <div class="rule-button">
+    <router-link  :to="{name:'pullNewRule'}">活动说明 </router-link>
+    </div>
     <div class="title"></div>
     <div class="share-button" @click="inviteFriends"></div>
     <div class="content">
@@ -138,28 +140,27 @@
           }
         })
       } else {
-        // //console.log("activity")
-        // this.checkLogin(async(res) => {
-        //   await this.getPullNewInfo();
-        //   await this.getYesterdayAwardAmt();
-        //   let {
-        //     data,
-        //     pagesize,
-        //     count
-        //   } = await this.getInviteUserList({
-        //     pagenum: this.pageNum,
-        //     pagesize: this.pageSize
-        //   });
-        //   this.totalPageNum = Math.ceil(count / pagesize)
-        //   this.loginUsers = data;
-        //   if (this.pageNum == this.totalPageNum) {
-        //     this.allLoaded = true;
-        //     this.bottomPullText = ""
-        //   }
-        // })
-        this.$router.push({
-          name: "activityOver"
+        this.checkLogin(async(res) => {
+          await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pageNum,
+            pagesize: this.pageSize
+          });
+          this.totalPageNum = Math.ceil(count / pagesize)
+          this.loginUsers = data;
+          if (this.pageNum == this.totalPageNum) {
+            this.allLoaded = true;
+            this.bottomPullText = ""
+          }
         })
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
       }
     },
     computed: {
