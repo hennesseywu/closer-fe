@@ -87,7 +87,7 @@ const router = new Router({
             name: 'pullNew',
             component: PullNewIndex,
             meta: {
-                title: '贴近Closer'
+                title: '邀好友，赚现金'
             }
         },
         {
@@ -95,7 +95,7 @@ const router = new Router({
             name: 'pullNewRule',
             component: PullNewRule,
             meta: {
-                title: '贴近Closer'
+                title: '邀好友，赚现金'
             }
         }
 

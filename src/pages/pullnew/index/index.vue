@@ -104,9 +104,8 @@
         allLoaded: false,
         inviteUsers: [],
         loginUsers: [],
-        pagenum: 1,
-        pagesize: 0,
-        loginCount: null,
+        pageNum: 1,
+        totalPageNum: 0,
         isLogin: false,
         fileUrl: feConfig.fileUrl
       }
@@ -117,7 +116,6 @@
       }
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
-          console.log("checkLogin res");
           if (res) {
             this.isLogin = true;
           }
@@ -128,16 +126,13 @@
             pagesize,
             count
           } = await this.getInviteUserList({
-            pagenum: this.pagenum
+            pageNum: this.pageNum
           });
-  
-          this.pagesize = pagesize;
-          this.loginCount = count;
+          this.totalPageNum = Math.ceil(count / pagesize)
           this.loginUsers = data;
         })
       } else {
         this.checkLogin(async(res) => {
-          console.log("checkLoginxxx res");
           await this.getPullNewInfo();
           await this.getYesterdayAwardAmt();
           let {
@@ -145,17 +140,11 @@
             pagesize,
             count
           } = await this.getInviteUserList({
-            pagenum: this.pagenum
+            pageNum: this.pageNum
           });
-          Indicator.close();
-          this.pagesize = pagesize;
-          this.loginCount = count;
+          this.totalPageNum = Math.ceil(count / pagesize)
           this.loginUsers = data;
-  
         })
-        // this.$router.push({
-        //   name: "activityOver"
-        // })
       }
     },
     computed: {
@@ -167,28 +156,26 @@
     methods: {
       ...mapActions("pullNew", ["checkLogin", "getInviteUserList", "getPullNewInfo", "remindLogin", "getYesterdayAwardAmt"]),
       async loadBottom() {
-        if (this.pagenum == this.pagesize) {
+        if (this.pageNum == this.totalPageNum) {
           this.allLoaded = true;
           this.bottomPullText = ""
           return;
         }
-        this.pagenum++;
+        this.pageNum++;
         let {
           data,
           pagesize,
           count
         } = await this.getInviteUserList({
-          pagenum: this.pagenum
+          pageNum: this.pageNum
         });
-        this.pagesize = pagesize;
-        this.loginCount = count;
-        console.log(data)
+        this.totalPageNum = Math.ceil(count / pagesize)
         for (var a in data) {
           this.loginUsers.push(data[a]);
         }
         this.$refs.loadmore.onBottomLoaded();
-        console.log(this.pagenum, "----", this.pagesize)
-        if (this.pagenum == this.pagesize) {
+        console.log(this.pageNum, "----", this.totalPageNum)
+        if (this.pageNum == this.totalPageNum) {
           this.allLoaded = true;
           this.bottomPullText = ""
         }
@@ -207,7 +194,7 @@
             pagesize,
             count
           } = await this.getInviteUserList({
-            pagenum: this.pagenum
+            pageNum: this.pageNum
           });
           this.pagesize = pagesize;
           this.loginCount = count;
