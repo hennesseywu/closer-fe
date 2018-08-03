@@ -29,6 +29,7 @@
         <div class="weibo" @click="toShare('inviteNewGuyActionSina')"></div>
         <div class="save-img" @click="toShare('inviteNewGuyActionSavePicture')"></div>
       </div>
+      <div class="share-tips">此活动需在最新版本客户端参与</div>
       <div class="balance">
         <div class="remain-money">奖金已到账 {{formateMoney(pullNewStatic.awardTotalAmt/100)}}元</div>
         <div class="drawing" @click="toShare('inviteNewGuyActionWithdraw')"></div>
@@ -197,7 +198,7 @@
           this.bottomPullText = ""
         }
       },
-      async remind(invitee, reminded,that) {
+      async remind(invitee, reminded, that) {
         console.log(that.srcElement.className)
         if (reminded) {
           Toast("已经提醒过啦~")
@@ -207,7 +208,7 @@
           invitee: invitee
         });
         if (backData) {
-          that.srcElement.className="reminded"
+          that.srcElement.className = "reminded"
         }
       },
       toShare(type) {
@@ -473,11 +474,16 @@
           height: 62pr;
         }
       }
+      .share-tips {
+        margin-top: 20pr;
+        font-size: 20pr;
+        color: #747474;
+      }
       .balance {
         display: flex;
         flex-direction: row;
         justify-content: center;
-        margin-top: 60pr;
+        margin-top: 20pr;
         .remain-money {
           color: #212121;
           font-size: 32pr;

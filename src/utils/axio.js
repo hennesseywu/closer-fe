@@ -15,7 +15,7 @@ const axio = axios.create({ 
     // http request 拦截器 
 axio.interceptors.request.use(
     config => {
-        //console.log(config)
+        console.log(config)
         let reqUrl = feConfig.serverDevUrl + config.url
         if (/a-sandbox.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverDevUrl + config.url;
