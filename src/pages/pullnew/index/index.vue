@@ -1,7 +1,7 @@
 <template>
   <div class="pullnew">
-    <div class="rule-button">
-    <router-link  :to="{name:'pullNewRule'}">活动说明 </router-link>
+    <div class="rule-button" @click="toRule()">
+    活动说明
     </div>
     <div class="title"></div>
     <div class="share-button" @click="inviteFriends"></div>
@@ -266,6 +266,11 @@
             location.href = "closer_invite_guys_raise_cash";
           }
         }
+      },
+      toRule(){
+         this.$router.push({
+          name: "pullNewRule"
+        })
       },
       formateDate(date) {
         return dateFormat(date)
