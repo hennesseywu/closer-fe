@@ -288,7 +288,7 @@
     background: url("../assets/images/bg.png") no-repeat center;
     height: 1680pr;
     background-size: cover;
-    padding-top: 176pr;
+    padding-top: 186pr;
     .rule-button {
       background: url("../assets/images/rule-button.png") no-repeat center;
       width: 176pr;
