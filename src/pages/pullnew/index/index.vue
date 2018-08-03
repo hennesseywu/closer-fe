@@ -117,9 +117,6 @@
       }
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
-          if (res) {
-            this.isLogin = true;
-          }
           await this.getPullNewInfo();
           await this.getYesterdayAwardAmt();
           let {
@@ -127,25 +124,7 @@
             pagesize,
             count
           } = await this.getInviteUserList({
-            pageNum: this.pageNum,
-            pagesize: this.pageSize
-          });
-          this.totalPageNum = Math.ceil(count / pagesize);
-          this.loginUsers = data;
-        })
-      } else {
-        this.checkLogin(async(res) => {
-          Cookies.set("GroukAuth", "1.ae2ffef1f78b3914d8d7eb4d5002eeb983c8462cc7dffea14b7cdc1f2400593a59829487130fd337b7974adf0ed36262d180b0d194d5529584c124ef4f649b01", {
-            expires: 30
-          });
-          await this.getPullNewInfo();
-          await this.getYesterdayAwardAmt();
-          let {
-            data,
-            pagesize,
-            count
-          } = await this.getInviteUserList({
-            pageNum: this.pageNum,
+            pagenum: this.pageNum,
             pagesize: this.pageSize
           });
           this.totalPageNum = Math.ceil(count / pagesize)
@@ -155,6 +134,27 @@
             this.bottomPullText = ""
           }
         })
+      } else {
+        // console.log("activity")
+        // this.checkLogin(async(res) => {
+        //   await this.getPullNewInfo();
+        //   await this.getYesterdayAwardAmt();
+        //   let {
+        //     data,
+        //     pagesize,
+        //     count
+        //   } = await this.getInviteUserList({
+        //     pagenum: this.pageNum,
+        //     pagesize: this.pageSize
+        //   });
+        //   this.totalPageNum = Math.ceil(count / pagesize)
+        //   this.loginUsers = data;
+        //   if (this.pageNum == this.totalPageNum) {
+        //     this.allLoaded = true;
+        //     this.bottomPullText = ""
+        //   }
+        // })
+      this.$router.push({name:"activityOver"})
       }
     },
     computed: {
@@ -167,7 +167,6 @@
       ...mapActions("pullNew", ["checkLogin", "getInviteUserList", "getPullNewInfo", "remindLogin", "getYesterdayAwardAmt"]),
       async loadBottom() {
         if (this.pageNum == this.totalPageNum) {
-          console.log("loadBottom")
           this.$refs.loadmore.onBottomLoaded();
           this.allLoaded = true;
           this.bottomPullText = ""
@@ -179,7 +178,7 @@
           pagesize,
           count
         } = await this.getInviteUserList({
-          pageNum: this.pageNum,
+          pagenum: this.pageNum,
           pagesize: this.pageSize
         });
         this.totalPageNum = Math.ceil(count / pagesize)
@@ -187,7 +186,6 @@
           this.loginUsers.push(data[a]);
         }
         this.$refs.loadmore.onBottomLoaded();
-        console.log(this.pageNum, "----", this.totalPageNum)
         if (this.pageNum == this.totalPageNum) {
           this.allLoaded = true;
           this.bottomPullText = ""
@@ -208,7 +206,7 @@
             pagesize,
             count
           } = await this.getInviteUserList({
-            pageNum: this.pageNum,
+            pagenum: this.pageNum,
             pagesize: this.pageSize
           });
           this.pagesize = pagesize;
@@ -268,8 +266,6 @@
       formateMoney(money) {
         return (Math.round(money * 100) / 100).toFixed(2)
       }
-  
-  
     }
   
   }
