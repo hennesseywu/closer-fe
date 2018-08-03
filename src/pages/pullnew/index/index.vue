@@ -62,7 +62,7 @@
                 <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
               </div>
               <div class="amount" v-if="value.loginAmount">+{{formateMoney(value.loginAmount/100)}}</div>
-              <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded)"></div>
+              <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded,$event)"></div>
             </div>
           </div>
         </mt-loadmore>
@@ -140,27 +140,27 @@
           }
         })
       } else {
-        // this.checkLogin(async(res) => {
-        //   await this.getPullNewInfo();
-        //   await this.getYesterdayAwardAmt();
-        //   let {
-        //     data,
-        //     pagesize,
-        //     count
-        //   } = await this.getInviteUserList({
-        //     pagenum: this.pageNum,
-        //     pagesize: this.pageSize
-        //   });
-        //   this.totalPageNum = Math.ceil(count / pagesize)
-        //   this.loginUsers = data;
-        //   if (this.pageNum == this.totalPageNum) {
-        //     this.allLoaded = true;
-        //     this.bottomPullText = ""
-        //   }
-        // })
-        this.$router.push({
-          name: "activityOver"
+        this.checkLogin(async(res) => {
+          await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pageNum,
+            pagesize: this.pageSize
+          });
+          this.totalPageNum = Math.ceil(count / pagesize)
+          this.loginUsers = data;
+          if (this.pageNum == this.totalPageNum) {
+            this.allLoaded = true;
+            this.bottomPullText = ""
+          }
         })
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
       }
     },
     computed: {
@@ -197,7 +197,8 @@
           this.bottomPullText = ""
         }
       },
-      async remind(invitee, reminded) {
+      async remind(invitee, reminded,that) {
+        console.log(that.srcElement.className)
         if (reminded) {
           Toast("已经提醒过啦~")
           return;
@@ -206,18 +207,7 @@
           invitee: invitee
         });
         if (backData) {
-          this.pageNum = 1;
-          let {
-            data,
-            pagesize,
-            count
-          } = await this.getInviteUserList({
-            pagenum: this.pageNum,
-            pagesize: this.pageSize
-          });
-          this.totalPageNum = Math.ceil(count / pagesize)
-          this.bottomPullText = "上拉加载更多"
-          this.loginUsers = data;
+          that.srcElement.className="reminded"
         }
       },
       toShare(type) {
