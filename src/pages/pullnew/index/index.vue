@@ -63,7 +63,7 @@
               </div>
               <div class="amount" v-if="value.loginAmount">+{{formateMoney(value.loginAmount/100)}}</div>
               <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded,$event)"></div>
-            </div>
+            </div>.
           </div>
         </mt-loadmore>
       </div>
@@ -140,27 +140,27 @@
           }
         })
       } else {
-        this.checkLogin(async(res) => {
-          await this.getPullNewInfo();
-          await this.getYesterdayAwardAmt();
-          let {
-            data,
-            pagesize,
-            count
-          } = await this.getInviteUserList({
-            pagenum: this.pageNum,
-            pagesize: this.pageSize
-          });
-          this.totalPageNum = Math.ceil(count / pagesize)
-          this.loginUsers = data;
-          if (this.pageNum == this.totalPageNum) {
-            this.allLoaded = true;
-            this.bottomPullText = ""
-          }
-        })
-        // this.$router.push({
-        //   name: "activityOver"
+        // this.checkLogin(async(res) => {
+        //   await this.getPullNewInfo();
+        //   await this.getYesterdayAwardAmt();
+        //   let {
+        //     data,
+        //     pagesize,
+        //     count
+        //   } = await this.getInviteUserList({
+        //     pagenum: this.pageNum,
+        //     pagesize: this.pageSize
+        //   });
+        //   this.totalPageNum = Math.ceil(count / pagesize)
+        //   this.loginUsers = data;
+        //   if (this.pageNum == this.totalPageNum) {
+        //     this.allLoaded = true;
+        //     this.bottomPullText = ""
+        //   }
         // })
+        this.$router.push({
+          name: "activityOver"
+        })
       }
     },
     computed: {
