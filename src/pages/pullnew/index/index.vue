@@ -105,7 +105,7 @@
         inviteUsers: [],
         loginUsers: [],
         pageNum: 1,
-        pageSize: 4,
+        pageSize: 10,
         totalPageNum: 0,
         isLogin: false,
         fileUrl: feConfig.fileUrl
