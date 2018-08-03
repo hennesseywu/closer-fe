@@ -117,6 +117,9 @@
       }
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
+          if(res){
+            this.isLogin=true;
+          }
           await this.getPullNewInfo();
           await this.getYesterdayAwardAmt();
           let {
