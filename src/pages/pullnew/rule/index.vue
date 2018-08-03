@@ -1,8 +1,8 @@
 <template>
   <div class="rule">
-    <div class="back" @click="back">
+    <!-- <div class="back" @click="back">
       <span class="arrow"></span>返回
-    </div>
+    </div> -->
     <div class="rule-title">
       <span class="rule-text">贴近奖励金发放和提取规则</span>
     </div>
@@ -59,9 +59,9 @@
 <script>
   export default {
     methods:{
-      back(){
-        this.$router.push({name:"pullNew"})
-      }
+      // back(){
+      //   this.$router.push({name:"pullNew"})
+      // }
     }
   }
 </script>

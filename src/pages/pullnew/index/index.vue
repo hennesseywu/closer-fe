@@ -267,16 +267,16 @@
           }
         }
       },
-      toRule() {
-        this.$router.push({
-          name: "pullNewRule"
-        })
-      },
       formateDate(date) {
         return dateFormat(date)
       },
       formateMoney(money) {
         return (Math.round(money * 100) / 100).toFixed(2)
+      },
+      toRule(){
+        this.$router.push({
+          name: "pullNewRule"
+        })
       }
     }
   
@@ -413,7 +413,8 @@
         }
         .progress-text {
           color: #222222;
-          font-size: 26pr;
+          font-size: 20pr;
+          
         }
       }
       .progress-desc {
@@ -421,14 +422,15 @@
         flex-direction: row;
         justify-content: center;
         color: #454545;
-        font-size: 26pr;
+        font-size: 20pr;
         margin: 18pr 21pr 40pr 21pr;
         text-align: center;
         >div {
-          width: 64pr;
-          margin-left: 35pr;
+          width: 80pr;
+          margin-left: 20pr;
         }
         .progress-desc-text1 {
+          width: 80pr;
           margin-left: 0;
         }
         .progress-ren {
