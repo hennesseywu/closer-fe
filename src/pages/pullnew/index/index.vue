@@ -1,10 +1,10 @@
 <template>
   <div class="pullnew">
+    <div class="rule-button" @click="toRule">
+      活动说明
+    </div>
+    <div class="title"></div>
     <div class="pullnew-title">
-      <div class="rule-button" @click="toRule">
-        活动说明
-      </div>
-      <div class="title"></div>
       <div class="share-button" @click="inviteFriends"></div>
     </div>
   
@@ -121,8 +121,6 @@
       if (this.$store.state.IS_DEV) {
         this.fileUrl = feConfig.fileDevURL;
       }
-          let ua = navigator.userAgent || window.navigator.userAgent;
-      console.log("user-agent", ua)
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
           if (res) {
@@ -146,27 +144,27 @@
           }
         })
       } else {
-        this.checkLogin(async(res) => {
-          await this.getPullNewInfo();
-          await this.getYesterdayAwardAmt();
-          let {
-            data,
-            pagesize,
-            count
-          } = await this.getInviteUserList({
-            pagenum: this.pageNum,
-            pagesize: this.pageSize
-          });
-          this.totalPageNum = Math.ceil(count / pagesize)
-          this.loginUsers = data;
-          if (this.pageNum == this.totalPageNum) {
-            this.allLoaded = true;
-            this.bottomPullText = ""
-          }
-        })
-        // this.$router.push({
-        //   name: "activityOver"
+        // this.checkLogin(async(res) => {
+        //   await this.getPullNewInfo();
+        //   await this.getYesterdayAwardAmt();
+        //   let {
+        //     data,
+        //     pagesize,
+        //     count
+        //   } = await this.getInviteUserList({
+        //     pagenum: this.pageNum,
+        //     pagesize: this.pageSize
+        //   });
+        //   this.totalPageNum = Math.ceil(count / pagesize)
+        //   this.loginUsers = data;
+        //   if (this.pageNum == this.totalPageNum) {
+        //     this.allLoaded = true;
+        //     this.bottomPullText = ""
+        //   }
         // })
+        this.$router.push({
+          name: "activityOver"
+        })
       }
     },
     computed: {
@@ -285,9 +283,8 @@
     height: 1680pr;
     background-size: cover;
     padding-top: 186pr;
-    .pullnew-title{
-
-      .rule-button {
+    text-align: center;
+    .rule-button {
       background: url("../assets/images/rule-button.png") no-repeat center;
       width: 176pr;
       height: 70pr;
@@ -305,13 +302,19 @@
       margin: 0 auto;
       background-size: cover;
     }
-    .share-button {
-      background: url("../assets/images/share-button.png") no-repeat center;
-      width: 341pr;
-      height: 109pr;
-      margin: 24px auto 14pr auto;
+    .pullnew-title {
+      background: url("../assets/images/house.png") no-repeat center;
       background-size: cover;
-    }
+      width: 650pr;
+      height: 205pr;
+      margin: 24px auto 0 auto;
+      .share-button {
+        background: url("../assets/images/share-button.png") no-repeat center;
+        width: 341pr;
+        height: 109pr;
+        margin: 0 auto;
+        background-size: cover;
+      }
     }
     .content {
       position: relative;
@@ -320,7 +323,7 @@
       background: #ffffff;
       border-radius: 10pr;
       text-align: center;
-      margin: 0 17pr 17pr 21pr;
+      margin: -40pr 17pr 17pr 21pr;
       .left-top-icon {
         background: url("../assets/images/icon1.png") no-repeat center;
         background-size: cover;
