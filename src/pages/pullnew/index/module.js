@@ -61,7 +61,7 @@ export default {
                             bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                                 if (token) {
                                     Cookies.set("GroukAuth", token, { expires: 30 });
-                                    axios.post(api.admin.user_show).then(({ data }) => {
+                                    axios.post(api.admin.user_show, { "noIndicator": true }).then(({ data }) => {
                                         if (data.result) {
                                             Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
                                             cb(true)
@@ -92,7 +92,7 @@ export default {
                     let token = window.bridge.getUserToken(null);
                     if (token) {
                         Cookies.set("GroukAuth", token, { expires: 30 });
-                        axios.post(api.admin.user_show).then(({ data }) => {
+                        axios.post(api.admin.user_show, { "noIndicator": true }).then(({ data }) => {
                             if (data.result) {
                                 Cookies.set("user", JSON.stringify(data.result), { expires: 30 });
                                 cb(true)
