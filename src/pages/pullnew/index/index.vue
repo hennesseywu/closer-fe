@@ -127,7 +127,7 @@
             this.isLogin = true;
           }
           await this.getPullNewInfo();
-          await this.getYesterdayAwardAmt();
+          await this.getYesterdayAwardAmt({ "noIndicator":true});
           let {
             data,
             pagesize,
@@ -135,7 +135,7 @@
           } = await this.getInviteUserList({
             pagenum: this.pageNum,
             pagesize: this.pageSize,
-            noIndicator:true
+             "noIndicator":true
           });
           this.totalPageNum = Math.ceil(count / pagesize)
           this.loginUsers = data;
