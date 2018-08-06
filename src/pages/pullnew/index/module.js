@@ -117,7 +117,7 @@ export default {
             }
         },
         async getPullNewInfo({ commit }, payload) {
-            let { data } = await getInviteStatistic().catch(err => {
+            let { data } = await getInviteStatistic(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             });
@@ -159,7 +159,7 @@ export default {
             }
         },
         async getYesterdayAwardAmt({ commit }, payload) {
-            let { data } = await getYesterdayAwardAmt().catch(err => {
+            let { data } = await getYesterdayAwardAmt(payload).catch(err => {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             });
