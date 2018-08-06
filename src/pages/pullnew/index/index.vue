@@ -1,10 +1,13 @@
 <template>
   <div class="pullnew">
-    <div class="rule-button" @click="toRule">
-      活动说明
+    <div class="pullnew-title">
+      <div class="rule-button" @click="toRule">
+        活动说明
+      </div>
+      <div class="title"></div>
+      <div class="share-button" @click="inviteFriends"></div>
     </div>
-    <div class="title"></div>
-    <div class="share-button" @click="inviteFriends"></div>
+  
     <div class="content">
       <div class="left-top-icon"></div>
       <div class="right-top-icon"></div>
@@ -118,6 +121,7 @@
       if (this.$store.state.IS_DEV) {
         this.fileUrl = feConfig.fileDevURL;
       }
+      console.log("user-agent", this.$store.state.UA)
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
           if (res) {
@@ -141,27 +145,27 @@
           }
         })
       } else {
-        // this.checkLogin(async(res) => {
-        //   await this.getPullNewInfo();
-        //   await this.getYesterdayAwardAmt();
-        //   let {
-        //     data,
-        //     pagesize,
-        //     count
-        //   } = await this.getInviteUserList({
-        //     pagenum: this.pageNum,
-        //     pagesize: this.pageSize
-        //   });
-        //   this.totalPageNum = Math.ceil(count / pagesize)
-        //   this.loginUsers = data;
-        //   if (this.pageNum == this.totalPageNum) {
-        //     this.allLoaded = true;
-        //     this.bottomPullText = ""
-        //   }
-        // })
-        this.$router.push({
-          name: "activityOver"
+        this.checkLogin(async(res) => {
+          await this.getPullNewInfo();
+          await this.getYesterdayAwardAmt();
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pageNum,
+            pagesize: this.pageSize
+          });
+          this.totalPageNum = Math.ceil(count / pagesize)
+          this.loginUsers = data;
+          if (this.pageNum == this.totalPageNum) {
+            this.allLoaded = true;
+            this.bottomPullText = ""
+          }
         })
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
       }
     },
     computed: {
@@ -280,7 +284,9 @@
     height: 1680pr;
     background-size: cover;
     padding-top: 186pr;
-    .rule-button {
+    .pullnew-title{
+      
+      .rule-button {
       background: url("../assets/images/rule-button.png") no-repeat center;
       width: 176pr;
       height: 70pr;
@@ -304,6 +310,7 @@
       height: 109pr;
       margin: 24px auto 14pr auto;
       background-size: cover;
+    }
     }
     .content {
       position: relative;
