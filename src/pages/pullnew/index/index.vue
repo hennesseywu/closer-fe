@@ -121,7 +121,8 @@
       if (this.$store.state.IS_DEV) {
         this.fileUrl = feConfig.fileDevURL;
       }
-      console.log("user-agent", this.$store.state.UA)
+          let ua = navigator.userAgent || window.navigator.userAgent;
+      console.log("user-agent", ua)
       if (this.$store.state.IS_APP) {
         this.checkLogin(async(res) => {
           if (res) {
@@ -285,7 +286,7 @@
     background-size: cover;
     padding-top: 186pr;
     .pullnew-title{
-      
+
       .rule-button {
       background: url("../assets/images/rule-button.png") no-repeat center;
       width: 176pr;
