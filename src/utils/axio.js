@@ -15,14 +15,13 @@ const axio = axios.create({ 
     // http request 拦截器 
 axio.interceptors.request.use(
     config => {
-        console.log(config)
         let reqUrl = feConfig.serverDevUrl + config.url
         if (/a-sandbox.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverDevUrl + config.url;
         } else if (/a.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverUrl + config.url;
         }
-        console.log("requrl", reqUrl)
+        // console.log("requrl", reqUrl)
         config.url = reqUrl;
         if (!Store.state.IS_APP) {
             config.headers['Closer-Agent'] = 'Closer-H5';
@@ -42,7 +41,6 @@ axio.interceptors.request.use(
         if (Cookies.get("GroukAuth") && config.url.indexOf("auth") == -1 && config.url.indexOf("account") == -1 || Cookies.get("GroukAuth") && config.url.indexOf("closer_account.bind_phone") != -1) {
             config.headers.Authorization = Cookies.get("GroukAuth");
         }
-        console.log("xxxx", (config.data && typeof(config.data.noIndicator) != "undefined"))
         if (!(config.data && typeof(config.data.noIndicator) != "undefined")) {
             Indicator.open()
         }
