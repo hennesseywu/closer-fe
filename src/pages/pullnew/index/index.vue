@@ -126,7 +126,7 @@
           if (res) {
             this.isLogin = true;
           }
-          await this.getPullNewInfo();
+          await this.getPullNewInfo({ "noIndicator":true});
           await this.getYesterdayAwardAmt({ "noIndicator":true});
           let {
             data,
@@ -146,7 +146,7 @@
         })
       } else {
         this.checkLogin(async(res) => {
-          await this.getPullNewInfo();
+          await this.getPullNewInfo({ "noIndicator":true});
           await this.getYesterdayAwardAmt({ "noIndicator":true});
           let {
             data,
