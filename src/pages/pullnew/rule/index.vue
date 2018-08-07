@@ -74,7 +74,7 @@
 <style lang="less" scoped>
   .rule {
     background: url("../assets/images/bg.png") no-repeat center;
-    background-size: cover;
+    // background-size: cover;
     height: 2876pr;
     padding-top: 76pr;
     border
