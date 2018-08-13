@@ -31,6 +31,9 @@ const PullNewIndex = () =>
 const PullNewRule = () =>
     import ('@/pages/pullnew/rule')
 
+    // 成都土著活动
+const AnswerIndex = () =>
+    import ('@/pages/answer/index')
 
 Vue.use(Router)
 
@@ -89,13 +92,19 @@ const router = new Router({
             meta: {
                 title: '邀好友，赚现金'
             }
-        },
-        {
+        }, {
             path: '/pullNew/rule',
             name: 'pullNewRule',
             component: PullNewRule,
             meta: {
                 title: '邀好友，赚现金'
+            }
+        }, {
+            path: '/answer',
+            name: 'answerIndex',
+            component: AnswerIndex,
+            meta: {
+                title: '成都土著'
             }
         }
 
