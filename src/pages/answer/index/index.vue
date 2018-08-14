@@ -1,5 +1,11 @@
 <template>
-  <div>
-    index
+  <div class="index main">
+
   </div>
 </template>
+<script>
+  
+</script>
+<style lang="less">
+  
+</style>
