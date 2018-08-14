@@ -227,7 +227,7 @@
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
               //ios获取用户token 判断登录
-              bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {})
+              bridge.callHandler("inviteNewerAction", {'type':type,'img':'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534236465194&di=17466855726e087f602e47ec4a4d3604&imgtype=0&src=http%3A%2F%2Fp3.ifengimg.com%2Ffck%2F2017_20%2F452d4fe53008510_w640_h1138.jpg'}, function(data, responseCallback) {})
             }
           })
         } else if (ua.indexOf("closer-android") > -1) {
