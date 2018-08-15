@@ -105,7 +105,7 @@ const router = new Router({
             name: 'qa',
             component: Qa,
             meta: {
-                title: '邀好友，赚现金'
+                title: '我的客服'
             }
         }
     ]
