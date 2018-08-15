@@ -39,38 +39,60 @@
       </div>
     </div>
     <div class="bottom">
-      <div class="friends-list">
-        <div v-if="pullNewStatic.inviteUserTotalCount > 0">
-          <div class="remind-title" v-if="pullNewStatic.awardEnd">
-            恭喜你，奖金全部解冻了，再接再厉去邀请哦~
-          </div>
-          <div v-else>
-            <div class="remind-title" v-if="pullNewStatic.inviteUserTotalCount==pullNewStatic.remindCount">
-              已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧!
-            </div>
-            <div class="remind-title" v-else>
-              您有{{pullNewStatic.todayNotLoginUserCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
-            </div>
-          </div>
-        </div>
-        <div class="remind-title" v-else>
-          您还没有好友哦，快去邀请好友赚钱吧！
-        </div>
-        <mt-loadmore class="loadmore" v-if="!pullNewStatic.awardEnd&&loginUsers.length> 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance"
-          ref="loadmore">
-          <div class="remind-content">
-            <div class="friend" v-for="(value,key) in loginUsers" :key="key">
-              <img :src="fileUrl+value.inviteeUser.avatar" class="headphoto">
-              <div class="info">
-                <div class="name">{{value.inviteeUser.fullname}}</div>
-                <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
-              </div>
-              <div class="amount" v-if="value.loginAmount">+{{formateMoney(value.loginAmount/100)}}</div>
-              <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded,$event)"></div>
-            </div>.
-          </div>
-        </mt-loadmore>
+      <div class="bottom-tab">
+        <div class="tab-left" @click="clickTab('tabLeft')">新邀请好友</div>
+        <div class="tab-right" @click="clickTab('tabRight')">历史好友</div>
       </div>
+      <mt-tab-container v-model="tabActive">
+        <mt-tab-container-item class="friends-list" id='tabLeft'>
+          <div class="remind-title">
+            好友完成邀请进度，你将获取对应邀请的奖励金额
+          </div>
+          <div class="remind-content">
+            <div class="new-friend">
+              <div class="top">
+                <img class="headphoto" src=""/>
+                <div class="nickname">惺惺相惜</div>
+                <div class="date"></div>
+              </div>
+              <div class="middle"> </div>
+              <div class="bottom"></div>
+            </div>
+          </div>
+        </mt-tab-container-item>
+        <mt-tab-container-item class="friends-list" id='tabRight'>
+          <div v-if="pullNewStatic.inviteUserTotalCount > 0">
+            <div class="remind-title" v-if="pullNewStatic.awardEnd">
+              恭喜你，奖金全部解冻了，再接再厉去邀请哦~
+            </div>
+            <div v-else>
+              <div class="remind-title" v-if="pullNewStatic.inviteUserTotalCount==pullNewStatic.remindCount">
+                已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧!
+              </div>
+              <div class="remind-title" v-else>
+                您有{{pullNewStatic.todayNotLoginUserCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
+              </div>
+            </div>
+          </div>
+          <div class="remind-title" v-else>
+            您还没有好友哦，快去邀请好友赚钱吧！
+          </div>
+          <mt-loadmore class="loadmore" v-if="!pullNewStatic.awardEnd&&loginUsers.length> 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance"
+            ref="loadmore">
+            <div class="remind-content">
+              <div class="friend" v-for="(value,key) in loginUsers" :key="key">
+                <img :src="fileUrl+value.inviteeUser.avatar" class="headphoto">
+                <div class="info">
+                  <div class="name">{{value.inviteeUser.fullname}}</div>
+                  <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
+                </div>
+                <div class="amount" v-if="value.loginAmount">+{{formateMoney(value.loginAmount/100)}}</div>
+                <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objsectID,value.reminded,$event)"></div>
+              </div>.
+            </div>
+          </mt-loadmore>
+        </mt-tab-container-item>
+      </mt-tab-container>
     </div>
     <Redbag v-if="awardAmt>0" :amount="formateMoney(awardAmt/100)"></Redbag>
   </div>
@@ -89,7 +111,6 @@
   import {
     dateFormat
   } from "../../../utils/utils";
-  
   
   Vue.component(Loadmore.name, Loadmore);
   import {
@@ -114,6 +135,7 @@
         pageSize: 10,
         totalPageNum: 0,
         isLogin: false,
+        tabActive: 'tabLeft',
         fileUrl: feConfig.fileUrl
       }
     },
@@ -126,8 +148,12 @@
           if (res) {
             this.isLogin = true;
           }
-          await this.getPullNewInfo({ "noIndicator":true});
-          await this.getYesterdayAwardAmt({ "noIndicator":true});
+          await this.getPullNewInfo({
+            "noIndicator": true
+          });
+          await this.getYesterdayAwardAmt({
+            "noIndicator": true
+          });
           let {
             data,
             pagesize,
@@ -135,7 +161,7 @@
           } = await this.getInviteUserList({
             pagenum: this.pageNum,
             pagesize: this.pageSize,
-             "noIndicator":true
+            "noIndicator": true
           });
           this.totalPageNum = Math.ceil(count / pagesize)
           this.loginUsers = data;
@@ -145,9 +171,17 @@
           }
         })
       } else {
+    // Cookies.set("GroukAuth", "1.11dd643541e18835c584925d3de1e83840e710b79aec62cd554840634729b4192f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd", { expires: 30 });
         this.checkLogin(async(res) => {
-          await this.getPullNewInfo({ "noIndicator":true});
-          await this.getYesterdayAwardAmt({ "noIndicator":true});
+          if (res) {
+            this.isLogin = true;
+          }
+          await this.getPullNewInfo({
+            "noIndicator": true
+          });
+          await this.getYesterdayAwardAmt({
+            "noIndicator": true
+          });
           let {
             data,
             pagesize,
@@ -155,7 +189,7 @@
           } = await this.getInviteUserList({
             pagenum: this.pageNum,
             pagesize: this.pageSize,
-            "noIndicator":true
+            "noIndicator": true
           });
           this.totalPageNum = Math.ceil(count / pagesize)
           this.loginUsers = data;
@@ -273,6 +307,9 @@
         this.$router.push({
           name: "pullNewRule"
         })
+      },
+      clickTab(tab) {
+        this.tabActive = tab;
       }
     }
   
@@ -513,18 +550,44 @@
     .bottom {
       background-color: #025182;
       padding-bottom: 48pr;
-      .friends-list {
-        border: 6pr solid #000000;
-        border-radius: 10pr;
+      .bottom-tab {
+        display: flex;
+        flex-direction: row;
+        border-right: 6pr solid #000000;
+        border-top: 6pr solid #000000;
+        border-left: 6pr solid #000000;
+        border-radius: 10pr 10pr 0 0;
+        text-align: center;
+        font-size: 32pr;
+        line-height: 50pr;
         margin: 0 17pr 0 21pr;
+        line-height: 50pr;
+        color: #ffffff;
+        .tab-left {
+          padding: 24pr 0 27pr 0;
+          width: 50%;
+          background: #1570A9;
+        }
+        .tab-right {
+          width: 50%;
+          background: #025182;
+          padding: 24pr 0 27pr 0;
+        }
+      }
+      .friends-list {
+        flex-shrink: 1;
+        margin: 0 17pr 0 21pr;
+        border-right: 6pr solid #000000;
+        border-bottom: 6pr solid #000000;
+        border-left: 6pr solid #000000;
+        border-radius: 0 0 10pr 10pr;
         .remind-title {
           width: 100%;
-          padding: 24pr 63pr 27pr 27pr;
-          background-color: #1570A9;
           border-bottom: 6pr solid #000000;
-          border-radius: 10pr;
+          padding: 24pr 0pr 27pr 0pr;
+          background-color: #1570A9;
           text-align: center;
-          font-size: 32pr;
+          font-size: 28pr;
           line-height: 50pr;
           color: #ffffff;
         }
@@ -576,6 +639,19 @@
                 right: 18pr;
                 background: url("../assets/images/remind-login.png") no-repeat center;
                 background-size: cover;
+              }
+            }
+            .new-friend {
+              .top {
+                .headphoto {}
+                .nickname {}
+                .date {}
+              }
+              .middle {
+                .friend-progress {}
+              }
+              .bottom {
+                .progress-desc {}
               }
             }
           }
