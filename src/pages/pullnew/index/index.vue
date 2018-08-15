@@ -48,15 +48,20 @@
           <div class="remind-title">
             好友完成邀请进度，你将获取对应邀请的奖励金额
           </div>
-          <div class="remind-content">
-            <div class="new-friend">
-              <div class="top">
-                <img class="headphoto" src=""/>
-                <div class="nickname">惺惺相惜</div>
-                <div class="date"></div>
+          <div class="loadmore">
+            <div class="remind-content">
+              <div class="new-friend">
+                <div class="top">
+                  <img class="headphoto" src="https://file-sandbox.tiejin.cn/avatar/u/9uxNUky7dr?v=1530096892354" />
+                  <div class="nickname">惺惺相惜</div>
+                  <div class="date">2018-08-15</div>
+                </div>
+                <div class="middle">
+                  <div class="dot"></div>
+                  <div class="line"></div>
+                </div>
+                <div class="bottom"></div>
               </div>
-              <div class="middle"> </div>
-              <div class="bottom"></div>
             </div>
           </div>
         </mt-tab-container-item>
@@ -171,7 +176,7 @@
           }
         })
       } else {
-    // Cookies.set("GroukAuth", "1.11dd643541e18835c584925d3de1e83840e710b79aec62cd554840634729b4192f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd", { expires: 30 });
+        // Cookies.set("GroukAuth", "1.11dd643541e18835c584925d3de1e83840e710b79aec62cd554840634729b4192f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd", { expires: 30 });
         this.checkLogin(async(res) => {
           if (res) {
             this.isLogin = true;
@@ -642,13 +647,34 @@
               }
             }
             .new-friend {
+              background-color: #DC214C;
+              padding-top: 30pr;
               .top {
-                .headphoto {}
-                .nickname {}
-                .date {}
+                font-size: 26pr;
+                color: #fde9ee;
+                display: flex;
+                flex-direction: row;
+                .headphoto {
+                  width: 60pr;
+                  height: 60pr;
+                  border-radius: 60pr;
+                  margin-left: 20pr;
+                }
+                .nickname {
+                  text-align: left;
+                  margin-left: 19pr;
+                  width: 424pr;
+                }
+                .date {
+                }
               }
               .middle {
-                .friend-progress {}
+                .dot {
+                background: url()
+                }
+                .line{
+
+                }
               }
               .bottom {
                 .progress-desc {}
