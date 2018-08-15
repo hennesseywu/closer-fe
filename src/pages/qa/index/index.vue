@@ -29,7 +29,7 @@
     .question {
       margin-bottom: 5pr;
       line-height: 32pr;
-      line-height: 40pr;
+      font-size: 32pr;
     }
     .answer {
       color: #4B4945;
