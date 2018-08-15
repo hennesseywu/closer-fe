@@ -32,8 +32,17 @@ const PullNewRule = () =>
     import ('@/pages/pullnew/rule')
 
     // 成都土著活动
-const AnswerIndex = () =>
-    import ('@/pages/answer/index')
+const LocalIndex = () =>
+    import ('@/pages/local/index')
+
+const Answer = () =>
+    import ('@/pages/local/answer')
+
+const Result = () =>
+    import ('@/pages/local/result')
+
+const LocalShare = () =>
+    import ('@/pages/local/share')
 
 Vue.use(Router)
 
@@ -100,9 +109,30 @@ const router = new Router({
                 title: '邀好友，赚现金'
             }
         }, {
-            path: '/answer',
-            name: 'answerIndex',
-            component: AnswerIndex,
+            path: '/local',
+            name: 'localIndex',
+            component: LocalIndex,
+            meta: {
+                title: '成都土著'
+            }
+        }, {
+            path: '/local/answer',
+            name: 'answer',
+            component: Answer,
+            meta: {
+                title: '成都土著'
+            }
+        }, {
+            path: '/local/result',
+            name: 'result',
+            component: Result,
+            meta: {
+                title: '成都土著'
+            }
+        }, {
+            path: '/local/share',
+            name: 'localShare',
+            component: LocalShare,
             meta: {
                 title: '成都土著'
             }
