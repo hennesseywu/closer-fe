@@ -31,8 +31,6 @@ const PullNewIndex = () =>
 const PullNewRule = () =>
     import ('@/pages/pullnew/rule')
 
-const Qa = () =>
-    import ('@/pages/qa/index')
 
 Vue.use(Router)
 
@@ -99,15 +97,8 @@ const router = new Router({
             meta: {
                 title: '邀好友，赚现金'
             }
-        },
-        {
-            path: '/qa',
-            name: 'qa',
-            component: Qa,
-            meta: {
-                title: '邀好友，赚现金'
-            }
         }
+
     ]
 
 })
