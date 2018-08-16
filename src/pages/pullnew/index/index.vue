@@ -39,94 +39,59 @@
       </div>
     </div>
     <div class="bottom">
-      <div class="bottom-tab">
-        <div :class="tabActive=='tabLeft' ?'tab-left' :'tab-right'" @click="clickTab('tabLeft')">新邀请好友</div>
-        <div :class="tabActive=='tabLeft' ? 'tab-right':'tab-left'" @click="clickTab('tabRight')">历史好友</div>
-      </div>
-      <mt-tab-container v-model="tabActive">
-        <mt-tab-container-item class="friends-list" id='tabLeft'>
-          <div class="remind-title">
-            好友完成邀请进度，你将获取对应邀请的奖励金额
+      <div class="friends-list">
+        <div v-if="pullNewStatic.inviteUserTotalCount > 0">
+          <div class="remind-title" v-if="pullNewStatic.awardEnd">
+            恭喜你，奖金全部解冻了，再接再厉去邀请哦~
           </div>
-          <mt-loadmore class="loadmore" v-if="!pullNewStatic.awardEnd&&loginUsers.length> 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance"
-            ref="loadmore">
-            <div class="remind-content">
-              <div class="new-friend" v-for="(value,key) in loginUsers" :key="key">
-                <div class="top">
-                  <img class="headphoto" :src="fileUrl+value.inviteeUser.avatar" />
-                  <div class="nickname">{{value.inviteeUser.fullname}}</div>
-                  <div class="date">{{formateDate(value.inviteeUser.createTime)}}</div>
-                </div>
-                <div class="middle" v-if="value.userActions&&value.userActions.userActionEnum&&value.userActions.userActionEnum=='listFeed'">
-                  <div class="dot-active"></div>
-                  <div class="line"></div>
-                  <div class="dot-grey"></div>
-                  <div class="line"></div>
-                  <div class="dot-grey"></div>
-                </div>
-                <div class="middle" v-else-if="value.userActions&&value.userActions.userActionEnum&&value.userActions.userActionEnum=='listFeed'&&value.userActions.userActionEnum.count==1">
-                  <div class="dot-active"></div>
-                  <div class="line"></div>
-                  <div class="dot-active"></div>
-                  <div class="line"></div>
-                  <div class="dot-grey"></div>
-                </div>
-                <div class="middle" v-else-if="value.userActions&&value.userActions.userActionEnum&&value.userActions.userActionEnum=='listFeed'&&value.userActions.userActionEnum.count==2">
-                  <div class="dot-active"></div>
-                  <div class="line"></div>
-                  <div class="dot-active"></div>
-                  <div class="line"></div>
-                  <div class="dot-active"></div>
-                </div>
-                <div class="middle" else>
-                  <div class="dot-grey"></div>
-                  <div class="line"></div>
-                  <div class="dot-grey"></div>
-                  <div class="line"></div>
-                  <div class="dot-grey"></div>
-                </div>
-                <div class="progress-bottom" v-if="value.userActions&&value.userActions.userActionEnum&&value.userActions.userActionEnum=='listFeed'">
-                  <span class="desc1">进入首页</span>
-                  <span class="desc2 ">查看1篇文章</span>
-                  <span class="desc3">查看2篇文章</span>
-                </div>
-              </div>
+          <div v-else>
+            <div class="remind-title" v-if="pullNewStatic.inviteUserTotalCount==pullNewStatic.remindCount">
+              已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧!
             </div>
-          </mt-loadmore>
-        </mt-tab-container-item>
-        <mt-tab-container-item class="friends-list" id='tabRight'>
-          <div v-if="pullNewStatic.inviteUserTotalCount > 0">
-            <div class="remind-title" v-if="pullNewStatic.awardEnd">
-              恭喜你，奖金全部解冻了，再接再厉去邀请哦~
-            </div>
-            <div v-else>
-              <div class="remind-title" v-if="pullNewStatic.inviteUserTotalCount==pullNewStatic.remindCount">
-                已经提醒全部好友登录了，再去邀请几个朋友一起赚钱吧!
-              </div>
-              <div class="remind-title" v-else>
-                您有{{pullNewStatic.todayNotLoginUserCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
-              </div>
+            <div class="remind-title" v-else>
+              您有{{pullNewStatic.todayNotLoginUserCount}}位好友今天未登录，提醒他们登录 每位好友登录为您解冻0.2元
             </div>
           </div>
-          <div class="remind-title" v-else>
-            您还没有好友哦，快去邀请好友赚钱吧！
-          </div>
-          <mt-loadmore class="loadmore" v-if="!pullNewStatic.awardEnd&&loginUsers.length> 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded1" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance"
-            ref="loadmore1">
-            <div class="remind-content">
-              <div class="friend" v-for="(value,key) in loginUsers" :key="key">
+        </div>
+        <div class="remind-title" v-else>
+          您还没有好友哦，快去邀请好友赚钱吧！
+        </div>
+        <mt-loadmore class="loadmore" v-if="!pullNewStatic.awardEnd&&loginUsers.length> 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance"
+          ref="loadmore">
+          <div class="remind-content">
+            <div class="friend" v-for="(value,key) in loginUsers" :key="key">
+              <div :class="key==0 ? 'top self-top' :'top'">
                 <img :src="fileUrl+value.inviteeUser.avatar" class="headphoto">
-                <div class="info">
+                <div :class="key==0 ? 'info self' : 'info'">
                   <div class="name">{{value.inviteeUser.fullname}}</div>
                   <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
                 </div>
                 <div class="amount" v-if="value.loginAmount">+{{formateMoney(value.loginAmount/100)}}</div>
-                <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objsectID,value.reminded,$event)"></div>
+                <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded,$event)"></div>
+              </div>
+              <div v-if="value.awardedCount==0&&typeof(value.step)!='undefined'">
+                <div class="arrow" @click="clickArrow($event,key)">
+                  <span class="progress-span">邀请进度</span>
+                  <span class="arrow-right"></span>
+                </div>
+                <div class="middle" :id="'m'+key">
+                  <div :class="value.step>0 ? 'dot': 'dot-grey'"></div>
+                  <div class="line"></div>
+                  <div :class="value.step>1 ? 'dot': 'dot-grey'"></div>
+                  <div class="line"></div>
+                  <div :class="value.step>2 ? 'dot': 'dot-grey'"></div>
+                </div>
+                <div class="progress-bottom" :id="'b'+key">
+                  <span :class="value.step>0 ? 'desc1 desc-active': 'desc1'">进入首页</span>
+                  <span :class="value.step>1 ? 'desc2 desc-active': 'desc2'">查看1篇文章</span>
+                  <span :class="value.step>2 ? 'desc3 desc-active': 'desc3'">查看2篇文章</span>
+                </div>
+  
               </div>
             </div>
-          </mt-loadmore>
-        </mt-tab-container-item>
-      </mt-tab-container>
+          </div>
+        </mt-loadmore>
+      </div>
     </div>
     <Redbag v-if="awardAmt>0" :amount="formateMoney(awardAmt/100)"></Redbag>
   </div>
@@ -206,7 +171,10 @@
           }
         })
       } else {
-        // Cookies.set("GroukAuth", "1.11dd643541e18835c584925d3de1e83840e710b79aec62cd554840634729b4192f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd", { expires: 30 });
+        // Cookies.set("GroukAuth", 
+        // "1.8e82d158f2cf188525c6bec291296ab0c0a711400790bb6cf721e858ae5211a32f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd", {
+        //   expires: 30
+        // });
         this.checkLogin(async(res) => {
           if (res) {
             this.isLogin = true;
@@ -228,6 +196,11 @@
             "awardType": "firstAward"
           });
           this.totalPageNum = Math.ceil(count / pagesize)
+          for (let u in data) {
+            if (typeof(data[u].awardedCount) != "undefined" && data[u].awardedCount == 0 && typeof(data[u].userActions) != "undefined") {
+              data[u].step = this.checkLoginUser(data[u].userActions);
+            }
+          }
           this.loginUsers = data;
           if (this.pageNum == this.totalPageNum) {
             this.allLoaded = true;
@@ -259,10 +232,6 @@
           return;
         }
         this.pageNum++;
-        let type = "firstAward";
-        if (this.tabActive == "tabRight") {
-          type = "dailyAward"
-        }
         let {
           data,
           pagesize,
@@ -273,8 +242,11 @@
           awardType: type
         });
         this.totalPageNum = Math.ceil(count / pagesize)
-        for (var a in data) {
-          this.loginUsers.push(data[a]);
+        for (let u in data) {
+          if (typeof(data[u].awardedCount) != "undefined" && data[u].awardedCount == 0 && typeof(data[u].userActions) != "undefined") {
+            data[u].step = this.checkLoginUser(data[u].userActions);
+          }
+          this.loginUsers.push(data[u]);
         }
         if (this.tabActive == 'tabLeft') {
           this.$refs.loadmore.onBottomLoaded();
@@ -287,17 +259,34 @@
         }
       },
       async remind(invitee, reminded, that) {
-        console.log(that.srcElement.className)
         if (reminded) {
           Toast("已经提醒过啦~")
           return;
         }
+        console.log(invitee)
         let backData = await this.remindLogin({
           invitee: invitee
         });
         if (backData) {
           that.srcElement.className = "reminded"
         }
+      },
+      checkLoginUser(userAction) {
+        console.log(userAction)
+        let step = 0;
+        for (let u in userAction) {
+          if (userAction[u]['userActionEnum'] == "listFeed") {
+  
+            step = 1;
+          } else if (userAction[u]['userActionEnum'] == "viewSubject") {
+            if (userAction[u]['count'] == 1) {
+              step = 2;
+            } else {
+              step = 3;
+            }
+          }
+        }
+        return step;
       },
       toShare(type) {
         if (!this.isLogin) {
@@ -323,6 +312,17 @@
           }
         }
   
+      },
+      clickArrow(e, key) {
+        if (e.target.className == "arrow-right") {
+          e.target.className = "arrow-down"
+          document.getElementById("m" + key).style.display = 'flex';
+          document.getElementById("b" + key).style.display = 'flex';
+        } else {
+          e.target.className = "arrow-right";
+          document.getElementById("m" + key).style.display = 'none';
+          document.getElementById("b" + key).style.display = 'none';
+        }
       },
       inviteFriends() {
         if (!this.isLogin) {
@@ -456,7 +456,7 @@
       .content-desc {
         font-size: 28pr;
         color: #454545;
-        margin: 0 30pr 38pr 30pr;
+        margin: 0 30pr 25pr 30pr;
       }
       .progress-bg {
         background: url("../assets/images/progress-bg.png") no-repeat center;
@@ -599,41 +599,15 @@
     .bottom {
       background-color: #025182;
       padding-bottom: 48pr;
-      .bottom-tab {
-        display: flex;
-        flex-direction: row;
-        border-right: 6pr solid #000000;
-        border-top: 6pr solid #000000;
-        border-left: 6pr solid #000000;
-        border-radius: 10pr 10pr 0 0;
-        text-align: center;
-        font-size: 32pr;
-        line-height: 50pr;
-        margin: 0 17pr 0 21pr;
-        line-height: 50pr;
-        color: #ffffff;
-        .tab-left {
-          padding: 24pr 0 27pr 0;
-          width: 50%;
-          background: #1570A9;
-        }
-        .tab-right {
-          width: 50%;
-          background: #025182;
-          padding: 24pr 0 27pr 0;
-        }
-      }
       .friends-list {
         flex-shrink: 1;
         margin: 0 17pr 0 21pr;
-        border-right: 6pr solid #000000;
-        border-bottom: 6pr solid #000000;
-        border-left: 6pr solid #000000;
+        border: 6pr solid #000000;
         border-radius: 0 0 10pr 10pr;
         .remind-title {
           width: 100%;
           border-bottom: 6pr solid #000000;
-          padding: 24pr 0pr 27pr 0pr;
+          padding: 24pr 63pr 27pr 59pr;
           background-color: #1570A9;
           text-align: center;
           font-size: 28pr;
@@ -646,72 +620,58 @@
           .remind-content {
             .friend {
               position: relative;
-              display: flex;
-              flex-direction: row;
               margin-top: 41pr;
-              height: 100pr;
               color: #ffffff;
-              .headphoto {
-                width: 87pr;
-                height: 87pr;
-                margin-left: 23pr;
-              }
-              .info {
-                width: 300pr;
-                display: flex;
-                flex-direction: column;
-                margin-left: 20pr;
-                .name {
-                  font-size: 28pr;
-                  margin-right: 20pr;
+              .self-top{
+                   border: 6pr solid #feda02;
                 }
-              }
-              .amount {
-                width: 225pr;
-                height: 96pr;
-                text-align: center;
-                font-size: 32pr;
-                margin-top: 25pr;
-              }
-              .reminded {
-                position: absolute;
-                width: 225pr;
-                height: 96pr;
-                right: 18pr;
-                background: url("../assets/images/reminded.png") no-repeat center;
-                background-size: cover;
-              }
-              .remind-login {
-                position: absolute;
-                width: 225pr;
-                height: 96pr;
-                right: 18pr;
-                background: url("../assets/images/remind-login.png") no-repeat center;
-                background-size: cover;
-              }
-            }
-            .new-friend {
-              background-color: #DC214C;
-              padding-top: 30pr;
               .top {
-                font-size: 26pr;
-                color: #fde9ee;
                 display: flex;
                 flex-direction: row;
                 .headphoto {
-                  width: 60pr;
-                  height: 60pr;
-                  border-radius: 60pr;
-                  margin-left: 20pr;
+                  width: 87pr;
+                  height: 87pr;
+                  margin-left: 23pr;
                 }
-                .nickname {
-                  text-align: left;
-                  margin-left: 19pr;
-                  width: 424pr;
+                .info {
+                  width: 300pr;
+                  display: flex;
+                  flex-direction: column;
+                  margin-left: 20pr;
+                  .name {
+                    font-size: 28pr;
+                    margin-right: 20pr;
+                  }
+                }
+                .self {
+                  color: #000000;
+                }
+                .amount {
+                  width: 225pr;
+                  height: 96pr;
+                  text-align: center;
+                  font-size: 32pr;
+                  margin-top: 15pr;
+                }
+                .reminded {
+                  position: absolute;
+                  width: 225pr;
+                  height: 96pr;
+                  right: 18pr;
+                  background: url("../assets/images/reminded.png") no-repeat center;
+                  background-size: cover;
+                }
+                .remind-login {
+                  position: absolute;
+                  width: 225pr;
+                  height: 96pr;
+                  right: 18pr;
+                  background: url("../assets/images/remind-login.png") no-repeat center;
+                  background-size: cover;
                 }
               }
               .middle {
-                display: flex;
+                display: none;
                 flex-direction: row;
                 margin: 17pr 102pr 17pr 102pr;
                 .dot {
@@ -735,6 +695,7 @@
                 }
               }
               .progress-bottom {
+                display: none;
                 font-size: 28pr;
                 color: #FFC4D1;
                 .desc-active {
@@ -748,6 +709,56 @@
                 }
                 .desc3 {
                   margin-right: 43pr;
+                }
+              }
+              .arrow {
+                text-align: left;
+                margin-top: 10pr;
+                .progress-span {
+                  font-size: 28pr;
+                  color: #FDE9EE;
+                  margin: 10pr 10pr 0 31pr;
+                }
+                .arrow-right:after {
+                  content: '';
+                  display: inline-block;
+                  width: 14pr;
+                  height: 14pr;
+                  border-top: 2pr solid #ffffff;
+                  border-right: 2pr solid #ffffff;
+                  transform: rotate(45deg);
+                  -webkit-transform: rotate(45deg);
+                }
+                .arrow-down:after {
+                  content: '';
+                  display: inline-block;
+                  width: 14pr;
+                  height: 14pr;
+                  border-top: 2pr solid #ffffff;
+                  border-right: 2pr solid #ffffff;
+                  transform: rotate(135deg);
+                  -webkit-transform: rotate(135deg);
+                }
+              }
+            }
+            .new-friend {
+              background-color: #DC214C;
+              padding-top: 30pr;
+              .top {
+                font-size: 26pr;
+                color: #fde9ee;
+                display: flex;
+                flex-direction: row;
+                .headphoto {
+                  width: 60pr;
+                  height: 60pr;
+                  border-radius: 60pr;
+                  margin-left: 20pr;
+                }
+                .nickname {
+                  text-align: left;
+                  margin-left: 19pr;
+                  width: 424pr;
                 }
               }
             }
