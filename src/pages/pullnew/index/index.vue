@@ -80,9 +80,9 @@
                 <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded,$event)"></div>
               </div>
               <div v-if="value.awardedCount==0&&typeof(value.step)!='undefined'">
-                <div class="arrow" @click="clickArrow($event,key)">
+                <div class="arrow">
                   <span class="progress-span">邀请进度</span>
-                  <span class="arrow-right"></span>
+                  <span class="arrow-right" @click="clickArrow($event,key)"></span>
                 </div>
                 <div class="middle" :id="'m'+key">
                   <div :class="value.step>0 ? 'dot': 'dot-grey'"></div>
@@ -186,13 +186,6 @@
           }
         })
       } else {
-        // this.$router.push({
-        //   name: "activityOver"
-        // })
-        // Cookies.set("GroukAuth", 
-        // "1.8e82d158f2cf188525c6bec291296ab0c0a711400790bb6cf721e858ae5211a32f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd", {
-        //   expires: 30
-        // });
         this.checkLogin(async(res) => {
           if (res) {
             this.isLogin = true;
