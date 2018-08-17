@@ -737,13 +737,14 @@
                   color: #ffffff;
                 }
                 .desc1 {
+                  margin-left: 50pr;
                   margin-right: 100pr;
                 }
                 .desc2 {
                   margin-right: 76pr;
                 }
                 .desc3 {
-                  margin-right: 43pr;
+                  margin-right: 23pr;
                 }
               }
               .arrow {
