@@ -287,11 +287,9 @@
         }
       },
       checkLoginUser(userAction) {
-        console.log(userAction)
         let step = 0;
         for (let u in userAction) {
           if (userAction[u]['userActionEnum'] == "listFeed") {
-  
             step = 1;
           } else if (userAction[u]['userActionEnum'] == "viewSubject") {
             if (userAction[u]['count'] == 1) {
