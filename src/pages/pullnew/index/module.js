@@ -121,7 +121,6 @@ export default {
                 Toast('网络开小差啦，请稍后再试')
                 return;
             });
-            // let data = { "result": { "awardTotalAmt": 0, "awardEnd": true, "inviteUserTotalCount": 0, "invitedUsers": [{ "amount": 200, "remindTime": 1532659481220, "create_time": 1531299414724, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576465247175075", "invitee": "9Bw5d2unBX" }, { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }, { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }, { "amount": 1000, "remindTime": 1532659465391, "create_time": 1531299378151, "attributes": {}, "inviter": "9cvmI6wW0u", "id": "59576445919822231", "invitee": "9Bw4HRFug1" }], "todayNotLoginUserCount": 2 }, "code": 0 }
             if (typeof(data.code) != "undefined" && data.code == 0) {
                 if (typeof(data.result.inviteUserTotalCount) != "undefined") {
                     let newUsers = {}

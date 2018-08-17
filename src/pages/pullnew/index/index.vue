@@ -40,6 +40,16 @@
     </div>
     <div class="bottom">
       <div class="friends-list">
+        <div class="remind-self" v-if="loginUsers.length>0">
+          <img :src="fileUrl+loginUsers[0].inviteeUser.avatar" class="headphoto">
+          <div class="info">
+            <div class="name">{{loginUsers[0].inviteeUser.fullname}}</div>
+            <div class="name">{{formateDate(loginUsers[0].inviteeUser.createTime)}}</div>
+          </div>
+          <div class="amount" v-if="loginUsers[0].loginAmount">你今日获得 +{{formateMoney(loginUsers[0].loginAmount/100)}}元</div>
+          <div class="amount" v-else>你今日获得 0元</div>
+        </div>
+        <div class="line"></div>
         <div v-if="pullNewStatic.inviteUserTotalCount > 0">
           <div class="remind-title" v-if="pullNewStatic.awardEnd">
             恭喜你，奖金全部解冻了，再接再厉去邀请哦~
@@ -59,15 +69,35 @@
         <mt-loadmore class="loadmore" v-if="!pullNewStatic.awardEnd&&loginUsers.length> 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance"
           ref="loadmore">
           <div class="remind-content">
-            <div class="friend" v-for="(value,key) in loginUsers" :key="key">
-              <img :src="fileUrl+value.inviteeUser.avatar" class="headphoto">
-              <div class="info">
-                <div class="name">{{value.inviteeUser.fullname}}</div>
-                <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
+            <div class="friend" v-for="(value,key) in loginUsers" :key="key" v-if="key!=0">
+              <div class="top">
+                <img :src="fileUrl+value.inviteeUser.avatar" class="headphoto">
+                <div class="info">
+                  <div class="name">{{value.inviteeUser.fullname}}</div>
+                  <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
+                </div>
+                <div class="amount" v-if="value.loginAmount">+{{formateMoney(value.loginAmount/100)}}</div>
+                <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded,$event)"></div>
               </div>
-              <div class="amount" v-if="value.loginAmount">+{{formateMoney(value.loginAmount/100)}}</div>
-              <div v-else :class="value.reminded ? 'reminded':'remind-login'" @click="remind(value.inviteeUser.objectID,value.reminded,$event)"></div>
-            </div>.
+              <div v-if="value.awardedCount==0&&typeof(value.step)!='undefined'">
+                <div class="arrow" @click="clickArrow($event,key)">
+                  <span class="progress-span">邀请进度</span>
+                  <span class="arrow-right"></span>
+                </div>
+                <div class="middle" :id="'m'+key">
+                  <div :class="value.step>0 ? 'dot': 'dot-grey'"></div>
+                  <div class="line"></div>
+                  <div :class="value.step>1 ? 'dot': 'dot-grey'"></div>
+                  <div class="line"></div>
+                  <div :class="value.step>2 ? 'dot': 'dot-grey'"></div>
+                </div>
+                <div class="progress-bottom" :id="'b'+key">
+                  <span :class="value.step>0 ? 'desc1 desc-active': 'desc1'">进入首页</span>
+                  <span :class="value.step>1 ? 'desc2 desc-active': 'desc2'">查看1篇文章</span>
+                  <span :class="value.step>2 ? 'desc3 desc-active': 'desc3'">查看2篇文章</span>
+                </div>
+              </div>
+            </div>
           </div>
         </mt-loadmore>
       </div>
@@ -90,7 +120,6 @@
     dateFormat
   } from "../../../utils/utils";
   
-  
   Vue.component(Loadmore.name, Loadmore);
   import {
     mapActions,
@@ -108,12 +137,14 @@
         bottomLoadingText: '加载中',
         redbagVisiable: false,
         allLoaded: false,
+        allLoaded1: false,
         inviteUsers: [],
         loginUsers: [],
         pageNum: 1,
         pageSize: 10,
         totalPageNum: 0,
         isLogin: false,
+        tabActive: 'tabLeft',
         fileUrl: feConfig.fileUrl
       }
     },
@@ -126,8 +157,12 @@
           if (res) {
             this.isLogin = true;
           }
-          await this.getPullNewInfo({ "noIndicator":true});
-          await this.getYesterdayAwardAmt({ "noIndicator":true});
+          await this.getPullNewInfo({
+            "noIndicator": true
+          });
+          await this.getYesterdayAwardAmt({
+            "noIndicator": true
+          });
           let {
             data,
             pagesize,
@@ -135,9 +170,15 @@
           } = await this.getInviteUserList({
             pagenum: this.pageNum,
             pagesize: this.pageSize,
-             "noIndicator":true
+            "noIndicator": true,
+            "awardType": "firstAward"
           });
           this.totalPageNum = Math.ceil(count / pagesize)
+          for (let u in data) {
+            if (typeof(data[u].awardedCount) != "undefined" && data[u].awardedCount == 0 && typeof(data[u].userActions) != "undefined") {
+              data[u].step = this.checkLoginUser(data[u].userActions);
+            }
+          }
           this.loginUsers = data;
           if (this.pageNum == this.totalPageNum) {
             this.allLoaded = true;
@@ -145,8 +186,44 @@
           }
         })
       } else {
-        this.$router.push({
-          name: "activityOver"
+        // this.$router.push({
+        //   name: "activityOver"
+        // })
+        // Cookies.set("GroukAuth", 
+        // "1.8e82d158f2cf188525c6bec291296ab0c0a711400790bb6cf721e858ae5211a32f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd", {
+        //   expires: 30
+        // });
+        this.checkLogin(async(res) => {
+          if (res) {
+            this.isLogin = true;
+          }
+          await this.getPullNewInfo({
+            "noIndicator": true
+          });
+          await this.getYesterdayAwardAmt({
+            "noIndicator": true
+          });
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pageNum,
+            pagesize: this.pageSize,
+            "noIndicator": true,
+            "awardType": "firstAward"
+          });
+          this.totalPageNum = Math.ceil(count / pagesize)
+          for (let u in data) {
+            if (typeof(data[u].awardedCount) != "undefined" && data[u].awardedCount == 0 && typeof(data[u].userActions) != "undefined") {
+              data[u].step = this.checkLoginUser(data[u].userActions);
+            }
+          }
+          this.loginUsers = data;
+          if (this.pageNum == this.totalPageNum) {
+            this.allLoaded = true;
+            this.bottomPullText = ""
+          }
         })
       }
     },
@@ -160,7 +237,11 @@
       ...mapActions("pullNew", ["checkLogin", "getInviteUserList", "getPullNewInfo", "remindLogin", "getYesterdayAwardAmt"]),
       async loadBottom() {
         if (this.pageNum == this.totalPageNum) {
-          this.$refs.loadmore.onBottomLoaded();
+          if (this.tabActive == 'tabLeft') {
+            this.$refs.loadmore.onBottomLoaded();
+          } else {
+            this.$refs.loadmore1.onBottomLoaded();
+          }
           this.allLoaded = true;
           this.bottomPullText = ""
           return;
@@ -172,30 +253,55 @@
           count
         } = await this.getInviteUserList({
           pagenum: this.pageNum,
-          pagesize: this.pageSize
+          pagesize: this.pageSize,
+          awardType: type
         });
         this.totalPageNum = Math.ceil(count / pagesize)
-        for (var a in data) {
-          this.loginUsers.push(data[a]);
+        for (let u in data) {
+          if (typeof(data[u].awardedCount) != "undefined" && data[u].awardedCount == 0 && typeof(data[u].userActions) != "undefined") {
+            data[u].step = this.checkLoginUser(data[u].userActions);
+          }
+          this.loginUsers.push(data[u]);
         }
-        this.$refs.loadmore.onBottomLoaded();
+        if (this.tabActive == 'tabLeft') {
+          this.$refs.loadmore.onBottomLoaded();
+        } else {
+          this.$refs.loadmore1.onBottomLoaded();
+        }
         if (this.pageNum == this.totalPageNum) {
           this.allLoaded = true;
           this.bottomPullText = ""
         }
       },
       async remind(invitee, reminded, that) {
-        console.log(that.srcElement.className)
         if (reminded) {
           Toast("已经提醒过啦~")
           return;
         }
+        console.log(invitee)
         let backData = await this.remindLogin({
           invitee: invitee
         });
         if (backData) {
           that.srcElement.className = "reminded"
         }
+      },
+      checkLoginUser(userAction) {
+        console.log(userAction)
+        let step = 0;
+        for (let u in userAction) {
+          if (userAction[u]['userActionEnum'] == "listFeed") {
+  
+            step = 1;
+          } else if (userAction[u]['userActionEnum'] == "viewSubject") {
+            if (userAction[u]['count'] == 1) {
+              step = 2;
+            } else {
+              step = 3;
+            }
+          }
+        }
+        return step;
       },
       toShare(type) {
         if (!this.isLogin) {
@@ -221,6 +327,17 @@
           }
         }
   
+      },
+      clickArrow(e, key) {
+        if (e.target.className == "arrow-right") {
+          e.target.className = "arrow-down"
+          document.getElementById("m" + key).style.display = 'flex';
+          document.getElementById("b" + key).style.display = 'flex';
+        } else {
+          e.target.className = "arrow-right";
+          document.getElementById("m" + key).style.display = 'none';
+          document.getElementById("b" + key).style.display = 'none';
+        }
       },
       inviteFriends() {
         if (!this.isLogin) {
@@ -254,6 +371,9 @@
         this.$router.push({
           name: "pullNewRule"
         })
+      },
+      clickTab(tab) {
+        this.tabActive = tab;
       }
     }
   
@@ -351,7 +471,7 @@
       .content-desc {
         font-size: 28pr;
         color: #454545;
-        margin: 0 30pr 38pr 30pr;
+        margin: 0 30pr 25pr 30pr;
       }
       .progress-bg {
         background: url("../assets/images/progress-bg.png") no-repeat center;
@@ -495,19 +615,54 @@
       background-color: #025182;
       padding-bottom: 48pr;
       .friends-list {
-        border: 6pr solid #000000;
-        border-radius: 10pr;
+        flex-shrink: 1;
+        background: #1570A9;
         margin: 0 17pr 0 21pr;
+        border: 6pr solid #000000;
+        border-radius: 0 0 10pr 10pr;
+        .remind-self {
+          color: #ACDFFF;
+          margin-top: 20pr;
+          display: flex;
+          flex-direction: row;
+          .headphoto {
+            width: 87pr;
+            height: 87pr;
+            margin-left: 23pr;
+          }
+          .info {
+            width: 300pr;
+            display: flex;
+            flex-direction: column;
+            margin-left: 20pr;
+            .name {
+              font-size: 28pr;
+              margin-right: 20pr;
+            }
+          }
+          .amount {
+            width: 225pr;
+            height: 96pr;
+            text-align: center;
+            font-size: 28pr;
+            margin-top: 15pr;
+          }
+        }
+        .line {
+          width: 628pr;
+          height: 2pr;
+          margin: 10pr 43pr 20pr 39pr;
+          background: #2685C1;
+        }
         .remind-title {
+          color: #ACDFFF;
           width: 100%;
-          padding: 24pr 63pr 27pr 27pr;
-          background-color: #1570A9;
           border-bottom: 6pr solid #000000;
-          border-radius: 10pr;
+          padding: 0pr 63pr 27pr 59pr;
+          background-color: #1570A9;
           text-align: center;
-          font-size: 32pr;
+          font-size: 28pr;
           line-height: 50pr;
-          color: #ffffff;
         }
         .loadmore {
           background-color: #DC214C;
@@ -515,48 +670,140 @@
           .remind-content {
             .friend {
               position: relative;
-              display: flex;
-              flex-direction: row;
               margin-top: 41pr;
-              height: 100pr;
               color: #ffffff;
-              .headphoto {
-                width: 87pr;
-                height: 87pr;
-                margin-left: 23pr;
-              }
-              .info {
-                width: 300pr;
+              .top {
                 display: flex;
-                flex-direction: column;
-                margin-left: 20pr;
-                .name {
-                  font-size: 28pr;
-                  margin-right: 20pr;
+                flex-direction: row;
+                .headphoto {
+                  width: 87pr;
+                  height: 87pr;
+                  margin-left: 23pr;
+                }
+                .info {
+                  width: 300pr;
+                  display: flex;
+                  flex-direction: column;
+                  margin-left: 20pr;
+                  .name {
+                    font-size: 28pr;
+                    margin-right: 20pr;
+                  }
+                }
+                .amount {
+                  width: 225pr;
+                  height: 96pr;
+                  text-align: center;
+                  font-size: 32pr;
+                  margin-top: 15pr;
+                }
+                .reminded {
+                  position: absolute;
+                  width: 225pr;
+                  height: 96pr;
+                  right: 18pr;
+                  background: url("../assets/images/reminded.png") no-repeat center;
+                  background-size: cover;
+                }
+                .remind-login {
+                  position: absolute;
+                  width: 225pr;
+                  height: 96pr;
+                  right: 18pr;
+                  background: url("../assets/images/remind-login.png") no-repeat center;
+                  background-size: cover;
                 }
               }
-              .amount {
-                width: 225pr;
-                height: 96pr;
-                text-align: center;
-                font-size: 32pr;
-                margin-top: 25pr;
+              .middle {
+                display: none;
+                flex-direction: row;
+                margin: 17pr 102pr 17pr 102pr;
+                .dot {
+                  background: url(../assets/images/dot1.png);
+                  background-size: cover;
+                  width: 33pr;
+                  height: 33pr;
+                }
+                .dot-grey {
+                  background: url(../assets/images/dot2.png);
+                  background-size: cover;
+                  width: 33pr;
+                  height: 33pr;
+                }
+                .line {
+                  margin: 12pr 2pr 12pr 2pr;
+                  width: 209pr;
+                  height: 4pr;
+                  border: 4pr dashed #313131;
+                  width: 200pr;
+                }
               }
-              .reminded {
-                position: absolute;
-                width: 225pr;
-                height: 96pr;
-                right: 18pr;
-                background: url("../assets/images/reminded.png") no-repeat center;
-                background-size: cover;
+              .progress-bottom {
+                display: none;
+                font-size: 28pr;
+                color: #FFC4D1;
+                .desc-active {
+                  color: #ffffff;
+                }
+                .desc1 {
+                  margin-right: 100pr;
+                }
+                .desc2 {
+                  margin-right: 76pr;
+                }
+                .desc3 {
+                  margin-right: 43pr;
+                }
               }
-              .remind-login {
-                position: absolute;
-                width: 225pr;
-                height: 96pr;
-                right: 18pr;
-                background: url("../assets/images/remind-login.png") no-repeat center;
-                background-size: cover;
+              .arrow {
+                text-align: left;
+                margin-top: 10pr;
+                .progress-span {
+                  font-size: 28pr;
+                  color: #FDE9EE;
+                  margin: 10pr 10pr 0 31pr;
+                }
+                .arrow-right:after {
+                  content: '';
+                  display: inline-block;
+                  width: 14pr;
+                  height: 14pr;
+                  border-top: 2pr solid #ffffff;
+                  border-right: 2pr solid #ffffff;
+                  transform: rotate(45deg);
+                  -webkit-transform: rotate(45deg);
+                }
+                .arrow-down:after {
+                  content: '';
+                  display: inline-block;
+                  width: 14pr;
+                  height: 14pr;
+                  border-top: 2pr solid #ffffff;
+                  border-right: 2pr solid #ffffff;
+                  transform: rotate(135deg);
+                  -webkit-transform: rotate(135deg);
+                }
+              }
+            }
+            .new-friend {
+              background-color: #DC214C;
+              padding-top: 30pr;
+              .top {
+                font-size: 26pr;
+                color: #fde9ee;
+                display: flex;
+                flex-direction: row;
+                .headphoto {
+                  width: 60pr;
+                  height: 60pr;
+                  border-radius: 60pr;
+                  margin-left: 20pr;
+                }
+                .nickname {
+                  text-align: left;
+                  margin-left: 19pr;
+                  width: 424pr;
+                }
               }
             }
           }
