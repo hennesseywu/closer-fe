@@ -724,8 +724,8 @@
                 .line {
                   margin: 12pr 2pr 12pr 2pr;
                   width: 209pr;
-                  height: 4pr;
-                  border: 4pr dashed #313131;
+                  height: 2pr;
+                  border: 2pr dashed #313131;
                   width: 200pr;
                 }
               }
