@@ -40,6 +40,16 @@
     </div>
     <div class="bottom">
       <div class="friends-list">
+        <div class="remind-self" v-if="loginUsers.length>0">
+          <img :src="fileUrl+loginUsers[0].inviteeUser.avatar" class="headphoto">
+          <div class="info">
+            <div class="name">{{loginUsers[0].inviteeUser.fullname}}</div>
+            <div class="name">{{formateDate(loginUsers[0].inviteeUser.createTime)}}</div>
+          </div>
+          <div class="amount" v-if="loginUsers[0].loginAmount">你今日获得 +{{formateMoney(loginUsers[0].loginAmount/100)}}元</div>
+          <div class="amount" v-else>你今日获得 0元</div>
+        </div>
+        <div class="line"></div>
         <div v-if="pullNewStatic.inviteUserTotalCount > 0">
           <div class="remind-title" v-if="pullNewStatic.awardEnd">
             恭喜你，奖金全部解冻了，再接再厉去邀请哦~
@@ -59,10 +69,10 @@
         <mt-loadmore class="loadmore" v-if="!pullNewStatic.awardEnd&&loginUsers.length> 0" :bottom-method="loadBottom" :auto-fill="false" :bottom-all-loaded="allLoaded" :bottomPullText="bottomPullText" :bottomLoadingText="bottomLoadingText" :bottomDistance="bottomDistance"
           ref="loadmore">
           <div class="remind-content">
-            <div class="friend" v-for="(value,key) in loginUsers" :key="key">
-              <div :class="key==0 ? 'top self-top' :'top'">
+            <div class="friend" v-for="(value,key) in loginUsers" :key="key" v-if="key!=0">
+              <div class="top">
                 <img :src="fileUrl+value.inviteeUser.avatar" class="headphoto">
-                <div :class="key==0 ? 'info self' : 'info'">
+                <div class="info">
                   <div class="name">{{value.inviteeUser.fullname}}</div>
                   <div class="name">{{formateDate(value.inviteeUser.createTime)}}</div>
                 </div>
@@ -86,7 +96,6 @@
                   <span :class="value.step>1 ? 'desc2 desc-active': 'desc2'">查看1篇文章</span>
                   <span :class="value.step>2 ? 'desc3 desc-active': 'desc3'">查看2篇文章</span>
                 </div>
-  
               </div>
             </div>
           </div>
@@ -601,18 +610,53 @@
       padding-bottom: 48pr;
       .friends-list {
         flex-shrink: 1;
+        background: #1570A9;
         margin: 0 17pr 0 21pr;
         border: 6pr solid #000000;
         border-radius: 0 0 10pr 10pr;
+        .remind-self {
+          color: #ACDFFF;
+          margin-top: 20pr;
+          display: flex;
+          flex-direction: row;
+          .headphoto {
+            width: 87pr;
+            height: 87pr;
+            margin-left: 23pr;
+          }
+          .info {
+            width: 300pr;
+            display: flex;
+            flex-direction: column;
+            margin-left: 20pr;
+            .name {
+              font-size: 28pr;
+              margin-right: 20pr;
+            }
+          }
+          .amount {
+            width: 225pr;
+            height: 96pr;
+            text-align: center;
+            font-size: 28pr;
+            margin-top: 15pr;
+          }
+        }
+        .line {
+          width: 628pr;
+          height: 2pr;
+          margin: 10pr 43pr 20pr 39pr;
+          background: #2685C1;
+        }
         .remind-title {
+          color: #ACDFFF;
           width: 100%;
           border-bottom: 6pr solid #000000;
-          padding: 24pr 63pr 27pr 59pr;
+          padding: 0pr 63pr 27pr 59pr;
           background-color: #1570A9;
           text-align: center;
           font-size: 28pr;
           line-height: 50pr;
-          color: #ffffff;
         }
         .loadmore {
           background-color: #DC214C;
@@ -622,9 +666,6 @@
               position: relative;
               margin-top: 41pr;
               color: #ffffff;
-              .self-top{
-                   border: 6pr solid #feda02;
-                }
               .top {
                 display: flex;
                 flex-direction: row;
@@ -642,9 +683,6 @@
                     font-size: 28pr;
                     margin-right: 20pr;
                   }
-                }
-                .self {
-                  color: #000000;
                 }
                 .amount {
                   width: 225pr;
