@@ -31,9 +31,18 @@ const PullNewIndex = () =>
 const PullNewRule = () =>
     import ('@/pages/pullnew/rule')
 
-// 成都土著活动
+    // 成都土著活动
 const LocalIndex = () =>
     import ('@/pages/local/index')
+
+const LocalAnswer = () =>
+    import ('@/pages/local/answer')
+
+const LocalResult = () =>
+    import ('@/pages/local/result')
+
+const LocalShare = () =>
+    import ('@/pages/local/share')
 // 土著活动规则
 const LocalRule = () =>
     import ('@/pages/local/rule')
@@ -109,6 +118,27 @@ const router = new Router({
             path: '/local',
             name: 'localIndex',
             component: LocalIndex,
+            meta: {
+                title: '成都土著'
+            }
+        }, {
+            path: '/local/answer',
+            name: 'localAnswer',
+            component: LocalAnswer,
+            meta: {
+                title: '成都土著'
+            }
+        }, {
+            path: '/local/result',
+            name: 'localResult',
+            component: LocalResult,
+            meta: {
+                title: '成都土著'
+            }
+        }, {
+            path: '/local/share',
+            name: 'localShare',
+            component: LocalShare,
             meta: {
                 title: '成都土著'
             }
