@@ -47,7 +47,7 @@
             <div class="name">{{formateDate(loginUsers[0].inviteeUser.createTime)}}</div>
           </div>
           <div class="amount" v-if="loginUsers[0].loginAmount">你今日获得 +{{formateMoney(loginUsers[0].loginAmount/100)}}元</div>
-          <div class="amount" v-else>你今日获得 10:00元</div>
+          <div class="amount" v-else>你今日获得 0元</div>
         </div>
         <div class="line"></div>
         <div v-if="pullNewStatic.inviteUserTotalCount > 0">
@@ -185,7 +185,7 @@
           }
         })
       } else {
-           Cookies.set("GroukAuth", '1.4f8f454f8e6c98ebc09da0105ffa3ca040e710b79aec62cd554840634729b4192f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd', { expires: 30 });
+           Cookies.set("GroukAuth", '1.78c17e45ed9c04281f45884889b6ebc6544bdb6e8a693431f34da248f838e21d2f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd', { expires: 30 });
         this.checkLogin(async(res) => {
           if (res) {
             this.isLogin = true;
