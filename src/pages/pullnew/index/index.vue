@@ -85,16 +85,16 @@
                   <span class="arrow-right" @click="clickArrow($event,key)"></span>
                 </div>
                 <div class="middle" :id="'m'+key">
-                  <div :class="value.step>0 ? 'dot': 'dot-grey'"></div>
+                  <div :class="value.step.step1 ? 'dot': 'dot-grey'"></div>
                   <div class="line"></div>
-                  <div :class="value.step>1 ? 'dot': 'dot-grey'"></div>
+                  <div :class="value.step.step2 ||value.step.step3 ? 'dot': 'dot-grey'"></div>
                   <div class="line"></div>
-                  <div :class="value.step>2 ? 'dot': 'dot-grey'"></div>
+                  <div :class="value.step.step2 ||value.step.step3 ? 'dot': 'dot-grey'"></div>
                 </div>
                 <div class="progress-bottom" :id="'b'+key">
-                  <span :class="value.step>0 ? 'desc1 desc-active': 'desc1'">进入首页</span>
-                  <span :class="value.step>1 ? 'desc2 desc-active': 'desc2'">查看1篇文章</span>
-                  <span :class="value.step>2 ? 'desc3 desc-active': 'desc3'">查看2篇文章</span>
+                  <span :class="value.step.step1 ? 'desc1 desc-active': 'desc1'">进入首页</span>
+                  <span :class="value.step.step2 ||value.step.step3 ? 'desc2 desc-active': 'desc2'">查看1篇文章</span>
+                  <span :class="value.step.step2 ||value.step.step3? 'desc3 desc-active': 'desc3'">查看2篇文章</span>
                 </div>
               </div>
             </div>
@@ -185,7 +185,9 @@
           }
         })
       } else {
-           Cookies.set("GroukAuth", '1.78c17e45ed9c04281f45884889b6ebc6544bdb6e8a693431f34da248f838e21d2f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd', { expires: 30 });
+        Cookies.set("GroukAuth", '1.5cac34ffabb92049a680f8981f0e011840e710b79aec62cd554840634729b4192f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd', {
+          expires: 30
+        });
         this.checkLogin(async(res) => {
           if (res) {
             this.isLogin = true;
@@ -278,19 +280,21 @@
         }
       },
       checkLoginUser(userAction) {
-        let step = 0;
+        let step1 = 0;
+        let step2 = 0;
+        let step3 = 0;
         for (let u in userAction) {
           if (userAction[u]['userActionEnum'] == "listFeed") {
-            step = 1;
+            step1 = 1;
           } else if (userAction[u]['userActionEnum'] == "viewSubject") {
             if (userAction[u]['count'] == 1) {
-              step = 2;
+              step2 = 1;
             } else {
-              step = 3;
+              step3 = 1;
             }
           }
         }
-        return step;
+        return {'step1':step1,'step2':step2,'step3':step3};
       },
       toShare(type) {
         if (!this.isLogin) {
