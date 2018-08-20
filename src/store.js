@@ -5,6 +5,7 @@ import index from './pages/worldcup/index/module'
 import activity from './pages/worldcup/activity/module'
 import tbLogin from './pages/teabar/index/module'
 import pullNew from './pages/pullnew/index/module'
+import local from './pages/local/index/module'
 
 
 Vue.use(Vuex)
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     state: {
         UA: "",
         IS_APP: false,
+        IS_WX: false,
         IS_NEW_USER: false,
         IS_DEV: false
     },
@@ -20,6 +22,7 @@ export default new Vuex.Store({
         index,
         activity,
         tbLogin,
-        pullNew
+        pullNew,
+        local
     }
 })

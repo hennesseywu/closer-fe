@@ -39,6 +39,7 @@ window.setupWebViewJavascriptBridge = function(callback) {
 Vue.config.productionTip = false
 Vue.use(MintUI)
 
+checkUA();
 // 运行时动态设置
 pageResize()
 window.onresize = pageResize;
@@ -47,7 +48,16 @@ function pageResize() {
     let fontSize = Math.min(screen.width, document.documentElement.getBoundingClientRect().width) / 375 * 16
     document.documentElement.style.fontSize = (fontSize >= 32 ? 32 : fontSize) + 'px'
 }
-
+function checkUA() {
+    let ua = (navigator.userAgent || window.navigator.userAgent).toLowerCase();
+    store.state.UA = ua;
+    if (/closer-(android|ios)/.test(ua)) {
+        store.state.IS_APP = true;
+    }
+    if (/micromessenger/.test(ua)) {
+        store.state.IS_WX = true;
+    }
+}
 
 new Vue({
     store,

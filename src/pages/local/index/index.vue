@@ -11,53 +11,44 @@
       <div class="hd-default hd-4" :class="{active: mounted}"></div>
       <div class="hd-img"></div>
     </section>
-    <section class="bd"
-      :class="{active: mounted}">
+    <section class="bd" :class="{active: mounted}">
       <div class="bd-progress">
-        <div class="bd-complete" 
-          :style="{width: score + '%'}"></div>
+        <div class="bd-complete" :style="{width: user.score + '%'}"></div>
       </div>
       <div class="bd-scale">
-        <div class="bd-scale-default bd-scale-0"
-          :class="{active: score > 0}">0元</div>
-        <div class="bd-scale-default bd-scale-50"
-          :class="{active: score >= 50}">50元</div>
-        <div class="bd-scale-default bd-scale-100"
-          :class="{active: score >= 100}">100元</div>
+        <div class="bd-scale-default bd-scale-0" :class="{active: user.score > 0}">0元</div>
+        <div class="bd-scale-default bd-scale-50" :class="{active: user.score >= 50}">50元</div>
+        <div class="bd-scale-default bd-scale-100" :class="{active: user.score >= 100}">100元</div>
       </div>
       <div class="bd-total">
         累计获得：
-        <span class="bd-count">{{score}}</span>
-        元
+        <span class="bd-count">{{user.score}}</span> 元
       </div>
       <div class="bd-desc" v-html="currentDesc"></div>
       <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>
-      <div class="bd-remain">您还有{{remainTimes}}次答题机会</div>
+      <div class="bd-remain">您还有{{user.remainTimes}}次答题机会</div>
     </section>
     <section class="ft"></section>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
   </div>
 </template>
+
 <script>
   import Vue from 'vue';
   import localDialog from '../components/dialog';
-  import { createNamespacedHelpers } from 'vuex'
-  const {
+  import {
     mapState,
     mapActions,
     mapMutations
-  } = createNamespacedHelpers('index');
-
+  } from 'vuex';
+  
   export default {
     name: 'index',
     data() {
       return {
+        user: {},
         // mounted
         mounted: false,
-        // 当前分数（金额）
-        score: 0,
-        // 剩余答题次数
-        remainTimes: 0,
         // 弹窗
         dialog: {
           // 是否显示弹窗
@@ -73,17 +64,60 @@
       localDialog
     },
     computed: {
+      ...mapState({
+        IS_APP: state => state.IS_APP, 
+        IS_WX: state => state.IS_WX, 
+        user1: state => state.index.user
+      }),
       currentDesc() {
         return '您再获得5次王者称号就可以拿到总计100元的现金奖励了！'
       }
     },
+    beforeRouteEnter({
+      name,
+      query,
+      fullPath
+    }, from, next) {
+      console.log(from)
+      next();
+      return;
+      if (this.IS_APP) { 
+        // 端内
+        Cookies.remove('user'); //app端user完全依赖APP
+        next();
+      } else if (this.IS_WX) {
+        // 微信端，若未授权则进入授权页
+        if (query.code) {
+          next();
+          this.getUserInfoAndLoginByWx(query)
+        } else {
+          this.wxAuthorization(fullPath).then(({
+            data
+          }) => {
+            if (typeof(data.code) != "undefined" && data.code == 0) {
+              location.href = data.result;
+            } else {
+              next()
+            }
+          })
+        }
+      } else {
+        next();
+      }
+    },
     methods: {
-
+      ...mapActions('index', [
+        'wxAuthorization'
+      ]),
       showRankingList() {
-        this.$router.push({name: 'localRank'})
+        this.$router.push({
+          name: 'localRank'
+        })
       },
       showRule() {
-        this.$router.push({name: 'localRule'})
+        this.$router.push({
+          name: 'localRule'
+        })
       },
       handleStart() {
         this.dialog.show = true;
@@ -93,13 +127,15 @@
       }
     },
     mounted() {
+      console.log(this.$store.state)
       setTimeout(() => {
         this.mounted = true;
-        setTimeout(() => this.score = 60,100)
+        // setTimeout(() => this.user.score = 60, 100)
       }, 800);
     }
   }
 </script>
+
 <style lang="less">
   @import '../assets/style/animation.less';
   @import '../assets/style/main.less';

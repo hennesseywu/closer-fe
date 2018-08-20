@@ -139,12 +139,6 @@ router.beforeEach(({
     params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
-    let ua = navigator.userAgent || window.navigator.userAgent;
-    ua = ua.toLowerCase();
-    Store.state.UA = ua;
-    if (ua.indexOf("closer-android") > -1 || ua.indexOf("closer-ios") != -1) {
-        Store.state.IS_APP = true;
-    }
     if (name == "worldcupIndex") {
         axios.post(api.activity.get_activity).then(({ data }) => {
             if (typeof(data.code) != "undefined" && data.code == 0) {
@@ -228,7 +222,6 @@ router.beforeEach(({
         }
 
     } else if (name == "tblogin") {
-        console.log("tblogin")
         if (ua.indexOf("closer-ios") > -1 || ua.indexOf("closer-android") > -1) {
             console.log("closer device")
             Cookies.remove('user'); //app端user完全依赖APP
