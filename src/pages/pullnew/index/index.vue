@@ -47,7 +47,7 @@
             <div class="name">{{formateDate(loginUsers[0].inviteeUser.createTime)}}</div>
           </div>
           <div class="amount" v-if="loginUsers[0].loginAmount">你今日获得 +{{formateMoney(loginUsers[0].loginAmount/100)}}元</div>
-          <div class="amount" v-else>你今日获得 0元</div>
+          <div class="amount" v-else>你今日获得 10:00元</div>
         </div>
         <div class="line"></div>
         <div v-if="pullNewStatic.inviteUserTotalCount > 0">
@@ -170,8 +170,7 @@
           } = await this.getInviteUserList({
             pagenum: this.pageNum,
             pagesize: this.pageSize,
-            "noIndicator": true,
-            "awardType": "firstAward"
+            "noIndicator": true
           });
           this.totalPageNum = Math.ceil(count / pagesize)
           for (let u in data) {
@@ -186,6 +185,7 @@
           }
         })
       } else {
+           Cookies.set("GroukAuth", '1.4f8f454f8e6c98ebc09da0105ffa3ca040e710b79aec62cd554840634729b4192f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd', { expires: 30 });
         this.checkLogin(async(res) => {
           if (res) {
             this.isLogin = true;
@@ -203,8 +203,7 @@
           } = await this.getInviteUserList({
             pagenum: this.pageNum,
             pagesize: this.pageSize,
-            "noIndicator": true,
-            "awardType": "firstAward"
+            "noIndicator": true
           });
           this.totalPageNum = Math.ceil(count / pagesize)
           for (let u in data) {
@@ -246,8 +245,7 @@
           count
         } = await this.getInviteUserList({
           pagenum: this.pageNum,
-          pagesize: this.pageSize,
-          awardType: type
+          pagesize: this.pageSize
         });
         this.totalPageNum = Math.ceil(count / pagesize)
         for (let u in data) {
@@ -622,7 +620,7 @@
             margin-left: 23pr;
           }
           .info {
-            width: 300pr;
+            width: 308pr;
             display: flex;
             flex-direction: column;
             margin-left: 20pr;
@@ -632,7 +630,7 @@
             }
           }
           .amount {
-            width: 225pr;
+            width: 350pr;
             height: 96pr;
             text-align: center;
             font-size: 28pr;
