@@ -89,12 +89,12 @@
                   <div class="line"></div>
                   <div :class="value.step.step2 ||value.step.step3 ? 'dot': 'dot-grey'"></div>
                   <div class="line"></div>
-                  <div :class="value.step.step2 ||value.step.step3 ? 'dot': 'dot-grey'"></div>
+                  <div :class="value.step.step3 ? 'dot': 'dot-grey'"></div>
                 </div>
                 <div class="progress-bottom" :id="'b'+key">
                   <span :class="value.step.step1 ? 'desc1 desc-active': 'desc1'">进入首页</span>
                   <span :class="value.step.step2 ||value.step.step3 ? 'desc2 desc-active': 'desc2'">查看1篇文章</span>
-                  <span :class="value.step.step2 ||value.step.step3? 'desc3 desc-active': 'desc3'">查看2篇文章</span>
+                  <span :class="value.step.step3? 'desc3 desc-active': 'desc3'">查看2篇文章</span>
                 </div>
               </div>
             </div>
