@@ -67,7 +67,7 @@
       ...mapState({
         IS_APP: state => state.IS_APP, 
         IS_WX: state => state.IS_WX, 
-        user1: state => state.index.user
+        user: state => state.local.user
       }),
       currentDesc() {
         return '您再获得5次王者称号就可以拿到总计100元的现金奖励了！'
@@ -106,7 +106,7 @@
       }
     },
     methods: {
-      ...mapActions('index', [
+      ...mapActions('local', [
         'wxAuthorization'
       ]),
       showRankingList() {

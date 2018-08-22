@@ -5,7 +5,7 @@ import index from './pages/worldcup/index/module'
 import activity from './pages/worldcup/activity/module'
 import tbLogin from './pages/teabar/index/module'
 import pullNew from './pages/pullnew/index/module'
-import local from './pages/local/index/module'
+import local from './pages/local/module'
 
 
 Vue.use(Vuex)
