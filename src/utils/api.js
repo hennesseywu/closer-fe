@@ -82,7 +82,20 @@ export default {
         get_invite_statistic: "closer_invite.get_statistic",
         get_invitee_page_list: "closer_invite.get_invitee_page_list",
         get_yesterday_award_amt: "closer_invite.get_yesterday_award_amt",
-        remind_login: "closer_invite.remind_login"
+        remind_login: "closer_invite.remind_login",
+        // 土著活动
+        tuzhu: {
+            // 获取开始测试之前 个人统计信息
+            get_question_statistic: "activity_tuzhu.get_question_statistic",
+            // 结束测试，上传测试结果
+            end_test: "activity_tuzhu.end_test",
+            // 获取排行榜 top10
+            get_rank_list: "activity_tuzhu.get_rank_list",
+            // 分享测试结果，获取分享图片
+            share_user_answer: "activity_tuzhu.share_user_answer",
+            // 开始测试
+            start_test: "activity_tuzhu.start_test"
+        }
     },
     statitics: {
         // 数据统计接口

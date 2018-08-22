@@ -1,8 +1,10 @@
-import api from "../../../utils/api";
-
-
+import api from '../../utils/api';
 
 export default {
+  async wechatConfig(payload) {
+    console.log('service--', payload)
+    return await axios.post(api.admin.wechat_config, payload);
+  },
   async wechatAuthorization(payload) {
     let params = {
       path: (Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + payload
