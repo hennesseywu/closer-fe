@@ -2,17 +2,23 @@ import service from './service'
 import {
   Toast
 } from 'mint-ui'
+import Router from '../../router'
 
 export default {
   namespaced: true,
   state: {
+    activityId: 12,
     user: {
       // 当前分数（金额）
       score: 40,
       // 剩余答题次数
       remainTimes: 1
     },
-    token: ''
+    token: '',
+    startData: [],
+    currentQuesitionNum: 0,
+    endData: {},
+    shareData: {}
   },
   mutations: {
     // 设置微信授权后用户信息
@@ -22,6 +28,19 @@ export default {
     // 设置token
     SET_TOKEN(state, para) {
       state.token = para
+    },
+    // 开始测试数据
+    startData(state, payload) {
+      let data = payload.data
+      state.startData = data.list
+    },
+    // 结束测试数据
+    endData(state, payload) {
+      let data = payload.data.result
+      state.endData = data.data
+    },
+    shareData(state, payload) {
+      state.shareData = payload
     }
   },
 
@@ -29,7 +48,6 @@ export default {
     async wechatConfig({
       rootState
     }, payload) {
-      console.log('modules--', payload)
       let params = {
         url: location.href
       };
@@ -42,10 +60,26 @@ export default {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      if (typeof(data.code) != "undefined" && data.code == 0) {
+      if (typeof (data.code) != "undefined" && data.code == 0) {
         return data.result;
       } else {
         return;
+      }
+    },
+    async userShare({ state, commit }, payload) {
+      let {
+        data
+      } = await service.userShare(params).catch(err => {
+        Toast('网络开小差啦，请稍后再试')
+        return;
+      })
+      if(typeof(data.code) != undefined && data.code == 0) {
+        commit({
+          type: 'shareData',
+          data
+        })
+      } else {
+        data.result && Toast(data.result)
       }
     },
     checkLogin({
@@ -57,11 +91,11 @@ export default {
       if (ua.indexOf("closer-ios") > -1) {
         console.log("module closer-ios");
         setTimeout(() => {
-          setupWebViewJavascriptBridge(function(bridge) {
+          setupWebViewJavascriptBridge(function (bridge) {
             console.log("ios bridge", bridge)
             if (bridge) {
               //ios获取用户token 判断登录
-              bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+              bridge.callHandler("getUserToken", null, function (token, responseCallback) {
                 console.log("ios token", token)
                 if (token) {
                   Cookies.set("GroukAuth", token, {
@@ -86,7 +120,7 @@ export default {
                   })
                 } else {
                   console.log("ios jumpLogin")
-                  setupWebViewJavascriptBridge(function(bridge) {
+                  setupWebViewJavascriptBridge(function (bridge) {
                     bridge.callHandler("jumpLogin", null);
                   });
                   cb();
@@ -150,7 +184,7 @@ export default {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      if (typeof(data.code) != "undefined" && data.code == 0) {
+      if (typeof (data.code) != "undefined" && data.code == 0) {
         console.log("loginWithWechat", data.result)
         return data.result;
       } else {
@@ -285,6 +319,64 @@ export default {
         })
         commit('SET_USER', userInfo)
         commit('SET_TOKEN', userToken)
+      }
+    },
+    // 开始测试
+    async startTest({
+      commit,
+      state
+    }, payload) {
+      let params = {
+        activityId: state.activityId
+      }
+      let {
+        data
+      } = await service.startTest(params).catch(err => {
+        Toast('网络开小差啦，请稍后再试')
+        return;
+      })
+      // if(typeof(data.code) != undefined && data.code == 0) {
+      commit({
+        type: 'startData',
+        data
+      })
+
+      // } else {
+      //   Toast('网络开小差啦，请稍后再试')
+      //   return;
+      // }
+    },
+    nextQuestion({
+      state,
+      commit
+    }, payload) {
+      let data = state.currentQuesitionNum++
+        if (data > state.startData.length) return
+    },
+    // 结束测试
+    async commitTest({
+      state,
+      commit
+    }, payload) {
+      let {
+        data
+      } = await service.endTest(payload).catch(err => {
+        Toast('网络开小差啦，请稍后再试')
+        return;
+      })
+      console.log(3, data)
+      if (typeof (data.code != undefined) && data.code == 0) {
+        commit({
+          type: 'endData',
+          data
+        })
+        Router.push({
+          name: "localResult"
+        })
+        window.sessionStorage.score = state.endData.score
+        window.sessionStorage.level = state.endData.level
+      } else {
+        data.result && Toast(data.result)
       }
     }
   }

@@ -92,7 +92,7 @@ export default {
             // 获取排行榜 top10
             get_rank_list: "activity_tuzhu.get_rank_list",
             // 分享测试结果，获取分享图片
-            share_user_answer: "activity_tuzhu.share_user_answer",
+            share_user_answer: "activity_tuzhu.",
             // 开始测试
             start_test: "activity_tuzhu.start_test"
         }
