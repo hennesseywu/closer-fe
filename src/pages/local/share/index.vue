@@ -39,6 +39,11 @@
     created() {
       console.log('isAPP', this.isApp)
     },
+    computed: {
+      ...mapState('local', {
+        shareData: state => state.shareData
+      })
+    },
     async mounted() {
       let wxConfig = await this.wechatConfig();
       console.log('wxConfig', wxConfig)
@@ -55,8 +60,8 @@
           console.log("ready")
           // 分享朋友
           wx.onMenuShareAppMessage({
-            title: '贴近一点，看身边', // 分享标题
-            desc: '我参加贴近免费领取一台饮水机', // 分享描述
+            title: '是成都人就来瓜分百万大奖', // 分享标题
+            desc: '参与成都人纯度测试，纯度越高，奖金越多！', // 分享描述
             link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'https://tiejin.cn/public/img/index/tiejin_white.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
@@ -68,8 +73,8 @@
   
           // 分享朋友圈
           wx.onMenuShareTimeline({
-            title: '', // 分享标题
-            link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            title: '是成都人就来瓜分百万大奖', // 分享标题
+            link: 'location.href', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: '', // 分享图标
             success: function() {
               // 用户点击了分享后执行的回调函数
@@ -84,7 +89,10 @@
       }
     },
     methods: {
-      ...mapActions("local", ["wechatConfig"]),
+      ...mapActions("local", [
+        "wechatConfig",
+        "userShare"
+        ]),
       toShare(type) {
         // if(!this.isLogin) {
         //   // 调登录
