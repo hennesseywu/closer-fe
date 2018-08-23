@@ -13,20 +13,20 @@
     </section>
     <section class="bd" :class="{active: mounted}">
       <div class="bd-progress">
-        <div class="bd-complete" :style="{width: user.score + '%'}"></div>
+        <div class="bd-complete" :style="{width: statistic.totalAwardAmt + '%'}"></div>
       </div>
       <div class="bd-scale">
-        <div class="bd-scale-default bd-scale-0" :class="{active: user.score > 0}">0元</div>
-        <div class="bd-scale-default bd-scale-50" :class="{active: user.score >= 50}">50元</div>
-        <div class="bd-scale-default bd-scale-100" :class="{active: user.score >= 100}">100元</div>
+        <div class="bd-scale-default bd-scale-0" :class="{active: statistic.totalAwardAmt > 0}">0元</div>
+        <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= 50}">50元</div>
+        <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= 100}">100元</div>
       </div>
       <div class="bd-total">
         累计获得：
-        <span class="bd-count">{{user.score}}</span> 元
+        <span class="bd-count">{{statistic.totalAwardAmt}}</span> 元
       </div>
       <div class="bd-desc" v-html="currentDesc"></div>
       <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>
-      <div class="bd-remain">您还有{{user.remainTimes}}次答题机会</div>
+      <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
     </section>
     <section class="ft"></section>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
@@ -43,10 +43,9 @@
   } from 'vuex';
   
   export default {
-    name: 'index',
+    name: 'localIndex',
     data() {
       return {
-        user: {},
         // mounted
         mounted: false,
         // 弹窗
@@ -64,42 +63,23 @@
       localDialog
     },
     computed: {
-      ...mapState({
-        IS_APP: state => state.IS_APP, 
-        IS_WX: state => state.IS_WX, 
-        user: state => state.local.user
-      }),
+      ...mapState('local', ['statistic']),
+      ...mapState(['IS_APP', 'IS_WX']),
       currentDesc() {
         return '您再获得5次王者称号就可以拿到总计100元的现金奖励了！'
       }
     },
-    beforeRouteEnter({
-      name,
-      query,
-      fullPath
-    }, from, next) {
-      console.log(from)
-      next();
-      return;
+    created() {
       if (this.IS_APP) { 
         // 端内
-        Cookies.remove('user'); //app端user完全依赖APP
-        next();
+        this.checkLoginInApp();
       } else if (this.IS_WX) {
-        // 微信端，若未授权则进入授权页
-        if (query.code) {
-          next();
-          this.getUserInfoAndLoginByWx(query)
+        // 微信端
+        let user = Cookies.get("user");
+        if (typeof(Cookies.get("token")) != "undefined" && typeof(user) != "undefined") {
+          this.SET_USER(JSON.parse(user))
         } else {
-          this.wxAuthorization(fullPath).then(({
-            data
-          }) => {
-            if (typeof(data.code) != "undefined" && data.code == 0) {
-              location.href = data.result;
-            } else {
-              next()
-            }
-          })
+          this.getUserInfoAndLoginWithWx(this.$route.query)
         }
       } else {
         next();
@@ -107,31 +87,53 @@
     },
     methods: {
       ...mapActions('local', [
-        'wxAuthorization'
+        'checkLoginInApp',
+        'getUserInfoAndLoginWithWx',
+        'getStatistic'
+      ]),
+      ...mapMutations('local', [
+        'SET_USER'
       ]),
       showRankingList() {
-        this.$router.push({
-          name: 'localRank'
-        })
+        if (this.checkOtherEnv()) {
+          this.$router.push({
+            name: 'localRank'
+          })
+        }
       },
       showRule() {
         this.$router.push({
           name: 'localRule'
         })
       },
+      // 开始答题
       handleStart() {
-        this.dialog.show = true;
+        if (this.checkOtherEnv()) {
+          this.$router.push({
+            name: 'localAnswer'
+          })
+        }
       },
       closeDialog() {
         this.dialog.show = false;
+      },
+      // 其他环境下弹窗提示去微信答题
+      checkOtherEnv() {
+        if (!this.IS_APP && !this.IS_WX) {
+          this.dialog.share = false;
+          this.dialog.content = '亲，请去微信环境下答题吧';
+          this.dialog.show = true;
+          return false;
+        } else {
+          return true;
+        }
       }
     },
     mounted() {
-      console.log(this.$store.state)
       setTimeout(() => {
         this.mounted = true;
-        // setTimeout(() => this.user.score = 60, 100)
       }, 800);
+      this.getStatistic();
     }
   }
 </script>

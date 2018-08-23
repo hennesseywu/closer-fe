@@ -1,3 +1,4 @@
+import api from './api';
 export function redirectAddChance(isApp) {
     //console.log("addchance", isApp);
     if (isApp) {
@@ -38,6 +39,16 @@ export function getPlatform() {
     }
 }
 
+export function isApp() {
+  const ua = navigator.userAgent.toLowerCase();
+  return /closer-(android|ios)/.test(ua);
+}
+
+export function isWechat() {
+  const ua = navigator.userAgent.toLowerCase();
+  return /micromessenger/.test(ua);
+}
+
 // 禁用微信分享功能
 export function noShare() {
     if (typeof WeixinJSBridge == "undefined") {
@@ -71,11 +82,11 @@ export function rem2px(v) {
 }
 
 export function px2rem(v) {
-    var val = parseFloat(v) * this.dpr / this.baseFontSize;
-    if (typeof v === "string" && v.match(/px$/)) {
-        val += "rem";
-    }
-    return val;
+  var val = parseFloat(v) * this.dpr / this.baseFontSize;
+  if (typeof v === "string" && v.match(/px$/)) {
+      val += "rem";
+  }
+  return val;
 }
 
 export function px2px(v) {
@@ -105,4 +116,17 @@ export function dateFormat(time) {
         day = "0" + day;
     }
     return year + "-" + month + "-" + day;
+}
+// 图片地址处理
+export function makeFileUrl(url, type, size) {
+  if (url) {
+    let sizes = size ? size : 500
+    if (type === 'src') {
+      return (url.indexOf('://') !== -1) ? url + '?s=' + sizes : api.fileDevURL + url + '?s=' + sizes;
+    } else {
+      return (url.indexOf('://') !== -1) ? url : api.fileDevURL + url;
+    }
+  } else {
+    return
+  }
 }

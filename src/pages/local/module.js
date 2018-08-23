@@ -6,22 +6,31 @@ import {
 export default {
   namespaced: true,
   state: {
-    user: {
+    activityId: '',
+    user: {},
+    statistic: {
       // 当前分数（金额）
-      score: 40,
+      totalAwardAmt: 0,
       // 剩余答题次数
-      remainTimes: 1
+      chance: 0,
+      // 排名
+      rank: 0
     },
-    token: ''
+    rankList: []
   },
   mutations: {
     // 设置微信授权后用户信息
     SET_USER(state, para) {
       state.user = para
     },
-    // 设置token
-    SET_TOKEN(state, para) {
-      state.token = para
+    // 获取用户个人分数信息
+    SET_STATISTIC(state, para) {
+      state.statistic = para
+    },
+    // 好友排行榜
+    SET_RANKLIST(state, para) {
+      state.rankList = para.rankList
+      state.statistic.rank = para.selfRank
     }
   },
 
@@ -48,8 +57,10 @@ export default {
         return;
       }
     },
-    checkLogin({
+    // 端内检查登录
+    checkLoginInApp({
       state,
+      commit,
       rootState
     }, cb) {
       console.log("checkLogin", rootState.IS_APP);
@@ -68,14 +79,16 @@ export default {
                     expires: 30
                   });
                   // setTimeout(() => {
-                  axios.post(api.admin.user_show).then(({
+                  service.getUserInfoInApp().then(({
                     data
                   }) => {
                     console.log("ios", data.result);
                     if (data.result) {
-                      Cookies.set("user", JSON.stringify(data.result), {
+                      let userInfo = JSON.stringify(data.result);
+                      Cookies.set("user", userInfo, {
                         expires: 30
                       });
+                      commit('SET_USER', userInfo);
                       cb(true)
                     } else {
                       cb();
@@ -107,14 +120,16 @@ export default {
               expires: 30
             });
             setTimeout(() => {
-              axios.post(api.admin.user_show).then(({
+              service.getUserInfoInApp().then(({
                 data
               }) => {
                 console.log("android", data.result);
                 if (data.result) {
-                  Cookies.set("user", JSON.stringify(data.result), {
+                  let userInfo = JSON.stringify(data.result);
+                  Cookies.set("user", userInfo, {
                     expires: 30
                   });
+                  commit('SET_USER', userInfo);
                   cb(true)
                 } else {
                   cb();
@@ -135,125 +150,9 @@ export default {
         cb()
       }
     },
-    async loginWithWechat({
-      rootState,
-      dispatch
-    }, code) {
-      let params = {
-        'plateform': 2,
-        'protocol': 'WEB_SOCKET'
-      }
-      params['code'] = code;
-      let {
-        data
-      } = await loginWithWechat(params).catch(err => {
-        Toast('网络开小差啦，请稍后再试')
-        return;
-      })
-      if (typeof(data.code) != "undefined" && data.code == 0) {
-        console.log("loginWithWechat", data.result)
-        return data.result;
-      } else {
-        // Toast('微信认证异常');
-        await dispatch("getAuthPath");
-        return;
-      }
-    },
-    // 跳微信授权页
-    wxAuthorization(path) {
-      return service.wxAuthorization(path).catch(err => {
-        Toast('网络开小差啦，请稍后再试')
-        return;
-      });
-    },
-    // 通过code进行登录，如果get_wx_auth被调用，get_code_by_login才会被调用
-    async get_code_by_login({
-      commit
-    }, {
-      code,
-      inv_id,
-      type
-    }) {
-      let self = this,
-        para;
-      // 注意： code 只能用一次，所以这里校验了 就不能再登录了，需要将校验放在登录里面
-      // $router 是否存在 验证是否是奖励金登录
-      if (type && type === 'bonus') {
-        let unionId,
-          nickName,
-          avatar,
-          paras = {
-            code: code
-          }
-        // 校验账号是否存在
-        let check = await self.$axios.$post(`${api.admin.check_wechat}`, paras)
-        if (check.code != 0) {
-          return false
-        } else {
-          if (check.result.hasRegist) {
-            return false
-          } else {
-            unionId = check.result.unionId;
-            nickName = check.result.nickName;
-            avatar = check.result.avatar;
-          }
-        }
-        if (inv_id) {
-          para = {
-            unionid: unionId,
-            inviter: inv_id,
-            nickName: nickName,
-            avatar: avatar,
-            protocol: "WEB_SOCKET",
-            udid: Cookie.get('h5Cookies'),
-            adid: Cookie.get('h5Adid') || 'closer-invitenew',
-          }
-        } else {
-          return false
-        }
-      } else {
-        para = {
-          plateform: 2,
-          code: code,
-          protocol: "WEB_SOCKET",
-          udid: Cookie.get('h5Cookies'),
-          adid: Cookie.get('h5Adid') || 'closer-share'
-        }
-      }
-      let data = await self.$axios.$post(`${api.admin.login_with_wechat}`, para);
-      if (data.code === 0) {
-        // 返回的数据
-        let userInfo = {
-          gender: data.result.user.gender,
-          phones: data.result.user.phones,
-          updateTime: data.result.user.updateTime,
-          avatar: data.result.user.avatar,
-          createTime: data.result.user.createTime,
-          teamID: data.result.user.teamID,
-          // 姓名
-          fullname: data.result.user.fullname,
-          security_signal: data.result.user.security_signal,
-          objectID: data.result.user.objectID,
-          email: data.result.user.email,
-          username: data.result.user.username,
-          status: data.result.user.status
-        };
-        let userToken = data.result.token;
-        // // 存cookies
-        Cookie.set('token', userToken, {
-          expires: 7
-        })
-        Cookie.set('user', userInfo, {
-          expires: 7
-        })
-        commit('SET_USER', userInfo)
-        commit('SET_TOKEN', userToken)
-        return true
-      } else {
-        return false
-      }
-    },
-    getUserInfoAndLoginByWx({
+    // 通过微信授权code获取用户信息并登录
+    async getUserInfoAndLoginWithWx({
+      state,
       commit
     }, {
       code,
@@ -261,11 +160,11 @@ export default {
     }) {
       let params = {
         plateform: 2,
+        // 微信授权code
         code,
+        // 分享人id
         inviter,
-        protocol: "WEB_SOCKET",
-        udid: Cookie.get('h5Cookies'),
-        adid: Cookie.get('h5Adid') || 'closer-local',
+        protocol: "WEB_SOCKET"
       };
       // let check = checkWxCode({
       //   code: query.code
@@ -273,18 +172,42 @@ export default {
       // let { unionId, nickName, avatar } = check.result;
       // Object.assign(params, { unionId, nickName, avatar });
       // query.inviter && (params.inviter = query.inviter);
-      let loginData = service.loginByWx(params);
+      let { data: loginData } = await service.loginWithWx(params);
+      console.log('loginData:',loginData)
       if (loginData.code == 0) {
-        let userInfo = loginData.result.user,
-          userToken = loginData.result.token;
-        Cookie.set('token', userToken, {
+        let { user, token } = loginData.result;
+        console.log('userInfo', user);
+        console.log('userToken', token);
+        commit('SET_USER', user)
+        Cookies.set('token', token, {
           expires: 7
         })
-        Cookie.set('user', userInfo, {
+        Cookies.set('user', user, {
           expires: 7
         })
-        commit('SET_USER', userInfo)
-        commit('SET_TOKEN', userToken)
+        console.log('SET_USER', state);
+      }
+    },
+    // 获取用户分数以及剩余答题次数
+    async getStatistic({state}) {
+      let {code,result} = await service.getStatistic({
+        activityId: state.activityId
+      });
+      if (code == 0) {
+        commit('SET_STATISTIC', result)
+      } else {
+        Toast('网络开小差啦，请稍后再试')
+      }
+    },
+    // 获取好友排行榜
+    async getRankList({state}) {
+      let {code,result} = await service.getRankList({
+        activityId: state.activityId
+      });
+      if (code == 0) {
+        commit('SET_RANKLIST', result)
+      } else {
+        Toast('网络开小差啦，请稍后再试')
       }
     }
   }

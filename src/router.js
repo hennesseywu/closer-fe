@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import api from './utils/api';
-import Store from './store';
-import { Toast } from 'mint-ui'
+import { Toast } from 'mint-ui';
+import { isApp, isWechat } from './utils/utils';
 
 
 const Index = () =>
@@ -251,12 +251,12 @@ router.beforeEach(({
             }
         }
 
-    } else if (name == "tblogin") {
-        if (ua.indexOf("closer-ios") > -1 || ua.indexOf("closer-android") > -1) {
+    } else if (name == "tblogin" || name == 'localIndex') {
+        if (isApp()) {
             console.log("closer device")
             Cookies.remove('user'); //app端user完全依赖APP
             next();
-        } else {
+        } else if (isWechat()) {
             if (query.code) {
                 next();
                 return;
@@ -265,7 +265,7 @@ router.beforeEach(({
                 path: api.wxLoginUrl
             };
             if (Cookies.get("IS_DEV")) {
-                params.path = api.wxLoginDevUrl
+                params.path = api.wxLoginDevUrl+path
             }
             axios.post(api.admin.get_auth_path, params).then(({ data }) => {
                 if (typeof(data.code) != "undefined" && data.code == 0) {
@@ -278,6 +278,8 @@ router.beforeEach(({
                 return;
             })
 
+        } else {
+            next();
         }
     } else if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
         router.push({
