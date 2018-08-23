@@ -68,20 +68,23 @@ export default {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      if (typeof (data.code) != "undefined" && data.code == 0) {
+      if (typeof(data.code) != "undefined" && data.code == 0) {
         return data.result;
       } else {
         return;
       }
     },
-    async userShare({ state, commit }, payload) {
+    async userShare({
+      state,
+      commit
+    }, payload) {
       let {
         data
       } = await service.userShare(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      if(typeof(data.code) != undefined && data.code == 0) {
+      if (typeof(data.code) != undefined && data.code == 0) {
         commit({
           type: 'shareData',
           data
@@ -101,11 +104,11 @@ export default {
       if (ua.indexOf("closer-ios") > -1) {
         console.log("module closer-ios");
         setTimeout(() => {
-          setupWebViewJavascriptBridge(function (bridge) {
+          setupWebViewJavascriptBridge(function(bridge) {
             console.log("ios bridge", bridge)
             if (bridge) {
               //ios获取用户token 判断登录
-              bridge.callHandler("getUserToken", null, function (token, responseCallback) {
+              bridge.callHandler("getUserToken", null, function(token, responseCallback) {
                 console.log("ios token", token)
                 if (token) {
                   Cookies.set("GroukAuth", token, {
@@ -132,7 +135,7 @@ export default {
                   })
                 } else {
                   console.log("ios jumpLogin")
-                  setupWebViewJavascriptBridge(function (bridge) {
+                  setupWebViewJavascriptBridge(function(bridge) {
                     bridge.callHandler("jumpLogin", null);
                   });
                   cb();
@@ -199,18 +202,14 @@ export default {
         inviter,
         protocol: "WEB_SOCKET"
       };
-      // let check = checkWxCode({
-      //   code: query.code
-      // });
-      // let { unionId, nickName, avatar } = check.result;
-      // Object.assign(params, { unionId, nickName, avatar });
-      // query.inviter && (params.inviter = query.inviter);
-      let { data: loginData } = await service.loginWithWx(params);
-      console.log('loginData:',loginData)
+      let {
+        data: loginData
+      } = await service.loginWithWx(params);
       if (loginData.code == 0) {
-        let { user, token } = loginData.result;
-        console.log('userInfo', user);
-        console.log('userToken', token);
+        let {
+          user,
+          token
+        } = loginData.result;
         commit('SET_USER', user)
         Cookies.set('token', token, {
           expires: 7
@@ -218,12 +217,16 @@ export default {
         Cookies.set('user', user, {
           expires: 7
         })
-        console.log('SET_USER', state);
       }
     },
     // 获取用户分数以及剩余答题次数
-    async getStatistic({state}) {
-      let {code,result} = await service.getStatistic({
+    async getStatistic({
+      state
+    }) {
+      let {
+        code,
+        result
+      } = await service.getStatistic({
         activityId: state.activityId
       });
       if (code == 0) {
@@ -233,8 +236,13 @@ export default {
       }
     },
     // 获取好友排行榜
-    async getRankList({state}) {
-      let {code,result} = await service.getRankList({
+    async getRankList({
+      state
+    }) {
+      let {
+        code,
+        result
+      } = await service.getRankList({
         activityId: state.activityId
       });
       if (code == 0) {
@@ -287,7 +295,7 @@ export default {
         return;
       })
       console.log(3, data)
-      if (typeof (data.code != undefined) && data.code == 0) {
+      if (typeof(data.code != undefined) && data.code == 0) {
         commit({
           type: 'endData',
           data

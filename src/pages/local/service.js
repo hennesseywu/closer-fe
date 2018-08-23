@@ -20,9 +20,6 @@ export default {
   async getRankList(payload) {
     return await axios.post(api.activity.tuzhu.get_rank_list, payload)
   },
-  async checkWxCode(payload) {
-    return await Axios.post(api.admin.check_wechat, payload)
-  },
   async startTest(payload) {
     // return await Axios.post(api.activity.tuzhu.start_test, payload)
     return new Promise((resolve) => {
