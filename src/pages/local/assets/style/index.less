@@ -134,12 +134,13 @@
     justify-content: space-between;
   }
   .bd-scale-default {
-    width: 78pr;
+    position: relative;
+    // width: 78pr;
     height: 52pr;
     line-height: 64pr;
     text-align: center;
     font-size: 24pr;
-    background: url(../images/index_scale.png);
+    // background: url(../images/index_scale.png);
     background-size: 232pr 104pr;
     &.active {
       background-position-y: -52pr;
@@ -149,11 +150,88 @@
     background-position: 0 0;
   }
   .bd-scale-50 {
-    width: 76pr;
+    // width: 76pr;
     background-position: -78pr 0;
   }
   .bd-scale-100 {
     background-position: -154pr 0;
+  }
+  .bd-arrow {
+    position: absolute;
+    top: 0;
+    width: 16pr;
+    height: 24pr;
+    box-sizing: border-box;
+    border-color: transparent;
+    border-style: solid;
+    border-left-width: 8pr;
+    border-right-width: 8pr;
+    border-top-width: 12pr;
+    border-bottom-width: 12pr;
+  }
+  .bd-arrow-left {
+    left: 0;
+    border-left-color: #e7e7e7;
+    border-bottom-color: #e7e7e7;
+  }
+  .bd-arrow-center {
+    left: 50%;
+    margin-left: -8pr;
+    border-top-width: 0;
+    border-bottom-width: 24pr;
+    border-bottom-color: #e7e7e7;
+  }
+  .bd-arrow-right {
+    right: 0;
+    border-right-color: #e7e7e7;
+    border-bottom-color: #e7e7e7;
+  }
+  .bd-scale-amount {
+    position: absolute;
+    top: 12pr;
+    min-width: 78pr;
+    background: #e7e7e7;
+    line-height: 1.5;
+    white-space: nowrap;
+    padding: 0 8pr;
+    border-radius: 10pr;
+    box-shadow: 0 4pr 0 0 #a3a3a3;
+    &:after {
+      content: '元';
+    }
+  }
+  .bd-scale-0 {
+    .bd-scale-amount {
+      left: 0;
+    }
+  }
+  .bd-scale-50 {
+    .bd-scale-amount {
+      left: 0;
+      transform: translate(-50%, 0)
+    }
+  }
+  .bd-scale-100 {
+    .bd-scale-amount {
+      right: 0;
+    }
+  }
+  .bd-scale-default.active {
+    .bd-arrow-left {
+      border-left-color: #FDDB00;
+      border-bottom-color: #FDDB00;
+    }
+    .bd-arrow-center {
+      border-bottom-color: #FDDB00;
+    }
+    .bd-arrow-right {
+      border-right-color: #FDDB00;
+      border-bottom-color: #FDDB00;
+    }
+    .bd-scale-amount {
+      background: #FDDB00;
+      box-shadow: 0 4pr 0 0 #FFB300;
+    }
   }
   .bd-total {
     margin: 40pr auto 28pr;
@@ -166,7 +244,7 @@
     text-shadow: 0 4pr 0 #ffb300, 0 6pr 0 #929292;
   }
   .bd-desc {
-    width: 496pr;
+    width: 484pr;
     min-height: 80pr;
     line-height: 48pr;
     margin: 0 auto;

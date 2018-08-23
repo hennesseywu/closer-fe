@@ -7,11 +7,13 @@ import Router from '../../router'
 export default {
   namespaced: true,
   state: {
-    activityId: 12,
+    activityId: 2,
     user: {},
     statistic: {
-      // 当前分数（金额）
-      totalAwardAmt: 0,
+      // 最高总奖金
+      maxAwardAmt: 1000,
+      // 当前已获得奖金
+      totalAwardAmt: 100,
       // 剩余答题次数
       chance: 0,
       // 排名
@@ -115,7 +117,7 @@ export default {
                     expires: 30
                   });
                   // setTimeout(() => {
-                  axios.post(api.admin.user_show).then(({
+                    service.getUserInfoInApp().then(({
                     data
                   }) => {
                     console.log("ios", data.result);
@@ -156,7 +158,7 @@ export default {
               expires: 30
             });
             setTimeout(() => {
-              axios.post(api.admin.user_show).then(({
+              service.getUserInfoInApp().then(({
                 data
               }) => {
                 console.log("android", data.result);
@@ -192,14 +194,14 @@ export default {
       commit
     }, {
       code,
-      inviter
-    }) {
+      inviteUser
+    }, cb) {
       let params = {
         plateform: 2,
         // 微信授权code
         code,
         // 分享人id
-        inviter,
+        inviteUser,
         protocol: "WEB_SOCKET"
       };
       let {
@@ -211,7 +213,7 @@ export default {
           token
         } = loginData.result;
         commit('SET_USER', user)
-        Cookies.set('token', token, {
+        Cookies.set('GroukAuth', token, {
           expires: 7
         })
         Cookies.set('user', user, {
@@ -221,16 +223,17 @@ export default {
     },
     // 获取用户分数以及剩余答题次数
     async getStatistic({
+      commit,
       state
     }) {
       let {
-        code,
-        result
+        data
       } = await service.getStatistic({
         activityId: state.activityId
       });
-      if (code == 0) {
-        commit('SET_STATISTIC', result)
+      console.log(data.code, data.result)
+      if (data.code == 0) {
+        commit('SET_STATISTIC', data.result)
       } else {
         Toast('网络开小差啦，请稍后再试')
       }
@@ -240,13 +243,12 @@ export default {
       state
     }) {
       let {
-        code,
-        result
+        data
       } = await service.getRankList({
         activityId: state.activityId
       });
-      if (code == 0) {
-        commit('SET_RANKLIST', result)
+      if (data.code == 0) {
+        commit('SET_RANKLIST', data.result)
       } else {
         Toast('网络开小差啦，请稍后再试')
       }

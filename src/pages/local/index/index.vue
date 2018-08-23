@@ -13,12 +13,21 @@
     </section>
     <section class="bd" :class="{active: mounted}">
       <div class="bd-progress">
-        <div class="bd-complete" :style="{width: statistic.totalAwardAmt + '%'}"></div>
+        <div class="bd-complete" :style="{width: currentWidth}"></div>
       </div>
       <div class="bd-scale">
-        <div class="bd-scale-default bd-scale-0" :class="{active: statistic.totalAwardAmt > 0}">0元</div>
-        <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= 50}">50元</div>
-        <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= 100}">100元</div>
+        <div class="bd-scale-default bd-scale-0" :class="{active: statistic.totalAwardAmt > showAmount(0)}">
+          <span class="bd-arrow bd-arrow-left"></span>
+          <span class="bd-scale-amount">{{showAmount(0)}}</span>
+        </div>
+        <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
+          <span class="bd-arrow bd-arrow-center"></span>
+          <span class="bd-scale-amount">{{showAmount(.5)}}</span>
+        </div>
+        <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
+          <span class="bd-arrow bd-arrow-right"></span>
+          <span class="bd-scale-amount">{{showAmount(1)}}</span>
+        </div>
       </div>
       <div class="bd-total">
         累计获得：
@@ -65,24 +74,35 @@
     computed: {
       ...mapState('local', ['statistic']),
       ...mapState(['IS_APP', 'IS_WX']),
+      currentWidth() {
+        return this.statistic.totalAwardAmt*100/this.statistic.maxAwardAmt + '%'
+      },
+      remainTimesToMax() {
+        return Math.ceil((this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
+      },
       currentDesc() {
-        return '您再获得5次王者称号就可以拿到总计100元的现金奖励了！'
+        if (this.remainTimesToMax == 0) {
+          return `恭喜，您已获得全部${this.statistic.maxAwardAmt}元的现金奖励~`
+        }
+        return `您再获得${this.remainTimesToMax}次王者称号就可以拿到总计${this.statistic.maxAwardAmt}元的现金奖励了！`
       }
     },
     created() {
-      if (this.IS_APP) { 
+      const self = this;
+      if (self.IS_APP) { 
         // 端内
-        this.checkLoginInApp();
-      } else if (this.IS_WX) {
+        self.checkLoginInApp(self.getStatistic);
+      } else if (self.IS_WX) {
         // 微信端
-        let user = Cookies.get("user");
-        if (typeof(Cookies.get("token")) != "undefined" && typeof(user) != "undefined") {
-          this.SET_USER(JSON.parse(user))
-        } else {
-          this.getUserInfoAndLoginWithWx(this.$route.query)
-        }
-      } else {
-        next();
+        // let user = Cookies.get("user");
+        // if (typeof(Cookies.get("token")) != "undefined" && typeof(user) != "undefined") {
+        //   self.SET_USER(JSON.parse(user))
+        // } else {
+          self.getUserInfoAndLoginWithWx(self.$route.query).then(function() {
+            console.log('then::');
+            self.getStatistic()
+          })
+        // }
       }
     },
     methods: {
@@ -94,6 +114,9 @@
       ...mapMutations('local', [
         'SET_USER'
       ]),
+      showAmount(rate) {
+        return parseInt(this.statistic.maxAwardAmt*rate)
+      },
       showRankingList() {
         if (this.checkOtherEnv()) {
           this.$router.push({
@@ -133,12 +156,12 @@
       setTimeout(() => {
         this.mounted = true;
       }, 800);
-      this.getStatistic();
+      // this.getStatistic();
     }
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   @import '../assets/style/animation.less';
   @import '../assets/style/main.less';
   @import '../assets/style/index.less';
