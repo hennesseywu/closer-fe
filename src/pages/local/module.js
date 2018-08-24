@@ -7,7 +7,7 @@ import Router from '../../router'
 export default {
   namespaced: true,
   state: {
-    activityId: 12,
+    activityId: 2,
     user: {},
     statistic: {
       // 当前分数（金额）
@@ -18,6 +18,7 @@ export default {
       rank: 0
     },
     rankList: [],
+    startResult: {},
     startData: [],
     currentQuesitionNum: 0,
     endData: {},
@@ -31,6 +32,7 @@ export default {
     // 获取用户个人分数信息
     SET_STATISTIC(state, para) {
       state.statistic = para
+      console.log(state.statistic)
     },
     // 好友排行榜
     SET_RANKLIST(state, para) {
@@ -39,16 +41,20 @@ export default {
     },
     // 开始测试数据
     startData(state, payload) {
-      let data = payload.data
-      state.startData = data.list
+      let data = payload.data.result
+      state.startResult = data
+      state.startData = data.questions
+      
     },
     // 结束测试数据
     endData(state, payload) {
-      let data = payload.data.result
-      state.statistic.rank = para.selfRank
+      let data = payload.data
+      state.endData = data.result
+      // state.statistic.rank = para.selfRank
     },
     shareData(state, payload) {
-      state.shareData = payload
+      let data = payload.data.result
+      state.shareData = data.shareUrl
     }
   },
 
@@ -75,6 +81,10 @@ export default {
       }
     },
     async userShare({ state, commit }, payload) {
+      let params = {
+        userAnswerId: sessionStorage.userAnswerId
+      }
+      console.log('share--',params)
       let {
         data
       } = await service.userShare(params).catch(err => {
@@ -297,6 +307,8 @@ export default {
         })
         window.sessionStorage.score = state.endData.score
         window.sessionStorage.level = state.endData.level
+        window.sessionStorage.awardAmt = state.endData.awardAmt
+        window.sessionStorage.userAnswerId = state.endData.userAnswerId
       } else {
         data.result && Toast(data.result)
       }
