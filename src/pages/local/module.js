@@ -37,7 +37,6 @@ export default {
     },
     // 好友排行榜
     SET_RANKLIST(state, para) {
-      let data = payload.data
       state.rankList = para.rankList
     },
     // 开始测试数据
@@ -246,6 +245,7 @@ export default {
     },
     // 获取好友排行榜
     async getRankList({
+      commit,
       state
     }) {
       let {
