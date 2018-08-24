@@ -5,6 +5,10 @@
   bottom: 0;
   right: 0;
   background: #144a9d;
+  >img {
+    width: 100%;
+    height: 100%;
+  }
 }
 .is-app {
   position: absolute;
@@ -16,11 +20,20 @@
   padding-top: 128pr;
   background: #144a9d;
   .share-img {
-    border: 1px solid black;
-    height: 916pr;
+    margin-top: 168pr;
+    width: 90%;
+    height: 90%;
     margin: 0 40pr 40pr;
+    >img {
+      width: 100%;
+      height: 90%;
+
+    }
   }
   .share-items {
+    position: fixed;
+    bottom: 26pr;
+    width: 90%;
     margin: 0 40pr;
     background: #fff;
     box-shadow: 0 4pr 20pr 0 rgba(0, 0, 0, 0.2);
@@ -56,9 +69,6 @@
     }
     .item2 {
       margin: 0 134pr;
-    }
-    .item3 {
-      // margin-left: 58pr;
     }
   }
 }

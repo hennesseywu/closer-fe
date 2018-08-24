@@ -20,6 +20,7 @@ export default {
       rank: 0
     },
     rankList: [],
+    startResult: {},
     startData: [],
     currentQuesitionNum: 0,
     endData: {},
@@ -41,16 +42,20 @@ export default {
     },
     // 开始测试数据
     startData(state, payload) {
-      let data = payload.data
-      state.startData = data.list
+      let data = payload.data.result
+      state.startResult = data
+      state.startData = data.questions
+      
     },
     // 结束测试数据
     endData(state, payload) {
-      let data = payload.data.result
-      state.statistic.rank = para.selfRank
+      let data = payload.data
+      state.endData = data.result
+      // state.statistic.rank = para.selfRank
     },
     shareData(state, payload) {
-      state.shareData = payload
+      let data = payload.data.result
+      state.shareData = data.shareUrl
     }
   },
 
@@ -76,17 +81,18 @@ export default {
         return;
       }
     },
-    async userShare({
-      state,
-      commit
-    }, payload) {
+    async userShare({ state, commit }, payload) {
+      let params = {
+        userAnswerId: sessionStorage.userAnswerId
+      }
+      console.log('share--',params)
       let {
         data
       } = await service.userShare(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      if (typeof(data.code) != undefined && data.code == 0) {
+      if(typeof(data.code) != undefined && data.code == 0) {
         commit({
           type: 'shareData',
           data
@@ -106,11 +112,11 @@ export default {
       if (ua.indexOf("closer-ios") > -1) {
         console.log("module closer-ios");
         setTimeout(() => {
-          setupWebViewJavascriptBridge(function(bridge) {
+          setupWebViewJavascriptBridge(function (bridge) {
             console.log("ios bridge", bridge)
             if (bridge) {
               //ios获取用户token 判断登录
-              bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+              bridge.callHandler("getUserToken", null, function (token, responseCallback) {
                 console.log("ios token", token)
                 if (token) {
                   Cookies.set("GroukAuth", token, {
@@ -137,7 +143,7 @@ export default {
                   })
                 } else {
                   console.log("ios jumpLogin")
-                  setupWebViewJavascriptBridge(function(bridge) {
+                  setupWebViewJavascriptBridge(function (bridge) {
                     bridge.callHandler("jumpLogin", null);
                   });
                   cb();
@@ -297,7 +303,7 @@ export default {
         return;
       })
       console.log(3, data)
-      if (typeof(data.code != undefined) && data.code == 0) {
+      if (typeof (data.code != undefined) && data.code == 0) {
         commit({
           type: 'endData',
           data
@@ -307,6 +313,8 @@ export default {
         })
         window.sessionStorage.score = state.endData.score
         window.sessionStorage.level = state.endData.level
+        window.sessionStorage.awardAmt = state.endData.awardAmt
+        window.sessionStorage.userAnswerId = state.endData.userAnswerId
       } else {
         data.result && Toast(data.result)
       }

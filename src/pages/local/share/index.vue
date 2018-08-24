@@ -1,7 +1,9 @@
 <template>
-  <div class="share-wrapper">
+  <div class="share-wrapper" v-if="shareData.length > 0">
     <div class="is-app" v-if="isApp">
-      <div class="share-img"></div>
+      <div class="share-img">
+        <img :src="shareData"/>
+      </div>
       <div class="share-items box box-lr box-center-center">
         <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat')">
           <span class="weixin"></span>
@@ -17,7 +19,9 @@
         </div>
       </div>
     </div>
-    <div class="is-weixin" v-else></div>
+    <div class="is-weixin" v-else>
+      <img :src="shareData" />
+    </div>
   </div>
 </template>
 
@@ -38,6 +42,7 @@
     },
     created() {
       console.log('isAPP', this.isApp)
+      this.userShare()
     },
     computed: {
       ...mapState('local', {
@@ -63,7 +68,7 @@
             title: '是成都人就来瓜分百万大奖', // 分享标题
             desc: '参与成都人纯度测试，纯度越高，奖金越多！', // 分享描述
             link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'https://tiejin.cn/public/img/index/tiejin_white.png', // 分享图标
+            imgUrl: 'http://img.zcool.cn/community/011a5859ac137ea8012028a92fc78a.jpg@1280w_1l_2o_100sh.jpg', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function() {
@@ -75,7 +80,7 @@
           wx.onMenuShareTimeline({
             title: '是成都人就来瓜分百万大奖', // 分享标题
             link: 'location.href', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: '', // 分享图标
+            imgUrl: 'http://img.zcool.cn/community/011a5859ac137ea8012028a92fc78a.jpg@1280w_1l_2o_100sh.jpg', // 分享图标
             success: function() {
               // 用户点击了分享后执行的回调函数
             }
