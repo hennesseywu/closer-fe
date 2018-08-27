@@ -42,7 +42,7 @@
     },
     created() {
       console.log('isAPP', this.isApp)
-      // this.userShare()
+      this.userShare()
     },
     computed: {
       ...mapState('local', {
