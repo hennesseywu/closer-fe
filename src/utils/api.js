@@ -7,8 +7,8 @@ export default {
     serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
     // wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://127.0.0.1:8888/teabar/water-9d3foyvita",
-    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=https://a-sandbox.tiejin.cn/teabar/water-9d3foyvita",
-    wxLoginUrl: "https://h5.tiejin.cn/redirect?redirectUrl=https://a.tiejin.cn/teabar/water-9ziqRidiYX",
+    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://local.tiejin.cn:8889",
+    wxLoginUrl: "https://h5.tiejin.cn/redirect?redirectUrl=https://a.tiejin.cn",
     file: '/file/upload/public',
     admin: {
         // 微信授权获取code
@@ -82,7 +82,20 @@ export default {
         get_invite_statistic: "closer_invite.get_statistic",
         get_invitee_page_list: "closer_invite.get_invitee_page_list",
         get_yesterday_award_amt: "closer_invite.get_yesterday_award_amt",
-        remind_login: "closer_invite.remind_login"
+        remind_login: "closer_invite.remind_login",
+        // 土著活动
+        tuzhu: {
+            // 获取开始测试之前 个人统计信息
+            get_question_statistic: "activity_tuzhu.get_question_statistic",
+            // 结束测试，上传测试结果
+            end_test: "activity_tuzhu.end_test",
+            // 获取排行榜 top10
+            get_rank_list: "activity_tuzhu.get_rank_list",
+            // 分享测试结果，获取分享图片
+            share_user_answer: "activity_tuzhu.share_user_answer",
+            // 开始测试
+            start_test: "activity_tuzhu.start_test"
+        }
     },
     statitics: {
         // 数据统计接口

@@ -1,0 +1,71 @@
+.is-weixin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #144a9d;
+  >img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.is-app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  // width: 100%;
+  // height: 100%;
+  padding-top: 40pr;
+  background: #144a9d;
+  .share-img {
+    // width: 90%;
+    height: 82%;
+    margin: 0 40pr;
+    >img {
+      // width: 100%;
+      height: 98%;
+    }
+  }
+  .share-items {
+    width: 90%;
+    margin: 0 40pr;
+    background: #fff;
+    box-shadow: 0 4pr 20pr 0 rgba(0, 0, 0, 0.2);
+    border-radius: 12pr;
+    padding: 22pr 6pr 22pr 36pr;
+    .item {
+      > span:first-child {
+        display: inline-block;
+        width: 92pr;
+        height: 92pr;
+      }
+      >span:last-child {
+        font-size: 28pr;
+        color: #4B4945;
+        margin-top: 8pr;
+      }
+      .weixin {
+        background: url(../images/wx.png) no-repeat center;
+        background-size: cover;
+      }
+      .pyq {
+        background: url(../images/pyq.png) no-repeat center;
+        background-size: cover;
+      }
+      .qq {
+        background: url(../images/qq.png) no-repeat center;
+        background-size: cover;
+      }
+      .download {
+        background: url(../images/download.png) no-repeat center;
+        background-size: cover;
+      }
+    }
+    .item2 {
+      margin: 0 134pr;
+    }
+  }
+}

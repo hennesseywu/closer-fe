@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import api from './utils/api';
-import Store from './store';
-import { Toast } from 'mint-ui'
+import { Toast } from 'mint-ui';
+import { isApp, isWechat } from './utils/utils';
 
 
 const Index = () =>
@@ -31,8 +31,29 @@ const PullNewIndex = () =>
 const PullNewRule = () =>
     import ('@/pages/pullnew/rule')
 
+<<<<<<< HEAD
 const Qa = () =>
     import ('@/pages/qa/index')
+=======
+    // 成都土著活动
+const LocalIndex = () =>
+    import ('@/pages/local/index')
+
+const LocalAnswer = () =>
+    import ('@/pages/local/answer')
+
+const LocalResult = () =>
+    import ('@/pages/local/result')
+
+const LocalShare = () =>
+    import ('@/pages/local/share')
+// 土著活动规则
+const LocalRule = () =>
+    import ('@/pages/local/rule')
+// 土著活动排行榜
+const LocalRank = () =>
+    import ('@/pages/local/rank')
+>>>>>>> develop
 
 Vue.use(Router)
 
@@ -91,21 +112,54 @@ const router = new Router({
             meta: {
                 title: '邀好友，赚现金'
             }
-        },
-        {
+        }, {
             path: '/pullNew/rule',
             name: 'pullNewRule',
             component: PullNewRule,
             meta: {
                 title: '邀好友，赚现金'
             }
-        },
-        {
-            path: '/qa',
-            name: 'qa',
-            component: Qa,
+        }, {
+            path: '/local',
+            name: 'localIndex',
+            component: LocalIndex,
             meta: {
-                title: '我的客服'
+                title: '谁是成都最土著'
+            }
+        }, {
+            path: '/local/answer',
+            name: 'localAnswer',
+            component: LocalAnswer,
+            meta: {
+                title: '谁是成都最土著'
+            }
+        }, {
+            path: '/local/result',
+            name: 'localResult',
+            component: LocalResult,
+            meta: {
+                title: '谁是成都最土著'
+            }
+        }, {
+            path: '/local/share',
+            name: 'localShare',
+            component: LocalShare,
+            meta: {
+                title: '分享'
+            }
+        }, {
+            path: '/local/rule',
+            name: 'localRule',
+            component: LocalRule,
+            meta: {
+                title: '活动规则'
+            }
+        }, {
+            path: '/local/rank',
+            name: 'localRank',
+            component: LocalRank,
+            meta: {
+                title: '排行榜'
             }
         }
     ]
@@ -119,12 +173,6 @@ router.beforeEach(({
     params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
-    let ua = navigator.userAgent || window.navigator.userAgent;
-    ua = ua.toLowerCase();
-    Store.state.UA = ua;
-    if (ua.indexOf("closer-android") > -1 || ua.indexOf("closer-ios") != -1) {
-        Store.state.IS_APP = true;
-    }
     if (name == "worldcupIndex") {
         axios.post(api.activity.get_activity).then(({ data }) => {
             if (typeof(data.code) != "undefined" && data.code == 0) {
@@ -207,13 +255,12 @@ router.beforeEach(({
             }
         }
 
-    } else if (name == "tblogin") {
-        console.log("tblogin")
-        if (ua.indexOf("closer-ios") > -1 || ua.indexOf("closer-android") > -1) {
+    } else if (name == "tblogin" || name == 'localIndex') {
+        if (isApp()) {
             console.log("closer device")
             Cookies.remove('user'); //app端user完全依赖APP
             next();
-        } else {
+        } else if (isWechat()) {
             if (query.code) {
                 next();
                 return;
@@ -222,7 +269,7 @@ router.beforeEach(({
                 path: api.wxLoginUrl
             };
             if (Cookies.get("IS_DEV")) {
-                params.path = api.wxLoginDevUrl
+                params.path = api.wxLoginDevUrl+path
             }
             axios.post(api.admin.get_auth_path, params).then(({ data }) => {
                 if (typeof(data.code) != "undefined" && data.code == 0) {
@@ -235,6 +282,8 @@ router.beforeEach(({
                 return;
             })
 
+        } else {
+            next();
         }
     } else if (name == "worldcupActivity" && !Cookies.get("GroukAuth")) {
         router.push({
