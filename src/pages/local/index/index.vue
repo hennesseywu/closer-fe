@@ -131,6 +131,10 @@
       },
       // 开始答题
       handleStart() {
+        this.dialog.share = true;
+          this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
+          this.dialog.show = true;
+          return false;
         if (this.checkOtherEnv()) {
           this.$router.push({
             name: 'localAnswer'
@@ -145,6 +149,11 @@
         if (!this.IS_APP && !this.IS_WX) {
           this.dialog.share = false;
           this.dialog.content = '亲，请去微信环境下答题吧';
+          this.dialog.show = true;
+          return false;
+        } else if (this.statistic.chance <= 0) {
+          this.dialog.share = true;
+          this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
           this.dialog.show = true;
           return false;
         } else {
