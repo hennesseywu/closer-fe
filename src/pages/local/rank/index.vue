@@ -5,12 +5,12 @@
       <div class="bd-name">排行榜</div>
       <div class="bd-mine">
         <div class="bd-item bd-item-mine">
-          <div class="user-rank">{{selfRank.rank}}</div>
+          <div class="user-rank">{{statistic.rank}}</div>
           <div class="user-info">
-            <img class="user-img" :src="makeFileUrl(selfRank.user.avatar)"/>
-            <div class="user-name" v-html="selfRank.user.fullname"></div>
+            <img class="user-img" :src="makeFileUrl(user.avatar)"/>
+            <div class="user-name" v-html="user.fullname"></div>
           </div>
-          <div class="user-score">{{selfRank.maxScore}}分</div>
+          <div class="user-score">{{statistic.totalAwardAmt}}分</div>
         </div>
       </div>
       <div class="bd-friends">
@@ -21,10 +21,10 @@
           :class="item.rank < 4 ? 'bd-item-'+item.rank : ''">
           <div class="user-rank">{{item.rank}}</div>
           <div class="user-info">
-            <img class="user-img" :src="makeFileUrl(item.user.avatar)"/>
-            <div class="user-name" v-html="item.user.fullname"></div>
+            <img class="user-img" :src="makeFileUrl(user.avatar)"/>
+            <div class="user-name" v-html="item.fullname"></div>
           </div>
-          <div class="user-score">{{item.maxScore}}分</div>
+          <div class="user-score">{{item.totalAwardAmt}}分</div>
         </div>
 
       </div>
@@ -42,10 +42,11 @@
       return {}
     },
     computed: {
-      ...mapState('local', {
-        selfRank: state => state.rank.selfRank,
-        rankList: state => state.rank.rankList
-      })
+      ...mapState('local', [
+        'user',
+        'statistic',
+        'rankList'
+      ])
     },
     beforeRouteEnter(to, from, next) {
       if (from.name != 'localIndex') {
