@@ -11,9 +11,9 @@ export default {
     user: {},
     statistic: {
       // 最高总奖金
-      maxAwardAmt: 1000,
+      maxAwardAmt: 100,
       // 当前已获得奖金
-      totalAwardAmt: 100,
+      totalAwardAmt: 0,
       // 剩余答题次数
       chance: 0,
       // 排名
@@ -122,12 +122,12 @@ export default {
                     expires: 30
                   });
                   // setTimeout(() => {
-                    service.getUserInfoInApp().then(({
+                  service.getUserInfoInApp().then(({
                     data
                   }) => {
                     console.log("ios", data.result);
                     if (data.result) {
-                      let userInfo = JSON.stringify(data.result);
+                      let userInfo = data.result;
                       Cookies.set("user", userInfo, {
                         expires: 30
                       });
@@ -162,13 +162,13 @@ export default {
             Cookies.set("GroukAuth", token, {
               expires: 30
             });
-            setTimeout(() => {
+            // setTimeout(() => {
               service.getUserInfoInApp().then(({
                 data
               }) => {
                 console.log("android", data.result);
                 if (data.result) {
-                  let userInfo = JSON.stringify(data.result);
+                  let userInfo = data.result;
                   Cookies.set("user", userInfo, {
                     expires: 30
                   });
@@ -182,7 +182,7 @@ export default {
                 return;
               })
 
-            }, 1000)
+            // }, 1000)
           } else {
             console.log("android jumpLogin")
             window.bridge.jumpLogin(null);

@@ -121,10 +121,11 @@ export function dateFormat(time) {
 export function makeFileUrl(url, type, size) {
   if (url) {
     let sizes = size ? size : 500
+    let fileUrl = Cookies.get("IS_DEV") ? api.fileDevURL : api.fileUrl
     if (type === 'src') {
-      return (url.indexOf('://') !== -1) ? url + '?s=' + sizes : api.fileDevURL + url + '?s=' + sizes;
+      return (url.indexOf('://') !== -1) ? url + '?s=' + sizes : fileUrl + url + '?s=' + sizes;
     } else {
-      return (url.indexOf('://') !== -1) ? url : api.fileDevURL + url;
+      return (url.indexOf('://') !== -1) ? url : fileUrl + url;
     }
   } else {
     return
