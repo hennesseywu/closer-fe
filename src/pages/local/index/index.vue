@@ -131,11 +131,11 @@
       },
       // 开始答题
       handleStart() {
-        if (this.checkOtherEnv()) {
+        // if (this.checkOtherEnv()) {
           this.$router.push({
             name: 'localAnswer'
           })
-        }
+        // }
       },
       closeDialog() {
         this.dialog.show = false;

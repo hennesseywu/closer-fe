@@ -3,6 +3,7 @@
     <div class="content1">
       <div class="avater" :class="level == 1 ? 'avater1' : (level == 2 ? 'avater2' : 'avater3')">
         <span class="avater-commen" :class="level == 1 ? 'avater1-icon' : (level == 2 ? 'avater2-icon' : 'avater3-icon')"></span>
+        <img :src="makeFileUrl(user.avatar)">
       </div>
       <div class="regards">
         <span>{{regards}}</span>分
@@ -46,6 +47,7 @@
     downloadApp
   } from '../../../utils/utils'
   import localDialog from '../components/dialog'
+  import { makeFileUrl } from '../../../utils/utils'
   export default {
     components: {
       localDialog
@@ -83,14 +85,17 @@
     },
     mounted() {
       this.chance = this.$store.state.local.statistic.chance
-      console.log('this.$store.state.local.statistic.chance', this.$store.state.local.statistic.chance)
+      console.log('user--', this.user)
     },
     computed: {
       ...mapState('local', {
-        // endData: state => state.endData
+        user: state => state.user
       })
     },
     methods: {
+      makeFileUrl(url) {
+        return makeFileUrl(url)
+      },
       regardsAdd() {
         if (this.regards > this.score) {
           return
@@ -123,6 +128,9 @@
       downloadApp() {
         if(this.isApp) {
           // 去分享
+          this.$router.push({
+            name: 'localShare'
+          })
         } else {
           downloadApp()
         }
@@ -130,7 +138,7 @@
       goTips() {
         if(this.isApp) {
           // 跳转app内部详情页
-
+          
         } else {
           // 跳转对应栏目页
         }

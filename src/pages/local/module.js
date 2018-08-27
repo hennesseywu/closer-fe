@@ -44,7 +44,7 @@ export default {
       let data = payload.data.result
       state.startResult = data
       state.startData = data.questions
-      
+
     },
     // 结束测试数据
     endData(state, payload) {
@@ -74,24 +74,27 @@ export default {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      if (typeof(data.code) != "undefined" && data.code == 0) {
+      if (typeof (data.code) != "undefined" && data.code == 0) {
         return data.result;
       } else {
         return;
       }
     },
-    async userShare({ state, commit }, payload) {
+    async userShare({
+      state,
+      commit
+    }, payload) {
       let params = {
         userAnswerId: sessionStorage.userAnswerId
       }
-      console.log('share--',params)
+      console.log('share--', params)
       let {
         data
       } = await service.userShare(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      if(typeof(data.code) != undefined && data.code == 0) {
+      if (typeof (data.code) != undefined && data.code == 0) {
         commit({
           type: 'shareData',
           data
@@ -122,7 +125,7 @@ export default {
                     expires: 30
                   });
                   // setTimeout(() => {
-                    service.getUserInfoInApp().then(({
+                  service.getUserInfoInApp().then(({
                     data
                   }) => {
                     console.log("ios", data.result);
@@ -273,16 +276,15 @@ export default {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      // if(typeof(data.code) != undefined && data.code == 0) {
-      commit({
-        type: 'startData',
-        data
-      })
-
-      // } else {
-      //   Toast('网络开小差啦，请稍后再试')
-      //   return;
-      // }
+      if (typeof (data.code) != undefined && data.code == 0) {
+        commit({
+          type: 'startData',
+          data
+        })
+      } else {
+        Toast('网络开小差啦，请稍后再试')
+        return;
+      }
     },
     nextQuestion({
       state,
