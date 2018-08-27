@@ -60,10 +60,18 @@ export default {
     },
     SET_ACTIVITYID(state, payload) {
       payload && (state.activityId = payload);
+    },
+    updateChance(state) {
+     let chance= state.statistic.chance;
+     state.statistic.chance=--chance;
+     console.log("chance",state.statistic.chance)
     }
   },
 
   actions: {
+    updateChance({commit}) {
+      commit('updateChance')
+    },
     async userShare({
       state,
       commit

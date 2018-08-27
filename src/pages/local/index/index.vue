@@ -147,6 +147,10 @@
       },
       // 开始答题
       handleStart() {
+        this.dialog.share = true;
+          this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
+          this.dialog.show = true;
+          return false;
         if (this.checkOtherEnv()) {
           this.$router.push({
             name: 'localAnswer'
