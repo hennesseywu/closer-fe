@@ -24,7 +24,7 @@ export default {
     startData: [],
     currentQuesitionNum: 0,
     endData: {},
-    shareData: {}
+    shareData: ''
   },
   mutations: {
     // 设置微信授权后用户信息
@@ -59,27 +59,6 @@ export default {
   },
 
   actions: {
-    async wechatConfig({
-      rootState
-    }, payload) {
-      let params = {
-        url: location.href
-      };
-      // if (rootState.IS_DEV) {
-      //     params.url = api.wxLoginDevUrl
-      // }
-      let {
-        data
-      } = await service.wechatConfig(params).catch(err => {
-        Toast('网络开小差啦，请稍后再试')
-        return;
-      })
-      if (typeof (data.code) != "undefined" && data.code == 0) {
-        return data.result;
-      } else {
-        return;
-      }
-    },
     async userShare({
       state,
       commit
