@@ -51,7 +51,7 @@ window.setupWebViewJavascriptBridge = function(callback) {
 Vue.config.productionTip = false
 Vue.use(MintUI)
 
-checkUA();
+initState();
 // 运行时动态设置
 pageResize()
 window.onresize = pageResize;
@@ -61,7 +61,7 @@ function pageResize() {
   document.documentElement.style.fontSize = (fontSize >= 32 ? 32 : fontSize) + 'px'
 }
 
-function checkUA() {
+function initState() {
   let ua = (navigator.userAgent || window.navigator.userAgent).toLowerCase();
   store.state.UA = ua;
   store.state.IS_APP = isApp();

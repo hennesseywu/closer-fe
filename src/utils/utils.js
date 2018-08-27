@@ -131,3 +131,28 @@ export function makeFileUrl(url, type, size) {
     return
   }
 }
+
+// 将单位‘分’转换为‘元’
+export function transAmount(count) {
+  return ~~(count/1e2);
+}
+// 为url添加参数
+export function addParamsForUrl(url, params) {
+  let str = [];
+  for (let key in params) {
+    if (params.hasOwnProperty(key)) {
+      str.push(`${key}=${params[key]}`)
+    }
+  }
+  return url + (url.indexOf('?') > -1 ? '&' : '?') + str.join('&')
+}
+// url中参数转query
+export function parseQuery() {
+  var query = location.search.substr(1);
+  var reg = /([^=&\s]+)[=\s]*([^&\s]*)/g;
+  var obj = {};
+  while (reg.exec(query)) {
+      obj[RegExp.$1] = RegExp.$2;
+  }
+  return obj;
+}
