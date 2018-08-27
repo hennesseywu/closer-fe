@@ -156,7 +156,7 @@
       setTimeout(() => {
         this.mounted = true;
       }, 800);
-      // this.getStatistic();
+      this.getStatistic();
     }
   }
 </script>

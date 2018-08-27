@@ -55,10 +55,18 @@ export default {
     shareData(state, payload) {
       let data = payload.data.result
       state.shareData = data.shareUrl
+    },
+    updateChance(state) {
+     let chance= state.statistic.chance;
+     state.statistic.chance=--chance;
+     console.log("chance",state.statistic.chance)
     }
   },
 
   actions: {
+    updateChance({commit}) {
+      commit('updateChance')
+    },
     async userShare({
       state,
       commit
