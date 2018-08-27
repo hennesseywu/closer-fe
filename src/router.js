@@ -119,42 +119,42 @@ const router = new Router({
             name: 'localIndex',
             component: LocalIndex,
             meta: {
-                title: '成都土著'
+                title: '谁是成都最土著'
             }
         }, {
             path: '/local/answer',
             name: 'localAnswer',
             component: LocalAnswer,
             meta: {
-                title: '成都土著'
+                title: '谁是成都最土著'
             }
         }, {
             path: '/local/result',
             name: 'localResult',
             component: LocalResult,
             meta: {
-                title: '成都土著'
+                title: '谁是成都最土著'
             }
         }, {
             path: '/local/share',
             name: 'localShare',
             component: LocalShare,
             meta: {
-                title: '成都土著'
+                title: '分享'
             }
         }, {
             path: '/local/rule',
             name: 'localRule',
             component: LocalRule,
             meta: {
-                title: '成都土著'
+                title: '活动规则'
             }
         }, {
             path: '/local/rank',
             name: 'localRank',
             component: LocalRank,
             meta: {
-                title: '成都土著'
+                title: '排行榜'
             }
         }
 
