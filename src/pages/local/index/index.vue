@@ -99,21 +99,16 @@
         self.checkLoginInApp(self.getStatistic);
       } else if (self.IS_WX) {
         // 微信端
-        // let user = Cookies.get("user");
-        // if (typeof(Cookies.get("token")) != "undefined" && typeof(user) != "undefined") {
-        //   self.SET_USER(JSON.parse(user))
-        // } else {
-          self.getUserInfoAndLoginWithWx(self.$route.query).then(sign => {
-            if (sign) {
-              self.getStatistic();
-              self.initWxConfig();
-            } else {
-              this.dialog.share = false;
-              this.dialog.content = '亲，请先登录再参与答题吧~';
-              this.dialog.show = true;
-            }
-          })
-        // }
+        self.getUserInfoAndLoginWithWx(self.$route.query).then(sign => {
+          if (sign) {
+            self.getStatistic();
+            self.initWxConfig();
+          } else {
+            this.dialog.share = false;
+            this.dialog.content = '亲，请先登录再参与答题吧~';
+            this.dialog.show = true;
+          }
+        })
       }
     },
     methods: {
