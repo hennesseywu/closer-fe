@@ -94,7 +94,9 @@ export default {
             // 分享测试结果，获取分享图片
             share_user_answer: "activity_tuzhu.share_user_answer",
             // 开始测试
-            start_test: "activity_tuzhu.start_test"
+            start_test: "activity_tuzhu.start_test",
+            // 获取分享默认图片
+            get_default_share: "activity_tuzhu.get_default_share_url"
         }
     },
     statitics: {

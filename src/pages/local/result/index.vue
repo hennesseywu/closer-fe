@@ -83,8 +83,6 @@
       this.score = sessionStorage.score
       this.level = sessionStorage.level
       this.awardAmt = sessionStorage.awardAmt
-      // this.chance = $store.state.local.statistic.chance
-      console.log('level', this.level)
       this.regardsAdd();
     },
     mounted() {
@@ -93,10 +91,14 @@
     },
     computed: {
       ...mapState('local', {
-        user: state => state.user
+        user: state => state.user,
+        chance: state => state.statistic.chance
       })
     },
     methods: {
+      ...mapActions('local', [
+        "updateChance"
+      ]),
       makeFileUrl(url) {
         return makeFileUrl(url)
       },
