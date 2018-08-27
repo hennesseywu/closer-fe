@@ -11,6 +11,8 @@
 </template>
 
 <script>
+
+  import { mapState } from 'vuex';
   export default {
     name: 'localDialog',
     props:{
@@ -18,13 +20,24 @@
       share: Boolean,
       content: String
     },
+    computed: {
+      ...mapState(['IS_APP'])
+    },
     methods:{
       handleClose() {
         this.$emit('close');
       },
       handleClick() {
         if (this.share) {
-
+          if (this.IS_APP) {
+            // 端内跳分享页
+            this.$router.push({
+              name: 'localShare'
+            })
+          } else if (this.IS_WX) {
+            // 微信端调sdk
+            
+          }
         } else {
           this.handleClose();
         }
