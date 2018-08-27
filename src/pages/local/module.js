@@ -19,7 +19,10 @@ export default {
       // 排名
       rank: 0
     },
-    rankList: [],
+    rank: {
+      selfRank: {},
+      rankList: []
+    },
     startResult: {},
     startData: [],
     currentQuesitionNum: 0,
@@ -37,7 +40,7 @@ export default {
     },
     // 好友排行榜
     SET_RANKLIST(state, para) {
-      state.rankList = para.rankList
+      state.rank = para
     },
     // 开始测试数据
     startData(state, payload) {
