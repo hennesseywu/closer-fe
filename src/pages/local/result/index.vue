@@ -26,7 +26,9 @@
       <div class="btn-commen go-answer" @click="goAnswer">再次答题</div>
       <div class="chance-remain">剩余{{chance}}次答题机会</div>
       <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-if="isApp">去分享</div>
-      <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else>领{{awardAmt}}元奖励</div>
+      <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 1">领5元奖励</div>
+      <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 2">领2元奖励</div>
+      <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 3">下载APP</div>
       <div class="text-commen go-wallet" v-if="!isApp">去“我的-钱包”查看</div>
       <div class="text-commen tips" @click="goTips">提高正确率，请查看攻略<span class="arrow"></span> </div>
     </div>
@@ -47,7 +49,9 @@
     downloadApp
   } from '../../../utils/utils'
   import localDialog from '../components/dialog'
-  import { makeFileUrl } from '../../../utils/utils'
+  import {
+    makeFileUrl
+  } from '../../../utils/utils'
   export default {
     components: {
       localDialog
@@ -108,25 +112,25 @@
         }, 10)
       },
       goAnswer() {
-        if(this.awardAmt >= 100) {
+        if (this.awardAmt >= 100) {
           Toast('您已经获得奖励100元，不能再答题了~')
           return
-        } 
-        if(this.chance > 0) {
+        }
+        if (this.chance > 0) {
           this.chance--
-          this.$router.push({
-            name: 'localAnswer'
-          })
+            this.$router.push({
+              name: 'localAnswer'
+            })
         } else {
           this.dialog.show = true
         }
-
+  
       },
       closeDialog() {
         this.dialog.show = false;
       },
       downloadApp() {
-        if(this.isApp) {
+        if (this.isApp) {
           // 去分享
           this.$router.push({
             name: 'localShare'
@@ -136,9 +140,9 @@
         }
       },
       goTips() {
-        if(this.isApp) {
+        if (this.isApp) {
           // 跳转app内部详情页
-          
+  
         } else {
           // 跳转对应栏目页
         }
