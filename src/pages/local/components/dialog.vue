@@ -29,15 +29,15 @@
       },
       handleClick() {
         if (this.share) {
-          if (this.IS_APP) {
+          // if (this.IS_APP) {
             // 端内跳分享页
             this.$router.push({
               name: 'localShare'
             })
-          } else if (this.IS_WX) {
-            // 微信端调sdk
+          // } else if (this.IS_WX) {
+          //   // 微信端调sdk
             
-          }
+          // }
         } else {
           this.handleClose();
         }

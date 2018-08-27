@@ -59,7 +59,7 @@ export default {
     },
     shareData(state, payload) {
       let data = payload.data.result
-      state.shareData = data.shareUrl
+      state.shareData = data.shareUrl || data.defaultShareUrl
     },
     SET_ACTIVITYID(state, payload) {
       payload && (state.activityId = payload);
@@ -104,7 +104,7 @@ export default {
         console.log('default share--', params)
         let {
           data
-        } = await service.get_default_share(params).catch(err => {
+        } = await service.userDefaultShare(params).catch(err => {
           Toast('网络开小差啦，请稍后再试')
           return;
         })
