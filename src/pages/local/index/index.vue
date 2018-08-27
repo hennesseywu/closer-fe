@@ -18,20 +18,20 @@
       <div class="bd-scale">
         <div class="bd-scale-default bd-scale-0" :class="{active: statistic.totalAwardAmt > showAmount(0)}">
           <span class="bd-arrow bd-arrow-left"></span>
-          <span class="bd-scale-amount">{{showAmount(0, 2)}}</span>
+          <span class="bd-scale-amount">{{showAmount(0)}}</span>
         </div>
         <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
           <span class="bd-arrow bd-arrow-center"></span>
-          <span class="bd-scale-amount">{{showAmount(.5, 2)}}</span>
+          <span class="bd-scale-amount">{{showAmount(.5)}}</span>
         </div>
         <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
           <span class="bd-arrow bd-arrow-right"></span>
-          <span class="bd-scale-amount">{{showAmount(1, 2)}}</span>
+          <span class="bd-scale-amount">{{showAmount(1)}}</span>
         </div>
       </div>
       <div class="bd-total">
         累计获得：
-        <span class="bd-count">{{currentTotalAmount}}</span> 元
+        <span class="bd-count">{{statistic.totalAwardAmt}}</span> 元
       </div>
       <div class="bd-desc" v-html="currentDesc"></div>
       <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>
@@ -50,7 +50,6 @@
     mapActions,
     mapMutations
   } from 'vuex';
-  import {transAmount, parseQuery} from '../../../utils/utils'
   
   export default {
     name: 'localIndex',
@@ -79,21 +78,17 @@
         return this.statistic.totalAwardAmt*100/this.statistic.maxAwardAmt + '%'
       },
       remainTimesToMax() {
-        return Math.ceil(transAmount(this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
-      },
-      currentTotalAmount() {
-        return (this.statistic.totalAwardAmt/100).toFixed(2);
+        return Math.ceil((this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
       },
       currentDesc() {
         if (this.remainTimesToMax == 0) {
-          return `恭喜，您已获得全部${transAmount(this.statistic.maxAwardAmt)}元的现金奖励~`
+          return `恭喜，您已获得全部${this.statistic.maxAwardAmt}元的现金奖励~`
         }
-        return `您再获得${this.remainTimesToMax}次王者称号就可以拿到总计${transAmount(this.statistic.maxAwardAmt)}元的现金奖励了！`
+        return `您再获得${this.remainTimesToMax}次王者称号就可以拿到总计${this.statistic.maxAwardAmt}元的现金奖励了！`
       }
     },
     created() {
       const self = this;
-      self.SET_ACTIVITYID(parseQuery().activityId);
       if (self.IS_APP) { 
         // 端内
         self.checkLoginInApp(self.getStatistic);
@@ -115,18 +110,14 @@
       ...mapActions('local', [
         'checkLoginInApp',
         'getUserInfoAndLoginWithWx',
-        'getStatistic',
-        'initWxConfig'
+        'getStatistic'
       ]),
       ...mapMutations('local', [
-        'SET_USER',
-        'SET_ACTIVITYID'
+        'SET_USER'
       ]),
-      // 展示金额，rate为百分比率，count为除以10的指数
-      showAmount(rate, count = 0) {
-        return parseInt(this.statistic.maxAwardAmt*rate/(10**count))
+      showAmount(rate) {
+        return parseInt(this.statistic.maxAwardAmt*rate)
       },
-      // 转到排行榜
       showRankingList() {
         if (this.checkOtherEnv()) {
           this.$router.push({
@@ -134,7 +125,6 @@
           })
         }
       },
-      // 转到规则
       showRule() {
         this.$router.push({
           name: 'localRule'
@@ -142,6 +132,10 @@
       },
       // 开始答题
       handleStart() {
+        this.dialog.share = true;
+          this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
+          this.dialog.show = true;
+          return false;
         if (this.checkOtherEnv()) {
           this.$router.push({
             name: 'localAnswer'
@@ -158,11 +152,6 @@
           this.dialog.content = '亲，请去微信环境下答题吧';
           this.dialog.show = true;
           return false;
-        } else if (this.statistic.chance <= 0) {
-          this.dialog.share = true;
-          this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
-          this.dialog.show = true;
-          return false;
         } else {
           return true;
         }
@@ -172,6 +161,7 @@
       setTimeout(() => {
         this.mounted = true;
       }, 800);
+      // this.getStatistic();
     }
   }
 </script>
