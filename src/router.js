@@ -31,10 +31,6 @@ const PullNewIndex = () =>
 const PullNewRule = () =>
     import ('@/pages/pullnew/rule')
 
-<<<<<<< HEAD
-const Qa = () =>
-    import ('@/pages/qa/index')
-=======
     // 成都土著活动
 const LocalIndex = () =>
     import ('@/pages/local/index')
@@ -53,7 +49,6 @@ const LocalRule = () =>
 // 土著活动排行榜
 const LocalRank = () =>
     import ('@/pages/local/rank')
->>>>>>> develop
 
 Vue.use(Router)
 
