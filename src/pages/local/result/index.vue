@@ -126,10 +126,7 @@
           if (this.regards >= this.score) {
             return
           }
-          // if(this.regards >= 100 || this.score >= 100) {
-          //   return
-          // }
-          this.regards++
+          this.regards += 0.5
         }, 10)
       },
       goAnswer() {
