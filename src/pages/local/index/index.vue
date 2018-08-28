@@ -152,7 +152,7 @@
         //   this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
         //   this.dialog.show = true;
         //   return false;
-        if (this.checkOtherEnv()) {
+        if (this.checkOtherEnv(true)) {
           this.$router.push({
             name: 'localAnswer'
           })
@@ -162,14 +162,14 @@
         this.dialog.show = false;
       },
       // 其他环境下弹窗提示去微信答题
-      checkOtherEnv() {
+      checkOtherEnv(needLogin) {
         console.log(this.statistic.chance)
         if (!this.IS_APP && !this.IS_WX) {
           this.dialog.share = false;
           this.dialog.content = '亲，请去微信环境下答题吧';
           this.dialog.show = true;
           return false;
-        } else if (this.statistic.chance <= 0) {
+        } else if (this.statistic.chance <= 0 && needLogin) {
           this.dialog.share = true;
           this.dialog.content = '亲，没有答题机会了，<br/>快去分享给好友获取答题机会吧！';
           this.dialog.show = true;

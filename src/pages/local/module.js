@@ -10,12 +10,13 @@ export default {
   namespaced: true,
   state: {
     activityId: 2,
+    inviter: '',
     user: {},
     statistic: {
       // 最高总奖金
       maxAwardAmt: 10000,
       // 当前已获得奖金
-      totalAwardAmt: 3000,
+      totalAwardAmt: 0,
       // 剩余答题次数
       chance: 0,
       // 排名
@@ -63,8 +64,10 @@ export default {
       let data = payload.data.result
       state.shareData = data.shareUrl || data.defaultShareUrl
     },
-    SET_ACTIVITYID(state, payload) {
-      payload && (state.activityId = payload);
+    SET_PARAMS(state, payload) {
+      let {inviter, activityId} = payload
+      activityId && (state.activityId = activityId);
+      state.inviter = inviter
     },
     updateChance(state) {
       let chance = state.statistic.chance
@@ -241,7 +244,11 @@ export default {
         activityId = params.activityId || activityId;
       }
       // 保存url中的activityId
-      commit('SET_ACTIVITYID', activityId);
+      commit('SET_PARAMS', {
+        activityId,
+        inviter
+      });
+
       let _params = {
         plateform: 2,
         // 微信授权code
