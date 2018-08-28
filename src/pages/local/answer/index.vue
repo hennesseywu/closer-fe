@@ -54,7 +54,6 @@
     mounted() {
       this.isUpdate = true
       this.updateChance()
-      this.inviter = parseQuery().inviter
     },
     computed: {
       ...mapState(['IS_APP', 'IS_WX']),
@@ -64,7 +63,8 @@
         startData: state => state.startData,
         currentQuesitionNum: state => state.questions.currentQuesitionNum,
         endData: state => state.endData,
-        chance: state => state.statistic.chance
+        chance: state => state.statistic.chance,
+        inviter: state => state.inviter
       })
     },
     methods: {
