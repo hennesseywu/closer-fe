@@ -94,7 +94,6 @@
     },
     created() {
       const self = this;
-      self.SET_ACTIVITYID(parseQuery().activityId);
       if (self.IS_APP) { 
         // 端内
         self.checkLoginInApp(self.getStatistic);
@@ -125,8 +124,7 @@
         'initWxConfig'
       ]),
       ...mapMutations('local', [
-        'SET_USER',
-        'SET_ACTIVITYID'
+        'SET_USER'
       ]),
       // 展示金额，rate为百分比率，count为除以10的指数
       showAmount(rate, count = 0) {
