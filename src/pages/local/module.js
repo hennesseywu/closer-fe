@@ -25,7 +25,9 @@ export default {
       signSalt: ''
     },
     rank: {
-      selfRank: {},
+      selfRank: {
+        user: {}
+      },
       rankList: []
     },
     startResult: {},
@@ -316,7 +318,7 @@ export default {
         data
       } = await service.getRankList({
         activityId: state.activityId,
-        inviter: state.inviter
+        inviteUser: state.inviter
       });
       if (data.code == 0) {
         commit('SET_RANKLIST', data.result)

@@ -105,7 +105,7 @@
           answers: this.answers,
           salt: this.signSalt,
           sign: this.sign(),
-          inviter: this.inviter
+          inviteUser: this.inviter
         }
         console.log(this.answers)
         if (this.currentQuesitionNum < 7) {
