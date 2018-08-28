@@ -256,6 +256,7 @@ export default {
       let token = Cookies.get('GroukAuth');
       if (user && token) {
         commit('SET_USER', user);
+        return true;
       } else {
         let { data } = await service.loginWithWx(_params);
         if (data.code == 0) {
