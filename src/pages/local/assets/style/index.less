@@ -1,7 +1,7 @@
 @aniTime: .2s;
 @aniFun: ease-out;
 .index {
-  padding: 80pr 0 40pr;
+  padding: 40pr 0 40pr;
   font-size: 28pr;
   .share {
     position: absolute;
@@ -11,6 +11,13 @@
     height: 68pr;
     background: url(../images/index_share.png) center no-repeat;
     background-size: contain;
+    display: none;
+  }
+  &.in-app {
+    padding-top: 90pr;
+    .share {
+      display: block;
+    }
   }
   .tab {
     display: flex;

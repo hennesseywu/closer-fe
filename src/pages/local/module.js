@@ -92,7 +92,6 @@ export default {
         let params = {
           userAnswerId: sessionStorage.userAnswerId
         }
-        console.log('share--', params)
         let {
           data
         } = await service.userShare(params).catch(err => {
@@ -255,13 +254,15 @@ export default {
       let user = Cookies.get('user');
       let token = Cookies.get('GroukAuth');
       if (user && token) {
-        commit('SET_USER', user);
+        console.log('user-from-cookie:',JSON.parse(user));
+        commit('SET_USER', JSON.parse(user));
         return true;
       } else {
         let { data } = await service.loginWithWx(_params);
         if (data.code == 0) {
           user = data.result.user;
           token = data.result.token;
+          console.log('user-from-server:',user);
           commit('SET_USER', user)
           Cookies.set('GroukAuth', token, {
             expires: 7

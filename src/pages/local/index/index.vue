@@ -1,6 +1,6 @@
 <template>
-  <div class="main index">
-    <div class="share" v-if="IS_APP" @click="handleShare()"></div>
+  <div class="main index" :class="{'in-app': IS_APP}">
+    <div class="share" @click="handleShare()"></div>
     <section class="tab">
       <div class="tab-default tab-left" @click="showRankingList()">好友排行榜</div>
       <div class="tab-default tab-right" @click="showRule()">活动规则</div>
