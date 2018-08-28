@@ -309,7 +309,8 @@ export default {
       let {
         data
       } = await service.getRankList({
-        activityId: state.activityId
+        activityId: state.activityId,
+        inviter: state.inviter
       });
       if (data.code == 0) {
         commit('SET_RANKLIST', data.result)

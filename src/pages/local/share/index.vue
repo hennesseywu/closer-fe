@@ -59,7 +59,7 @@
       ]),
       toShare(type, url) {
         let ua = this.$store.state.UA
-        console.log('share--', ua)
+        console.log('share--', type, url, ua)
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
             console.log("toShare ios bridge", bridge)
