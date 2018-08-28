@@ -100,6 +100,7 @@
         user: state => state.user,
         chance: state => state.statistic.chance,
         currentQuesitionNum: state => state.currentQuesitionNum,
+        statistic: state => state.statistic
       })
     },
     methods: {
@@ -127,7 +128,7 @@
         }, 10)
       },
       goAnswer() {
-        if (this.awardAmt >= 100) {
+        if (this.statistic.totalAwardAmt >= this.statistic.maxAwardAmt) {
           Toast('您已经获得奖励100元，不能再答题了~')
           return
         }
