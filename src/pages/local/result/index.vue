@@ -29,7 +29,8 @@
       <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 1">领5元奖励</div>
       <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 2">领2元奖励</div>
       <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 3">下载APP</div>
-      <div class="text-commen go-wallet" v-if="!isApp">去“我的-钱包”查看</div>
+      <div class="text-commen go-wallet" v-if="isApp">去“我的-钱包”查看</div>
+      <div class="text-commen go-wallet" v-else>下载贴近APP，去“我的-钱包”查看</div>
       <div class="text-commen tips" @click="goTips">提高正确率，请查看攻略<span class="arrow"></span> </div>
     </div>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
