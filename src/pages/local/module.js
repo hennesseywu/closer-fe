@@ -33,6 +33,7 @@ export default {
     questions: {
       currentQuesitionNum: 0
     },
+
     endData: {},
     shareData: ''
   },
@@ -368,9 +369,9 @@ export default {
         Router.push({
           name: "localResult"
         })
-        window.sessionStorage.score = state.endData.score
-        window.sessionStorage.level = state.endData.level
-        window.sessionStorage.awardAmt = state.endData.awardAmt
+        // window.sessionStorage.score = state.endData.score
+        // window.sessionStorage.level = state.endData.level
+        // window.sessionStorage.awardAmt = state.endData.awardAmt
         window.sessionStorage.userAnswerId = state.endData.userAnswerId
       } else {
         data.result && Toast(data.result)

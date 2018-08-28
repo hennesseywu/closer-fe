@@ -82,10 +82,6 @@
       };
     },
     created() {
-      this.score = sessionStorage.score
-      this.level = sessionStorage.level
-      this.awardAmt = sessionStorage.awardAmt
-      this.regardsAdd();
       if(this.IS_WX) {
         console.log('result wxshare--')
         this.initWxConfig()
@@ -93,6 +89,10 @@
     },
     mounted() {
       // this.chance = this.$store.state.local.statistic.chance
+      this.score = this.endData.score
+      this.level = this.endData.level
+      this.awardAmt = this.endData.awardAmt
+      this.regardsAdd();
       console.log('user--', this.user)
     },
     computed: {
@@ -101,7 +101,8 @@
         user: state => state.user,
         chance: state => state.statistic.chance,
         currentQuesitionNum: state => state.currentQuesitionNum,
-        statistic: state => state.statistic
+        statistic: state => state.statistic,
+        endData: state => state.endData
       })
     },
     methods: {
@@ -125,9 +126,9 @@
           if (this.regards >= this.score) {
             return
           }
-          if(this.regards >= 100 || this.score >= 100) {
-            return
-          }
+          // if(this.regards >= 100 || this.score >= 100) {
+          //   return
+          // }
           this.regards++
         }, 10)
       },
