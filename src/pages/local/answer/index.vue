@@ -39,19 +39,21 @@
       }
     },
     created() {
-      this.getStatistic()
       if(this.statistic) {
         this.startTest()
       }
-      
-      
+      if(this.IS_WX) {
+        console.log('answer wxshare--')
+        this.initWxConfig()
+      } 
     },
     mounted() {
       this.isUpdate = true
       this.updateChance()
-      this.inviter = parseQuery().inviter
+      this.inviter = parseQuery().inviter 
     },
     computed: {
+      ...mapState(['IS_APP', 'IS_WX']),
       ...mapState("local", {
         statistic: state => state.statistic,
         startResult: state => state.startResult,
@@ -67,7 +69,8 @@
         "nextQuestion",
         "commitTest",
         "getStatistic",
-        "updateChance"
+        "updateChance",
+        "initWxConfig"
       ]),
       checkOptions(event) {
         let questionId = event.target.dataset.questionid
@@ -101,7 +104,6 @@
           this.nextQuestion()
           this.questionNum++
         } else {
-
           this.commitTest(params)
         }
       }
