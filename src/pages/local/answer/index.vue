@@ -64,7 +64,8 @@
         currentQuesitionNum: state => state.questions.currentQuesitionNum,
         endData: state => state.endData,
         chance: state => state.statistic.chance,
-        inviter: state => state.inviter
+        inviter: state => state.inviter,
+        signSalt: state => state.statistic.signSalt
       })
     },
     methods: {
