@@ -29,7 +29,9 @@ export default {
     },
     startResult: {},
     startData: [],
-    currentQuesitionNum: 0,
+    questions: {
+      currentQuesitionNum: 0
+    },
     endData: {},
     shareData: ''
   },
@@ -67,12 +69,20 @@ export default {
     updateChance(state) {
       let chance = state.statistic.chance
       state.statistic.chance = --chance
+    },
+    updateCurrentQuestionNum(state) {
+      let currentQuesitionNum = state.questions.currentQuesitionNum
+      state.questions.currentQuesitionNum = 0
+      console.log(123, state.questions.currentQuesitionNum)
     }
   },
 
   actions: {
     updateChance({ commit }) {
       commit('updateChance')
+    },
+    updateCurrentQuestionNum({ commit }) {
+      commit('updateCurrentQuestionNum')
     },
     async userShare({
       state,
@@ -308,7 +318,7 @@ export default {
       state,
       commit
     }, payload) {
-      let data = state.currentQuesitionNum++
+      let data = state.questions.currentQuesitionNum++
         if (data > state.startData.length) return
     },
     // 结束测试

@@ -39,7 +39,8 @@
 <script>
   import {
     mapState,
-    mapActions
+    mapActions,
+    mapMutations
   } from "vuex"
   import {
     Toast,
@@ -97,13 +98,19 @@
       ...mapState(['IS_APP', 'IS_WX']),
       ...mapState('local', {
         user: state => state.user,
-        chance: state => state.statistic.chance
+        chance: state => state.statistic.chance,
+        currentQuesitionNum: state => state.currentQuesitionNum,
       })
     },
     methods: {
+      ...mapMutations([
+        "updateChance",
+        "updateCurrentQuestionNum"
+      ]),
       ...mapActions('local', [
         "updateChance",
-        "initWxConfig"
+        "initWxConfig",
+        "updateCurrentQuestionNum"
       ]),
       makeFileUrl(url) {
         return makeFileUrl(url)
@@ -125,7 +132,10 @@
           return
         }
         if (this.chance > 0) {
-          this.chance--
+          // this.chance--
+          // this.updateChance()
+          this.updateCurrentQuestionNum()
+          console.log('updateCurrentQuestionNum', this.currentQuesitionNum)
             this.$router.push({
               name: 'localAnswer'
             })
