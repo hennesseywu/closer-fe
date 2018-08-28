@@ -74,10 +74,10 @@
           console.log("toShare android bridge", bridge)
           if (typeof window.bridge != "undefined") {
             try {
-              window.bridge.inviteNewerAction({
+              window.bridge.inviteNewerAction(JSON.stringify({
                 "type": type,
                 "img": url
-              });
+              }));
             } catch (e) {
               Toast("请升级最新版本客户端")
             }

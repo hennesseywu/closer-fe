@@ -125,6 +125,9 @@
           if (this.regards >= this.score) {
             return
           }
+          if(this.regards >= 100 || this.score >= 100) {
+            return
+          }
           this.regards++
         }, 10)
       },
