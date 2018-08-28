@@ -102,6 +102,7 @@
         let params = {
           userAnswerId: userAnswerId,
           answers: this.answers,
+          salt: this.signSalt,
           sign: this.sign(),
           inviter: this.inviter
         }
