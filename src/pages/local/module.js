@@ -67,7 +67,7 @@ export default {
     SET_PARAMS(state, payload) {
       let {inviter, activityId} = payload
       activityId && (state.activityId = activityId);
-      state.inviter = inviter
+      inviter && (state.inviter = inviter);
     },
     updateChance(state) {
       let chance = state.statistic.chance
@@ -128,6 +128,20 @@ export default {
         } else {
           data.result && Toast(data.result)
         }
+      }
+    },
+    // 判断params，有该参数则为微信授权后跳转
+    checkParams({
+      commit
+    },{params}) {
+      if (params) {
+        try {
+          params = JSON.parse(decodeURIComponent(params))
+        } catch(e) {
+          params = {};
+        }
+        // 保存url中的activityId
+        commit('SET_PARAMS', params);
       }
     },
     // 端内检查登录
@@ -229,26 +243,9 @@ export default {
       commit
     }, {
       code,
-      params,
-      activityId,
       inviter
     }) {
-      // 判断params，有该参数则为微信授权后跳转
-      if (params) {
-        try {
-          params = JSON.parse(decodeURIComponent(params))
-        } catch(e) {
-          params = {};
-        }
-        inviter = params.inviter || inviter;
-        activityId = params.activityId || activityId;
-      }
-      // 保存url中的activityId
-      commit('SET_PARAMS', {
-        activityId,
-        inviter
-      });
-
+      inviter = state.inviter || inviter;
       let _params = {
         plateform: 2,
         // 微信授权code
@@ -309,7 +306,8 @@ export default {
       let {
         data
       } = await service.getRankList({
-        activityId: state.activityId
+        activityId: state.activityId,
+        inviter: state.inviter
       });
       if (data.code == 0) {
         commit('SET_RANKLIST', data.result)
