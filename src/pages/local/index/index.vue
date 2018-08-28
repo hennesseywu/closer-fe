@@ -1,5 +1,6 @@
 <template>
   <div class="main index">
+    <div class="share" @click="handleShare()"></div>
     <section class="tab">
       <div class="tab-default tab-left" @click="showRankingList()">好友排行榜</div>
       <div class="tab-default tab-right" @click="showRule()">活动规则</div>
@@ -93,7 +94,6 @@
     },
     created() {
       const self = this;
-      self.SET_ACTIVITYID(parseQuery().activityId);
       if (self.IS_APP) { 
         // 端内
         self.checkLoginInApp(self.getStatistic);
@@ -104,14 +104,14 @@
         //   self.SET_USER(JSON.parse(user))
         // } else {
           self.getUserInfoAndLoginWithWx(self.$route.query).then(sign => {
-            if (sign) {
+            // if (sign) {
               self.getStatistic();
               self.initWxConfig();
-            } else {
-              this.dialog.share = false;
-              this.dialog.content = '亲，请先登录再参与答题吧~';
-              this.dialog.show = true;
-            }
+            // } else {
+            //   this.dialog.share = false;
+            //   this.dialog.content = '亲，请先登录再参与答题吧~';
+            //   this.dialog.show = true;
+            // }
           })
         // }
       }
@@ -124,8 +124,7 @@
         'initWxConfig'
       ]),
       ...mapMutations('local', [
-        'SET_USER',
-        'SET_ACTIVITYID'
+        'SET_USER'
       ]),
       // 展示金额，rate为百分比率，count为除以10的指数
       showAmount(rate, count = 0) {
@@ -165,12 +164,18 @@
           return false;
         } else if (this.statistic.chance <= 0) {
           this.dialog.share = true;
-          this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
+          this.dialog.content = '亲，没有答题机会了，<br/>快去分享给好友获取答题机会吧！';
           this.dialog.show = true;
           return false;
         } else {
           return true;
         }
+      },
+      // 点击分享跳转到分享页
+      handleShare() {
+        this.$router.push({
+          name: 'localShare'
+        })
       }
     },
     mounted() {

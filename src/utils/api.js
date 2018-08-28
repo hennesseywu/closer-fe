@@ -7,7 +7,7 @@ export default {
     serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
     // wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://127.0.0.1:8888/teabar/water-9d3foyvita",
-    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://local.tiejin.cn:8889",
+    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://a-sandbox.tiejin.cn:8889",
     wxLoginUrl: "https://h5.tiejin.cn/redirect?redirectUrl=https://a.tiejin.cn",
     file: '/file/upload/public',
     admin: {

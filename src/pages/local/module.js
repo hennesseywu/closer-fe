@@ -186,9 +186,23 @@ export default {
       commit
     }, {
       code,
+      params,
+      activityId,
       inviter
     }) {
-      let params = {
+      // 判断params，有该参数则为微信授权后跳转
+      if (params) {
+        try {
+          params = JSON.parse(decodeURIComponent(params))
+        } catch(e) {
+          params = {};
+        }
+        inviter = params.inviter || inviter;
+        activityId = params.activityId || activityId;
+      }
+      // 保存url中的activityId
+      commit('SET_ACTIVITYID', activityId);
+      let _params = {
         plateform: 2,
         // 微信授权code
         code,
@@ -196,25 +210,29 @@ export default {
         inviter,
         protocol: "WEB_SOCKET"
       };
-      let {
-        data: loginData
-      } = await service.loginWithWx(params);
-      if (loginData.code == 0) {
-        let {
-          user,
-          token
-        } = loginData.result;
-        commit('SET_USER', user)
-        Cookies.set('GroukAuth', token, {
-          expires: 7
-        })
-        Cookies.set('user', user, {
-          expires: 7
-        })
-        return true;
+      // 判断cookie，过期则从接口重新取
+      let user = Cookies.get('user');
+      let token = Cookies.get('GroukAuth');
+      if (user && token) {
+        commit('SET_USER', user);
       } else {
-        return false;
+        let { data } = await service.loginWithWx(_params);
+        if (data.code == 0) {
+          user = data.result.user;
+          token = data.result.token;
+          commit('SET_USER', user)
+          Cookies.set('GroukAuth', token, {
+            expires: 7
+          })
+          Cookies.set('user', user, {
+            expires: 7
+          })
+          return true;
+        } else {
+          return false;
+        }
       }
+      
     },
     // 获取用户分数以及剩余答题次数
     async getStatistic({
@@ -312,15 +330,13 @@ export default {
       let params = {
         url: location.href
       };
-      let {
-        data
-      } = service.wechatConfig(params).catch(err => {
+      service.wechatConfig(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
-      }).then((data) => {
+      }).then(({data}) => {
         let wxConfig = {};
         let link = addParamsForUrl(location.origin + location.pathname, {
-          inviter: state.user.uid,
+          inviter: state.user.objectID,
           activityId: state.activityId
         });
         if (typeof(data.code) != "undefined" && data.code == 0) {
@@ -328,6 +344,7 @@ export default {
         } else {
           return;
         }
+        console.log('wxConfig::', link);
         if (wxConfig && wxConfig.signature && wxConfig.appId && wxConfig.nonceStr && wxConfig.timestamp) {
           wx.config({
             "debug": rootState.IS_DEV, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
