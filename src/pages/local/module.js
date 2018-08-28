@@ -134,16 +134,24 @@ export default {
     // 判断params，有该参数则为微信授权后跳转
     checkParams({
       commit
-    },{params}) {
-      if (params) {
-        try {
-          params = JSON.parse(decodeURIComponent(params))
-        } catch(e) {
-          params = {};
-        }
-        // 保存url中的activityId
-        commit('SET_PARAMS', params);
+    },{
+      params,
+      activityId,
+      inviter
+    }) {
+      try {
+        params = JSON.parse(decodeURIComponent(params))
+      } catch(e) {
+        params = {};
       }
+      activityId = params.activityId || activityId;
+      inviter = params.inviter || inviter;
+      // 保存url中的activityId
+      console.log('params:',activityId,inviter);
+      commit('SET_PARAMS', {
+        activityId,
+        inviter
+      });
     },
     // 端内检查登录
     checkLoginInApp({
