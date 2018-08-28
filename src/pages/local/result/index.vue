@@ -39,7 +39,8 @@
 <script>
   import {
     mapState,
-    mapActions
+    mapActions,
+    mapMutations
   } from "vuex"
   import {
     Toast,
@@ -64,7 +65,7 @@
         score: 0,
         awardAmt: 0,
         level: '',
-        chance: 0,
+        // chance: 0,
         localText1: '同样是九年义务教育，为什么你那么优秀？你“土”的一览众山小，谁都没你DIAO',
         localText2: '恭喜你获得2元奖励，但你对成都了解还不够多哦！冲击满分赢5元！',
         localText3: '盆友，你是路过成都吗？得满分可以领5元现金，再试试吧',
@@ -83,20 +84,34 @@
       this.score = sessionStorage.score
       this.level = sessionStorage.level
       this.awardAmt = sessionStorage.awardAmt
-      // this.chance = $store.state.local.statistic.chance
-      console.log('level', this.level)
       this.regardsAdd();
+      if(this.IS_WX) {
+        console.log('result wxshare--')
+        this.initWxConfig()
+      } 
     },
     mounted() {
-      this.chance = this.$store.state.local.statistic.chance
+      // this.chance = this.$store.state.local.statistic.chance
       console.log('user--', this.user)
     },
     computed: {
+      ...mapState(['IS_APP', 'IS_WX']),
       ...mapState('local', {
-        user: state => state.user
+        user: state => state.user,
+        chance: state => state.statistic.chance,
+        currentQuesitionNum: state => state.currentQuesitionNum,
       })
     },
     methods: {
+      ...mapMutations([
+        "updateChance",
+        "updateCurrentQuestionNum"
+      ]),
+      ...mapActions('local', [
+        "updateChance",
+        "initWxConfig",
+        "updateCurrentQuestionNum"
+      ]),
       makeFileUrl(url) {
         return makeFileUrl(url)
       },
@@ -117,7 +132,10 @@
           return
         }
         if (this.chance > 0) {
-          this.chance--
+          // this.chance--
+          // this.updateChance()
+          this.updateCurrentQuestionNum()
+          console.log('updateCurrentQuestionNum', this.currentQuesitionNum)
             this.$router.push({
               name: 'localAnswer'
             })

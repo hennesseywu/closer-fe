@@ -94,6 +94,7 @@
     },
     created() {
       const self = this;
+      self.SET_ACTIVITYID(parseQuery().activityId);
       if (self.IS_APP) { 
         // 端内
         self.checkLoginInApp(self.getStatistic);
@@ -104,14 +105,14 @@
         //   self.SET_USER(JSON.parse(user))
         // } else {
           self.getUserInfoAndLoginWithWx(self.$route.query).then(sign => {
-            // if (sign) {
+            if (sign) {
               self.getStatistic();
               self.initWxConfig();
-            // } else {
-            //   this.dialog.share = false;
-            //   this.dialog.content = '亲，请先登录再参与答题吧~';
-            //   this.dialog.show = true;
-            // }
+            } else {
+              this.dialog.share = false;
+              this.dialog.content = '亲，请先登录再参与答题吧~';
+              this.dialog.show = true;
+            }
           })
         // }
       }
@@ -124,7 +125,8 @@
         'initWxConfig'
       ]),
       ...mapMutations('local', [
-        'SET_USER'
+        'SET_USER',
+        'SET_ACTIVITYID'
       ]),
       // 展示金额，rate为百分比率，count为除以10的指数
       showAmount(rate, count = 0) {
@@ -146,6 +148,10 @@
       },
       // 开始答题
       handleStart() {
+        // this.dialog.share = true;
+        //   this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
+        //   this.dialog.show = true;
+        //   return false;
         if (this.checkOtherEnv()) {
           this.$router.push({
             name: 'localAnswer'
@@ -157,6 +163,7 @@
       },
       // 其他环境下弹窗提示去微信答题
       checkOtherEnv() {
+        console.log(this.statistic.chance)
         if (!this.IS_APP && !this.IS_WX) {
           this.dialog.share = false;
           this.dialog.content = '亲，请去微信环境下答题吧';

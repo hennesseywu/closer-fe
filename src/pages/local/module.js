@@ -4,6 +4,7 @@ import {
 } from 'mint-ui'
 import Router from '../../router'
 import { addParamsForUrl } from '../../utils/utils'
+import { stat } from 'fs';
 
 export default {
   namespaced: true,
@@ -18,7 +19,9 @@ export default {
       // 剩余答题次数
       chance: 0,
       // 排名
-      rank: 0
+      rank: 0,
+      // salt
+      signSalt: ''
     },
     rank: {
       selfRank: {},
@@ -26,7 +29,9 @@ export default {
     },
     startResult: {},
     startData: [],
-    currentQuesitionNum: 0,
+    questions: {
+      currentQuesitionNum: 0
+    },
     endData: {},
     shareData: ''
   },
@@ -56,35 +61,71 @@ export default {
     },
     shareData(state, payload) {
       let data = payload.data.result
-      state.shareData = data.shareUrl
+      state.shareData = data.shareUrl || data.defaultShareUrl
     },
     SET_ACTIVITYID(state, payload) {
       payload && (state.activityId = payload);
+    },
+    updateChance(state) {
+      let chance = state.statistic.chance
+      state.statistic.chance = --chance
+    },
+    updateCurrentQuestionNum(state) {
+      let currentQuesitionNum = state.questions.currentQuesitionNum
+      state.questions.currentQuesitionNum = 0
+      console.log(123, state.questions.currentQuesitionNum)
     }
   },
 
   actions: {
+    updateChance({ commit }) {
+      commit('updateChance')
+    },
+    updateCurrentQuestionNum({ commit }) {
+      commit('updateCurrentQuestionNum')
+    },
     async userShare({
       state,
       commit
     }, payload) {
-      let params = {
-        userAnswerId: sessionStorage.userAnswerId
-      }
-      console.log('share--', params)
-      let {
-        data
-      } = await service.userShare(params).catch(err => {
-        Toast('网络开小差啦，请稍后再试')
-        return;
-      })
-      if (typeof(data.code) != undefined && data.code == 0) {
-        commit({
-          type: 'shareData',
+      if(sessionStorage.userAnswerId) {
+        let params = {
+          userAnswerId: sessionStorage.userAnswerId
+        }
+        console.log('share--', params)
+        let {
           data
+        } = await service.userShare(params).catch(err => {
+          Toast('网络开小差啦，请稍后再试')
+          return;
         })
+        if (typeof (data.code) != undefined && data.code == 0) {
+          commit({
+            type: 'shareData',
+            data
+          })
+        } else {
+          data.result && Toast(data.result)
+        }
       } else {
-        data.result && Toast(data.result)
+        let params = {
+          activityId: state.activityId
+        }
+        console.log('default share--', params)
+        let {
+          data
+        } = await service.userDefaultShare(params).catch(err => {
+          Toast('网络开小差啦，请稍后再试')
+          return;
+        })
+        if (typeof (data.code) != undefined && data.code == 0) {
+          commit({
+            type: 'shareData',
+            data
+          })
+        } else {
+          data.result && Toast(data.result)
+        }
       }
     },
     // 端内检查登录
@@ -295,7 +336,7 @@ export default {
       state,
       commit
     }, payload) {
-      let data = state.currentQuesitionNum++
+      let data = state.questions.currentQuesitionNum++
         if (data > state.startData.length) return
     },
     // 结束测试

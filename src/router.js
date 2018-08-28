@@ -170,7 +170,6 @@ router.beforeEach(({
     params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
-
     if (name == "worldcupIndex") {
         axios.post(api.activity.get_activity).then(({ data }) => {
             if (typeof(data.code) != "undefined" && data.code == 0) {

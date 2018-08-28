@@ -7,7 +7,7 @@ export default {
     serverDevUrl: 'https://api-sandbox.tiejin.cn/command/',
     downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
     // wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://127.0.0.1:8888/teabar/water-9d3foyvita",
-    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://a-sandbox.tiejin.cn:8889",
+    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=https://a-sandbox.tiejin.cn",
     wxLoginUrl: "https://h5.tiejin.cn/redirect?redirectUrl=https://a.tiejin.cn",
     file: '/file/upload/public',
     admin: {
@@ -94,7 +94,9 @@ export default {
             // 分享测试结果，获取分享图片
             share_user_answer: "activity_tuzhu.share_user_answer",
             // 开始测试
-            start_test: "activity_tuzhu.start_test"
+            start_test: "activity_tuzhu.start_test",
+            // 获取分享默认图片
+            get_default_share: "activity_tuzhu.get_default_share_url"
         }
     },
     statitics: {

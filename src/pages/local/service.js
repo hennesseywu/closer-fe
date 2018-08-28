@@ -234,5 +234,10 @@ export default {
   async userShare(payload) {
     console.log(1, payload)
     return await axios.post(api.activity.tuzhu.share_user_answer, payload)
+  },
+
+  async userDefaultShare(payload) {
+    console.log(1, payload)
+    return await axios.post(api.activity.tuzhu.get_default_share, payload)
   }
 }
