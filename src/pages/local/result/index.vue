@@ -124,9 +124,10 @@
         }
         setInterval(() => {
           if (this.regards >= this.score) {
+            this.regards=this.score
             return
           }
-          this.regards += 0.5
+          this.regards++
         }, 10)
       },
       goAnswer() {
@@ -135,8 +136,6 @@
           return
         }
         if (this.chance > 0) {
-          // this.chance--
-          // this.updateChance()
           this.updateCurrentQuestionNum()
           console.log('updateCurrentQuestionNum', this.currentQuesitionNum)
             this.$router.push({

@@ -384,7 +384,7 @@ export default {
         return;
       }).then(({data}) => {
         let wxConfig = {};
-        let link = addParamsForUrl(location.origin + location.pathname, {
+        let link = addParamsForUrl(location.origin + '/local', {
           inviter: state.user.objectID,
           activityId: state.activityId
         });
