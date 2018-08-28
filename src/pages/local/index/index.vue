@@ -94,7 +94,8 @@
     },
     created() {
       const self = this;
-      if (self.IS_APP) { 
+      self.checkParams(self.$route.query);
+      if (self.IS_APP) {
         // 端内
         self.checkLoginInApp(self.getStatistic);
       } else if (self.IS_WX) {
@@ -118,6 +119,7 @@
     },
     methods: {
       ...mapActions('local', [
+        'checkParams',
         'checkLoginInApp',
         'getUserInfoAndLoginWithWx',
         'getStatistic',

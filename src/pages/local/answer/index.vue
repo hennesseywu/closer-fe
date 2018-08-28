@@ -91,7 +91,7 @@
       sign() {
         let todayTimeStamp = Date.parse(new Date(new Date(new Date().toLocaleDateString()).getTime()))
         let salt = this.signSalt ? this.signSalt : ''
-        let inviter = this.inviter ? this.inviter : ''
+        let inviter = this.inviter || ''
         return md5(md5(todayTimeStamp + "" + salt + inviter))
       },
       next(userAnswerId) {
@@ -102,7 +102,8 @@
         let params = {
           userAnswerId: userAnswerId,
           answers: this.answers,
-          sign: this.sign()
+          sign: this.sign(),
+          inviter: this.inviter
         }
         console.log(this.answers)
         if (this.currentQuesitionNum < 7) {
