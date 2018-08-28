@@ -165,9 +165,10 @@
       goTips() {
         if (this.isApp) {
           // 跳转app内部详情页
-  
+          location.href = 'closer://community/9Mj8OC0TUL'
         } else {
           // 跳转对应栏目页
+          location.href = 'https://h5.tiejin.cn/community/9Mj8OC0TUL'
         }
       }
     }
