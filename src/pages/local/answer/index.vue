@@ -90,10 +90,12 @@
         }, 100)
       },
       sign() {
-        let todayTimeStamp = Date.parse(new Date(new Date(new Date().toLocaleDateString()).getTime()))
+        let todayTimeStamp = '056fef44ea0ca7ad63a0aae84024ef2d'
         let salt = this.signSalt ? this.signSalt : ''
         let inviter = this.inviter || ''
-        return md5(md5(inviter + salt + todayTimeStamp))
+        let params = md5(md5(inviter + salt + todayTimeStamp))
+        console.log('sign params', params)
+        return params
       },
       next(userAnswerId) {
         if (!this.isCheck) {
