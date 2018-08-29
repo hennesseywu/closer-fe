@@ -50,9 +50,13 @@
     created() {
       console.log('isAPP', this.isApp)
       this.userShare()
+      if (this.IS_WX) {
+        console.log('share wxshare--')
+        this.initWxConfig()
+      }
     },
     computed: {
-      ...mapState(['IS_APP']),
+      ...mapState(['IS_APP', 'IS_WX']),
       ...mapState('local', {
         shareData: state => state.shareData
       })
