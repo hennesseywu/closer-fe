@@ -9,6 +9,7 @@ import { stat } from 'fs';
 export default {
   namespaced: true,
   state: {
+    isLogin: false,
     activityId: 2,
     inviter: '',
     user: {},
@@ -42,6 +43,7 @@ export default {
     // 设置微信授权后用户信息
     SET_USER(state, para) {
       state.user = para
+      state.isLogin = true;
     },
     // 获取用户个人分数信息
     SET_STATISTIC(state, para) {
@@ -61,6 +63,7 @@ export default {
     endData(state, payload) {
       let data = payload.data
       state.endData = data.result
+      data.result.totalAwardAmt && (state.statistic.totalAwardAmt = data.result.totalAwardAmt);
     },
     shareData(state, payload) {
       let data = payload.data.result

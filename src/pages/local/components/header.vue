@@ -1,8 +1,12 @@
 <template>
   <header class="header">
-    <div class="common back" :style="{display: back ? 'block' : 'none'}" @click="handleBack()"></div>
-    <div class="common close" :style="{display: close ? 'block' : 'none'}" @click="handleClose()"></div>
-    <div class="common share" :style="{display: share ? 'block' : 'none'}" @click="handleShare()"></div>
+    <div class="left">
+      <div class="common back" :style="{display: back ? 'block' : 'none'}" @click="handleBack()"></div>
+      <div class="common close" :style="{display: close ? 'block' : 'none'}" @click="handleClose()"></div>
+    </div>
+    <div class="right">
+      <div class="common share" :style="{display: share ? 'block' : 'none'}" @click="handleShare()"></div>
+    </div>
   </header>
 </template>
 <script>
@@ -55,24 +59,34 @@
   position: relative;
   height: 76pr;
   margin-bottom: 40pr;
-  .common {
+  .left, .right {
     position: absolute;
     top: 0;
+    height: 100%;
+  }
+  .left {
+    left: 20pr;
+  }
+  .right {
+    right: 20pr;
+  }
+  .common {
     width: 68pr;
     height: 76pr;
   }
   .back {
-    left: 20pr;
+    float: left;
+    margin-right: 20pr;
     background: url(../assets/images/back.png) center no-repeat;
     background-size: contain;
   }
   .close {
-    left: 108pr;
+    float: left;
     background: url(../assets/images/close.png) center no-repeat;
     background-size: contain;
   }
   .share {
-    right: 20pr;
+    float: right;
     background: url(../assets/images/index_share.png) center no-repeat;
     background-size: contain;
   }

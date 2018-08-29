@@ -1,6 +1,6 @@
 <template>
   <div class="main local-index" :class="{'in-app': IS_APP}">
-    <local-header v-if="IS_APP" back share></local-header>
+    <local-header v-if="IS_APP" close share></local-header>
     <section class="tab">
       <div class="tab-default tab-left" @click="showRankingList()">好友排行榜</div>
       <div class="tab-default tab-right" @click="showRule()">活动规则</div>
@@ -77,19 +77,19 @@
       localHeader
     },
     computed: {
-      ...mapState('local', ['statistic']),
+      ...mapState('local', ['isLogin', 'statistic']),
       ...mapState(['IS_APP', 'IS_WX']),
       remainTimesToMax() {
         return Math.ceil(transAmount(this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
       },
       currentTotalAmount() {
-        return (this.statistic.totalAwardAmt/100).toFixed(2);
+        return (this.statistic.totalAwardAmt/100).toFixed(0);
       },
       currentDesc() {
         if (this.remainTimesToMax == 0) {
           return `恭喜，您已获得全部${transAmount(this.statistic.maxAwardAmt)}元的现金奖励~`
         }
-        return `您再获得${this.remainTimesToMax}次王者称号就可以拿到总计${transAmount(this.statistic.maxAwardAmt)}元的现金奖励了！`
+        return `您再获得<span style="color: #f20707;">${this.remainTimesToMax}次</span>王者称号就可以拿到总计${transAmount(this.statistic.maxAwardAmt)}元的现金奖励了！`
       }
     },
     created() {
@@ -134,7 +134,7 @@
       },
       // 转到排行榜
       showRankingList() {
-        if (!Cookies.get('user')) {
+        if (!this.isLogin) {
           this.checkLoginInApp(this.getStatistic);
         } else if (this.checkOtherEnv()) {
           this.$router.push({
@@ -154,7 +154,7 @@
         //   this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
         //   this.dialog.show = true;
         //   return false;
-        if (!Cookies.get('user')) {
+        if (!this.isLogin) {
           this.checkLoginInApp(this.getStatistic);
         } else if (this.checkOtherEnv(true)) {
           this.$router.push({

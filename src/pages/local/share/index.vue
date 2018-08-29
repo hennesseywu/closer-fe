@@ -1,6 +1,6 @@
 <template>
   <div class="main local-share" :class="{'in-app': IS_APP}">
-  <local-header v-if="IS_APP" back close></local-header>
+  <local-header v-if="IS_APP" back></local-header>
   <div class="share-wrapper" >
     <div class="is-app" v-if="isApp">
       <div class="share-img">

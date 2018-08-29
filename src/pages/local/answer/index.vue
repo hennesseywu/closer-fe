@@ -2,7 +2,7 @@
   <!-- <div>{{startData}}</div> -->
   <div class="main local-answer">
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
-      <local-header v-if="IS_APP" back close share></local-header>
+      <local-header v-if="IS_APP" back close></local-header>
       <div class="hd-img"></div>
       <div class="answer-box">
         <div class="answer-acount">{{currentQuesitionNum + 1}}/8</div>
@@ -75,6 +75,16 @@
         inviter: state => state.inviter,
         signSalt: state => state.statistic.signSalt
       })
+    },
+    beforeRouteEnter (to, {path}, next) {
+      let _path = path.split('/');
+      if (_path[2]) {
+        this.$router.replace({
+          name: 'localIndex'
+        })
+      } else {
+        next();
+      }
     },
     methods: {
       ...mapActions("local", [
