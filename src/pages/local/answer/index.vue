@@ -93,7 +93,7 @@
         let todayTimeStamp = Date.parse(new Date(new Date(new Date().toLocaleDateString()).getTime()))
         let salt = this.signSalt ? this.signSalt : ''
         let inviter = this.inviter || ''
-        return md5(md5(todayTimeStamp + "" + salt + inviter))
+        return md5(md5(inviter + salt + todayTimeStamp))
       },
       next(userAnswerId) {
         if (!this.isCheck) {
