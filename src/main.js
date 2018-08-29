@@ -29,8 +29,6 @@ window.axios = axio;
 window.Cookies = Cookies;
 window.MobileDetect = MobileDetect;
 
-Cookies.set("GroukAuth", "1.87aff880c0190124668f8ee9c2ea58d133eeb719176224a35db08300e194e7d9", { expires: 30 })
-
 
 window.setupWebViewJavascriptBridge = function(callback) {
   if (window.WebViewJavascriptBridge) {

@@ -156,3 +156,11 @@ export function parseQuery() {
   }
   return obj;
 }
+export function compareVersion(nvg) {
+  try {
+    let b = nvg.split('closerapp/version/')[1].split('.');
+    return b[0] > 1 || (b[0] == 1 && b[1] && b[1] > 1) || (b[0] == 1 && b[1] == 1 && b[2] && b[2] > 100)
+  } catch (e) {
+    return false
+  }
+}
