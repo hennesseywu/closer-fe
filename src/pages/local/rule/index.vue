@@ -1,6 +1,6 @@
 <template>
   <div class="main rule">
-    <div class="hd" @click="handleBack()"></div>
+    <local-header v-if="IS_APP" back></local-header>
     <section class="bd">
       <div class="bd-name">游戏规则</div>
       <div class="bd-wrap">
@@ -29,12 +29,15 @@
 </template>
 <script>
   import Vue from 'vue';
+  import {mapState} from 'vuex';
+  import localHeader from '../components/header';
   export default {
     name: 'rule',
-    methods: {
-      handleBack() {
-        this.$router.back();
-      }
+    components: {
+      localHeader
+    },
+    computed: {
+      ...mapState(['IS_APP']),
     }
   }
 </script>

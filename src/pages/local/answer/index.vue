@@ -1,16 +1,20 @@
 <template>
   <!-- <div>{{startData}}</div> -->
-  <div class="answer-wrapper" v-if="startData && startData.length > 0">
-    <div class="answer-box">
-      <div class="answer-acount">{{currentQuesitionNum + 1}}/8</div>
-      <div class="subject" :class="isUpdate ? 'animated slideInUp' : ''">{{startData[currentQuesitionNum].title}}</div>
-      <div class="optoins" :class="isUpdate ? 'animated slideInUp' : ''" v-for="(item, index) in startData[currentQuesitionNum].answers" :key="index">
-        <div class="list" :data-index="index" :data-seq="item.seq" :data-questionId="item.questionId" :class="index===checkNum ? 'bg-yellow' : ''" @click="checkOptions($event)">{{item.title}}</div>
+  <div class="main local-answer">
+    <div class="answer-wrapper" v-if="startData && startData.length > 0">
+      <local-header v-if="IS_APP" back close share></local-header>
+      <div class="hd-img"></div>
+      <div class="answer-box">
+        <div class="answer-acount">{{currentQuesitionNum + 1}}/8</div>
+        <div class="subject" :class="isUpdate ? 'animated slideInUp' : ''">{{startData[currentQuesitionNum].title}}</div>
+        <div class="optoins" :class="isUpdate ? 'animated slideInUp' : ''" v-for="(item, index) in startData[currentQuesitionNum].answers" :key="index">
+          <div class="list" :data-index="index" :data-seq="item.seq" :data-questionId="item.questionId" :class="index===checkNum ? 'bg-yellow' : ''" @click="checkOptions($event)">{{item.title}}</div>
+        </div>
       </div>
-    </div>
-    <div class="next-box" :class="isUpdate ? 'animated slideInUp' : ''">
-      <div :class="isCheck ? 'checked' : 'next-btn'" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)"></div>
-      <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-if="currentQuesitionNum == 7" @click="next(startResult.userAnswerId)">完成答题</div>
+      <div class="next-box" :class="isUpdate ? 'animated slideInUp' : ''">
+        <div :class="isCheck ? 'checked' : 'next-btn'" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)"></div>
+        <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-if="currentQuesitionNum == 7" @click="next(startResult.userAnswerId)">完成答题</div>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +32,7 @@
   import {
     parseQuery
   } from '../../../utils/utils'
+  import localHeader from '../components/header';
   export default {
     data() {
       return {
@@ -40,6 +45,9 @@
         isUpdate: false,
         questionNum: 0
       }
+    },
+    components: {
+      localHeader
     },
     created() {
       // this.getStatistic()
@@ -124,6 +132,7 @@
 </script>
 
 <style lang="less" scoped>
+  @import '../assets/style/main.less';
   @import '../assets/style/animation.less';
   @import '../assets/style/answer.less';
 </style>

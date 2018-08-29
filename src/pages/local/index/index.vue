@@ -1,6 +1,6 @@
 <template>
-  <div class="main index" :class="{'in-app': IS_APP}">
-    <div class="share" @click="handleShare()"></div>
+  <div class="main local-index" :class="{'in-app': IS_APP}">
+    <local-header v-if="IS_APP" back share></local-header>
     <section class="tab">
       <div class="tab-default tab-left" @click="showRankingList()">好友排行榜</div>
       <div class="tab-default tab-right" @click="showRule()">活动规则</div>
@@ -46,6 +46,7 @@
 <script>
   import Vue from 'vue';
   import localDialog from '../components/dialog';
+  import localHeader from '../components/header';
   import {
     mapState,
     mapActions,
@@ -57,6 +58,7 @@
     name: 'localIndex',
     data() {
       return {
+        currentWidth: 0,
         // mounted
         mounted: false,
         // 弹窗
@@ -71,14 +73,12 @@
       }
     },
     components: {
-      localDialog
+      localDialog,
+      localHeader
     },
     computed: {
       ...mapState('local', ['statistic']),
       ...mapState(['IS_APP', 'IS_WX']),
-      currentWidth() {
-        return this.statistic.totalAwardAmt*100/this.statistic.maxAwardAmt + '%'
-      },
       remainTimesToMax() {
         return Math.ceil(transAmount(this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
       },
@@ -134,7 +134,9 @@
       },
       // 转到排行榜
       showRankingList() {
-        if (this.checkOtherEnv()) {
+        if (!Cookies.get('user')) {
+          this.checkLoginInApp(this.getStatistic);
+        } else if (this.checkOtherEnv()) {
           this.$router.push({
             name: 'localRank'
           })
@@ -152,7 +154,9 @@
         //   this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
         //   this.dialog.show = true;
         //   return false;
-        if (this.checkOtherEnv(true)) {
+        if (!Cookies.get('user')) {
+          this.checkLoginInApp(this.getStatistic);
+        } else if (this.checkOtherEnv(true)) {
           this.$router.push({
             name: 'localAnswer'
           })
@@ -165,29 +169,38 @@
       checkOtherEnv(needLogin) {
         console.log(this.statistic.chance)
         if (!this.IS_APP && !this.IS_WX) {
-          this.dialog.share = false;
-          this.dialog.content = '亲，请去微信环境下答题吧';
-          this.dialog.show = true;
+          this.dialog = {
+            share: false,
+            content: '亲，请去微信环境下答题吧',
+            show: true
+          }
           return false;
         } else if (this.statistic.chance <= 0 && needLogin) {
-          this.dialog.share = true;
-          this.dialog.content = '亲，没有答题机会了，<br/>快去分享给好友获取答题机会吧！';
-          this.dialog.show = true;
+          this.dialog = {
+            share: true,
+            content: '亲，没有答题机会了~<br/>快去分享给好友获取答题机会吧！',
+            show: true
+          }
+          return false;
+        } else if (this.remainTimesToMax <= 0) {
+          this.dialog = {
+            share: false,
+            content: '亲，您已经获得全部奖励~<br/>',
+            show: true
+          }
           return false;
         } else {
           return true;
         }
       },
-      // 点击分享跳转到分享页
-      handleShare() {
-        this.$router.push({
-          name: 'localShare'
-        })
+      setCurrentWidth() {
+        return this.currentWidth = this.statistic.totalAwardAmt*100/this.statistic.maxAwardAmt + '%'
       }
     },
     mounted() {
       setTimeout(() => {
         this.mounted = true;
+        this.setCurrentWidth();
       }, 800);
     }
   }
