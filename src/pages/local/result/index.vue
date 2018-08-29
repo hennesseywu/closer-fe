@@ -21,8 +21,7 @@
         <div class="logo animated shake"></div>
         <div class="go-share animated bounceInDown1" v-if="IS_WX" @click="goShare">去分享</div>
       </div>
-      <div class="local-desc localText">
-        {{level == 1 ? localText1 : (level == 2) ? localText2 : localText3}}
+      <div class="local-desc localText" v-html="level == 1 ? localText1 : (level == 2) ? localText2 : localText3">
       </div>
     </div>
     <div class="content3">
@@ -76,7 +75,7 @@
         // chance: 0,
         localText1: '同样是九年义务教育，为什么你那么优秀？你“土”的一览众山小，谁都没你DIAO',
         localText2: '恭喜你获得2元奖励，但你对成都了解还不够多哦！冲击满分赢5元！',
-        localText3: '盆友，你是路过成都吗？得满分可以领5元现金，再试试吧',
+        localText3: '盆友，你是路过成都吗？得满分可以领5元现<br/>金，再试试吧',
         // 弹窗
         dialog: {
           // 是否显示弹窗
