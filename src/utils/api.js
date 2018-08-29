@@ -9,7 +9,7 @@ export default {
     // 本地测试微信二跳链接
     wxLoginLocalUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://local.tiejin.cn:8889",
     // sandbox测试微信二跳链接
-    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=http://a-sandbox.tiejin.cn:8889",
+    wxLoginDevUrl: "https://h5-sandbox.tiejin.cn/redirect?redirectUrl=https://a-sandbox.tiejin.cn",
     // 线上微信二跳链接
     wxLoginUrl: "https://h5.tiejin.cn/redirect?redirectUrl=https://a.tiejin.cn",
     file: '/file/upload/public',
