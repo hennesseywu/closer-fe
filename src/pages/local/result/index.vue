@@ -14,7 +14,7 @@
         <div class="line right"></div>
       </div>
     </div>
-    <div class="content2 box box-tb box-center-center">
+    <div class="content2">
       <div class="commen-width animated bounceInDown" :class="level == 1 ? 'local1-img' : (level == 2 ? 'local2-img' : 'local3-img')">
         <div class="logo animated shake"></div>
       </div>
@@ -52,7 +52,8 @@
   } from '../../../utils/utils'
   import localDialog from '../components/dialog'
   import {
-    makeFileUrl
+    makeFileUrl,
+    addParamsForUrl
   } from '../../../utils/utils'
   export default {
     components: {
@@ -63,7 +64,7 @@
         isApp: this.$store.state.IS_APP,
         // btnText: "下载APP",
         regards: 0,
-        score: 0,
+        score: '',
         awardAmt: 0,
         level: '',
         // chance: 0,
@@ -82,17 +83,30 @@
       };
     },
     created() {
-      if(this.IS_WX) {
+      if (this.IS_WX) {
         console.log('result wxshare--')
         this.initWxConfig()
-      } 
+      }
     },
     mounted() {
       // this.chance = this.$store.state.local.statistic.chance
-      this.score = this.endData.score
+      this.score = this.endData.score ? this.endData.score : ''
       this.level = this.endData.level
       this.awardAmt = this.endData.awardAmt
-      this.regardsAdd();
+      if (this.score != '' ) {
+        this.regardsAdd();
+      } else {
+        let data={
+          activityId: this.activityId
+        }
+        if(this.user.objectID){
+          data['inviter']=this.user.objectID;
+        }
+         location.href = addParamsForUrl(location.origin + '/local', data)
+
+  }
+  
+  
       console.log('user--', this.user)
     },
     computed: {
@@ -102,7 +116,8 @@
         chance: state => state.statistic.chance,
         currentQuesitionNum: state => state.currentQuesitionNum,
         statistic: state => state.statistic,
-        endData: state => state.endData
+        endData: state => state.endData,
+        activityId: state => state.activityId
       })
     },
     methods: {
@@ -122,12 +137,14 @@
         if (this.regards > this.score) {
           return
         }
-        setInterval(() => {
-          if (this.regards >= this.score) {
-            this.regards=this.score
-            return
-          }
+        var time = setInterval(() => {
           this.regards++
+          console.log(this.regards, '-----', this.score)
+            if (this.regards >= this.score) {
+              this.regards = this.score
+              window.clearInterval(time)
+              return
+            }
         }, 10)
       },
       goAnswer() {
@@ -138,9 +155,9 @@
         if (this.chance > 0) {
           this.updateCurrentQuestionNum()
           console.log('updateCurrentQuestionNum', this.currentQuesitionNum)
-            this.$router.push({
-              name: 'localAnswer'
-            })
+          this.$router.push({
+            name: 'localAnswer'
+          })
         } else {
           this.dialog.show = true
         }
