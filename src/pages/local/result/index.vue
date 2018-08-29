@@ -89,7 +89,12 @@
       };
     },
     created() {
-      if (this.IS_WX) {
+      let _path = location.pathname.split('/');
+      if (_path[2]) {
+        this.$router.replace({
+          name: 'localIndex'
+        })
+      } else if (this.IS_WX) {
         console.log('result wxshare--')
         this.initWxConfig()
       }
