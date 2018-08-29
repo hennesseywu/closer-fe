@@ -1,4 +1,6 @@
 <template>
+  <div class="main local-share" :class="{'in-app': IS_APP}">
+  <local-header v-if="IS_APP" back close></local-header>
   <div class="share-wrapper" >
     <div class="is-app" v-if="isApp">
       <div class="share-img">
@@ -23,6 +25,7 @@
       <img :src="shareData" />
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -33,6 +36,7 @@
     mapState,
     mapActions
   } from "vuex";
+  import localHeader from '../components/header';
   export default {
     data() {
       return {
@@ -40,11 +44,15 @@
         isLogin: false
       }
     },
+    components: {
+      localHeader
+    },
     created() {
       console.log('isAPP', this.isApp)
       this.userShare()
     },
     computed: {
+      ...mapState(['IS_APP']),
       ...mapState('local', {
         shareData: state => state.shareData
       })
@@ -89,6 +97,7 @@
 </script>
 
 <style lang="less" scoped>
+  @import '../assets/style/main.less';
   @import '../assets/style/share.less';
 </style>
 

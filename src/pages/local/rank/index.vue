@@ -1,6 +1,6 @@
 <template>
   <div class="main rank">
-    <div class="hd" @click="handleBack()"></div>
+    <local-header v-if="IS_APP" back></local-header>
     <section class="bd">
       <div class="bd-name">排行榜</div>
       <div class="bd-mine">
@@ -36,12 +36,18 @@
   import router from '../../../router';
   import { mapState, mapActions } from 'vuex';
   import { makeFileUrl } from '../../../utils/utils';
+  import localHeader from '../components/header';
+  
   export default {
     name: 'rule',
     data() {
       return {}
     },
+    components: {
+      localHeader
+    },
     computed: {
+      ...mapState(['IS_APP']),
       ...mapState('local', {
         selfRank: state => state.rank.selfRank,
         rankList: state => state.rank.rankList
@@ -58,9 +64,6 @@
       ...mapActions('local', [
         'getRankList'
       ]),
-      handleBack() {
-        this.$router.back();
-      },
       makeFileUrl(url) {
         return makeFileUrl(url)
       }
