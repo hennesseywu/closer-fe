@@ -95,6 +95,10 @@
     created() {
       const self = this;
       self.checkParams(self.$route.query);
+      if (self.isLogin) {
+        self.getStatistic();
+        return;
+      }
       if (self.IS_APP) {
         // 端内
         self.checkLoginInApp(self.getStatistic);
@@ -182,7 +186,7 @@
             show: true
           }
           return false;
-        } else if (this.remainTimesToMax <= 0) {
+        } else if (this.remainTimesToMax <= 0 && needLogin) {
           this.dialog = {
             share: false,
             content: '亲，您已经获得全部奖励~<br/>',

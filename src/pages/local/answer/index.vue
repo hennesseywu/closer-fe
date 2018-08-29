@@ -76,12 +76,12 @@
       })
     },
     beforeRouteEnter (to, {path}, next) {
-      let _path = path.split('/');
-      if (_path[2]) {
-        next('/local');
-      } else {
+      // let _path = path.split('/');
+      // if (_path[2]) {
+      //   next('/local');
+      // } else {
         next();
-      }
+      // }
     },
     methods: {
       ...mapActions("local", [
