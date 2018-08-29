@@ -13,12 +13,12 @@ import Cookies from 'js-cookie';
 import Vconsole from 'vconsole';
 import MobileDetect from 'mobile-detect';
 import wx from 'weixin-js-sdk';
-import {isApp, isWechat} from './utils/utils';
+import {isApp, isWechat, compareVersion} from './utils/utils';
 
 
 if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /local.tiejin.cn/.test(window.location.href)) {
   const vconsole = new Vconsole()
-  store.state.IS_DEV = true
+  store.state.IS_DEV = true;
   Cookies.set("IS_DEV", true, {
     expires: 1
   });
@@ -62,6 +62,7 @@ function pageResize() {
 
 function initState() {
   let ua = (navigator.userAgent || window.navigator.userAgent).toLowerCase();
+  store.state.V_1_2_3 = compareVersion(ua, '1.2.3', '1.2.2');
   store.state.UA = ua;
   store.state.IS_APP = isApp();
   store.state.IS_WX = isWechat();
