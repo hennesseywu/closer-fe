@@ -26,7 +26,7 @@
     </div>
     <div class="content3">
       <div class="btn-commen go-answer" @click="goAnswer">再次答题</div>
-      <div class="chance-remain">剩余{{chance}}次答题机会</div>
+      <div class="chance-remain">剩余{{chance >= 0 ? chance : '0'}}次答题机会</div>
       <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-if="isApp">去分享</div>
       <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 1">领5元奖励</div>
       <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 2">领2元奖励</div>
