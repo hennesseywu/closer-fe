@@ -17,6 +17,7 @@
     <div class="content2">
       <div class="commen-width animated bounceInDown" :class="level == 1 ? 'local1-img' : (level == 2 ? 'local2-img' : 'local3-img')">
         <div class="logo animated shake"></div>
+        <div class="go-share animated bounceInDown1" v-if="IS_WX" @click="goShare">去分享</div>
       </div>
       <div class="local-desc localText">
         {{level == 1 ? localText1 : (level == 2) ? localText2 : localText3}}
@@ -93,18 +94,18 @@
       this.score = this.endData.score ? this.endData.score : ''
       this.level = this.endData.level
       this.awardAmt = this.endData.awardAmt
-      if (this.score != '' ) {
+      if (this.score != '') {
         this.regardsAdd();
       } else {
-        let data={
+        let data = {
           activityId: this.activityId
         }
-        if(this.user.objectID){
-          data['inviter']=this.user.objectID;
+        if (this.user.objectID) {
+          data['inviter'] = this.user.objectID;
         }
-         location.href = addParamsForUrl(location.origin + '/local', data)
-
-  }
+        location.href = addParamsForUrl(location.origin + '/local', data)
+  
+      }
   
   
       console.log('user--', this.user)
@@ -139,12 +140,12 @@
         }
         var time = setInterval(() => {
           this.regards++
-          console.log(this.regards, '-----', this.score)
-            if (this.regards >= this.score) {
-              this.regards = this.score
-              window.clearInterval(time)
-              return
-            }
+            console.log(this.regards, '-----', this.score)
+          if (this.regards >= this.score) {
+            this.regards = this.score
+            window.clearInterval(time)
+            return
+          }
         }, 10)
       },
       goAnswer() {
@@ -174,6 +175,13 @@
           })
         } else {
           downloadApp()
+        }
+      },
+      goShare() {
+        if(this.IS_WX) {
+          this.$router.push({
+            name: 'localShare'
+          })
         }
       },
       goTips() {
