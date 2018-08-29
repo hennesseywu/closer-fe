@@ -1,4 +1,6 @@
 <template>
+  <div class="main local-result">
+  <local-header v-if="IS_APP" back close share></local-header>
   <div class="result-wrapper">
     <div class="content1">
       <div class="avater" :class="level == 1 ? 'avater1' : (level == 2 ? 'avater2' : 'avater3')">
@@ -35,6 +37,7 @@
     </div>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
   </div>
+  </div>
 </template>
 
 <script>
@@ -51,12 +54,14 @@
     downloadApp
   } from '../../../utils/utils'
   import localDialog from '../components/dialog'
+  import localHeader from '../components/header';
   import {
     makeFileUrl
   } from '../../../utils/utils'
   export default {
     components: {
-      localDialog
+      localDialog,
+      localHeader
     },
     data() {
       return {
@@ -173,6 +178,7 @@
 </script>
 
 <style lang="less" scoped>
+  @import '../assets/style/main.less';
   @import '../assets/style/animation.less';
   @import '../assets/style/result.less';
 </style>

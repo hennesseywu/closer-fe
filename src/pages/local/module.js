@@ -420,7 +420,7 @@ export default {
               title: '是成都人就来瓜分百万大奖', // 分享标题
               desc: '参与成都人纯度测试，纯度越高，奖金越多！', // 分享描述
               link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: 'http://file.tiejin.cn/public/9XnByg35Ju/logo300.png', // 分享图标
+              imgUrl: 'http://file.tiejin.cn/public/9Ykg0XgzgX/share_img.png', // 分享图标
               type: '', // 分享类型,music、video或link，不填默认为link
               dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
               success: function() {
@@ -433,7 +433,7 @@ export default {
             wx.onMenuShareTimeline({
               title: '是成都人就来瓜分百万大奖', // 分享标题
               link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: 'http://file.tiejin.cn/public/9XnByg35Ju/logo300.png', // 分享图标
+              imgUrl: 'http://file.tiejin.cn/public/9Ykg0XgzgX/share_img.png', // 分享图标
               success: function() {
                 // 用户点击了分享后执行的回调函数
                 Toast('分享成功~')
