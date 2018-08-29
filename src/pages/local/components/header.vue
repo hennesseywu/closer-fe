@@ -6,6 +6,7 @@
   </header>
 </template>
 <script>
+  import {mapState} from 'vuex';
   export default {
     name: 'tjHeader',
     data() {
@@ -16,18 +17,21 @@
       close: Boolean,
       share: Boolean
     },
+    computed: {
+      ...mapState(['UA'])
+    },
     methods: {
       handleBack() {
         this.$router.back();
       },
       handleClose() {
-        if (ua.indexOf("closer-ios") > -1) {
+        if (this.UA.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
               bridge.callHandler("exitPage")
             }
           })
-        } else if (ua.indexOf("closer-android") > -1) {
+        } else if (this.UA.indexOf("closer-android") > -1) {
           if (typeof window.bridge != "undefined") {
             try {
               window.bridge.exitPage();
