@@ -67,7 +67,8 @@
       ...mapActions("local", [
         "wechatConfig",
         "userShare",
-        "checkLoginInApp"
+        "checkLoginInApp",
+        "initWxConfig"
       ]),
       toShare(type, url) {
         let ua = this.$store.state.UA
