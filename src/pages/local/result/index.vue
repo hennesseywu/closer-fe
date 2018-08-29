@@ -107,8 +107,10 @@
         if (this.user.objectID) {
           data['inviter'] = this.user.objectID;
         }
-        location.href = addParamsForUrl(location.origin + '/local', data)
-  
+        // this.$router.push({
+        //     name: 'localIndex'
+        //   })
+        // location.href = addParamsForUrl(location.origin + '/local', data)
       }
   
   

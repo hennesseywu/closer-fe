@@ -79,7 +79,6 @@ export default {
       state.statistic.chance = --chance
     },
     updateCurrentQuestionNum(state) {
-      let currentQuesitionNum = state.questions.currentQuesitionNum
       state.questions.currentQuesitionNum = 0
       console.log(123, state.questions.currentQuesitionNum)
     }

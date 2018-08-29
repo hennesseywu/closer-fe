@@ -6,8 +6,8 @@
       <div class="hd-img"></div>
       <div class="answer-box">
         <div class="answer-acount">{{currentQuesitionNum + 1}}/8</div>
-        <div class="subject" :class="isUpdate ? 'animated slideInUp' : ''">{{startData[currentQuesitionNum].title}}</div>
-        <div class="optoins" :class="isUpdate ? 'animated slideInUp' : ''" v-for="(item, index) in startData[currentQuesitionNum].answers" :key="index">
+        <div class="subject animated slideInUp">{{startData[currentQuesitionNum].title}}</div>
+        <div class="optoins animated slideInUp" v-for="(item, index) in startData[currentQuesitionNum].answers" :key="index">
           <div class="list" :data-index="index" :data-seq="item.seq" :data-questionId="item.questionId" :class="index===checkNum ? 'bg-yellow' : ''" @click="checkOptions($event)">{{item.title}}</div>
         </div>
       </div>
