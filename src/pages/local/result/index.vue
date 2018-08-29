@@ -145,7 +145,6 @@
         }
         var time = setInterval(() => {
           this.regards++
-            console.log(this.regards, '-----', this.score)
           if (this.regards >= this.score) {
             this.regards = this.score
             window.clearInterval(time)
@@ -166,6 +165,7 @@
           })
         } else {
           this.dialog.show = true
+          this.dialog.share = true
         }
   
       },
