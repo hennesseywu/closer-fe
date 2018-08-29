@@ -50,7 +50,6 @@
       localHeader
     },
     created() {
-      // this.getStatistic()
       if (this.statistic) {
         this.startTest()
       }
@@ -79,9 +78,7 @@
     beforeRouteEnter (to, {path}, next) {
       let _path = path.split('/');
       if (_path[2]) {
-        this.$router.replace({
-          name: 'localIndex'
-        })
+        next('/local');
       } else {
         next();
       }
