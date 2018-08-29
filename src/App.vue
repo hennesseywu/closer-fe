@@ -7,7 +7,11 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
+  // beforeDestroy() {
+  //   Cookies.remove('GroukAuth');
+  //   Cookies.remove('user');
+  // }
 }
 </script>
 
