@@ -273,14 +273,6 @@ export default {
       inviter
     }) {
       inviter = state.inviter || inviter;
-      let _params = {
-        plateform: 2,
-        // 微信授权code
-        code,
-        // 分享人id
-        inviter,
-        protocol: "WEB_SOCKET"
-      };
       // 判断cookie，过期则从接口重新取
       let user = Cookies.get('user');
       let token = Cookies.get('GroukAuth');
@@ -289,6 +281,15 @@ export default {
         commit('SET_USER', JSON.parse(user));
         return true;
       } else {
+        let _params = {
+          plateform: 2,
+          // 微信授权code
+          code,
+          // 分享人id
+          inviter,
+          adid: 'TuZhuActivity-2',
+          protocol: "WEB_SOCKET"
+        };
         let {
           data
         } = await service.loginWithWx(_params);
