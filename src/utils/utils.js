@@ -156,13 +156,13 @@ export function parseQuery() {
   }
   return obj;
 }
+// 版本号比较，ver1为安卓，ver2为ios
 export function compareVersion(ua, ver1, ver2) {
   let ver = ua.indexOf('android') > -1 ? ver1 : ver2;
   try {
-    let a = ver.split('.');
-    let b = (ua.split('closerapp/version/')[1] || '').split('.');
-    console.log(b);
-    return b[0] >= a[0] && b[1] >= a[1] && b[2] >= a[2];
+    let a = parseInt(ver.replace(/\./g, ''));
+    let b = parseInt((ua.split('closerapp/version/')[1] || '').replace(/\./g, ''));
+    return b >= a;
   } catch (e) {
     return false
   }

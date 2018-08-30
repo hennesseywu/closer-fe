@@ -263,7 +263,7 @@ router.beforeEach(({
                 return;
             }
             console.log('fullpath:',fullPath,query)
-            let _path = (Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query))
+            let _path = (location.origin.indexOf('local.tiejin.cn') > -1 ? api.wxLoginLocalUrl : Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query))
             let params = {
                 path: _path
             };
