@@ -26,7 +26,13 @@
     },
     methods: {
       handleBack() {
-        this.$router.back();
+        if (this.home) {
+          this.$router.push({
+            name: 'localIndex'
+          });
+        } else {
+          this.$router.back();
+        }
       },
       handleClose() {
         if (this.UA.indexOf("closer-ios") > -1) {
@@ -58,7 +64,7 @@
 .header {
   position: relative;
   height: 76pr;
-  margin-bottom: 40pr;
+  margin-bottom: 20pr;
   .left, .right {
     position: absolute;
     top: 0;

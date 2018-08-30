@@ -94,14 +94,15 @@
     },
     created() {
       const self = this;
+      console.log('isLogin:',self.isLogin)
       self.checkParams(self.$route.query);
       if (self.isLogin) {
-        self.getStatistic();
+        self.initAnimation();
         return;
       }
       if (self.IS_APP) {
         // 端内
-        self.checkLoginInApp(self.getStatistic);
+        self.checkLoginInApp(self.initAnimation);
       } else if (self.IS_WX) {
         // 微信端
         // let user = Cookies.get("user");
@@ -110,7 +111,7 @@
         // } else {
           self.getUserInfoAndLoginWithWx(self.$route.query).then(sign => {
             if (sign) {
-              self.getStatistic();
+              self.initAnimation();
               self.initWxConfig();
             } else {
               this.dialog.share = false;
@@ -139,7 +140,7 @@
       // 转到排行榜
       showRankingList() {
         if (!this.isLogin) {
-          this.checkLoginInApp(this.getStatistic);
+          this.checkLoginInApp(this.initAnimation);
         } else if (this.checkOtherEnv()) {
           this.$router.push({
             name: 'localRank'
@@ -159,7 +160,7 @@
         //   this.dialog.show = true;
         //   return false;
         if (!this.isLogin) {
-          this.checkLoginInApp(this.getStatistic);
+          this.checkLoginInApp(this.initAnimation);
         } else if (this.checkOtherEnv(true)) {
           this.$router.push({
             name: 'localAnswer'
@@ -199,12 +200,16 @@
       },
       setCurrentWidth() {
         return this.currentWidth = this.statistic.totalAwardAmt*100/this.statistic.maxAwardAmt + '%'
+      },
+      initAnimation() {
+        this.getStatistic().then(() => {
+            this.setCurrentWidth();
+        })
       }
     },
     mounted() {
       setTimeout(() => {
         this.mounted = true;
-        this.setCurrentWidth();
       }, 800);
     }
   }
