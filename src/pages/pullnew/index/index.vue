@@ -407,7 +407,7 @@
     background: url("../assets/images/bg.png") no-repeat center;
     height: 1680pr;
     background-size: cover;
-    padding-top: 120pr;
+    padding-top: 150pr;
     text-align: center;
     .back {
       color: #ffffff;
