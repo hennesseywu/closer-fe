@@ -413,7 +413,7 @@
       color: #ffffff;
       width: 120pr;
       position: absolute;
-      top: 50pr;
+      top: 80pr;
       left: 20pr;
       .arrow:after {
         content: '';
