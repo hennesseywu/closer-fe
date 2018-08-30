@@ -53,7 +53,7 @@
     mapActions,
     mapMutations
   } from 'vuex';
-  import {transAmount, parseQuery} from '../../../utils/utils'
+  import {transAmount, parseQuery, downloadApp} from '../../../utils/utils'
   
   export default {
     name: 'localIndex',
@@ -78,7 +78,7 @@
       localHeader
     },
     computed: {
-      ...mapState('local', ['isLogin', 'statistic']),
+      ...mapState('local', ['aid', 'isLogin', 'statistic']),
       ...mapState(['IS_APP', 'IS_WX']),
       remainTimesToMax() {
         return Math.ceil(transAmount(this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
@@ -96,6 +96,8 @@
     created() {
       const self = this;
       console.log('isLogin:',self.isLogin)
+      // 种cookie
+      Cookies.set('aid', self.aid, {expires: 7});
       self.checkParams(self.$route.query);
       if (self.isLogin) {
         self.initAnimation();
@@ -236,7 +238,7 @@
           }
         } else {
           // DOWNLOAD
-          location.href = "http://tiejin.cn/down?downurl=closer://jump";
+          downloadApp();
         }
       }
     },
