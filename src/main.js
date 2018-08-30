@@ -62,7 +62,7 @@ function pageResize() {
 
 function initState() {
   let ua = (navigator.userAgent || window.navigator.userAgent).toLowerCase();
-  store.state.V_1_2_3 = compareVersion(ua, '1.2.2', '1.2.3');
+  store.state.V_1_2_3 = compareVersion(ua, '1.2.3', '1.2.2');
   store.state.UA = ua;
   store.state.IS_APP = isApp();
   store.state.IS_WX = isWechat();
