@@ -393,7 +393,10 @@ export default {
           data
         })
         Router.push({
-          name: "localResult"
+          name: "localResult",
+          params: {
+            from: 'answer'
+          }
         })
         window.sessionStorage.userAnswerId = state.endData.userAnswerId
       } else {
