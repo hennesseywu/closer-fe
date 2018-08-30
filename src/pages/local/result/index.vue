@@ -158,7 +158,8 @@
         if (this.chance > 0) {
           this.updateCurrentQuestionNum()
           this.$router.push({
-            name: 'localAnswer'
+            name: 'localAnswer',
+            params:{from:'playAgain'}
           })
         } else {
           this.dialog.show = true

@@ -163,7 +163,8 @@
           this.checkLoginInApp(this.initAnimation);
         } else if (this.checkOtherEnv(true)) {
           this.$router.push({
-            name: 'localAnswer'
+            name: 'localAnswer',
+            params: {from:'fromIndex'}
           })
         }
       },

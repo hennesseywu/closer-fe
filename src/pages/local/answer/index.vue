@@ -50,6 +50,20 @@
       localHeader
     },
     created() {
+      console.log("parkk", this.$route.params.from)
+  
+      if (typeof(this.$route.params.from) == "undefined") {
+        this.$router.push({
+          name: 'localIndex'
+        })
+      } else {
+        if (this.$route.params.from != 'fromIndex' &&this.$route.params.from != 'playAgain') {
+          this.$router.push({
+            name: 'localIndex'
+          })
+        }
+      }
+  
       if (this.statistic) {
         this.startTest()
       }
@@ -89,6 +103,7 @@
       // if (_path[2]) {
       //   next('/local');
       // } else {
+  
       next();
       // }
     },
@@ -122,7 +137,7 @@
         return params
       },
       next(userAnswerId) {
-        
+  
         if (!this.isCheck) {
           Toast('您还未答题哟~')
           return
@@ -136,7 +151,7 @@
         }
         console.log("currentQuesitionNum---", this.currentQuesitionNum)
         if (this.currentQuesitionNum < 7) {
-this.isUpdate = true
+          this.isUpdate = true
           this.checkNum = ''
           this.isCheck = false
           this.nextQuestion()
