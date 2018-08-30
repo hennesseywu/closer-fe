@@ -33,6 +33,7 @@
       <div class="bd-total">
         累计获得：
         <span class="bd-count">{{currentTotalAmount}}</span> 元
+        <span class="bd-tixian" @click="handleWithDraw()">去提现</span>
       </div>
       <div class="bd-desc" v-html="currentDesc"></div>
       <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>
@@ -150,7 +151,10 @@
       // 转到规则
       showRule() {
         this.$router.push({
-          name: 'localRule'
+          name: 'localRule',
+          params: {
+            from: 'localIndex'
+          }
         })
       },
       // 开始答题
@@ -206,6 +210,34 @@
         this.getStatistic().then(() => {
             this.setCurrentWidth();
         })
+      },
+      handleWithDraw() {
+        if (this.IS_APP) {
+          if (!this.isLogin) {
+            this.checkLoginInApp(this.initAnimation);
+          } else {
+            let ua = this.$store.state.UA;
+            if (ua.indexOf("closer-ios") > -1) {
+              setupWebViewJavascriptBridge(function(bridge) {
+                if (bridge) {
+                  //ios获取用户token 判断登录
+                  bridge.callHandler("inviteNewGuyAction", 'inviteNewGuyActionWithdraw', function(data, responseCallback) {})
+                }
+              })
+            } else if (ua.indexOf("closer-android") > -1) {
+              if (typeof window.bridge != "undefined") {
+                try {
+                  window.bridge.inviteNewGuyAction('inviteNewGuyActionWithdraw');
+                } catch (e) {
+                  Toast("请升级最新版本客户端")
+                }
+              }
+            }
+          }
+        } else {
+          // DOWNLOAD
+          location.href = "http://tiejin.cn/down?downurl=closer://jump";
+        }
       }
     },
     mounted() {
