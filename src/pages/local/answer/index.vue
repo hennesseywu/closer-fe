@@ -124,7 +124,7 @@
           sign: this.sign(),
           inviteUser: this.inviter
         }
-        console.log(this.answers)
+        console.log("currentQuesitionNum---",this.currentQuesitionNum)
         if (this.currentQuesitionNum < 7) {
           this.checkNum = ''
           this.isCheck = false
