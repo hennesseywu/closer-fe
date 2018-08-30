@@ -1,10 +1,12 @@
 <template>
   <div class="pullnew">
-    <div class="back" @click="back">
-      <span class="arrow"></span>
-    </div>
-    <div class="rule-button" @click="toRule">
-      活动说明
+    <div class="head">
+      <div class="back" @click="back">
+        <span class="arrow"></span>
+      </div>
+      <div class="rule-button" @click="toRule">
+        活动说明
+      </div>
     </div>
     <div class="title"></div>
     <div class="pullnew-title">
@@ -187,44 +189,40 @@
           }
         })
       } else {
-        this.$router.push({
-          name: "activityOver"
-        });
-        // Cookies.set("GroukAuth", '1.5cac34ffabb92049a680f8981f0e011840e710b79aec62cd554840634729b4192f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd', {
-        //   expires: 30
+        // this.$router.push({
+        //   name: "activityOver"
         // });
-  
-        // this.checkLogin(async(res) => {
-        //   if (res) {
-        //     this.isLogin = true;
-        //   }
-        //   await this.getPullNewInfo({
-        //     "noIndicator": true
-        //   });
-        //   await this.getYesterdayAwardAmt({
-        //     "noIndicator": true
-        //   });
-        //   let {
-        //     data,
-        //     pagesize,
-        //     count
-        //   } = await this.getInviteUserList({
-        //     pagenum: this.pageNum,
-        //     pagesize: this.pageSize,
-        //     "noIndicator": true
-        //   });
-        //   this.totalPageNum = Math.ceil(count / pagesize)
-        //   for (let u in data) {
-        //     if (typeof(data[u].awardedCount) != "undefined" && data[u].awardedCount == 0 && typeof(data[u].userActions) != "undefined") {
-        //       data[u].step = this.checkLoginUser(data[u].userActions);
-        //     }
-        //   }
-        //   this.loginUsers = data;
-        //   if (this.pageNum == this.totalPageNum) {
-        //     this.allLoaded = true;
-        //     this.bottomPullText = ""
-        //   }
-        // })
+        this.checkLogin(async(res) => {
+          if (res) {
+            this.isLogin = true;
+          }
+          await this.getPullNewInfo({
+            "noIndicator": true
+          });
+          await this.getYesterdayAwardAmt({
+            "noIndicator": true
+          });
+          let {
+            data,
+            pagesize,
+            count
+          } = await this.getInviteUserList({
+            pagenum: this.pageNum,
+            pagesize: this.pageSize,
+            "noIndicator": true
+          });
+          this.totalPageNum = Math.ceil(count / pagesize)
+          for (let u in data) {
+            if (typeof(data[u].awardedCount) != "undefined" && data[u].awardedCount == 0 && typeof(data[u].userActions) != "undefined") {
+              data[u].step = this.checkLoginUser(data[u].userActions);
+            }
+          }
+          this.loginUsers = data;
+          if (this.pageNum == this.totalPageNum) {
+            this.allLoaded = true;
+            this.bottomPullText = ""
+          }
+        })
       }
     },
     computed: {
@@ -405,25 +403,25 @@
 <style lang="less" scoped>
   .pullnew {
     background: url("../assets/images/bg.png") no-repeat center;
-    height: 1680pr;
+    // height: 1680pr;
     background-size: cover;
-    padding-top: 150pr;
+    padding-top: 120pr;
     text-align: center;
-    .back {
-      color: #ffffff;
-      width: 120pr;
-      position: absolute;
-      top: 80pr;
-      left: 20pr;
-      .arrow:after {
-        content: '';
-        display: inline-block;
-        width: 24pr;
-        height: 24pr;
-        border-top: 3pr solid #ffffff;
-        border-right: 3pr solid #ffffff;
-        transform: rotate(225deg);
-        -webkit-transform: rotate(225deg);
+    .head {
+      .back {
+        color: #ffffff;
+        width: 120pr;
+        margin-bottom:30pr;
+        .arrow:after {
+          content: '';
+          display: inline-block;
+          width: 24pr;
+          height: 24pr;
+          border-top: 3pr solid #ffffff;
+          border-right: 3pr solid #ffffff;
+          transform: rotate(225deg);
+          -webkit-transform: rotate(225deg);
+        }
       }
     }
     .rule-button {

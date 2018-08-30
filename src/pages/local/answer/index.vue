@@ -138,7 +138,6 @@
         return params
       },
       next(userAnswerId) {
-  
         if (!this.isCheck) {
           Toast('您还未答题哟~')
           return
