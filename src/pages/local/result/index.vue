@@ -135,7 +135,9 @@
         "updateCurrentQuestionNum"
       ]),
       makeFileUrl(url) {
-        return makeFileUrl(url)
+        let avatar = makeFileUrl(url)
+        console.log('result:avatar:', avatar)
+        return avatar
       },
       regardsAdd() {
         if (this.regards > this.score) {

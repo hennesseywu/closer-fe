@@ -38,6 +38,14 @@
     },
     computed: {
       ...mapState(['IS_APP']),
+    },
+    created() {
+      let {from} = this.$route.params
+      if (from != 'localIndex') {
+        this.$router.replace({
+          name: 'localIndex'
+        })
+      }
     }
   }
 </script>
