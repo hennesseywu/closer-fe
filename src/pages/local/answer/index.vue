@@ -6,8 +6,8 @@
       <div class="hd-img"></div>
       <div class="answer-box">
         <div class="answer-acount">{{currentQuesitionNum + 1}}/8</div>
-        <div class="subject animated slideInUp">{{startData[currentQuesitionNum].title}}</div>
-        <div class="optoins animated slideInUp" v-for="(item, index) in startData[currentQuesitionNum].answers" :key="index">
+        <div class="subject" :class="isUpdate ? 'animated slideInUp' : ''">{{startData[currentQuesitionNum].title}}</div>
+        <div class="optoins" :class="isUpdate ? 'animated slideInUp' : ''" v-for="(item, index) in startData[currentQuesitionNum].answers" :key="index">
           <div class="list" :data-index="index" :data-seq="item.seq" :data-questionId="item.questionId" :class="index===checkNum ? 'bg-yellow' : ''" @click="checkOptions($event)">{{item.title}}</div>
         </div>
       </div>
@@ -59,7 +59,14 @@
       }
     },
     mounted() {
+  
       this.isUpdate = true
+      var time = setInterval(() => {
+        this.isUpdate = false
+      }, 1500)
+      if (this.currentQuesitionNum && this.currentQuesitionNum >= 7) {
+        window.clearInterval(time)
+      }
       this.updateChance()
     },
     computed: {
@@ -75,12 +82,14 @@
         signSalt: state => state.statistic.signSalt
       })
     },
-    beforeRouteEnter (to, {path}, next) {
+    beforeRouteEnter(to, {
+      path
+    }, next) {
       // let _path = path.split('/');
       // if (_path[2]) {
       //   next('/local');
       // } else {
-        next();
+      next();
       // }
     },
     methods: {
@@ -113,6 +122,7 @@
         return params
       },
       next(userAnswerId) {
+        
         if (!this.isCheck) {
           Toast('您还未答题哟~')
           return
@@ -124,8 +134,9 @@
           sign: this.sign(),
           inviteUser: this.inviter
         }
-        console.log(this.answers)
+        console.log("currentQuesitionNum---", this.currentQuesitionNum)
         if (this.currentQuesitionNum < 7) {
+this.isUpdate = true
           this.checkNum = ''
           this.isCheck = false
           this.nextQuestion()

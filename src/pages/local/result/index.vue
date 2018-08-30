@@ -112,16 +112,13 @@
         //   })
         // location.href = addParamsForUrl(location.origin + '/local', data)
       }
-  
-  
-      console.log('user--', this.user)
     },
     computed: {
       ...mapState(['IS_APP', 'IS_WX']),
       ...mapState('local', {
         user: state => state.user,
         chance: state => state.statistic.chance,
-        currentQuesitionNum: state => state.currentQuesitionNum,
+        currentQuesitionNum: state => state.questions.currentQuesitionNum,
         statistic: state => state.statistic,
         endData: state => state.endData,
         activityId: state => state.activityId
@@ -160,7 +157,6 @@
         }
         if (this.chance > 0) {
           this.updateCurrentQuestionNum()
-          console.log('updateCurrentQuestionNum', this.currentQuesitionNum)
           this.$router.push({
             name: 'localAnswer'
           })

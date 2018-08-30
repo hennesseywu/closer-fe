@@ -3,8 +3,12 @@ import {
   Toast
 } from 'mint-ui'
 import Router from '../../router'
-import { addParamsForUrl } from '../../utils/utils'
-import { stat } from 'fs';
+import {
+  addParamsForUrl
+} from '../../utils/utils'
+import {
+  stat
+} from 'fs';
 
 export default {
   namespaced: true,
@@ -70,7 +74,10 @@ export default {
       state.shareData = data.shareUrl || data.defaultShareUrl
     },
     SET_PARAMS(state, payload) {
-      let {inviter, activityId} = payload
+      let {
+        inviter,
+        activityId
+      } = payload
       activityId && (state.activityId = activityId);
       inviter && (state.inviter = inviter);
     },
@@ -81,21 +88,29 @@ export default {
     updateCurrentQuestionNum(state) {
       state.questions.currentQuesitionNum = 0
       console.log(123, state.questions.currentQuesitionNum)
+    },
+    nextQuestion(state) {
+      let currentQuesitionNum = state.questions.currentQuesitionNum
+      state.questions.currentQuesitionNum = ++currentQuesitionNum
     }
   },
 
   actions: {
-    updateChance({ commit }) {
+    updateChance({
+      commit
+    }) {
       commit('updateChance')
     },
-    updateCurrentQuestionNum({ commit }) {
+    updateCurrentQuestionNum({
+      commit
+    }) {
       commit('updateCurrentQuestionNum')
     },
     async userShare({
       state,
       commit
     }, payload) {
-      if(sessionStorage.userAnswerId) {
+      if (sessionStorage.userAnswerId) {
         let params = {
           userAnswerId: sessionStorage.userAnswerId
         }
@@ -137,20 +152,20 @@ export default {
     // 判断params，有该参数则为微信授权后跳转
     checkParams({
       commit
-    },{
+    }, {
       params,
       activityId,
       inviter
     }) {
       try {
         params = JSON.parse(decodeURIComponent(params))
-      } catch(e) {
+      } catch (e) {
         params = {};
       }
       activityId = params.activityId || activityId;
       inviter = params.inviter || inviter;
       // 保存url中的activityId
-      console.log('params:',activityId,inviter);
+      console.log('params:', activityId, inviter);
       commit('SET_PARAMS', {
         activityId,
         inviter
@@ -167,11 +182,11 @@ export default {
       if (ua.indexOf("closer-ios") > -1) {
         console.log("module closer-ios");
         setTimeout(() => {
-          setupWebViewJavascriptBridge(function(bridge) {
+          setupWebViewJavascriptBridge(function (bridge) {
             console.log("ios bridge", bridge)
             if (bridge) {
               //ios获取用户token 判断登录
-              bridge.callHandler("getUserToken", null, function(token, responseCallback) {
+              bridge.callHandler("getUserToken", null, function (token, responseCallback) {
                 console.log("ios token", token)
                 if (token) {
                   Cookies.set("GroukAuth", token, {
@@ -198,7 +213,7 @@ export default {
                   })
                 } else {
                   console.log("ios jumpLogin")
-                  setupWebViewJavascriptBridge(function(bridge) {
+                  setupWebViewJavascriptBridge(function (bridge) {
                     bridge.callHandler("jumpLogin", null);
                   });
                   cb();
@@ -270,15 +285,17 @@ export default {
       let user = Cookies.get('user');
       let token = Cookies.get('GroukAuth');
       if (user && token) {
-        console.log('user-from-cookie:',JSON.parse(user));
+        console.log('user-from-cookie:', JSON.parse(user));
         commit('SET_USER', JSON.parse(user));
         return true;
       } else {
-        let { data } = await service.loginWithWx(_params);
+        let {
+          data
+        } = await service.loginWithWx(_params);
         if (data.code == 0) {
           user = data.result.user;
           token = data.result.token;
-          console.log('user-from-server:',user);
+          console.log('user-from-server:', user);
           commit('SET_USER', user)
           Cookies.set('GroukAuth', token, {
             expires: 7
@@ -291,7 +308,7 @@ export default {
           return false;
         }
       }
-      
+
     },
     // 获取用户分数以及剩余答题次数
     async getStatistic({
@@ -341,7 +358,7 @@ export default {
         Toast('网络开小差啦，请稍后再试')
         return;
       })
-      if (typeof(data.code) != undefined && data.code == 0) {
+      if (typeof (data.code) != undefined && data.code == 0) {
         commit({
           type: 'startData',
           data
@@ -355,8 +372,8 @@ export default {
       state,
       commit
     }, payload) {
-      let data = state.questions.currentQuesitionNum++
-        if (data > state.startData.length) return
+      commit("nextQuestion")
+      if (state.questions.currentQuesitionNum > state.startData.length) return
     },
     // 结束测试
     async commitTest({
@@ -370,7 +387,7 @@ export default {
         return;
       })
       console.log(3, data)
-      if (typeof(data.code != undefined) && data.code == 0) {
+      if (typeof (data.code != undefined) && data.code == 0) {
         commit({
           type: 'endData',
           data
@@ -383,20 +400,25 @@ export default {
         data.result && Toast(data.result)
       }
     },
-    initWxConfig({state, rootState}) {
+    initWxConfig({
+      state,
+      rootState
+    }) {
       let params = {
         url: location.href
       };
       service.wechatConfig(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
-      }).then(({data}) => {
+      }).then(({
+        data
+      }) => {
         let wxConfig = {};
         let link = addParamsForUrl(location.origin + '/local', {
           inviter: state.user.objectID,
           activityId: state.activityId
         });
-        if (typeof(data.code) != "undefined" && data.code == 0) {
+        if (typeof (data.code) != "undefined" && data.code == 0) {
           wxConfig = data.result;
         } else {
           return;
@@ -411,7 +433,7 @@ export default {
             "timestamp": wxConfig.timestamp,
             jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
           });
-          wx.ready(function() {
+          wx.ready(function () {
             console.log("ready")
             // 分享朋友
             wx.onMenuShareAppMessage({
@@ -421,7 +443,7 @@ export default {
               imgUrl: 'http://file.tiejin.cn/public/9Ykg0XgzgX/share_img.png', // 分享图标
               type: '', // 分享类型,music、video或link，不填默认为link
               dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-              success: function() {
+              success: function () {
                 // 用户点击了分享后执行的回调函数
                 Toast('分享成功~')
               }
@@ -432,14 +454,14 @@ export default {
               title: '是成都人就来瓜分百万大奖', // 分享标题
               link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: 'http://file.tiejin.cn/public/9Ykg0XgzgX/share_img.png', // 分享图标
-              success: function() {
+              success: function () {
                 // 用户点击了分享后执行的回调函数
                 Toast('分享成功~')
               }
             })
             // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
           })
-          wx.error(function(res) {
+          wx.error(function (res) {
             console.log("error", res)
             // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
           });
