@@ -156,10 +156,13 @@ export function parseQuery() {
   }
   return obj;
 }
-export function compareVersion(nvg) {
+export function compareVersion(ua, ver1, ver2) {
+  let ver = ua.indexOf('android') > -1 ? ver1 : ver2;
   try {
-    let b = nvg.split('closerapp/version/')[1].split('.');
-    return b[0] > 1 || (b[0] == 1 && b[1] && b[1] > 1) || (b[0] == 1 && b[1] == 1 && b[2] && b[2] > 100)
+    let a = ver.split('.');
+    let b = (ua.split('closerapp/version/')[1] || '').split('.');
+    console.log(b);
+    return b[0] >= a[0] && b[1] >= a[1] && b[2] >= a[2];
   } catch (e) {
     return false
   }

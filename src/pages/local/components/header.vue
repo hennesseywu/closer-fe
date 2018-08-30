@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header v-if="V_1_2_3" class="header">
     <div class="left">
       <div class="common back" :style="{display: back ? 'block' : 'none'}" @click="handleBack()"></div>
       <div class="common close" :style="{display: close ? 'block' : 'none'}" @click="handleClose()"></div>
@@ -22,7 +22,7 @@
       share: Boolean
     },
     computed: {
-      ...mapState(['UA'])
+      ...mapState(['UA', 'V_1_2_3'])
     },
     methods: {
       handleBack() {

@@ -16,7 +16,8 @@ export default new Vuex.Store({
         IS_APP: false,
         IS_WX: false,
         IS_NEW_USER: false,
-        IS_DEV: false
+        IS_DEV: false,
+        V_1_2_3: false
     },
     modules: {
         index,
