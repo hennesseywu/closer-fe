@@ -81,6 +81,10 @@ export default {
     updateCurrentQuestionNum(state) {
       state.questions.currentQuesitionNum = 0
       console.log(123, state.questions.currentQuesitionNum)
+    },
+    nextQuestion(state) {
+      let currentQuesitionNum = state.questions.currentQuesitionNum
+      state.questions.currentQuesitionNum = ++currentQuesitionNum
     }
   },
 
@@ -355,7 +359,9 @@ export default {
       state,
       commit
     }, payload) {
-      let data = state.questions.currentQuesitionNum++
+      commit('nextQuestion')
+      let data = state.questions.currentQuesitionNum
+      console.log('data--', data)
         if (data > state.startData.length) return
     },
     // 结束测试
