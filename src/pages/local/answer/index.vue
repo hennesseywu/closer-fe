@@ -64,9 +64,9 @@
       var time = setInterval(() => {
         this.isUpdate = false
       }, 1500)
-      // if (this.currentQuesitionNum && this.currentQuesitionNum >= 7) {
-      //   window.clearInterval(time)
-      // }
+      if (this.currentQuesitionNum && this.currentQuesitionNum >= 7) {
+        window.clearInterval(time)
+      }
       this.updateChance()
     },
     computed: {
@@ -142,7 +142,6 @@ this.isUpdate = true
           this.nextQuestion()
           this.questionNum++
         } else {
-          window.clearInterval(time)
           this.commitTest(params)
         }
       }
