@@ -43,7 +43,8 @@
         checkArr: [],
         answers: [],
         isUpdate: false,
-        questionNum: 0
+        questionNum: 0,
+        isCommit: false
       }
     },
     components: {
@@ -57,7 +58,7 @@
           name: 'localIndex'
         })
       } else {
-        if (this.$route.params.from != 'fromIndex' &&this.$route.params.from != 'playAgain') {
+        if (this.$route.params.from != 'fromIndex' && this.$route.params.from != 'playAgain') {
           this.$router.push({
             name: 'localIndex'
           })
@@ -154,10 +155,14 @@
           this.isUpdate = true
           this.checkNum = ''
           this.isCheck = false
-          this.nextQuestion()
           this.questionNum++
+          this.nextQuestion()
         } else {
-          this.commitTest(params)
+          if (this.isCommit) return
+          this.isCommit = true
+          this.commitTest(params).then(() => {
+            this.isCommit = false
+          })
         }
       }
     }
