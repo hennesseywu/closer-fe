@@ -1,42 +1,42 @@
 <template>
   <div class="main local-result" :class="{'in-app': IS_APP}">
-  <local-header v-if="IS_APP" close></local-header>
-  <div class="result-wrapper">
-    <div class="content1">
-      <div class="avater" :class="level == 1 ? 'avater1' : (level == 2 ? 'avater2' : 'avater3')">
-        <span class="avater-commen" :class="level == 1 ? 'avater1-icon' : (level == 2 ? 'avater2-icon' : 'avater3-icon')"></span>
-        <img :src="makeFileUrl(user.avatar)">
+    <local-header v-if="IS_APP" close></local-header>
+    <div class="result-wrapper">
+      <div class="content1">
+        <div class="avater" :class="level == 1 ? 'avater1' : (level == 2 ? 'avater2' : 'avater3')">
+          <span class="avater-commen" :class="level == 1 ? 'avater1-icon' : (level == 2 ? 'avater2-icon' : 'avater3-icon')"></span>
+          <img :src="makeFileUrl(user.avatar)">
+        </div>
+        <div class="regards">
+          <span>{{regards}}</span>分
+        </div>
+        <div class="local-name box box-lr box-center-center">
+          <div class="line left"></div>
+          <div class="name">获得称号</div>
+          <div class="line right"></div>
+        </div>
       </div>
-      <div class="regards">
-        <span>{{regards}}</span>分
+      <div class="content2">
+        <div class="commen-width animated bounceInDown" :class="level == 1 ? 'local1-img' : (level == 2 ? 'local2-img' : 'local3-img')">
+          <div class="logo animated shake"></div>
+          <div class="go-share animated bounceInDown1" v-if="IS_WX" @click="goShare">去分享</div>
+        </div>
+        <div class="local-desc localText" v-html="level == 1 ? localText1 : (level == 2) ? localText2 : localText3">
+        </div>
       </div>
-      <div class="local-name box box-lr box-center-center">
-        <div class="line left"></div>
-        <div class="name">获得称号</div>
-        <div class="line right"></div>
+      <div class="content3">
+        <div class="btn-commen go-answer" @click="goAnswer">再次答题</div>
+        <div class="chance-remain">剩余{{chance >= 0 ? chance : '0'}}次答题机会</div>
+        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-if="isApp">去分享</div>
+        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 1">领5元奖励</div>
+        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 2">领2元奖励</div>
+        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 3">下载APP</div>
+        <div class="text-commen go-wallet" v-if="isApp">去“我的-钱包”查看</div>
+        <div class="text-commen go-wallet" v-else>下载贴近APP，去“我的-钱包”查看</div>
+        <div class="text-commen tips" @click="goTips">提高正确率，请查看攻略<span class="arrow"></span> </div>
       </div>
+      <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
     </div>
-    <div class="content2">
-      <div class="commen-width animated bounceInDown" :class="level == 1 ? 'local1-img' : (level == 2 ? 'local2-img' : 'local3-img')">
-        <div class="logo animated shake"></div>
-        <div class="go-share animated bounceInDown1" v-if="IS_WX" @click="goShare">去分享</div>
-      </div>
-      <div class="local-desc localText" v-html="level == 1 ? localText1 : (level == 2) ? localText2 : localText3">
-      </div>
-    </div>
-    <div class="content3">
-      <div class="btn-commen go-answer" @click="goAnswer">再次答题</div>
-      <div class="chance-remain">剩余{{chance >= 0 ? chance : '0'}}次答题机会</div>
-      <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-if="isApp">去分享</div>
-      <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 1">领5元奖励</div>
-      <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 2">领2元奖励</div>
-      <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 3">下载APP</div>
-      <div class="text-commen go-wallet" v-if="isApp">去“我的-钱包”查看</div>
-      <div class="text-commen go-wallet" v-else>下载贴近APP，去“我的-钱包”查看</div>
-      <div class="text-commen tips" @click="goTips">提高正确率，请查看攻略<span class="arrow"></span> </div>
-    </div>
-    <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
-  </div>
   </div>
 </template>
 
@@ -88,8 +88,16 @@
       };
     },
     created() {
+  
+      console.log("parkk", this.$route.params.from)
+  
+      if (this.$route.params.from != 'answer') {
+        this.$router.push({
+          name: 'localIndex'
+        })
+        return
+      }
       if (this.IS_WX) {
-        console.log('result wxshare--')
         this.initWxConfig()
       }
     },
@@ -145,11 +153,11 @@
         }
         var time = setInterval(() => {
           this.regards++
-          if (this.regards >= this.score) {
-            this.regards = this.score
-            window.clearInterval(time)
-            return
-          }
+            if (this.regards >= this.score) {
+              this.regards = this.score
+              window.clearInterval(time)
+              return
+            }
         }, 10)
       },
       goAnswer() {
@@ -161,7 +169,9 @@
           this.updateCurrentQuestionNum()
           this.$router.push({
             name: 'localAnswer',
-            params:{from:'playAgain'}
+            params: {
+              from: 'playAgain'
+            }
           })
         } else {
           this.dialog.show = true
@@ -183,7 +193,7 @@
         }
       },
       goShare() {
-        if(this.IS_WX) {
+        if (this.IS_WX) {
           this.$router.push({
             name: 'localShare'
           })
