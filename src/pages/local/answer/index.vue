@@ -12,8 +12,8 @@
         </div>
       </div>
       <div class="next-box" :class="isUpdate ? 'animated slideInUp' : ''">
-        <div :class="isCheck ? 'checked' : 'next-btn'" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)"></div>
-        <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-if="currentQuesitionNum == 7" @click="next(startResult.userAnswerId)">完成答题</div>
+        <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)">下一题</div>
+        <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-else @click="next(startResult.userAnswerId)">完成答题</div>
       </div>
     </div>
   </div>
