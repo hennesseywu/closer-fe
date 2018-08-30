@@ -1,6 +1,6 @@
 <template>
   <div class="main local-result" :class="{'in-app': IS_APP}">
-    <local-header v-if="IS_APP" close></local-header>
+    <local-header v-if="IS_APP" back home></local-header>
     <div class="result-wrapper">
       <div class="content1">
         <div class="avater" :class="level == 1 ? 'avater1' : (level == 2 ? 'avater2' : 'avater3')">
