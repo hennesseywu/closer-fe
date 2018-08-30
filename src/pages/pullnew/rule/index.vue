@@ -1,8 +1,8 @@
 <template>
   <div class="rule">
-    <!-- <div class="back" @click="back">
+    <div class="back" @click="back">
       <span class="arrow"></span>返回
-    </div> -->
+    </div>
     <div class="rule-title">
       <span class="rule-text">贴近奖励金发放和提取规则</span>
     </div>
@@ -11,7 +11,6 @@
         <div class="left-top-icon"></div>
         <div class="right-top-icon"></div>
         <div class="left-bottom-icon"></div>
-  
         <div class="right-bottom-icon"></div>
         <p class="content-title">什么是贴近奖励金：</p>
         <p class="content-text">
@@ -64,9 +63,9 @@
 <script>
   export default {
     methods:{
-      // back(){
-      //   this.$router.push({name:"pullNew"})
-      // }
+      back(){
+        this.$router.push({name:"pullNew"})
+      }
     }
   }
 </script>
@@ -77,7 +76,6 @@
     background-size: cover;
     height: 2876pr;
     padding-top: 76pr;
-    border
     .back {
       margin-left: 40pr;
       color: #ffffff;
