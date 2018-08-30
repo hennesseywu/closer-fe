@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="is-weixin" v-else>
+    <div class="is-weixin" v-if="IS_WX && shareData">
       <img :src="shareData" />
     </div>
   </div>
