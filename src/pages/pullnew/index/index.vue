@@ -1,5 +1,8 @@
 <template>
   <div class="pullnew">
+    <div class="back" @click="back">
+      <span class="arrow"></span>
+    </div>
     <div class="rule-button" @click="toRule">
       活动说明
     </div>
@@ -7,7 +10,6 @@
     <div class="pullnew-title">
       <div class="share-button" @click="inviteFriends"></div>
     </div>
-  
     <div class="content">
       <div class="left-top-icon"></div>
       <div class="right-top-icon"></div>
@@ -327,7 +329,26 @@
             }
           }
         }
-  
+      },
+      back() {
+        let ua = this.$store.state.UA;
+        if (ua.indexOf("closer-ios") > -1) {
+          let isOK = false;
+          setupWebViewJavascriptBridge(function(bridge) {
+            if (bridge) {
+              //ios获取用户token 判断登录
+              bridge.callHandler("exitPage", function(data, responseCallback) {})
+            }
+          })
+        } else if (ua.indexOf("closer-android") > -1) {
+          if (typeof window.bridge != "undefined") {
+            try {
+              window.bridge.exitPage();
+            } catch (e) {
+              Toast("请升级最新版本客户端")
+            }
+          }
+        }
       },
       clickArrow(e, key) {
         if (e.target.className == "arrow-right") {
@@ -386,8 +407,25 @@
     background: url("../assets/images/bg.png") no-repeat center;
     height: 1680pr;
     background-size: cover;
-    padding-top: 186pr;
+    padding-top: 150pr;
     text-align: center;
+    .back {
+      color: #ffffff;
+      width: 120pr;
+      position: absolute;
+      top: 50pr;
+      left: 20pr;
+      .arrow:after {
+        content: '';
+        display: inline-block;
+        width: 24pr;
+        height: 24pr;
+        border-top: 3pr solid #ffffff;
+        border-right: 3pr solid #ffffff;
+        transform: rotate(225deg);
+        -webkit-transform: rotate(225deg);
+      }
+    }
     .rule-button {
       background: url("../assets/images/rule-button.png") no-repeat center;
       width: 176pr;
