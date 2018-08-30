@@ -1,6 +1,6 @@
 <template>
   <div class="pullnew">
-     <div class="back" @click="back">
+    <div class="back" @click="back">
       <span class="arrow"></span>
     </div>
     <div class="rule-button" @click="toRule">
@@ -330,8 +330,9 @@
           }
         }
       },
-       back(){
-         if (ua.indexOf("closer-ios") > -1) {
+      back() {
+        let ua = this.$store.state.UA;
+        if (ua.indexOf("closer-ios") > -1) {
           let isOK = false;
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
@@ -348,7 +349,7 @@
             }
           }
         }
-       },
+      },
       clickArrow(e, key) {
         if (e.target.className == "arrow-right") {
           e.target.className = "arrow-down"
@@ -408,12 +409,12 @@
     background-size: cover;
     padding-top: 120pr;
     text-align: center;
-     .back {
+    .back {
       color: #ffffff;
       width: 120pr;
       position: absolute;
-      top:50pr;
-      left:20pr;
+      top: 50pr;
+      left: 20pr;
       .arrow:after {
         content: '';
         display: inline-block;
