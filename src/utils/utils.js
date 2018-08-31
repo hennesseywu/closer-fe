@@ -305,41 +305,13 @@ export function tjUploadFile(img) {
   var fd = new FormData(form);
   fd.append("file", file);
   // Submit Form and upload file
-  return new Promise(function(resolve, reject) {
 
-    jquery.ajax({
-      url: "https://file-sandbox.tiejin.cn/file/upload/public",
-      data: fd, // the formData function is available in almost all new browsers.
-      type: "POST",
-      headers: {
-        Accept: "application/json; charset=utf-8",
-        Authorization: "1.438e5b73ce608983bd9f1cbcb65f54a8f699b879a70de023327b0d4213276a042f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd"
-      },
-      contentType: false,
-      processData: false,
-      cache: false,
-      dataType: "json", // Change this according to your response from the server.
-      error: function(err) {
-        console.error(err);
-      },
-      success: function(data) {
-        console.log(data);
-        resolve(data)
-
-      },
-      complete: function() {
-        console.log("Request finished.");
-      }
-    });
-  })
-
-
-  //   return axios.post("https://file-sandbox.tiejin.cn/file/upload/public", fd, {
-  //     headers: {
-  //       Accept: "application/json; charset=utf-8",
-  //       Authorization: Cookies.get('GroukAuth')
-  //     }
-  //   });
+  return axios.post("https://file-sandbox.tiejin.cn/file/upload/public", fd, {
+    headers: {
+      Accept: "application/json; charset=utf-8",
+      Authorization: Cookies.get('GroukAuth')
+    }
+  });
 
   function dataURLtoFile(dataurl, filename = 'file') {
     let arr = dataurl.split(',')
