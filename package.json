@@ -17,6 +17,7 @@
     "mobile-detect": "^1.4.2",
     "npm": "^6.1.0",
     "promise-polyfill": "^8.0.0",
+    "qrcode.vue": "^1.6.0",
     "vconsole": "^3.2.0",
     "vue": "^2.5.16",
     "vue-axios": "^2.1.1",
