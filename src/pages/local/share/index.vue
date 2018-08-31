@@ -5,8 +5,12 @@
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
           <div v-if="answerId" class="share-score">
-            <div :class="'share-user-img '+levelData.logo">
-              <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
+            <div class="share-user-img">
+              <div :style="{
+                background: 'url(' + makeFileUrl(user.avatar) + ') no-repeat',
+                backgroundSize: 'cover'
+              }" class="share-user-avatar" crossOrigin="Anonymous"></div>
+              <div :class="'share-user-filter '+levelData.logo"></div>
             </div>
             <div class="share-user-name">{{user.fullname}}</div>
             <div class="share-desc">
@@ -126,7 +130,7 @@
     },
     mounted() {
       console.log('answerId:',this.answerId)
-      setTimeout(this.drawHtmlToCanvas, 0)
+      setTimeout(this.drawHtmlToCanvas, 1000)
     },
     methods: {
       ...mapActions("local", [
