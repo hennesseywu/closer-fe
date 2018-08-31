@@ -299,15 +299,17 @@ export function tjUploadFile(img) {
   var form = document.forms[0];
   let filename = md5(Date.now() + "file")
   let file = dataURLtoFile(img.src, filename);
-
-  // Create a FormData and append the file
+  console.log("upload")
+    // Create a FormData and append the file
   var fd = new FormData(form);
   fd.append("file", file);
   // Submit Form and upload file
   return axios.post("https://file-sandbox.tiejin.cn/file/upload/public", fd, {
     headers: {
       Accept: "application/json; charset=utf-8",
-      Authorization: Cookies.get('GroukAuth')
+      Authorization: Cookies.get('GroukAuth'),
+      processData: false,
+      contentType: false
     }
   });
 

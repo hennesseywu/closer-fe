@@ -1,7 +1,7 @@
 <template>
   <div class="main local-share" :class="{'in-app': IS_APP}">
     <local-header v-if="IS_APP" back home></local-header>
-    <div class="share-wrapper" >
+    <div class="share-wrapper">
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
           <div v-if="answerId" class="share-score">
@@ -12,8 +12,8 @@
             <div class="share-user-name">{{user.fullname}}</div>
             <div class="share-desc">
               在【谁是成都最土著】中获得
-              <span class="share-desc-score">{{score}}</span>
-              分，<br/>
+              <span class="share-desc-score">{{score}}</span> 分，
+              <br/>
               <span class="share-desc-tip">{{levelData.tip}}</span>
             </div>
             <div class="share-title box box-lr box-center-center">
@@ -76,22 +76,21 @@
         isLogin: false,
         qrcode: {
           val: 'https://a.tiejin.cn/local',
-          size: 80        },
-        showData: [
-          {
-            logo: 'user-img-1',
-            tip: '赢得5元红包！',
-            tag: 'share-tag-1'
-          },{
-            logo: 'user-img-2',
-            tip: '赢得2元现金红包，全答对可得5元哦！',
-            tag: 'share-tag-2'
-          },{
-            logo: 'user-img-3',
-            tip: '和5元现金红包失之交臂，你要来试试吗？',
-            tag: 'share-tag-3'
-          }
-        ],
+          size: 80
+        },
+        showData: [{
+          logo: 'user-img-1',
+          tip: '赢得5元红包！',
+          tag: 'share-tag-1'
+        }, {
+          logo: 'user-img-2',
+          tip: '赢得2元现金红包，全答对可得5元哦！',
+          tag: 'share-tag-2'
+        }, {
+          logo: 'user-img-3',
+          tip: '和5元现金红包失之交臂，你要来试试吗？',
+          tag: 'share-tag-3'
+        }],
         imgUrl: ''
       }
     },
@@ -107,9 +106,9 @@
         this.initWxConfig()
       }
       if (this.IS_DEV) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId='+this.activityId+'&inviter='+this.user.objectID+'&salt='+this.salt
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.user.objectID + '&salt=' + this.salt
       } else {
-        this.qrcode.val = 'https://a.tiejin.cn/local?activityId='+this.activityId+'&inviter='+this.user.objectID+'&salt='+this.salt
+        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.user.objectID + '&salt=' + this.salt
       }
     },
     computed: {
@@ -124,11 +123,11 @@
         score: state => state.endData.score
       }),
       levelData() {
-        return this.showData[parseInt(this.level)-1]
+        return this.showData[parseInt(this.level) - 1]
       }
     },
     mounted() {
-      console.log('answerId:',this.answerId)
+      console.log('answerId:', this.answerId)
       setTimeout(this.drawHtmlToCanvas, 500)
     },
     methods: {
@@ -176,11 +175,13 @@
         console.log('drawHtmlToCanvas')
         html2Image(container).then(img => {
           img.setAttribute('class', 'qr-img');
-          img.setAttribute("crossOrigin",'Anonymous')
+          img.setAttribute("crossOrigin", 'Anonymous')
           console.log('html2Image-finish:', img)
           container.appendChild(img)
           if (self.IS_APP) {
-            tjUploadFile(img).then(({data}) => {
+            tjUploadFile(img).then(({
+              data
+            }) => {
               self.imgUrl = self.makeFileUrl(data.result.url);
             })
           }
