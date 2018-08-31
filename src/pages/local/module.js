@@ -17,7 +17,10 @@ export default {
     isLogin: false,
     activityId: 2,
     inviter: '',
-    user: {},
+    user: {
+      // fullname: '张三',
+      // avatar: '/avatar/u/9XFfgm6EnA?v=1535437906781'
+    },
     statistic: {
       // 最高总奖金
       maxAwardAmt: 10000,
@@ -41,7 +44,9 @@ export default {
     questions: {
       currentQuesitionNum: 0
     },
-    endData: {},
+    endData: {
+      answerId: ''
+    },
     shareData: ''
   },
   mutations: {

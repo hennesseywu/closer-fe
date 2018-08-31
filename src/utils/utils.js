@@ -1,4 +1,6 @@
 import api from './api';
+import html2canvas from 'html2canvas';
+import $ from 'jquery';
 export function redirectAddChance(isApp) {
     //console.log("addchance", isApp);
     if (isApp) {
@@ -183,5 +185,156 @@ export function compareVersion(ua, ver1, ver2) {
     return b >= a;
   } catch (e) {
     return false
+  }
+}
+
+export function html2Image(dom) {
+  return new Promise(function(resolve, reject) {
+    var shareContent = dom; //需要截图的包裹的（原生的）DOM 对象
+    var width = shareContent.offsetWidth; //获取dom 宽度
+    var height = shareContent.offsetHeight; //获取dom 高度
+    var canvas = document.createElement("canvas"); //创建一个canvas节点
+    var context = canvas.getContext('2d');
+    context.scale(scale, scale); //获取context,设置scale 
+    // 【重要】关闭抗锯齿
+    context.mozImageSmoothingEnabled = false;
+    context.webkitImageSmoothingEnabled = false;
+    context.msImageSmoothingEnabled = false;
+    context.imageSmoothingEnabled = false;
+    var ratio = getPixelRatio(context);
+    var scale = 2; //定义任意放大倍数 支持小数
+    canvas.width = width * scale * ratio; //定义canvas 宽度 * 缩放
+    canvas.height = height * scale * ratio; //定义canvas高度 *缩放
+
+    var opts = {
+      scale: scale, // 添加的scale 参数
+      canvas: canvas, //自定义 canvas
+      // logging: true, //日志开关，便于查看html2canvas的内部执行流程
+      width: width, //dom 原始宽度
+      height: height,
+      useCORS: true // 【重要】开启跨域配置
+    };
+
+    html2canvas(shareContent, opts).then((canvas) => { //html2canvas
+      var img = convertToImage(canvas, canvas.width, canvas.height, 'jpeg');
+      resolve(img);
+    })
+
+  })
+}
+
+
+//canvas2image
+function convertToImage(canvas, width, height, type) {
+  function createFile(urlData, fileType) {
+    var bytes = window.atob(urlData),
+      n = bytes.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bytes.charCodeAt(n);
+    }
+    return new Blob([u8arr], {
+      type: fileType
+    });
+  }
+  type = fixType(type);
+  var strData = getDataURL(canvas, type, width, height);
+  return genImage(strData);
+
+  function fixType(type) {
+    type = type.toLowerCase().replace(/jpg/i, 'jpeg');
+    var r = type.match(/png|jpeg|bmp|gif/)[0];
+    return 'image/' + r;
+  }
+
+  function getDataURL(canvas, type, width, height) {
+    canvas = scaleCanvas(canvas, width, height);
+    return canvas.toDataURL(type);
+  }
+
+  function genImage(strData) {
+    var img = document.createElement('img');
+    img.src = strData;
+    return img;
+  }
+
+  function scaleCanvas(canvas, width, height) {
+    var w = canvas.width,
+      h = canvas.height;
+    if (width == undefined) {
+      width = w;
+    }
+    if (height == undefined) {
+      height = h;
+    }
+
+    var retCanvas = document.createElement('canvas');
+    var retCtx = retCanvas.getContext('2d');
+    retCanvas.width = width;
+    retCanvas.height = height;
+    retCtx.drawImage(canvas, 0, 0, w, h, 0, 0, width, height);
+    return retCanvas;
+  }
+
+
+}
+
+export function getPixelRatio(context) {
+  var backingStore = context.backingStorePixelRatio ||
+    context.webkitBackingStorePixelRatio ||
+    context.mozBackingStorePixelRatio ||
+    context.msBackingStorePixelRatio ||
+    context.oBackingStorePixelRatio ||
+    context.backingStorePixelRatio || 1;
+  return (window.devicePixelRatio || 1) / backingStore;
+}
+
+
+export function tjUploadFile(img) {
+  // 【重要】默认转化的格式为png,也可设置为其他格式
+  // Get the form
+  var form = document.forms[0];
+  let file = dataURLtoFile(img.src);
+
+  // Create a FormData and append the file
+  var fd = new FormData(form);
+  fd.append("file", file);
+  // Submit Form and upload file
+  return $.ajax({
+    url: "https://file-sandbox.tiejin.cn/file/upload/public",
+    data: fd, // the formData function is available in almost all new browsers.
+    type: "POST",
+    headers: {
+      Accept: "application/json; charset=utf-8",
+      // Authorization: "1.438e5b73ce608983bd9f1cbcb65f54a8f699b879a70de023327b0d4213276a042f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd"
+    },
+    contentType: false,
+    processData: false,
+    cache: false,
+    dataType: "json", // Change this according to your response from the server.
+    error: function(err) {
+      console.error(err);
+    },
+    success: function(data) {
+      console.log(data);
+    },
+    complete: function() {
+      console.log("Request finished.");
+    }
+  });
+
+  function dataURLtoFile(dataurl, filename = 'file') {
+    let arr = dataurl.split(',')
+    let mime = arr[0].match(/:(.*?);/)[1]
+    let suffix = mime.split('/')[1]
+    let bstr = atob(arr[1])
+    let n = bstr.length
+    let u8arr = new Uint8Array(n)
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new File([u8arr], `${filename}.${suffix}`, {
+      type: mime
+    })
   }
 }

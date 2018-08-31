@@ -1,12 +1,37 @@
 <template>
   <div class="main local-share" :class="{'in-app': IS_APP}">
-  <local-header v-if="IS_APP" back home></local-header>
-  <div class="share-wrapper" >
-    <div class="is-app" v-if="isApp">
-      <div class="share-img">
-        <img :src="shareData" />
+    <local-header v-if="IS_APP" back home></local-header>
+    <div class="share-wrapper" >
+      <div class="share-container">
+        <div ref="canvasContainer" v-if="answerId" class="share-score">
+          <div :class="'share-user-img '+levelData.logo">
+            <img :src="makeFileUrl(user.avatar)" class="share-user-avatar">
+          </div>
+          <div class="share-user-name">{{user.fullname}}</div>
+          <div class="share-desc">
+            在【谁是成都最土著】中获得
+            <span class="share-desc-score">{{score}}</span>
+            分，<br/>
+            <span class="share-desc-tip">{{levelData.tip}}</span>
+          </div>
+          <div class="share-title box box-lr box-center-center">
+            <div class="line left"></div>
+            <div class="name">获得称号</div>
+            <div class="line right"></div>
+          </div>
+          <div :class="'share-tag '+levelData.tag"></div>
+          <div class="share-qrcode">
+            <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+          </div>
+          <div class="share-tip">扫描二维码参与游戏，和他PK吧！</div>
+        </div>
+        <div v-else class="share-default">
+          <div class="share-qrcode">
+            <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+          </div>
+        </div>
       </div>
-      <div class="share-items box box-lr box-center-center">
+      <div v-if="IS_APP" class="share-items box box-lr box-center-center">
         <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
           <span class="weixin"></span>
           <span>好友</span>
@@ -21,10 +46,6 @@
         </div>
       </div>
     </div>
-    <div class="is-weixin" v-if="IS_WX && shareData">
-      <img :src="shareData" />
-    </div>
-  </div>
   </div>
 </template>
 
@@ -37,31 +58,99 @@
     mapActions
   } from "vuex";
   import localHeader from '../components/header';
+  import {
+    makeFileUrl,
+    addParamsForUrl,
+    html2Image,
+    tjUploadFile
+  } from '../../../utils/utils'
+  import QrcodeVue from 'qrcode.vue';
+  import html2canvas from 'html2canvas';
   export default {
     data() {
       return {
         isApp: this.$store.state.IS_APP,
-        isLogin: false
+        isLogin: false,
+        score: '100',
+        level: 1,
+        qrcode: {
+          val: 'http://local.tiejin.cn:8889/local/share',
+          size: 80        },
+        showData: [
+          {
+            logo: 'user-img-1',
+            tip: '赢得5元红包！',
+            tag: 'share-tag-1'
+          },{
+            logo: 'user-img-2',
+            tip: '赢得2元现金红包，全答对可得5元哦！',
+            tag: 'share-tag-2'
+          },{
+            logo: 'user-img-3',
+            tip: '和5元现金红包失之交臂，你要来试试吗？',
+            tag: 'share-tag-3'
+          }
+        ],
+        imgUrl: ''
       }
     },
     components: {
-      localHeader
+      localHeader,
+      QrcodeVue
     },
     created() {
       console.log('isAPP', this.isApp)
-      this.userShare()
+      // this.userShare()
       if (this.IS_WX) {
         console.log('share wxshare--')
         this.initWxConfig()
+      }
+      if (this.IS_APP) {
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=2&inviter='+this.user.objectID
+      } else {
+        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=2&inviter='+this.user.objectID
       }
     },
     computed: {
       ...mapState(['IS_APP', 'IS_WX']),
       ...mapState('local', {
+        user: state => state.user,
+        answerId: state => state.endData.answerId,
         shareData: state => state.shareData
-      })
+      }),
+      levelData() {
+        return this.showData[this.level-1]
+      }
     },
-    async mounted() {
+    mounted() {
+      let container = this.$refs.canvasContainer;
+      var opts = {
+        backgroundColor: null,
+        allowTaint:true,//允许加载跨域的图片
+        useCORS: true,
+        tainttest:true, //检测每张图片都已经加载完成
+        // scale:scaleBy, // 添加的scale 参数
+        // canvas:canvas, //自定义 canvas
+        logging: false, //日志开关，发布的时候记得改成false
+        width:container.clientWidth, //dom 原始宽度
+        height:container.clientHeight //dom 原始高度
+      };
+      console.log(container,container.clientWidth,container.clientHeight)
+      // html2canvas(this.$refs.canvasContainer, opts).then(canvas => {
+      //   container.appendChild(canvas)
+      //   var dataUrl = canvas.toDataURL('image/png');
+      //   // this.$refs.canvasImg.setAttribute("src",dataUrl);
+      // })
+      html2Image(container).then(img => {
+        img.setAttribute('class', 'qr-img');
+        img.setAttribute("crossOrigin",'Anonymous')
+        container.appendChild(img)
+        if (this.IS_APP) {
+          tjUploadFile(img).then(data => {
+            console.log('img-data:',data)
+          })
+        }
+      })
     },
     methods: {
       ...mapActions("local", [
@@ -96,12 +185,17 @@
             }
           }
         }
-      }
+      },
+      makeFileUrl(url) {
+        let avatar = makeFileUrl(url)
+        console.log('result:avatar:', avatar)
+        return avatar
+      },
     }
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import '../assets/style/main.less';
   @import '../assets/style/share.less';
 </style>
