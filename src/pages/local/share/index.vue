@@ -3,31 +3,33 @@
     <local-header v-if="IS_APP" back home></local-header>
     <div class="share-wrapper" >
       <div class="share-container">
-        <div ref="canvasContainer" v-if="answerId" class="share-score">
-          <div :class="'share-user-img '+levelData.logo">
-            <img :src="makeFileUrl(user.avatar)" class="share-user-avatar">
+        <div ref="canvasContainer" class="share-box">
+          <div v-if="answerId" class="share-score">
+            <div :class="'share-user-img '+levelData.logo">
+              <img :src="makeFileUrl(user.avatar)" class="share-user-avatar">
+            </div>
+            <div class="share-user-name">{{user.fullname}}</div>
+            <div class="share-desc">
+              在【谁是成都最土著】中获得
+              <span class="share-desc-score">{{score}}</span>
+              分，<br/>
+              <span class="share-desc-tip">{{levelData.tip}}</span>
+            </div>
+            <div class="share-title box box-lr box-center-center">
+              <div class="line left"></div>
+              <div class="name">获得称号</div>
+              <div class="line right"></div>
+            </div>
+            <div :class="'share-tag '+levelData.tag"></div>
+            <div class="share-qrcode">
+              <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+            </div>
+            <div class="share-tip">扫描二维码参与游戏，和他PK吧！</div>
           </div>
-          <div class="share-user-name">{{user.fullname}}</div>
-          <div class="share-desc">
-            在【谁是成都最土著】中获得
-            <span class="share-desc-score">{{score}}</span>
-            分，<br/>
-            <span class="share-desc-tip">{{levelData.tip}}</span>
-          </div>
-          <div class="share-title box box-lr box-center-center">
-            <div class="line left"></div>
-            <div class="name">获得称号</div>
-            <div class="line right"></div>
-          </div>
-          <div :class="'share-tag '+levelData.tag"></div>
-          <div class="share-qrcode">
-            <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-          </div>
-          <div class="share-tip">扫描二维码参与游戏，和他PK吧！</div>
-        </div>
-        <div v-else class="share-default">
-          <div class="share-qrcode">
-            <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+          <div v-else class="share-default">
+            <div class="share-qrcode">
+              <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+            </div>
           </div>
         </div>
       </div>
@@ -115,7 +117,7 @@
       ...mapState(['IS_APP', 'IS_WX']),
       ...mapState('local', {
         user: state => state.user,
-        answerId: state => state.endData.answerId,
+        answerId: state => state.endData.userAnswerId,
         shareData: state => state.shareData
       }),
       levelData() {
@@ -123,34 +125,8 @@
       }
     },
     mounted() {
-      let container = this.$refs.canvasContainer;
-      var opts = {
-        backgroundColor: null,
-        allowTaint:true,//允许加载跨域的图片
-        useCORS: true,
-        tainttest:true, //检测每张图片都已经加载完成
-        // scale:scaleBy, // 添加的scale 参数
-        // canvas:canvas, //自定义 canvas
-        logging: false, //日志开关，发布的时候记得改成false
-        width:container.clientWidth, //dom 原始宽度
-        height:container.clientHeight //dom 原始高度
-      };
-      console.log(container,container.clientWidth,container.clientHeight)
-      // html2canvas(this.$refs.canvasContainer, opts).then(canvas => {
-      //   container.appendChild(canvas)
-      //   var dataUrl = canvas.toDataURL('image/png');
-      //   // this.$refs.canvasImg.setAttribute("src",dataUrl);
-      // })
-      html2Image(container).then(img => {
-        img.setAttribute('class', 'qr-img');
-        img.setAttribute("crossOrigin",'Anonymous')
-        container.appendChild(img)
-        if (this.IS_APP) {
-          tjUploadFile(img).then(data => {
-            console.log('img-data:',data)
-          })
-        }
-      })
+      console.log('answerId:',this.answerId)
+      this.drawHtmlToCanvas()
     },
     methods: {
       ...mapActions("local", [
@@ -159,9 +135,10 @@
         "checkLoginInApp",
         "initWxConfig"
       ]),
-      toShare(type, url) {
+      toShare(type) {
         let ua = this.$store.state.UA
-        console.log('share--', type, url, ua)
+        let url = this.imgUrl;
+        console.log('share--', type, ua)
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
             console.log("toShare ios bridge", bridge)
@@ -191,6 +168,24 @@
         console.log('result:avatar:', avatar)
         return avatar
       },
+      drawHtmlToCanvas() {
+        let self = this;
+        // self.$nextTick(() => {
+          let container = self.$refs.canvasContainer;
+          console.log('drawHtmlToCanvas')
+          console.log(self.$refs)
+          html2Image(container).then(img => {
+            img.setAttribute('class', 'qr-img');
+            img.setAttribute("crossOrigin",'Anonymous')
+            container.appendChild(img)
+            if (self.IS_APP) {
+              tjUploadFile(img).then(data => {
+                console.log('img-data:',data)
+              })
+            }
+          })
+        // })
+      }
     }
   }
 </script>

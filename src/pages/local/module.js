@@ -45,7 +45,6 @@ export default {
       currentQuesitionNum: 0
     },
     endData: {
-      answerId: ''
     },
     shareData: ''
   },
