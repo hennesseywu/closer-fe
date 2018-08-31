@@ -306,7 +306,7 @@ export function tjUploadFile(img) {
     type: "POST",
     headers: {
       Accept: "application/json; charset=utf-8",
-      // Authorization: "1.438e5b73ce608983bd9f1cbcb65f54a8f699b879a70de023327b0d4213276a042f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd"
+      Authorization: Cookies.get('GroukAuth')
     },
     contentType: false,
     processData: false,
