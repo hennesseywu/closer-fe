@@ -327,17 +327,25 @@ export function tjUploadFile(img) {
   });
 
   function dataURLtoFile(dataurl, filename = 'file') {
-    let arr = dataurl.split(',')
-    let mime = arr[0].match(/:(.*?);/)[1]
-    let suffix = mime.split('/')[1]
-    let bstr = atob(arr[1])
-    let n = bstr.length
-    let u8arr = new Uint8Array(n)
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n)
+    // let arr = dataurl.split(',')
+    // let mime = arr[0].match(/:(.*?);/)[1]
+    // let suffix = mime.split('/')[1]
+    // let bstr = atob(arr[1])
+    // let n = bstr.length
+    // let u8arr = new Uint8Array(n)
+    // while (n--) {
+    //   u8arr[n] = bstr.charCodeAt(n)
+    // }
+    // return new File([u8arr], `${filename}.${suffix}`, {
+    //   type: mime
+    // })
+
+    var blobBin = atob(dataurl.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < blobBin.length; i++) {
+        array.push(blobBin.charCodeAt(i));
     }
-    return new File([u8arr], `${filename}.${suffix}`, {
-      type: mime
-    })
+    var file=new Blob([new Uint8Array(array)], {type: 'image/png'});
+    return file;
   }
 }
