@@ -75,7 +75,7 @@
         isApp: this.$store.state.IS_APP,
         isLogin: false,
         qrcode: {
-          val: 'http://local.tiejin.cn:8889/local/share',
+          val: 'https://a.tiejin.cn/local',
           size: 80        },
         showData: [
           {
