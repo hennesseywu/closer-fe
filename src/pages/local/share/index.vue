@@ -73,7 +73,6 @@
       return {
         isApp: this.$store.state.IS_APP,
         isLogin: false,
-        score: '100',
         level: 1,
         qrcode: {
           val: 'http://local.tiejin.cn:8889/local/share',
@@ -118,7 +117,8 @@
       ...mapState('local', {
         user: state => state.user,
         answerId: state => state.endData.userAnswerId,
-        shareData: state => state.shareData
+        shareData: state => state.shareData,
+        score: state => state.endData.score
       }),
       levelData() {
         return this.showData[this.level-1]
