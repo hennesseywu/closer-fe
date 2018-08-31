@@ -73,7 +73,6 @@
       return {
         isApp: this.$store.state.IS_APP,
         isLogin: false,
-        level: 1,
         qrcode: {
           val: 'http://local.tiejin.cn:8889/local/share',
           size: 80        },
@@ -118,15 +117,16 @@
         user: state => state.user,
         answerId: state => state.endData.userAnswerId,
         shareData: state => state.shareData,
+        level: state => state.endData.level,
         score: state => state.endData.score
       }),
       levelData() {
-        return this.showData[this.level-1]
+        return this.showData[parseInt(this.level)-1]
       }
     },
     mounted() {
       console.log('answerId:',this.answerId)
-      this.drawHtmlToCanvas()
+      setTimeout(this.drawHtmlToCanvas, 500)
     },
     methods: {
       ...mapActions("local", [
