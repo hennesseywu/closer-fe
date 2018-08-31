@@ -12,17 +12,6 @@ export function redirectAddChance(isApp) {
   }
 }
 
-<<<<<<< HEAD
-export function downloadApp() {
-  //console.log("downloadApp");
-  // let ua = navigator.userAgent || window.navigator.userAgent;
-  // ua = ua.toLowerCase();
-  // if (ua.indexOf('ipad') > -1 || ua.indexOf('iphone') > -1) {
-  //     location.href = "https://itunes.apple.com/us/app/%E8%B4%B4%E8%BF%91/id1363128511?l=zh&ls=1&mt=8";
-  // } else if (ua.indexOf('android')) {
-  location.href = "http://tiejin.cn/down?downurl=closer://jump";
-  // }
-=======
 export async function downloadApp() {
   if (Cookies.get("aid") != "0") {
     let md = new MobileDetect(navigator.userAgent);
@@ -36,7 +25,7 @@ export async function downloadApp() {
       deviceVersion = md.versionStr('Android');
       deviceVersion = deviceVersion.replace(/\./g, "_");
     }
-    let {data} = await axios.post(api.statitics.get_adcookie, {
+    let { data } = await axios.post(api.statitics.get_adcookie, {
       adid: Cookies.get("aid"),
       webUdid: false,
       deviceType: deviceType,
@@ -50,7 +39,6 @@ export async function downloadApp() {
     }
   }
   location.href = "http://tiejin.cn/down?downurl=closer://jump";
->>>>>>> 43a2b4fcc2fc017efa520207cae373db687ad83a
 }
 export function toYuan(money) {
   let yuan = money / 100.0;
