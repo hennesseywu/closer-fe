@@ -80,6 +80,9 @@
     computed: {
       ...mapState('local', ['aid', 'isLogin', 'statistic']),
       ...mapState(['IS_APP', 'IS_WX']),
+      ...mapState('local', {
+        currentQuesitionNum: state => state.questions.currentQuesitionNum,
+      }),
       remainTimesToMax() {
         return Math.ceil(transAmount(this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
       },
@@ -124,6 +127,7 @@
           })
         // }
       }
+      this.updateCurrentQuestionNum()
     },
     methods: {
       ...mapActions('local', [
@@ -131,10 +135,12 @@
         'checkLoginInApp',
         'getUserInfoAndLoginWithWx',
         'getStatistic',
-        'initWxConfig'
+        'initWxConfig',
+        'updateCurrentQuestionNum'
       ]),
       ...mapMutations('local', [
-        'SET_USER'
+        'SET_USER',
+        'updateCurrentQuestionNum'
       ]),
       // 展示金额，rate为百分比率，count为除以10的指数
       showAmount(rate, count = 0) {
