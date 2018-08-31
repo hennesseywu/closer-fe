@@ -172,7 +172,6 @@
       drawHtmlToCanvas() {
         let self = this;
         let container = self.$refs.canvasContainer;
-        console.log('drawHtmlToCanvas')
         html2Image(container).then(img => {
           img.setAttribute('class', 'qr-img');
           img.setAttribute("crossOrigin", 'Anonymous')
