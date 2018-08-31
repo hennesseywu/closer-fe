@@ -106,14 +106,14 @@
         console.log('share wxshare--')
         this.initWxConfig()
       }
-      if (this.IS_APP) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=2&inviter='+this.user.objectID
+      if (this.IS_DEV) {
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId='+this.activityId+'&inviter='+this.user.objectID
       } else {
-        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=2&inviter='+this.user.objectID
+        this.qrcode.val = 'https://a.tiejin.cn/local?activityId='+this.activityId+'&inviter='+this.user.objectID
       }
     },
     computed: {
-      ...mapState(['IS_APP', 'IS_WX']),
+      ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
         user: state => state.user,
         answerId: state => state.endData.userAnswerId,
