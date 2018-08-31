@@ -73,7 +73,7 @@
       }
     },
     mounted() {
-      this.isUpdate = true
+      this.isUpdate = true;
       if(this.currentQuesitionNum < 8) {
         var time = setInterval(() => {
         this.isUpdate = false
@@ -94,7 +94,7 @@
         endData: state => state.endData,
         chance: state => state.statistic.chance,
         inviter: state => state.inviter,
-        signSalt: state => state.statistic.signSalt
+        signSalt: state => state.signSalt
       })
     },
     beforeRouteEnter(to, {

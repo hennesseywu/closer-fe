@@ -17,6 +17,7 @@ export default {
     isLogin: false,
     activityId: 2,
     inviter: '',
+    signSalt: '',
     user: {
       // fullname: '张三',
       // avatar: '/avatar/u/9XFfgm6EnA?v=1535437906781'
@@ -81,10 +82,12 @@ export default {
     SET_PARAMS(state, payload) {
       let {
         inviter,
-        activityId
+        activityId,
+        salt
       } = payload
       activityId && (state.activityId = activityId);
       inviter && (state.inviter = inviter);
+      salt && (state.signSalt = salt);
     },
     updateChance(state) {
       let chance = state.statistic.chance
@@ -160,7 +163,8 @@ export default {
     }, {
       params,
       activityId,
-      inviter
+      inviter,
+      salt
     }) {
       try {
         params = JSON.parse(decodeURIComponent(params))
@@ -169,11 +173,13 @@ export default {
       }
       activityId = params.activityId || activityId;
       inviter = params.inviter || inviter;
+      salt = params.salt || salt;
       // 保存url中的activityId
       console.log('params:', activityId, inviter);
       commit('SET_PARAMS', {
         activityId,
-        inviter
+        inviter,
+        salt
       });
     },
     // 端内检查登录
@@ -425,7 +431,8 @@ export default {
         let wxConfig = {};
         let link = addParamsForUrl(location.origin + '/local', {
           inviter: state.user.objectID,
-          activityId: state.activityId
+          activityId: state.activityId,
+          salt: state.signSalt
         });
         if (typeof (data.code) != "undefined" && data.code == 0) {
           wxConfig = data.result;
