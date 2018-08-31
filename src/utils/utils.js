@@ -243,8 +243,13 @@ function convertToImage(canvas, width, height, type) {
   try {
     type = fixType(type);
     var strData = getDataURL(canvas, type, width, height);
-    return genImage(strData);
+
+    console.log(5);
+    let _genImage = genImage(strData);
+    console.log(6);
+    return _genImage
   } catch(e) {
+    console.log(7);
     throw new Error(e)
   }
 
@@ -256,7 +261,10 @@ function convertToImage(canvas, width, height, type) {
 
   function getDataURL(canvas, type, width, height) {
     canvas = scaleCanvas(canvas, width, height);
-    return canvas.toDataURL(type);
+    console.log(3);
+    let dataUrl = canvas.toDataURL(type);
+    console.log(4);
+    return dataUrl
   }
 
   function genImage(strData) {
@@ -279,7 +287,9 @@ function convertToImage(canvas, width, height, type) {
     var retCtx = retCanvas.getContext('2d');
     retCanvas.width = width;
     retCanvas.height = height;
+    console.log(1);
     retCtx.drawImage(canvas, 0, 0, w, h, 0, 0, width, height);
+    console.log(2);
     return retCanvas;
   }
 
