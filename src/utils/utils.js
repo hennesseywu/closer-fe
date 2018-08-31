@@ -1,8 +1,6 @@
 import api from './api';
 import html2canvas from 'html2canvas';
-import jquery from 'jquery'
-
-
+import $ from 'jquery';
 export function redirectAddChance(isApp) {
   //console.log("addchance", isApp);
   if (isApp) {
@@ -189,10 +187,6 @@ export function compareVersion(ua, ver1, ver2) {
     return false
   }
 }
-/**
- * @param dom element
- * @return image
- */
 
 export function html2Image(dom) {
   return new Promise(function(resolve, reject) {
@@ -306,13 +300,13 @@ export function tjUploadFile(img) {
   var fd = new FormData(form);
   fd.append("file", file);
   // Submit Form and upload file
-  jquery.ajax({
+  return $.ajax({
     url: "https://file-sandbox.tiejin.cn/file/upload/public",
     data: fd, // the formData function is available in almost all new browsers.
     type: "POST",
     headers: {
       Accept: "application/json; charset=utf-8",
-      Authorization: "1.438e5b73ce608983bd9f1cbcb65f54a8f699b879a70de023327b0d4213276a042f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd"
+      // Authorization: "1.438e5b73ce608983bd9f1cbcb65f54a8f699b879a70de023327b0d4213276a042f8ed7339fb2e548c187281bab7fcf9c5d30216a7fcccc9efb66552b9116ffdd"
     },
     contentType: false,
     processData: false,

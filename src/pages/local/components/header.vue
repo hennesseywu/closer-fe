@@ -65,6 +65,7 @@
   position: relative;
   height: 76pr;
   margin-bottom: 20pr;
+  z-index: 999;
   .left, .right {
     position: absolute;
     top: 0;
