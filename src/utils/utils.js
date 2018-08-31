@@ -1,7 +1,6 @@
 import api from './api';
 import html2canvas from 'html2canvas';
 import md5 from "js-md5"
-import jquery from 'jquery'
 
 export function redirectAddChance(isApp) {
   //console.log("addchance", isApp);
