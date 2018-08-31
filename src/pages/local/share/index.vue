@@ -167,22 +167,20 @@
       },
       makeFileUrl(url) {
         let avatar = makeFileUrl(url)
-        console.log('result:avatar:', avatar)
         return avatar
       },
       drawHtmlToCanvas() {
         let self = this;
         let container = self.$refs.canvasContainer;
         console.log('drawHtmlToCanvas')
-        console.log(self.$refs)
         html2Image(container).then(img => {
           img.setAttribute('class', 'qr-img');
           img.setAttribute("crossOrigin",'Anonymous')
           console.log('html2Image-finish:', img)
           container.appendChild(img)
           if (self.IS_APP) {
-            tjUploadFile(img).then(data => {
-              self.imgUrl = data.result.url;
+            tjUploadFile(img).then(({data}) => {
+              self.imgUrl = self.makeFileUrl(data.result.url);
             })
           }
         })

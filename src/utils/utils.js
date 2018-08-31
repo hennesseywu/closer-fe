@@ -207,7 +207,6 @@ export function html2Image(dom) {
 
     var opts = {
       allowTaint: true,
-      taintTest: true,
       scale: scale, // 添加的scale 参数
       canvas: canvas, //自定义 canvas
       // logging: true, //日志开关，便于查看html2canvas的内部执行流程
@@ -217,7 +216,9 @@ export function html2Image(dom) {
     };
 
     html2canvas(shareContent, opts).then((canvas) => { //html2canvas
+      console.log('html2canvas:finish:', canvas)
       var img = convertToImage(canvas, canvas.width, canvas.height, 'jpeg');
+      console.log('convertToImage:finish:', img)
       resolve(img);
     })
 
