@@ -1,6 +1,7 @@
 import api from './api';
 import html2canvas from 'html2canvas';
 import md5 from "js-md5"
+
 export function redirectAddChance(isApp) {
   //console.log("addchance", isApp);
   if (isApp) {
@@ -304,11 +305,28 @@ export function tjUploadFile(img) {
   var fd = new FormData(form);
   fd.append("file", file);
   // Submit Form and upload file
+
+  //   jqueryajax({
+  //     url: 'https://file-sandbox.tiejin.cn/file/upload/public',
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: "application/json; charset=utf-8",
+  //       Authorization: Cookies.get('GroukAuth'),
+  //       contentType: false
+  //     },
+  //     processData: false, // 必须
+  //     contentType: false, // 必须
+  //     dataType: 'json',
+  //     data: fd,
+  //     success(data) {
+  //       console.log(data);
+  //       return data;
+  //     }
+  //   });
   return axios.post("https://file-sandbox.tiejin.cn/file/upload/public", fd, {
     headers: {
       Accept: "application/json; charset=utf-8",
       Authorization: Cookies.get('GroukAuth'),
-      processData: false,
       contentType: false
     }
   });
