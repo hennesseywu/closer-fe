@@ -1,5 +1,6 @@
 import api from './api';
 import html2canvas from 'html2canvas';
+import md5 from "js-md5"
 export function redirectAddChance(isApp) {
   //console.log("addchance", isApp);
   if (isApp) {
@@ -296,18 +297,19 @@ export function tjUploadFile(img) {
   // 【重要】默认转化的格式为png,也可设置为其他格式
   // Get the form
   var form = document.forms[0];
-  let file = dataURLtoFile(img.src);
+  let filename = md5(Date.now() + "file")
+  let file = dataURLtoFile(img.src, filename);
 
   // Create a FormData and append the file
   var fd = new FormData(form);
   fd.append("file", file);
   // Submit Form and upload file
   return axios.post("https://file-sandbox.tiejin.cn/file/upload/public", fd, {
-      headers: {
-        Accept: "application/json; charset=utf-8",
-        Authorization: Cookies.get('GroukAuth')
-    }}
-  );
+    headers: {
+      Accept: "application/json; charset=utf-8",
+      Authorization: Cookies.get('GroukAuth')
+    }
+  });
 
   function dataURLtoFile(dataurl, filename = 'file') {
     let arr = dataurl.split(',')
