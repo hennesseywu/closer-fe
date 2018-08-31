@@ -73,12 +73,12 @@
       }
     },
     mounted() {
-  
       this.isUpdate = true
-      var time = setInterval(() => {
+      if(this.currentQuesitionNum < 8) {
+        var time = setInterval(() => {
         this.isUpdate = false
       }, 1500)
-      if (this.currentQuesitionNum && this.currentQuesitionNum >= 7) {
+      } else {
         window.clearInterval(time)
       }
       this.updateChance()
