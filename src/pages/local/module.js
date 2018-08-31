@@ -432,7 +432,7 @@ export default {
         let link = addParamsForUrl(location.origin + '/local', {
           inviter: state.user.objectID,
           activityId: state.activityId,
-          salt: state.signSalt
+          salt: state.statistic.signSalt
         });
         if (typeof (data.code) != "undefined" && data.code == 0) {
           wxConfig = data.result;
