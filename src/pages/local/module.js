@@ -13,6 +13,7 @@ import {
 export default {
   namespaced: true,
   state: {
+    aid: 'TuZhuActivity-2',
     isLogin: false,
     activityId: 2,
     inviter: '',
@@ -287,7 +288,7 @@ export default {
           code,
           // 分享人id
           inviter,
-          adid: 'TuZhuActivity-2',
+          adid: state.aid,
           protocol: "WEB_SOCKET"
         };
         let {

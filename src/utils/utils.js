@@ -12,6 +12,7 @@ export function redirectAddChance(isApp) {
   }
 }
 
+<<<<<<< HEAD
 export function downloadApp() {
   //console.log("downloadApp");
   // let ua = navigator.userAgent || window.navigator.userAgent;
@@ -21,6 +22,35 @@ export function downloadApp() {
   // } else if (ua.indexOf('android')) {
   location.href = "http://tiejin.cn/down?downurl=closer://jump";
   // }
+=======
+export async function downloadApp() {
+  if (Cookies.get("aid") != "0") {
+    let md = new MobileDetect(navigator.userAgent);
+    let deviceType = md.os();
+    let deviceVersion = "";
+    if (deviceType == "iOS") {
+      deviceType = "ios";
+      deviceVersion = md.versionStr('iPhone');
+    } else if (deviceType == "AndroidOS") {
+      deviceType = "android";
+      deviceVersion = md.versionStr('Android');
+      deviceVersion = deviceVersion.replace(/\./g, "_");
+    }
+    let {data} = await axios.post(api.statitics.get_adcookie, {
+      adid: Cookies.get("aid"),
+      webUdid: false,
+      deviceType: deviceType,
+      deviceVersion: deviceVersion
+    });
+    if (data.result) {
+      let result = data.result;
+      if (result.udid) {
+        Cookies.set("uid", result.udid, { expires: 30 })
+      }
+    }
+  }
+  location.href = "http://tiejin.cn/down?downurl=closer://jump";
+>>>>>>> 43a2b4fcc2fc017efa520207cae373db687ad83a
 }
 export function toYuan(money) {
   let yuan = money / 100.0;
