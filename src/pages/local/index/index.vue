@@ -127,7 +127,7 @@
           })
         // }
       }
-      this.updateCurrentQuestionNum()
+      
     },
     methods: {
       ...mapActions('local', [
@@ -252,6 +252,8 @@
       setTimeout(() => {
         this.mounted = true;
       }, 800);
+      this.updateCurrentQuestionNum()
+      console.log('index',this.currentQuesitionNum)
     }
   }
 </script>

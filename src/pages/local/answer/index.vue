@@ -82,6 +82,7 @@
         window.clearInterval(time)
       }
       this.updateChance()
+      this.updateCurrentQuestionNum()
     },
     computed: {
       ...mapState(['IS_APP', 'IS_WX']),
@@ -114,7 +115,8 @@
         "commitTest",
         "getStatistic",
         "updateChance",
-        "initWxConfig"
+        "initWxConfig",
+        "updateCurrentQuestionNum"
       ]),
       checkOptions(event) {
         let questionId = event.target.dataset.questionid
