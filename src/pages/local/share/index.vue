@@ -138,7 +138,7 @@
       toShare(type) {
         let ua = this.$store.state.UA
         let url = this.imgUrl;
-        console.log('share--', type, ua)
+        console.log('share--', type, url, ua)
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
             console.log("toShare ios bridge", bridge)
@@ -170,21 +170,19 @@
       },
       drawHtmlToCanvas() {
         let self = this;
-        // self.$nextTick(() => {
-          let container = self.$refs.canvasContainer;
-          console.log('drawHtmlToCanvas')
-          console.log(self.$refs)
-          html2Image(container).then(img => {
-            img.setAttribute('class', 'qr-img');
-            img.setAttribute("crossOrigin",'Anonymous')
-            container.appendChild(img)
-            if (self.IS_APP) {
-              tjUploadFile(img).then(data => {
-                console.log('img-data:',data)
-              })
-            }
-          })
-        // })
+        let container = self.$refs.canvasContainer;
+        console.log('drawHtmlToCanvas')
+        console.log(self.$refs)
+        html2Image(container).then(img => {
+          img.setAttribute('class', 'qr-img');
+          img.setAttribute("crossOrigin",'Anonymous')
+          container.appendChild(img)
+          if (self.IS_APP) {
+            tjUploadFile(img).then(data => {
+              self.imgUrl = data.result.url;
+            })
+          }
+        })
       }
     }
   }
