@@ -6,10 +6,7 @@
         <div ref="canvasContainer" class="share-box">
           <div v-if="answerId" class="share-score">
             <div class="share-user-img">
-              <div :style="{
-                background: 'url(' + makeFileUrl(user.avatar) + ') no-repeat',
-                backgroundSize: 'cover'
-              }" class="share-user-avatar" crossOrigin="Anonymous"></div>
+              <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
               <div :class="'share-user-filter '+levelData.logo"></div>
             </div>
             <div class="share-user-name">{{user.fullname}}</div>
@@ -118,6 +115,7 @@
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
+        activityId: state => state.activityId,
         user: state => state.user,
         answerId: state => state.endData.userAnswerId,
         shareData: state => state.shareData,
@@ -130,7 +128,7 @@
     },
     mounted() {
       console.log('answerId:',this.answerId)
-      setTimeout(this.drawHtmlToCanvas, 1000)
+      setTimeout(this.drawHtmlToCanvas, 0)
     },
     methods: {
       ...mapActions("local", [

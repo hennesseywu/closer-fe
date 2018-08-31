@@ -22,6 +22,12 @@ if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.locat
   Cookies.set("IS_DEV", true, {
     expires: 1
   });
+
+  // if (/local.tiejin.cn/.test(window.location.href)) {
+  //   Cookies.set("GroukAuth", '1.a35f4f962297c68519b7ece0243a162d9091571d7d37df63d2833ea30d7a711cd722492c834580c8500e224a273f94dc', {
+  //     expires: 1
+  //   });
+  // }
 }
 
 window.wx = wx;

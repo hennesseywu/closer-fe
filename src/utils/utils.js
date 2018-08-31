@@ -207,6 +207,8 @@ export function html2Image(dom) {
     canvas.height = height * scale * ratio; //定义canvas高度 *缩放
 
     var opts = {
+      allowTaint: true,
+      taintTest: true,
       scale: scale, // 添加的scale 参数
       canvas: canvas, //自定义 canvas
       // logging: true, //日志开关，便于查看html2canvas的内部执行流程
