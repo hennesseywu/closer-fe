@@ -171,9 +171,9 @@ export default {
       } catch (e) {
         params = {};
       }
-      activityId = params.activityId || activityId;
-      inviter = params.inviter || inviter;
-      salt = params.salt || salt;
+      activityId = params.activityId || activityId || '';
+      inviter = params.inviter || inviter || '';
+      salt = params.salt || salt || '';
       // 保存url中的activityId
       console.log('params:', activityId, inviter);
       commit('SET_PARAMS', {

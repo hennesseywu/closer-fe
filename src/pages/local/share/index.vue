@@ -106,14 +106,15 @@
         this.initWxConfig()
       }
       if (this.IS_DEV) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.user.objectID + '&salt=' + this.salt
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
-        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.user.objectID + '&salt=' + this.salt
+        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       }
     },
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
+        objectID: state => state.user.objectID || '',
         salt: state => state.statistic.signSalt,
         activityId: state => state.activityId,
         user: state => state.user,

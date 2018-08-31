@@ -240,9 +240,13 @@ function convertToImage(canvas, width, height, type) {
       type: fileType
     });
   }
-  type = fixType(type);
-  var strData = getDataURL(canvas, type, width, height);
-  return genImage(strData);
+  try {
+    type = fixType(type);
+    var strData = getDataURL(canvas, type, width, height);
+    return genImage(strData);
+  } catch(e) {
+    throw new Error(e)
+  }
 
   function fixType(type) {
     type = type.toLowerCase().replace(/jpg/i, 'jpeg');
