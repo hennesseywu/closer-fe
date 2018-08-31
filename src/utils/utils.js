@@ -1,6 +1,5 @@
 import api from './api';
 import html2canvas from 'html2canvas';
-import $ from 'jquery';
 export function redirectAddChance(isApp) {
   //console.log("addchance", isApp);
   if (isApp) {
@@ -302,28 +301,12 @@ export function tjUploadFile(img) {
   var fd = new FormData(form);
   fd.append("file", file);
   // Submit Form and upload file
-  return $.ajax({
-    url: "https://file-sandbox.tiejin.cn/file/upload/public",
-    data: fd, // the formData function is available in almost all new browsers.
-    type: "POST",
-    headers: {
-      Accept: "application/json; charset=utf-8",
-      Authorization: Cookies.get('GroukAuth')
-    },
-    contentType: false,
-    processData: false,
-    cache: false,
-    dataType: "json", // Change this according to your response from the server.
-    error: function(err) {
-      console.error(err);
-    },
-    success: function(data) {
-      console.log(data);
-    },
-    complete: function() {
-      console.log("Request finished.");
-    }
-  });
+  return axios.post("https://file-sandbox.tiejin.cn/file/upload/public", fd, {
+      headers: {
+        Accept: "application/json; charset=utf-8",
+        Authorization: Cookies.get('GroukAuth')
+    }}
+  );
 
   function dataURLtoFile(dataurl, filename = 'file') {
     let arr = dataurl.split(',')

@@ -128,7 +128,7 @@
     },
     mounted() {
       console.log('answerId:',this.answerId)
-      setTimeout(this.drawHtmlToCanvas, 0)
+      setTimeout(this.drawHtmlToCanvas, 500)
     },
     methods: {
       ...mapActions("local", [
@@ -178,6 +178,7 @@
         html2Image(container).then(img => {
           img.setAttribute('class', 'qr-img');
           img.setAttribute("crossOrigin",'Anonymous')
+          console.log('html2Image-finish:', img)
           container.appendChild(img)
           if (self.IS_APP) {
             tjUploadFile(img).then(data => {

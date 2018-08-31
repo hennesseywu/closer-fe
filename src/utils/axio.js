@@ -16,7 +16,9 @@ const axio = axios.create({ 
 axio.interceptors.request.use(
     config => {
         let reqUrl = feConfig.serverDevUrl + config.url
-        if (/a-sandbox.tiejin/.test(window.location.href)) {
+        if (/^https?:\/\//.test(config.url)) {
+            reqUrl = config.url;
+        } else if (/a-sandbox.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverDevUrl + config.url;
         } else if (/a.tiejin/.test(window.location.href)) {
             reqUrl = feConfig.serverUrl + config.url;
