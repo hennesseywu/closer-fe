@@ -32,6 +32,7 @@
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
           </div>
+          <img src="" class="qr-img" id="qr-img">
         </div>
       </div>
       <div v-if="IS_APP" class="share-items box box-lr box-center-center">
@@ -173,12 +174,11 @@
         let self = this;
         let container = self.$refs.canvasContainer;
         html2Image(container).then(img => {
-          img.setAttribute('class', 'qr-img');
-          img.setAttribute("crossOrigin", 'Anonymous')
+          // img.setAttribute('class', 'qr-img');
+          // img.setAttribute("crossOrigin", 'Anonymous')
+          document.getElementById("qr-img").src=img.src;
           console.log('html2Image-finish')
-          container.innerHTML=""; 
-          container.appendChild(img);
-          
+          // container.appendChild(img);
           if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
