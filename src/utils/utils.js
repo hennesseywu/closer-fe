@@ -243,9 +243,9 @@ function convertToImage(canvas, width, height, type) {
     type = fixType(type);
     var strData = getDataURL(canvas, type, width, height);
 
-    console.log(5, strData);
+    console.log(5);
     let _genImage = genImage(strData);
-    console.log(6, _genImage);
+    console.log(6);
     return _genImage
   } catch (e) {
     console.log(7, e);
