@@ -208,7 +208,6 @@ export function html2Image(dom) {
     canvas.height = height * scale * ratio; //定义canvas高度 *缩放
 
     var opts = {
-      // allowTaint: true,
       scale: scale, // 添加的scale 参数
       canvas: canvas, //自定义 canvas
       logging: true, //日志开关，便于查看html2canvas的内部执行流程
@@ -244,12 +243,12 @@ function convertToImage(canvas, width, height, type) {
     type = fixType(type);
     var strData = getDataURL(canvas, type, width, height);
 
-    console.log(5,strData);
+    console.log(5, strData);
     let _genImage = genImage(strData);
-    console.log(6,_genImage);
+    console.log(6, _genImage);
     return _genImage
-  } catch(e) {
-    console.log(7,e);
+  } catch (e) {
+    console.log(7, e);
     throw new Error(e)
   }
 
@@ -261,7 +260,7 @@ function convertToImage(canvas, width, height, type) {
 
   function getDataURL(canvas, type, width, height) {
     canvas = scaleCanvas(canvas, width, height);
-    console.log(3,canvas);
+    console.log(3, canvas);
     let dataUrl = canvas.toDataURL(type);
     console.log(4);
     return dataUrl
@@ -342,10 +341,10 @@ export function tjUploadFile(img) {
 
     var blobBin = atob(dataurl.split(',')[1]);
     var array = [];
-    for(var i = 0; i < blobBin.length; i++) {
-        array.push(blobBin.charCodeAt(i));
+    for (var i = 0; i < blobBin.length; i++) {
+      array.push(blobBin.charCodeAt(i));
     }
-    var file=new Blob([new Uint8Array(array)], {type: 'image/png'});
+    var file = new Blob([new Uint8Array(array)], { type: 'image/png' });
     return file;
   }
 }
