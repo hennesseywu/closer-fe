@@ -176,7 +176,9 @@
           img.setAttribute('class', 'qr-img');
           img.setAttribute("crossOrigin", 'Anonymous')
           console.log('html2Image-finish')
-          container.appendChild(img)
+          container.innerHTML=""; 
+          container.appendChild(img);
+          
           if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
