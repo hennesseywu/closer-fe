@@ -217,7 +217,7 @@ export function html2Image(dom) {
     };
     html2canvas(shareContent, opts).then((canvas) => { //html2canvas
       console.log('html2canvas:finish:', canvas)
-      var img = convertToImage(canvas, canvas.width, canvas.height, 'jpeg');
+      var img = convertToImage(canvas, canvas.width, canvas.height, 'image/jpeg');
       console.log('convertToImage:finish:', img)
       resolve(img);
     })
