@@ -20,12 +20,12 @@
               <div class="line left"></div>
               <div class="name">获得称号</div>
               <div class="line right"></div>
-            </div>
+            </div> -->
             <div :class="'share-tag '+levelData.tag"></div>
              <div class="share-qrcode"> 
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
-            <div class="share-tip">扫描二维码参与游戏，和他PK吧！</div> -->
+            <div class="share-tip">扫描二维码参与游戏，和他PK吧！</div>
           </div>
           <div v-else class="share-default">
             <div class="share-qrcode">
