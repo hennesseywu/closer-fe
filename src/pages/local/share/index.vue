@@ -10,6 +10,7 @@
               <div :class="'share-user-filter '+levelData.logo"></div>
             </div>
             <div class="share-user-name">{{user.fullname}}</div>
+             -->
             <div class="share-desc">
               在【谁是成都最土著】中获得
               <span class="share-desc-score">{{score}}</span> 分，
@@ -20,7 +21,7 @@
               <div class="line left"></div>
               <div class="name">获得称号</div>
               <div class="line right"></div>
-            </div> -->
+            </div>
             <div :class="'share-tag '+levelData.tag"></div>
              <div class="share-qrcode"> 
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
