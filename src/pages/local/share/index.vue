@@ -32,7 +32,7 @@
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
           </div>
-          <img class="qr-img" id="qr-img" src="">
+          <img class="share-img" id="share-img" src="">
         </div>
       </div>
       <div v-if="IS_APP" class="share-items box box-lr box-center-center">
