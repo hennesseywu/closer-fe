@@ -584,7 +584,7 @@
         border-top: 1px solid #ddd;
         text-align: center;
         font-size: 28pr;
-        color: #747474;
+        color: #1f1b1b;
         .share-text {
           position: relative;
           top: -18pr;

@@ -18,7 +18,7 @@
             </div> 
             <div class="share-title box box-lr box-center-center">
               <!-- <div class="line left"></div> -->
-              <span class="name">获得称号</span>
+              <div class="name">获得称号</div>
               <!-- <div class="line right"></div> -->
             </div>
             <div :class="'share-tag '+levelData.tag"></div>
