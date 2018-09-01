@@ -4,11 +4,12 @@
     <div class="share-wrapper">
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
-          <div v-if="answerId" class="share-score">
-            <!-- <div class="share-user-img"> -->
-              <!--img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous"-->
-              <!-- <div :class="'share-user-filter '+levelData.logo"></div> -->
-            <!-- </div> -->
+          <img src="../assets/images/default_share.png" class="default-share">
+           <!--<div v-if="answerId" class="share-score">
+            <div class="share-user-img">
+              img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous"
+              <div :class="'share-user-filter '+levelData.logo"></div>
+            </div>
             <div class="share-user-name">{{user.fullname}}</div>
             <div class="share-desc">
               在【谁是成都最土著】中获得
@@ -21,10 +22,10 @@
               <div class="name">获得称号</div>
               <div class="line right"></div>
             </div>
-            <!-- <div :class="'share-tag '+levelData.tag"></div> -->
-            <!-- <div class="share-qrcode">
+            <div :class="'share-tag '+levelData.tag"></div>
+             <div class="share-qrcode"> 
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-            </div> -->
+            </div> 
             <div class="share-tip">扫描二维码参与游戏，和他PK吧！</div>
           </div>
           <div v-else class="share-default">
@@ -32,7 +33,7 @@
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div v-if="IS_APP" class="share-items box box-lr box-center-center">
         <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
@@ -49,6 +50,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
