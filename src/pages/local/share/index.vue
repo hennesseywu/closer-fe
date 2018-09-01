@@ -5,10 +5,10 @@
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
           <div v-if="answerId" class="share-score">
-            <!-- <div class="share-user-img">
+            <div class="share-user-img">
               <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
               <div :class="'share-user-filter '+levelData.logo"></div>
-            </div> -->
+            </div>
             <!-- <div class="share-user-name">{{user.fullname}}</div>
             <div class="share-desc">
               在【谁是成都最土著】中获得
