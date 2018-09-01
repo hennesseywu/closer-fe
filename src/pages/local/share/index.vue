@@ -16,11 +16,11 @@
               <br/>
               <span class="share-desc-tip">{{levelData.tip}}</span>
             </div> 
-            <!-- <div class="share-title box box-lr box-center-center">
-              <div class="line left"></div>
+            <div class="share-title box box-lr box-center-center">
+              <!-- <div class="line left"></div> -->
               <div class="name">获得称号</div>
-              <div class="line right"></div>
-            </div> -->
+              <!-- <div class="line right"></div> -->
+            </div>
             <div :class="'share-tag '+levelData.tag"></div>
              <div class="share-qrcode"> 
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
