@@ -5,25 +5,27 @@
   font-size: 32pr;
   text-align: center;
   padding-bottom: 26pr;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  padding-top: 70pr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &.in-app {
     background: #144a9d;
+    min-height: 1334pr;
   }
   .header {
     // position: absolute;
     // top: 70pr;
-    margin-top: 52pr;
+    width: 100%;
+    // border: 1px solid red;
   }
   .share-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
+    // height: 100%;
+    flex-grow: 1;
   }
   .is-weixin {
     position: absolute;
@@ -35,7 +37,8 @@
     }
   }
   .share-items {
-    width: 90%;
+    // width: 90%;
+    width: 670pr;
     margin: 0 40pr;
     background: #fff;
     box-shadow: 0 4pr 20pr 0 rgba(0, 0, 0, 0.2);
@@ -106,7 +109,6 @@
     height: 100%;
     background: url(../images/default_share.png) center no-repeat;
     background-size: contain;
-    // border: 1px solid red;
   }
  
   .share-qrcode {
