@@ -180,6 +180,7 @@
         } else if (!this.isLogin) {
           this.checkLoginInApp(this.initAnimation);
         } else if (this.checkOtherEnv(true)) {
+          window.pageTo = 'answer'
           this.$router.push({
             name: 'localAnswer',
             params: {from:'fromIndex'}

@@ -50,21 +50,15 @@
     components: {
       localHeader
     },
-    created() {
-      console.log("parkk", this.$route.params.from)
-  
-      if (typeof(this.$route.params.from) == "undefined") {
-        this.$router.push({
-          name: 'localIndex'
-        })
+    beforeRouteEnter(to, from, next) {
+      if (window.pageTo == 'answer') {
+        window.pageTo = null
+        next()
       } else {
-        if (this.$route.params.from != 'fromIndex' && this.$route.params.from != 'playAgain') {
-          this.$router.push({
-            name: 'localIndex'
-          })
-        }
+        next('/local')
       }
-  
+    },
+    created() {
       if (this.statistic) {
         this.startTest()
       }
@@ -110,7 +104,7 @@
           "seq": seq,
           "questionId": questionId
         }
-          this.isCheck = true
+        this.isCheck = true
       },
       sign() {
         let todayTimeStamp = '056fef44ea0ca7ad63a0aae84024ef2d'
@@ -145,8 +139,7 @@
         } else {
           if (this.isCommit) return
           this.isCommit = true
-          this.commitTest(params).then(() => {
-          })
+          this.commitTest(params).then(() => {})
         }
       }
     }
