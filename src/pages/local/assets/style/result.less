@@ -214,6 +214,144 @@
       }
     }
   }
+  .share-box {
+    position: fixed;
+    top: 200%;
+    left: 200%;
+    width: 670pr;
+    height: 916pr;
+    border-radius: 10pr;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+  }
+  .share-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+  .default-share{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .share-default, .share-score {
+    width: 100%;
+    height: 100%;
+    // background: url(../images/default_share.png) center no-repeat;
+    background-size: contain;
+  }
+  .share-default-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+ 
+  .share-qrcode {
+    position: absolute;
+    left: 246pr;
+    bottom: 170pr;
+    width: 180pr;
+    height: 180pr;
+    padding: 10pr;
+    background: #fff;
+    // border: 1px solid red;
+    canvas {
+      width: 100%!important;
+      height: 100%!important;
+    }
+  }
+  .share-score {
+    padding-top: 40pr;
+    background: url(../images/bg.png) no-repeat;
+    background-size: cover;
+    .share-qrcode {
+      bottom: 70pr;
+      // border: 1px solid red;
+    }
+  }
+  .share-user-img {
+    position: relative;
+    width: 188pr;
+    height: 222pr;
+    margin: 0 auto;
+    background: url(../images/default_avatar.png) 4pr 38pr no-repeat;
+    background-size: 180pr;
+  }
+  .share-user-filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .share-user-avatar {
+    position: absolute;
+    left: 4pr;
+    bottom: 4pr;
+    width: 180pr;
+    height: 180pr;
+    border-radius: 172pr;
+
+  }
+  .share-user-name {
+    margin-top: 10pr;
+    text-align: center;
+  }
+  .share-desc {
+    margin-top: 10pr;
+  }
+  .share-desc-score {
+    color: #f30808;
+  }
+  .share-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 10pr;
+    .line {
+      width: 258pr;
+      height: 1px;
+    }
+    .name {
+      margin: 0 10pr;
+    }
+    .left {
+      background: linear-gradient(to left, white 65%, transparent);
+    }
+    .right {
+      background: linear-gradient(to left, transparent, white 35%);
+    }
+  }
+  .share-tag {
+    width: 578pr;
+    height: 148pr;
+    margin: 20pr auto 0;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .share-tip {
+    position: absolute;
+    bottom: 20pr;
+    width: 100%;
+    font-size: 24pr;
+  }
 }
 
 // 动画

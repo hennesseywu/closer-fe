@@ -1,10 +1,13 @@
 <template>
-  <div class="main local-share">
-    <local-header v-if="this.$store.state.IS_APP" back home ></local-header>
-      <div class="share" >
-      <img :src="shareData" class="weixin" />
-    </div>
-      <div v-if="this.$store.state.IS_APP" class="share-items box box-lr box-center-center">
+  <div class="main local-share" :class="{'in-app': IS_APP}">
+    <local-header v-if="IS_APP" back home></local-header>
+    <div class="share-wrapper">
+      <div class="share-container">
+        <div ref="canvasContainer" class="share-box">
+          <img class="share-img" id="share-img" :src="shareImg">
+        </div>
+      </div>
+      <div v-if="IS_APP" class="share-items box box-lr box-center-center">
         <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
           <span class="weixin"></span>
           <span>好友</span>
@@ -18,7 +21,7 @@
           <span>保存至相册</span>
         </div>
       </div>
-     
+    </div>
   </div>
 </template>
 
@@ -44,7 +47,27 @@
     data() {
       return {
         isApp: this.$store.state.IS_APP,
-        isLogin: false
+        isLogin: false,
+        shareImg: window.shareImg,
+        qrcode: {
+          val: 'https://a.tiejin.cn/local',
+          size: 80
+        },
+        showData: [{
+          logoImg: require('../assets/images/avatar1.png'),
+          tip: '赢得5元红包！',
+          tagImg: require('../assets/images/local1.png')
+        }, {
+          logoImg: require('../assets/images/avatar2.png'),
+          tip: '赢得2元现金红包，全答对可得5元哦！',
+          tagImg: require('../assets/images/local2.png')
+        }, {
+          logoImg: require('../assets/images/avatar3.png'),
+          tip: '和5元现金红包失之交臂，你要来试试吗？',
+          tagImg: require('../assets/images/local3.png')
+        }],
+        defaultImg: defaultImg,
+        appShareImg: ''
       }
     },
     components: {
@@ -52,15 +75,39 @@
       QrcodeVue
     },
     created() {
-     
+      Indicator.open();
+      console.log('isAPP', this.isApp)
+      // this.userShare()
+      if (this.IS_WX) {
+        console.log('share wxshare--')
+        this.initWxConfig()
+      }
+      if (this.IS_DEV) {
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+      } else {
+        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+      }
     },
     computed: {
-       ...mapState('local', {
-        shareData: state => state.shareData
-      })
+      ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
+      ...mapState('local', {
+        objectID: state => state.user.objectID || '',
+        salt: state => state.statistic.signSalt,
+        activityId: state => state.activityId,
+        user: state => state.user,
+        answerId: state => state.endData.userAnswerId,
+        shareData: state => state.shareData,
+        level: state => state.endData.level,
+        score: state => state.endData.score
+      }),
+      levelData() {
+        return this.showData[parseInt(this.level) - 1]
+      }
     },
     mounted() {
-    //  this.userShare();
+      console.log('answerId:', this.answerId)
+      this.drawHtmlToCanvas()
+      // setTimeout(this.drawHtmlToCanvas, 100)
     },
     methods: {
       ...mapActions("local", [
@@ -71,7 +118,7 @@
       ]),
       toShare(type) {
         let ua = this.$store.state.UA
-        let url = this.imgUrl;
+        let url = this.appShareImg;
         console.log('share--', type, url, ua)
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
@@ -100,6 +147,29 @@
       makeFileUrl(url) {
         let avatar = makeFileUrl(url)
         return avatar
+      },
+      drawHtmlToCanvas() {
+        let self = this;
+        let container = self.$refs.canvasContainer;
+        html2Image(container).then(img => {
+          // img.setAttribute('class', 'qr-img');
+          // img.setAttribute("crossOrigin", 'Anonymous')
+          let src = img.getAttribute('src');
+          self.shareImg=src;
+          console.log('html2Image-finish。img')
+          // container.appendChild(img);
+            Indicator.close();
+          if (self.IS_APP) {
+            tjUploadFile(img).then(({
+              data
+            }) => {
+
+              self.appShareImg = data.result.url;
+               document.getElementById("share-img").src=self.appShareImg;
+
+            })
+          }
+        })
       }
     }
   }
