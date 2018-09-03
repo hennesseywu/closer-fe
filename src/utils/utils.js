@@ -196,21 +196,18 @@ export function html2Image(dom) {
     var height = shareContent.offsetHeight; //获取dom 高度
     var canvas = document.createElement("canvas"); //创建一个canvas节点
     var context = canvas.getContext('2d');
-    context.scale(scale, scale); //获取context,设置scale 
+    let scale = 2;
     // 【重要】关闭抗锯齿
     context.mozImageSmoothingEnabled = false;
     context.webkitImageSmoothingEnabled = false;
     context.msImageSmoothingEnabled = false;
     context.imageSmoothingEnabled = false;
-    var ratio = getPixelRatio(context);
-    var scale = 2; //定义任意放大倍数 支持小数
-    canvas.width = width * scale * ratio; //定义canvas 宽度 * 缩放
-    canvas.height = height * scale * ratio; //定义canvas高度 *缩放
+
 
     var opts = {
       scale: scale, // 添加的scale 参数
       canvas: canvas, //自定义 canvas
-      logging: true, //日志开关，便于查看html2canvas的内部执行流程
+      logging: false, //日志开关，便于查看html2canvas的内部执行流程
       width: width, //dom 原始宽度
       height: height,
       backgroundColor: null, // 设置null，透明背景
@@ -225,7 +222,6 @@ export function html2Image(dom) {
 
   })
 }
-
 
 //canvas2image
 function convertToImage(canvas, width, height, type) {
@@ -288,6 +284,10 @@ function convertToImage(canvas, width, height, type) {
     retCanvas.width = width;
     retCanvas.height = height;
     console.log(1);
+    retCtx.mozImageSmoothingEnabled = false;
+    retCtx.webkitImageSmoothingEnabled = false;
+    retCtx.msImageSmoothingEnabled = false;
+    retCtx.imageSmoothingEnabled = false;
     retCtx.drawImage(canvas, 0, 0, w, h, 0, 0, width, height);
     console.log(2);
     return retCanvas;
