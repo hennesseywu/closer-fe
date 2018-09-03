@@ -225,7 +225,6 @@ export function html2Image(dom) {
   })
 }
 
-
 //canvas2image
 function convertToImage(canvas, width, height, type) {
   function createFile(urlData, fileType) {
@@ -261,7 +260,7 @@ function convertToImage(canvas, width, height, type) {
   function getDataURL(canvas, type, width, height) {
     canvas = scaleCanvas(canvas, width, height);
     console.log(3, canvas);
-    let dataUrl = canvas.toDataURL(type, 0.1);
+    let dataUrl = canvas.toDataURL(type);
     console.log(4);
     return dataUrl
   }
