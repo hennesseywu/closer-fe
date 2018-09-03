@@ -75,10 +75,10 @@
     },
     mounted() {
       this.isUpdate = true;
-      if(this.currentQuesitionNum < 8) {
-      //   var time = setInterval(() => {
-      //   this.isUpdate = false
-      // }, 1500)
+      if (this.currentQuesitionNum < 8) {
+        //   var time = setInterval(() => {
+        //   this.isUpdate = false
+        // }, 1500)
       } else {
         window.clearInterval(time)
       }
@@ -140,6 +140,7 @@
         return params
       },
       next(userAnswerId) {
+        this.isUpdate = false
         if (!this.isCheck) {
           Toast('您还未答题哟~')
           return
@@ -153,14 +154,13 @@
         }
         console.log("currentQuesitionNum---", this.currentQuesitionNum)
         if (this.currentQuesitionNum < 7) {
-          this.isUpdate=false;
-          setTimeout(() => {
-              this.isUpdate = true
-          }, 5);
           this.checkNum = ''
           this.isCheck = false
           this.questionNum++
-          this.nextQuestion()
+            this.nextQuestion()
+          setTimeout(() => {
+            this.isUpdate = true
+          }, 50)
         } else {
           if (this.isCommit) return
           this.isCommit = true
