@@ -196,7 +196,12 @@ export function html2Image(dom) {
     var height = shareContent.offsetHeight; //获取dom 高度
     var canvas = document.createElement("canvas"); //创建一个canvas节点
     var context = canvas.getContext('2d');
-    let scale = 2;
+    let scale = getPixelRatio(context);
+
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    context.scale(scale, scale);
+
     // 【重要】关闭抗锯齿
     context.mozImageSmoothingEnabled = false;
     context.webkitImageSmoothingEnabled = false;
@@ -258,7 +263,7 @@ function convertToImage(canvas, width, height, type) {
   function getDataURL(canvas, type, width, height) {
     canvas = scaleCanvas(canvas, width, height);
     console.log(3, canvas);
-    let dataUrl = canvas.toDataURL(type);
+    let dataUrl = canvas.toDataURL(type, 1);
     console.log(4);
     return dataUrl
   }
@@ -283,7 +288,9 @@ function convertToImage(canvas, width, height, type) {
     var retCtx = retCanvas.getContext('2d');
     retCanvas.width = width;
     retCanvas.height = height;
-    console.log(1);
+    retCanvas.style.width = width;
+    retCanvas.style.height = height;
+    console.log(1,w,h,width, height);
     retCtx.mozImageSmoothingEnabled = false;
     retCtx.webkitImageSmoothingEnabled = false;
     retCtx.msImageSmoothingEnabled = false;

@@ -7,7 +7,9 @@
           <div v-if="answerId" class="share-score">
             <div class="share-user-img">
               <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
-              <div :class="'share-user-filter '+levelData.logo"></div>
+              <div class="share-user-filter">
+                <img :src="levelData.logoImg" alt="">
+              </div>
             </div>
              <div class="share-user-name">{{user.fullname}}</div>
             <div class="share-desc">
@@ -21,13 +23,16 @@
               <div class="name">获得称号</div>
               <div class="line right"></div>
             </div>
-            <div :class="'share-tag '+levelData.tag"></div>
+            <div class="share-tag">
+              <img :src="levelData.tagImg" alt="">
+            </div>
              <div class="share-qrcode"> 
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
             <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
           </div>
           <div v-else class="share-default">
+            <img :src="defaultImg" alt="" class="share-default-bg">
             <div class="share-qrcode">
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
@@ -70,6 +75,7 @@
     tjUploadFile
   } from '../../../utils/utils'
   import QrcodeVue from 'qrcode.vue';
+  import defaultImg from '../assets/images/default_share.png';
   export default {
     data() {
       return {
@@ -80,18 +86,19 @@
           size: 80
         },
         showData: [{
-          logo: 'user-img-1',
+          logoImg: require('../assets/images/avatar1.png'),
           tip: '赢得5元红包！',
-          tag: 'share-tag-1'
+          tagImg: require('../assets/images/local1.png')
         }, {
-          logo: 'user-img-2',
+          logoImg: require('../assets/images/avatar2.png'),
           tip: '赢得2元现金红包，全答对可得5元哦！',
-          tag: 'share-tag-2'
+          tagImg: require('../assets/images/local2.png')
         }, {
-          logo: 'user-img-3',
+          logoImg: require('../assets/images/avatar3.png'),
           tip: '和5元现金红包失之交臂，你要来试试吗？',
-          tag: 'share-tag-3'
+          tagImg: require('../assets/images/local3.png')
         }],
+        defaultImg: defaultImg,
         imgUrl: ''
       }
     },
