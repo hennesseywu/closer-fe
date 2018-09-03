@@ -92,7 +92,7 @@
       if (/^\/local\//.test(from.path)) {
         next();
       } else {
-        next('/')
+        next('/local')
       }
     },
     created() {
