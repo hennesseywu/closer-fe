@@ -156,7 +156,7 @@
           this.isUpdate=false;
           setTimeout(() => {
               this.isUpdate = true
-          }, 50);
+          }, 5);
           this.checkNum = ''
           this.isCheck = false
           this.questionNum++
