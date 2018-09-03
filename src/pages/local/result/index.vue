@@ -114,6 +114,7 @@
       this.score = this.endData.score ? this.endData.score : ''
       this.level = this.endData.level
       this.awardAmt = this.endData.awardAmt
+      this.userShare();
       if (this.score != '') {
         this.regardsAdd();
       } else {
@@ -148,6 +149,7 @@
       ...mapActions('local', [
         "updateChance",
         "initWxConfig",
+        "userShare",
         "updateCurrentQuestionNum"
       ]),
       makeFileUrl(url) {

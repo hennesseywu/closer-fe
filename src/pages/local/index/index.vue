@@ -77,6 +77,9 @@
       localDialog,
       localHeader
     },
+    computed(){
+     this.userShare()
+    },
     computed: {
       ...mapState('local', ['aid', 'isLogin', 'statistic']),
       ...mapState(['IS_APP', 'IS_WX']),
@@ -136,7 +139,8 @@
         'getUserInfoAndLoginWithWx',
         'getStatistic',
         'initWxConfig',
-        'updateCurrentQuestionNum'
+        'updateCurrentQuestionNum',
+        'userShare'
       ]),
       ...mapMutations('local', [
         'SET_USER',

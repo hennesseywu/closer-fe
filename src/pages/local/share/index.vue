@@ -60,7 +60,7 @@
       })
     },
     mounted() {
-     this.userShare();
+    //  this.userShare();
     },
     methods: {
       ...mapActions("local", [
