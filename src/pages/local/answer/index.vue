@@ -1,6 +1,7 @@
 <template>
   <!-- <div>{{startData}}</div> -->
-  <div class="main local-answer">
+  <div class="main local-answer" :class="{'in-app': IS_APP}">
+    <local-header v-if="IS_APP" back close></local-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
       <div class="answer-box">
@@ -52,17 +53,17 @@
     created() {
       console.log("parkk", this.$route.params.from)
   
-      if (typeof(this.$route.params.from) == "undefined") {
-        this.$router.push({
-          name: 'localIndex'
-        })
-      } else {
-        if (this.$route.params.from != 'fromIndex' && this.$route.params.from != 'playAgain') {
-          this.$router.push({
-            name: 'localIndex'
-          })
-        }
-      }
+      // if (typeof(this.$route.params.from) == "undefined") {
+      //   this.$router.push({
+      //     name: 'localIndex'
+      //   })
+      // } else {
+      //   if (this.$route.params.from != 'fromIndex' && this.$route.params.from != 'playAgain') {
+      //     this.$router.push({
+      //       name: 'localIndex'
+      //     })
+      //   }
+      // }
   
       if (this.statistic) {
         this.startTest()
