@@ -135,7 +135,7 @@
           sign: this.sign(),
           inviteUser: this.inviter
         }
-        console.log("currentQuesitionNum---", this.currentQuesitionNum)
+        console.log("currentQuesitionNum---", this.questionNum)
         if (this.currentQuesitionNum < 7) {
           this.checkNum = ''
           this.isCheck = false
@@ -148,7 +148,6 @@
           if (this.isCommit) return
           this.isCommit = true
           this.commitTest(params).then(() => {
-            this.isCommit = false
           })
         }
       }
