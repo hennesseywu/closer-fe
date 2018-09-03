@@ -129,7 +129,7 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-      setTimeout(this.drawHtmlToCanvas, 500)
+      setTimeout(this.drawHtmlToCanvas, 100)
     },
     methods: {
       ...mapActions("local", [
