@@ -175,6 +175,7 @@
         }
         if (this.chance > 0) {
           this.updateCurrentQuestionNum()
+          window.pageTo = 'answer'
           this.$router.push({
             name: 'localAnswer',
             params: {
