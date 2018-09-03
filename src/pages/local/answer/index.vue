@@ -1,6 +1,7 @@
 <template>
   <!-- <div>{{startData}}</div> -->
-  <div class="main local-answer">
+  <div class="main local-answer" :class="{'in-app': IS_APP}">
+    <local-header v-if="IS_APP" back close></local-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
       <div class="answer-box">
@@ -74,10 +75,10 @@
     },
     mounted() {
       this.isUpdate = true;
-      if(this.currentQuesitionNum < 8) {
-        var time = setInterval(() => {
-        this.isUpdate = false
-      }, 1500)
+      if (this.currentQuesitionNum < 8) {
+        //   var time = setInterval(() => {
+        //   this.isUpdate = false
+        // }, 1500)
       } else {
         window.clearInterval(time)
       }
@@ -139,6 +140,7 @@
         return params
       },
       next(userAnswerId) {
+        this.isUpdate = false
         if (!this.isCheck) {
           Toast('您还未答题哟~')
           return
@@ -152,11 +154,13 @@
         }
         console.log("currentQuesitionNum---", this.currentQuesitionNum)
         if (this.currentQuesitionNum < 7) {
-          this.isUpdate = true
           this.checkNum = ''
           this.isCheck = false
           this.questionNum++
-          this.nextQuestion()
+            this.nextQuestion()
+          setTimeout(() => {
+            this.isUpdate = true
+          }, 50)
         } else {
           if (this.isCommit) return
           this.isCommit = true
