@@ -189,7 +189,7 @@
           console.log('html2Image-finish')
           // container.appendChild(img);
             Indicator.close();
-          if (self.IS_APP) {
+          // if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
             }) => {
@@ -198,7 +198,7 @@
                document.getElementById("share-img").src=self.imgUrl;
 
             })
-          }
+          // }
         })
       }
     }
