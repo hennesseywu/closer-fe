@@ -1,10 +1,10 @@
 <template>
-  <div class="main local-share" :class="{'in-app': this.$store.state.IS_APP}">
-    <local-header v-if="this.$store.state.IS_APP" back home></local-header>
+  <div class="main local-share">
+    <local-header v-if="this.$store.state.IS_APP" back home ></local-header>
+      <div class="share" >
+      <img :src="shareData" class="weixin" />
+    </div>
       <div v-if="this.$store.state.IS_APP" class="share-items box box-lr box-center-center">
-       <div class="share-img">
-        <img :src="shareData" />
-      </div>
         <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
           <span class="weixin"></span>
           <span>好友</span>
@@ -18,9 +18,7 @@
           <span>保存至相册</span>
         </div>
       </div>
-       <div class="is-weixin" v-else>
-      <img :src="shareData" />
-    </div>
+     
   </div>
 </template>
 
