@@ -139,8 +139,8 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-      // this.drawHtmlToCanvas()
-      setTimeout(this.drawHtmlToCanvas, 100)
+      this.drawHtmlToCanvas()
+      // setTimeout(this.drawHtmlToCanvas, 100)
     },
     methods: {
       ...mapActions("local", [
@@ -189,7 +189,7 @@
           // img.setAttribute("crossOrigin", 'Anonymous')
           let src = img.getAttribute('src');
           self.shareImg=src;
-          // console.log('html2Image-finish', src)
+          console.log('html2Image-finish。img')
           // container.appendChild(img);
             Indicator.close();
           if (self.IS_APP) {
