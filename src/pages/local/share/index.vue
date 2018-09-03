@@ -55,7 +55,8 @@
 
 <script>
   import {
-    Toast
+    Toast,
+    Indicator
   } from 'mint-ui';
   import {
     mapState,
@@ -99,6 +100,7 @@
       QrcodeVue
     },
     created() {
+      Indicator.open();
       console.log('isAPP', this.isApp)
       // this.userShare()
       if (this.IS_WX) {
@@ -179,6 +181,7 @@
           document.getElementById("share-img").src=img.src;
           console.log('html2Image-finish')
           // container.appendChild(img);
+            Indicator.close();
           if (self.IS_APP) {
             tjUploadFile(img).then(({
               data

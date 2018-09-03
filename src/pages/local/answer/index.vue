@@ -74,14 +74,8 @@
       }
     },
     mounted() {
+      console.log("true")
       this.isUpdate = true;
-      if (this.currentQuesitionNum < 8) {
-        //   var time = setInterval(() => {
-        //   this.isUpdate = false
-        // }, 1500)
-      } else {
-        window.clearInterval(time)
-      }
       this.updateChance()
       this.updateCurrentQuestionNum()
     },
@@ -97,17 +91,6 @@
         inviter: state => state.inviter,
         signSalt: state => state.signSalt
       })
-    },
-    beforeRouteEnter(to, {
-      path
-    }, next) {
-      // let _path = path.split('/');
-      // if (_path[2]) {
-      //   next('/local');
-      // } else {
-  
-      next();
-      // }
     },
     methods: {
       ...mapActions("local", [
