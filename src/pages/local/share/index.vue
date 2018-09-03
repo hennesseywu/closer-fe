@@ -37,7 +37,7 @@
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
           </div>
-          <img class="share-img" id="share-img" src="">
+          <img class="share-img" id="share-img" :src="shareImg">
         </div>
       </div>
       <div v-if="IS_APP" class="share-items box box-lr box-center-center">
@@ -139,6 +139,7 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
+      // this.drawHtmlToCanvas()
       setTimeout(this.drawHtmlToCanvas, 100)
     },
     methods: {
@@ -186,8 +187,9 @@
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
           // img.setAttribute("crossOrigin", 'Anonymous')
-          self.shareImg=img.src;
-          console.log('html2Image-finish')
+          let src = img.getAttribute('src');
+          self.shareImg=src;
+          // console.log('html2Image-finish', src)
           // container.appendChild(img);
             Indicator.close();
           if (self.IS_APP) {
