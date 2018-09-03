@@ -1,46 +1,10 @@
 <template>
-  <div class="main local-share" :class="{'in-app': IS_APP}">
-    <local-header v-if="IS_APP" back home></local-header>
-    <div class="share-wrapper">
-      <div class="share-container">
-        <div ref="canvasContainer" class="share-box">
-          <div v-if="answerId" class="share-score">
-            <div class="share-user-img">
-              <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
-              <div class="share-user-filter">
-                <img :src="levelData.logoImg" alt="">
-              </div>
-            </div>
-             <div class="share-user-name">{{user.fullname}}</div>
-            <div class="share-desc">
-              在【谁是成都最土著】中获得
-              <span class="share-desc-score"> {{score}}</span> 分，
-              <br/>
-              <span class="share-desc-tip">{{levelData.tip}}</span>
-            </div> 
-            <div class="share-title box box-lr box-center-center">
-              <div class="line left"></div>
-              <div class="name">获得称号</div>
-              <div class="line right"></div>
-            </div>
-            <div class="share-tag">
-              <img :src="levelData.tagImg" alt="">
-            </div>
-             <div class="share-qrcode"> 
-              <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-            </div>
-            <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
-          </div>
-          <div v-else class="share-default">
-            <img :src="defaultImg" alt="" class="share-default-bg">
-            <div class="share-qrcode">
-              <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-            </div>
-          </div>
-          <img class="share-img" id="share-img" :src="shareImg">
-        </div>
-      </div>
-      <div v-if="IS_APP" class="share-items box box-lr box-center-center">
+  <div class="main local-share">
+    <local-header v-if="this.$store.state.IS_APP" back home ></local-header>
+      <div class="share" >
+      <img :src="shareData" class="weixin" />
+    </div>
+      <div v-if="this.$store.state.IS_APP" class="share-items box box-lr box-center-center">
         <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
           <span class="weixin"></span>
           <span>好友</span>
@@ -54,7 +18,7 @@
           <span>保存至相册</span>
         </div>
       </div>
-    </div>
+     
   </div>
 </template>
 
@@ -80,27 +44,7 @@
     data() {
       return {
         isApp: this.$store.state.IS_APP,
-        isLogin: false,
-        shareImg: defaultImg,
-        qrcode: {
-          val: 'https://a.tiejin.cn/local',
-          size: 80
-        },
-        showData: [{
-          logoImg: require('../assets/images/avatar1.png'),
-          tip: '赢得5元红包！',
-          tagImg: require('../assets/images/local1.png')
-        }, {
-          logoImg: require('../assets/images/avatar2.png'),
-          tip: '赢得2元现金红包，全答对可得5元哦！',
-          tagImg: require('../assets/images/local2.png')
-        }, {
-          logoImg: require('../assets/images/avatar3.png'),
-          tip: '和5元现金红包失之交臂，你要来试试吗？',
-          tagImg: require('../assets/images/local3.png')
-        }],
-        defaultImg: defaultImg,
-        imgUrl: ''
+        isLogin: false
       }
     },
     components: {
@@ -108,39 +52,15 @@
       QrcodeVue
     },
     created() {
-      Indicator.open();
-      console.log('isAPP', this.isApp)
-      // this.userShare()
-      if (this.IS_WX) {
-        console.log('share wxshare--')
-        this.initWxConfig()
-      }
-      if (this.IS_DEV) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      } else {
-        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      }
+     
     },
     computed: {
-      ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
-      ...mapState('local', {
-        objectID: state => state.user.objectID || '',
-        salt: state => state.statistic.signSalt,
-        activityId: state => state.activityId,
-        user: state => state.user,
-        answerId: state => state.endData.userAnswerId,
-        shareData: state => state.shareData,
-        level: state => state.endData.level,
-        score: state => state.endData.score
-      }),
-      levelData() {
-        return this.showData[parseInt(this.level) - 1]
-      }
+       ...mapState('local', {
+        shareData: state => state.shareData
+      })
     },
     mounted() {
-      console.log('answerId:', this.answerId)
-      // this.drawHtmlToCanvas()
-      setTimeout(this.drawHtmlToCanvas, 100)
+     this.userShare();
     },
     methods: {
       ...mapActions("local", [
@@ -180,29 +100,6 @@
       makeFileUrl(url) {
         let avatar = makeFileUrl(url)
         return avatar
-      },
-      drawHtmlToCanvas() {
-        let self = this;
-        let container = self.$refs.canvasContainer;
-        html2Image(container).then(img => {
-          // img.setAttribute('class', 'qr-img');
-          // img.setAttribute("crossOrigin", 'Anonymous')
-          let src = img.getAttribute('src');
-          self.shareImg=src;
-          // console.log('html2Image-finish', src)
-          // container.appendChild(img);
-            Indicator.close();
-          if (self.IS_APP) {
-            tjUploadFile(img).then(({
-              data
-            }) => {
-
-              // self.imgUrl = self.makeFileUrl(data.result.url);
-               document.getElementById("share-img").src=self.imgUrl;
-
-            })
-          }
-        })
       }
     }
   }
