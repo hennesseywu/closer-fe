@@ -1,6 +1,7 @@
 <template>
   <!-- <div>{{startData}}</div> -->
-  <div class="main local-answer">
+  <div class="main local-answer" :class="{'in-app': IS_APP}">
+    <local-header v-if="IS_APP" back close></local-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
       <div class="answer-box">

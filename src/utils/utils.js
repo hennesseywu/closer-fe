@@ -210,6 +210,7 @@ export function html2Image(dom) {
       logging: false, //日志开关，便于查看html2canvas的内部执行流程
       width: width, //dom 原始宽度
       height: height,
+      backgroundColor: null, // 设置null，透明背景
       useCORS: true // 【重要】开启跨域配置
     };
     html2canvas(shareContent, opts).then((canvas) => { //html2canvas
