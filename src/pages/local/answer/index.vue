@@ -106,14 +106,11 @@
         let questionId = event.target.dataset.questionid
         let seq = event.target.dataset.seq
         this.checkNum = parseInt(event.target.dataset.index)
-        console.log("check option",this.questionNum);
         this.answers[this.questionNum] = {
           "seq": seq,
           "questionId": questionId
         }
-        setTimeout(() => {
           this.isCheck = true
-        }, 100)
       },
       sign() {
         let todayTimeStamp = '056fef44ea0ca7ad63a0aae84024ef2d'
