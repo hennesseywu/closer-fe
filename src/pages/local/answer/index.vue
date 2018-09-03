@@ -75,9 +75,9 @@
     mounted() {
       this.isUpdate = true;
       if(this.currentQuesitionNum < 8) {
-        var time = setInterval(() => {
-        this.isUpdate = false
-      }, 1500)
+      //   var time = setInterval(() => {
+      //   this.isUpdate = false
+      // }, 1500)
       } else {
         window.clearInterval(time)
       }
@@ -152,7 +152,10 @@
         }
         console.log("currentQuesitionNum---", this.currentQuesitionNum)
         if (this.currentQuesitionNum < 7) {
-          this.isUpdate = true
+          this.isUpdate=false;
+          setTimeout(() => {
+              this.isUpdate = true
+          }, 50);
           this.checkNum = ''
           this.isCheck = false
           this.questionNum++
