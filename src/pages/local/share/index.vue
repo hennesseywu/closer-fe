@@ -81,6 +81,7 @@
       return {
         isApp: this.$store.state.IS_APP,
         isLogin: false,
+        shareImg: defaultImg,
         qrcode: {
           val: 'https://a.tiejin.cn/local',
           size: 80
@@ -185,20 +186,20 @@
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
           // img.setAttribute("crossOrigin", 'Anonymous')
-          // document.getElementById("share-img").src=img.src;
+          self.shareImg=img.src;
           console.log('html2Image-finish')
           // container.appendChild(img);
             Indicator.close();
-          // if (self.IS_APP) {
+          if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
             }) => {
 
-              self.imgUrl = self.makeFileUrl(data.result.url);
+              // self.imgUrl = self.makeFileUrl(data.result.url);
                document.getElementById("share-img").src=self.imgUrl;
 
             })
-          // }
+          }
         })
       }
     }
