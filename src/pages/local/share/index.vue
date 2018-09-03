@@ -2,7 +2,8 @@
   <div class="main local-share">
     <local-header v-if="this.$store.state.IS_APP" back home ></local-header>
       <div class="share" >
-      <img :src="shareData" class="weixin" />
+        <img class="weixin" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535983344015&di=4c0656ca91bf374899194526b481374d&imgtype=0&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fexp%2Fw%3D500%2Fsign%3D3e1c415f22a446237ecaa562a8227246%2Fc75c10385343fbf2e12f9d06b27eca8065388f97.jpg">
+      <!-- <img :src="shareData" class="weixin" /> -->
     </div>
       <div v-if="this.$store.state.IS_APP" class="share-items box box-lr box-center-center">
         <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
