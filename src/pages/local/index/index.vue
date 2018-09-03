@@ -171,7 +171,13 @@
         //   this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
         //   this.dialog.show = true;
         //   return false;
-        if (!this.isLogin) {
+        if (!this.IS_APP && !this.IS_WX) {
+          this.dialog = {
+            share: false,
+            content: '亲，请去微信环境下答题吧',
+            show: true
+          }
+        } else if (!this.isLogin) {
           this.checkLoginInApp(this.initAnimation);
         } else if (this.checkOtherEnv(true)) {
           this.$router.push({

@@ -185,7 +185,7 @@
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
           // img.setAttribute("crossOrigin", 'Anonymous')
-          document.getElementById("share-img").src=img.src;
+          // document.getElementById("share-img").src=img.src;
           console.log('html2Image-finish')
           // container.appendChild(img);
             Indicator.close();
@@ -193,7 +193,10 @@
             tjUploadFile(img).then(({
               data
             }) => {
+
               self.imgUrl = self.makeFileUrl(data.result.url);
+               document.getElementById("share-img").src=self.imgUrl;
+
             })
           }
         })

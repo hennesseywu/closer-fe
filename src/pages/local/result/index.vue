@@ -89,7 +89,7 @@
     },
     beforeRouteEnter (to, from, next) {
       console.log(to, from)
-      if (/^\/local\//.test(from.path)) {
+      if (/^\/local\/(share|answer)/.test(from.path)) {
         next();
       } else {
         next('/local')
@@ -99,12 +99,12 @@
   
       console.log("parkk", this.$route.params.from)
   
-      if (this.$route.params.from != 'answer') {
-        this.$router.push({
-          name: 'localIndex'
-        })
-        return
-      }
+      // if (this.$route.params.from != 'answer') {
+      //   this.$router.push({
+      //     name: 'localIndex'
+      //   })
+      //   return
+      // }
       if (this.IS_WX) {
         this.initWxConfig()
       }
