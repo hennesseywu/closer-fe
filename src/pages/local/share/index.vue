@@ -4,39 +4,6 @@
     <div class="share-wrapper">
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
-          <div v-if="answerId" class="share-score">
-            <div class="share-user-img">
-              <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
-              <div class="share-user-filter">
-                <img :src="levelData.logoImg" alt="">
-              </div>
-            </div>
-             <div class="share-user-name">{{user.fullname}}</div>
-            <div class="share-desc">
-              在【谁是成都最土著】中获得
-              <span class="share-desc-score"> {{score}}</span> 分，
-              <br/>
-              <span class="share-desc-tip">{{levelData.tip}}</span>
-            </div> 
-            <div class="share-title box box-lr box-center-center">
-              <div class="line left"></div>
-              <div class="name">获得称号</div>
-              <div class="line right"></div>
-            </div>
-            <div class="share-tag">
-              <img :src="levelData.tagImg" alt="">
-            </div>
-             <div class="share-qrcode"> 
-              <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-            </div>
-            <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
-          </div>
-          <div v-else class="share-default">
-            <img :src="defaultImg" alt="" class="share-default-bg">
-            <div class="share-qrcode">
-              <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-            </div>
-          </div>
           <img class="share-img" id="share-img" :src="shareImg">
         </div>
       </div>
@@ -81,7 +48,7 @@
       return {
         isApp: this.$store.state.IS_APP,
         isLogin: false,
-        shareImg: defaultImg,
+        shareImg: window.shareImg,
         qrcode: {
           val: 'https://a.tiejin.cn/local',
           size: 80
@@ -100,7 +67,7 @@
           tagImg: require('../assets/images/local3.png')
         }],
         defaultImg: defaultImg,
-        imgUrl: ''
+        appShareImg: ''
       }
     },
     components: {
@@ -151,7 +118,7 @@
       ]),
       toShare(type) {
         let ua = this.$store.state.UA
-        let url = this.imgUrl;
+        let url = this.appShareImg;
         console.log('share--', type, url, ua)
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
@@ -197,8 +164,8 @@
               data
             }) => {
 
-              // self.imgUrl = self.makeFileUrl(data.result.url);
-               document.getElementById("share-img").src=self.imgUrl;
+              self.appShareImg = data.result.url;
+               document.getElementById("share-img").src=self.appShareImg;
 
             })
           }
