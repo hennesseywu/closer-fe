@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App'
 // import './reset.css'
 import './assets/style/reset.less'
-import './pages/teabar/assets/style/common.css'
 import './assets/style/common.css'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
@@ -13,7 +12,7 @@ import Cookies from 'js-cookie';
 import Vconsole from 'vconsole';
 import MobileDetect from 'mobile-detect';
 import wx from 'weixin-js-sdk';
-import {isApp, isWechat, compareVersion} from './utils/utils';
+import { isApp, isWechat, compareVersion } from './utils/utils';
 
 
 if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href)) {
