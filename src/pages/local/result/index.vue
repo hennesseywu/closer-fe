@@ -87,6 +87,14 @@
         }
       };
     },
+    beforeRouteEnter (to, from, next) {
+      console.log(to, from)
+      if (/^\/local\//.test(from.path)) {
+        next();
+      } else {
+        next('/')
+      }
+    },
     created() {
   
       console.log("parkk", this.$route.params.from)

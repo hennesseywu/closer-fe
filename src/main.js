@@ -16,7 +16,7 @@ import wx from 'weixin-js-sdk';
 import {isApp, isWechat, compareVersion} from './utils/utils';
 
 
-if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /local.tiejin.cn/.test(window.location.href)) {
+if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href)) {
   const vconsole = new Vconsole()
   store.state.IS_DEV = true;
   Cookies.set("IS_DEV", true, {
