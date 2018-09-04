@@ -1,8 +1,7 @@
 <template>
   <div class="main local-share" :class="{'in-app': IS_APP}">
     <local-header v-if="IS_APP" back home></local-header>
-    <div class="share-wrappe;
-    let shareImg = document.querySelector('#share-img')r">
+    <div class="share-wrapper">
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
           <div v-if="answerId" class="share-score">
@@ -140,8 +139,8 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-      setTimeout(this.drawHtmlToCanvas, 100)
-      // this.pixiImg()
+      // setTimeout(this.drawHtmlToCanvas, 100)
+      this.pixiImg()
     },
     methods: {
       ...mapActions("local", [
@@ -185,24 +184,14 @@
       drawHtmlToCanvas() {
         let self = this;
         let container = self.$refs.canvasContainer;
-        let width = container.clientWidth;
-        let height = container.clientHeight;
-        let shareWrap = document.querySelector('#share-wrap1');
-        let shareImg = document.querySelector('#share-img1');
-
-
-        shareWrap.setAttribute('style', `position:fixed;top:0;left:0;width:${width};height:${height};z-index:9999;`)
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
           // img.setAttribute("crossOrigin", 'Anonymous')
           // document.getElementById("share-img").src=img.src;
           console.log('html2Image-finish')
           // container.appendChild(img);
-          console.log(shareWrap,shareImg)
-          // shareImg.src = img.src;
-          shareWrap.style.display = 'block'
             Indicator.close();
-          if (self.IS_APP) {
+          // if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
             }) => {
@@ -211,8 +200,43 @@
                document.getElementById("share-img").src=self.imgUrl;
 
             })
-          }
+          // }
         })
+      },
+      pixiImg() {
+        let container = this.$refs.canvasContainer;
+        let width = container.clientWidth;
+        let height = container.clientHeight;
+
+        let shareWrap = document.querySelector('share-wrap');
+        let shareImg = document.querySelector('#share-img')
+
+        let _stage1Container = new PIXI.Container();
+        let synthetic=new PIXI.Graphics() ; //合成容器
+        _stage1Container.x=width/2;
+        _stage1Container.y=height/2;
+        // container.appendChild(_stage1Container);
+        _stage1Container.addChild(synthetic);
+
+        // 背景
+        let _bg = PIXI.Sprite.fromImage(defaultImg);
+        _bg.scale.y = _bg.scale.x = 2;
+        _bg.anchor.set(0.5);
+        synthetic.addChild(_bg);
+
+
+
+        // base64
+        setTimeout(() => {
+          var TextureO=synthetic.generateCanvasTexture();
+
+          var imgBase64=TextureO.baseTexture.source.toDataURL();
+          console.log('imgBase64:',imgBase64);
+          // this.imgUrl = imgBase64;
+          shareImg.src=imgBase64;
+          shareWrap.style.width=width+'px'
+          shareWrap.style.height=height+'px'
+        },10)
       }
     }
   }
