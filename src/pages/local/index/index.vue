@@ -94,11 +94,6 @@
       localDialog,
       localHeader
     },
-    beforeMount(){
-      let img=document.createElement("img");
-      img.src="https://file-sandbox.tiejin.cn/public/a161gNu0qY/blob.png";
-      document.body.appendChild(img)
-    },
     computed() {
       this.userShare()
     },
