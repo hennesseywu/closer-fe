@@ -420,14 +420,15 @@ export default {
     },
     async initWxConfig({
       state,
-      rootState
+      rootState,
+      commit
     }) {
       let wxConfig = state.wxConfig;
       if (!wxConfig || !wxConfig.signature || !wxConfig.appId || !wxConfig.nonceStr || !wxConfig.timestamp) {
         let params = {
           url: location.href
         };
-        let data = await service.wechatConfig(params).catch(err => {
+        let { data } = await service.wechatConfig(params).catch(err => {
           Toast('网络开小差啦，请稍后再试')
           return;
         })
