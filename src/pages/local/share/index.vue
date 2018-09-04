@@ -208,8 +208,8 @@
         let width = container.clientWidth;
         let height = container.clientHeight;
 
-        let shareWrap = document.querySelector('share-wrap');
-        let shareImg = document.querySelector('#share-img')
+        let shareWrap = document.querySelector('#share-wrap1');
+        let shareImg = document.querySelector('#share-img1')
 
         let _stage1Container = new PIXI.Container();
         let synthetic=new PIXI.Graphics() ; //合成容器
@@ -221,7 +221,7 @@
         // 背景
         let _bg = PIXI.Sprite.fromImage(defaultImg);
         _bg.scale.y = _bg.scale.x = 2;
-        _bg.anchor.set(0.5);
+        // _bg.anchor.set(0.5);
         synthetic.addChild(_bg);
 
 
@@ -236,7 +236,7 @@
           shareImg.src=imgBase64;
           shareWrap.style.width=width+'px'
           shareWrap.style.height=height+'px'
-        },10)
+        },100)
       }
     }
   }
