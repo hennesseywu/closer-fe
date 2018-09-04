@@ -63,7 +63,7 @@
             is_dev = true;
             fileUrl = "https://file-sandbox.tiejin.cn/"
         }
-        url = fileDevUrl + url;
+        url = fileUrl + "/public/" + url + "blob.";
         window.setupWebViewJavascriptBridge = function(callback) {
             if (window.WebViewJavascriptBridge) {
                 return callback(WebViewJavascriptBridge);
