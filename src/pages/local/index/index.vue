@@ -40,60 +40,14 @@
       <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
     </section>
     <section class="ft"></section>
-    <div class="share-default" ref="canvasContainer">
-      <img :src="defaultImg" alt="" class="share-default-bg">
-      <div class="share-qrcode">
-        <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-      </div>
-    </div>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
-    <div class="share-container">
-      <div ref="canvasContainer" class="share-box">
-        <div v-if="answerId" class="share-score">
-          <div class="share-user-img">
-            <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
-            <div class="share-user-filter">
-              <img :src="levelData.logoImg" alt="">
-            </div>
-          </div>
-          <div class="share-user-name">{{user.fullname}}</div>
-          <div class="share-desc">
-            在【谁是成都最土著】中获得
-            <span class="share-desc-score"> {{score}}</span> 分，
-            <br/>
-            <span class="share-desc-tip">{{levelData.tip}}</span>
-          </div>
-          <div class="share-title box box-lr box-center-center">
-            <div class="line left"></div>
-            <div class="name">获得称号</div>
-            <div class="line right"></div>
-          </div>
-          <div class="share-tag">
-            <img :src="levelData.tagImg" alt="">
-          </div>
-          <div class="share-qrcode">
-            <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-          </div>
-          <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
-        </div>
-        <div v-else class="share-default">
-          <img :src="defaultImg" alt="" class="share-default-bg">
-          <div class="share-qrcode">
-            <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-          </div>
-        </div>
-        <img class="share-img" id="share-img" src="">
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
-  import QrcodeVue from 'qrcode.vue';
   import localDialog from '../components/dialog';
   import localHeader from '../components/header';
-  import defaultImg from '../assets/images/default_share.png';
   
   import {
     mapState,
@@ -102,8 +56,6 @@
   } from 'vuex';
   import {
     makeFileUrl,
-    html2Image,
-    tjUploadFile,
     transAmount,
     parseQuery,
     downloadApp
@@ -124,17 +76,11 @@
           share: false,
           // 弹窗文字内容
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
-        },
-        qrcode: {
-          val: 'https://a.tiejin.cn/local',
-          size: 80
-        },
-        defaultImg: defaultImg
+        }
   
       }
     },
     components: {
-      QrcodeVue,
       localDialog,
       localHeader
     },
@@ -328,17 +274,17 @@
         let avatar = makeFileUrl(url)
         return avatar
       },
-      drawHtmlToCanvas() {
-        let container = this.$refs.canvasContainer;
-        html2Image(container).then(img => {
-          tjUploadFile(img).then(({
-            data
-          }) => {
-            this.imgUrl = this.makeFileUrl(data.result.url);
-            console.log(this.imgUrl)
-          })
-        })
-      }
+      // drawHtmlToCanvas() {
+      //   let container = this.$refs.canvasContainer;
+      //   html2Image(container).then(img => {
+      //     tjUploadFile(img).then(({
+      //       data
+      //     }) => {
+      //       this.imgUrl = this.makeFileUrl(data.result.url);
+      //       console.log(this.imgUrl)
+      //     })
+      //   })
+      // }
     },
     mounted() {
       setTimeout(() => {

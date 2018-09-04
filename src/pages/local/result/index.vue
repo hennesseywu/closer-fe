@@ -27,11 +27,11 @@
       <div class="content3">
         <div class="btn-commen go-answer" @click="goAnswer">再次答题</div>
         <div class="chance-remain">剩余{{chance >= 0 ? chance : '0'}}次答题机会</div>
-        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-if="isApp">去分享</div>
+        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-if="IS_APP">去分享</div>
         <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 1">领5元奖励</div>
         <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 2">领2元奖励</div>
         <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 3">下载APP</div>
-        <div class="text-commen go-wallet" v-if="isApp">去“我的-钱包”查看</div>
+        <div class="text-commen go-wallet" v-if="IS_APP">去“我的-钱包”查看</div>
         <div class="text-commen go-wallet" v-else>下载贴近APP，去“我的-钱包”查看</div>
         <div class="text-commen tips" @click="goTips">提高正确率，请查看攻略<span class="arrow"></span> </div>
       </div>
@@ -47,8 +47,7 @@
     mapMutations
   } from "vuex"
   import {
-    Toast,
-    Indicator
+    Toast
   } from 'mint-ui'
   import {
     downloadApp
@@ -66,13 +65,12 @@
     },
     data() {
       return {
-        isApp: this.$store.state.IS_APP,
         // btnText: "下载APP",
         regards: 0,
-        awardAmt: 0,
+        // awardAmt: 0,
         // chance: 0,
-        score: 0,
-        level: null,
+        // score: 0,
+        // level: '',
         localText1: '同样是九年义务教育，为什么你那么优秀？你“土”的一览众山小，谁都没你DIAO',
         localText2: '恭喜你获得2元奖励，但你对成都了解还不够多哦！冲击满分赢5元！',
         localText3: '盆友，你是路过成都吗？得满分可以领5元现<br/>金，再试试吧',
@@ -111,9 +109,9 @@
     },
     mounted() {
       // this.chance = this.$store.state.local.statistic.chance
-      this.score = this.endData.score ? this.endData.score : ''
-      this.level = this.endData.level
-      this.awardAmt = this.endData.awardAmt
+      // this.score = this.endData.score ? this.endData.score : ''
+      // this.level = this.endData.level
+      // this.awardAmt = this.endData.awardAmt
       this.userShare();
       if (this.score != '') {
         this.regardsAdd();
@@ -124,10 +122,6 @@
         if (this.user.objectID) {
           data['inviter'] = this.user.objectID;
         }
-        // this.$router.push({
-        //     name: 'localIndex'
-        //   })
-        // location.href = addParamsForUrl(location.origin + '/local', data)
       }
       // this.drawHtmlToCanvas()
     },
@@ -135,6 +129,9 @@
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
         user: state => state.user,
+        score: state => state.endData.score,
+        level: state => state.endData.level,
+        awardAmt: state => state.endData.awardAmt,
         chance: state => state.statistic.chance,
         currentQuesitionNum: state => state.questions.currentQuesitionNum,
         statistic: state => state.statistic,
@@ -143,10 +140,6 @@
       })
     },
     methods: {
-      ...mapMutations([
-        "updateChance",
-        "updateCurrentQuestionNum"
-      ]),
       ...mapActions('local', [
         "updateChance",
         "initWxConfig",
@@ -195,7 +188,7 @@
         this.dialog.show = false;
       },
       downloadApp() {
-        if (this.isApp) {
+        if (this.IS_APP) {
           // 去分享
           this.$router.push({
             name: 'localShare'
@@ -212,7 +205,7 @@
         }
       },
       goTips() {
-        if (this.isApp) {
+        if (this.IS_APP) {
           // 跳转app内部详情页
           location.href = 'closer://community/9Mj8OC0TUL'
         } else {
