@@ -110,7 +110,7 @@
       }
     },
     mounted() {
-      this.chance = this.$store.state.local.statistic.chance
+      // this.chance = this.$store.state.local.statistic.chance
       this.score = this.endData.score ? this.endData.score : ''
       this.level = this.endData.level
       this.awardAmt = this.endData.awardAmt

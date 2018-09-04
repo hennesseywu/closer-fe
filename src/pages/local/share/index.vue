@@ -37,7 +37,7 @@
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
           </div>
-          <img class="share-img" id="share-img" src="">
+          <img class="share-img" id="share-img" :src="imgUrl">
         </div>
       </div>
       <div v-if="IS_APP" class="share-items box box-lr box-center-center">
@@ -74,6 +74,7 @@
     html2Image,
     tjUploadFile
   } from '../../../utils/utils'
+  import * as PIXI from 'pixi.js';
   import QrcodeVue from 'qrcode.vue';
   import defaultImg from '../assets/images/default_share.png';
   export default {
@@ -138,7 +139,8 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-      setTimeout(this.drawHtmlToCanvas, 100)
+      // setTimeout(this.drawHtmlToCanvas, 100)
+      this.pixiImg()
     },
     methods: {
       ...mapActions("local", [
@@ -200,6 +202,33 @@
             })
           // }
         })
+      },
+      pixiImg() {
+        let container = this.$refs.canvasContainer;
+        let width = container.clientWidth;
+        let height = container.clientHeight;
+
+        let _stage1Container = new PIXI.Container();
+        let synthetic=new PIXI.Graphics() ; //合成容器
+        _stage1Container.x=width/2;
+        _stage1Container.y=height/2;
+        // container.appendChild(_stage1Container);
+        _stage1Container.addChild(synthetic);
+
+        // 背景
+        let _bg = PIXI.Sprite.fromImage(defaultImg);
+        _bg.scale.y = _bg.scale.x = 2;
+        _bg.anchor.set(0.5);
+        synthetic.addChild(_bg);
+
+
+
+        // base64
+        var TextureO=synthetic.generateCanvasTexture();
+
+        var imgBase64=TextureO.baseTexture.source.toDataURL();
+        console.log('imgBase64:',imgBase64);
+        this.imgUrl = imgBase64;
       }
     }
   }
