@@ -444,12 +444,10 @@ export default {
         activityId: state.activityId,
         salt: state.statistic.signSalt
       });
+      localStorage.setItem("link", link);
+
       console.log('wxConfig::', link);
       if (wxConfig && wxConfig.signature && wxConfig.appId && wxConfig.nonceStr && wxConfig.timestamp) {
-        localStorage.setItem("signature", wxConfig.signature);
-        localStorage.setItem("appId", wxConfig.appId);
-        localStorage.setItem("nonceStr", wxConfig.nonceStr);
-        localStorage.setItem("timestamp", wxConfig.timestamp);
         wx.config({
           "debug": false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           "signature": wxConfig.signature,
