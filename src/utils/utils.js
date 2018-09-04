@@ -346,7 +346,6 @@ export function tjUploadFile(img) {
     // return new File([u8arr], `${filename}.${suffix}`, {
     //   type: mime
     // })
-    IS_dev
     var blobBin = atob(dataurl.split(',')[1]);
     var array = [];
     for (var i = 0; i < blobBin.length; i++) {
