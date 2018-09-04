@@ -37,7 +37,7 @@
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
           </div>
-          <img class="share-img" id="share-img" src="https://file-sandbox.tiejin.cn/public/a161gNu0qY/blob.png">
+          <img class="share-img" id="share-img" src="">
         </div>
       </div>
       <div v-if="IS_APP" class="share-items box box-lr box-center-center">
