@@ -9,12 +9,119 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .share {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            background: #000;
+            padding-top: 18%;
+            text-align: center
+        }
+        
+        .share-img {
+            width: 90%;
+        }
+        
+        .bottom {
+            width: 90%;
+            margin: 1em;
+            background: #fff;
+            border-radius: 0.5em;
+            text-align: center;
+            /* display: none; */
+        }
+        
+        .icon {
+            margin: 1.5em;
+            width: 3.5em;
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        <img src="https://file-sandbox.tiejin.cn/public/a161gNu0qY/blob.png" style="width: 100%">
+    <div class="share">
+        <img src="https://file-sandbox.tiejin.cn/public/a161gNu0qY/blob.png" class="share-img">
+        <div class="bottom">
+            <img src="./img/wx.png" class="icon">
+            <img src="./img/pyq.png" class="icon">
+            <img src="./img/download.png" class="icon">
+        </div>
     </div>
 </body>
+<script>
+    window.onload = function() {
+        let fileUrl = "https://file.tiejin.cn";
+        let url = GetQueryString("url");
+        let is_dev = false;
+        if (/sandbox.tiejin/.test(window.location.href) || /local.tiejin/.test(window.location.href)) {
+            is_dev = true;
+            fileUrl = "https://file-sandbox.tiejin.cn/"
+        }
+        url = fileDevUrl + url;
+        window.setupWebViewJavascriptBridge = function(callback) {
+            if (window.WebViewJavascriptBridge) {
+                return callback(WebViewJavascriptBridge);
+            }
+            if (window.WVJBCallbacks) {
+                return window.WVJBCallbacks.push(callback);
+            }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'https://__bridge_loaded__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function() {
+                document.documentElement.removeChild(WVJBIframe)
+            }, 0)
+        }
+    }
+
+    function isApp() {
+        let ua = navigator.userAgent.toLowerCase();
+        return /closer-(android|ios)/.test(ua);
+    }
+
+    function toShare(type) {
+        let ua = navigator.userAgent.toLowerCase();
+        let url = this.appShareImg;
+        console.log('share--', type, url, ua)
+        if (ua.indexOf("closer-ios") > -1) {
+            setupWebViewJavascriptBridge(function(bridge) {
+                console.log("toShare ios bridge", bridge)
+                if (bridge) {
+                    bridge.callHandler("inviteNewerAction", {
+                        "type": type,
+                        "img": url
+                    }, function(data, responseCallback) {})
+                }
+            })
+        } else if (ua.indexOf("closer-android") > -1) {
+            console.log("toShare android bridge", bridge)
+            if (typeof window.bridge != "undefined") {
+                try {
+                    window.bridge.inviteNewerAction(JSON.stringify({
+                        "type": type,
+                        "img": url
+                    }));
+                } catch (e) {
+                    Toast("请升级最新版本客户端")
+                }
+            }
+        }
+    }
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
 
 </html>
