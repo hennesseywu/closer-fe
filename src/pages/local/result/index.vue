@@ -35,7 +35,7 @@
         <div class="text-commen go-wallet" v-else>下载贴近APP，去“我的-钱包”查看</div>
         <div class="text-commen tips" @click="goTips">提高正确率，请查看攻略<span class="arrow"></span> </div>
       </div>
-      <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
+      <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" :path="path"  @close="closeDialog"></local-dialog>
     </div>
     <div ref="canvasContainer" class="share-box">
       <div v-if="answerId" class="share-score">
@@ -143,7 +143,7 @@
           tagImg: require('../assets/images/local3.png')
         }],
         defaultImg: defaultImg,
-        appShareImg: ''
+        path:""
       };
     },
     beforeRouteEnter (to, from, next) {
@@ -308,7 +308,7 @@
               data
             }) => {
                Indicator.close();
-              self.appShareImg = data.result.url;
+              self.path = data.result.url;
             })
           }
         })
