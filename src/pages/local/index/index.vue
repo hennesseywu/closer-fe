@@ -342,7 +342,7 @@
     },
     mounted() {
       setTimeout(() => {
-        this.drawHtmlToCanvas()
+        // this.drawHtmlToCanvas()
       }, 800);
       setTimeout(() => {
         this.mounted = true;
