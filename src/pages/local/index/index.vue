@@ -109,6 +109,10 @@
       ...mapState(['IS_APP', 'IS_WX']),
       ...mapState('local', {
         currentQuesitionNum: state => state.questions.currentQuesitionNum,
+        objectID: state => state.user.objectID || '',
+        salt: state => state.statistic.signSalt,
+        activityId: state => state.activityId,
+
       }),
       remainTimesToMax() {
         return Math.ceil(transAmount(this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
