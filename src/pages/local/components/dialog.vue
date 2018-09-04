@@ -18,7 +18,8 @@
     props:{
       show: Boolean,
       share: Boolean,
-      content: String
+      content: String,
+      path:String
     },
     computed: {
       ...mapState(['IS_APP'])
@@ -29,15 +30,15 @@
       },
       handleClick() {
         if (this.share) {
-          // if (this.IS_APP) {
+          if (this.IS_APP) {
             // 端内跳分享页
             this.$router.push({
               name: 'localShare'
             })
-          // } else if (this.IS_WX) {
-          //   // 微信端调sdk
-            
-          // }
+          } else if (this.IS_WX) {
+            // 微信端调sdk
+           location.href = `/static/share.html?path=${this.path}`
+          }
         } else {
           this.handleClose();
         }

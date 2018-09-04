@@ -40,7 +40,13 @@
       <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
     </section>
     <section class="ft"></section>
-    <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
+    <local-dialog :show="dialog.show" :share="dialog.share" :path="path" :content="dialog.content" @close="closeDialog"></local-dialog>
+    <div class="share-default" ref="canvasContainer">
+      <img :src="defaultImg" alt="" class="share-default-bg">
+      <div class="share-qrcode">
+        <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -70,6 +76,7 @@
     data() {
       return {
         currentWidth: 0,
+        path:"",
         // mounted
         mounted: false,
         // 弹窗
@@ -213,6 +220,16 @@
           })
         }
       },
+      drawHtmlToCanvas() {
+        let container = this.$refs.canvasContainer;
+        html2Image(container).then(img => {
+          tjUploadFile(img).then(({
+            data
+          }) => {
+            this.path = data.result.url
+          })
+        })
+      },
       closeDialog() {
         this.dialog.show = false;
       },
@@ -287,7 +304,7 @@
      
     },
     mounted() {
-    
+    this.drawHtmlToCanvas();
       setTimeout(() => {
         this.mounted = true;
       }, 800);
