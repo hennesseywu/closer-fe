@@ -88,7 +88,7 @@
   import {
     downloadApp
   } from '../../../utils/utils'
-  import localDialog from '../components/dialog'
+  import localDialog from '../components/dialog';
   import localHeader from '../components/header';
   import defaultImg from '../assets/images/default_share.png';
   import QrcodeVue from 'qrcode.vue';
@@ -107,12 +107,10 @@
     },
     data() {
       return {
-        // btnText: "下载APP",
+        btnText: "下载APP",
         regards: 0,
-        // awardAmt: 0,
-        // chance: 0,
-        // score: 0,
-        // level: '',
+        awardAmt: 0,
+        chance: 0,
         localText1: '同样是九年义务教育，为什么你那么优秀？你“土”的一览众山小，谁都没你DIAO',
         localText2: '恭喜你获得2元奖励，但你对成都了解还不够多哦！冲击满分赢5元！',
         localText3: '盆友，你是路过成都吗？得满分可以领5元现<br/>金，再试试吧',
@@ -129,7 +127,26 @@
           val: 'https://a.tiejin.cn/local',
           size: 80
         },
-        defaultImg: defaultImg
+        shareImg: defaultImg,
+        qrcode: {
+          val: 'https://a.tiejin.cn/local',
+          size: 80
+        },
+        showData: [{
+          logoImg: require('../assets/images/avatar1.png'),
+          tip: '赢得5元红包！',
+          tagImg: require('../assets/images/local1.png')
+        }, {
+          logoImg: require('../assets/images/avatar2.png'),
+          tip: '赢得2元现金红包，全答对可得5元哦！',
+          tagImg: require('../assets/images/local2.png')
+        }, {
+          logoImg: require('../assets/images/avatar3.png'),
+          tip: '和5元现金红包失之交臂，你要来试试吗？',
+          tagImg: require('../assets/images/local3.png')
+        }],
+        defaultImg: defaultImg,
+        appShareImg: ''
       }
     },
     beforeRouteEnter(to, from, next) {
@@ -142,26 +159,15 @@
       next();
     },
     created() {
-  
-      console.log("parkk", this.$route.params.from)
-  
-      // if (this.$route.params.from != 'answer') {
-      //   this.$router.push({
-      //     name: 'localIndex'
-      //   })
-      //   return
-      // }
       if (this.IS_WX) {
         this.initWxConfig()
       }
     },
     mounted() {
-      // this.chance = this.$store.state.local.statistic.chance
-      // this.score = this.endData.score ? this.endData.score : ''
-      // this.level = this.endData.level
-      // this.awardAmt = this.endData.awardAmt
+      this.chance = this.$store.state.local.statistic.chance
+      this.awardAmt = this.endData.awardAmt
       this.userShare();
-      if (this.score != '') {
+      if (this.score&&this.score != '') {
         this.regardsAdd();
       } else {
         let data = {
@@ -176,19 +182,20 @@
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
+        objectID: state => state.user.objectID || '',
+        salt: state => state.statistic.signSalt,
         user: state => state.user,
-        score: state => state.endData.score,
-        level: state => state.endData.level,
-        awardAmt: state => state.endData.awardAmt,
-        chance: state => state.statistic.chance,
-        currentQuesitionNum: state => state.questions.currentQuesitionNum,
-        statistic: state => state.statistic,
         endData: state => state.endData,
-        activityId: state => state.activityId,
         answerId: state => state.endData.userAnswerId,
         shareData: state => state.shareData,
-      })
+        level: state => state.endData.level,
+        score: state => state.endData.score
+      }),
+      levelData() {
+        return this.showData[parseInt(this.level) - 1]
+      }
     },
+  
     methods: {
       ...mapActions('local', [
         "updateChance",
