@@ -5,7 +5,7 @@
       <div class="content1">
         <div class="avater" :class="level == 1 ? 'avater1' : (level == 2 ? 'avater2' : 'avater3')">
           <span class="avater-commen" :class="level == 1 ? 'avater1-icon' : (level == 2 ? 'avater2-icon' : 'avater3-icon')"></span>
-          <img :src="makeFileUrl(user.avatar)">
+          <img :src="makeFileUrl(avatar)">
         </div>
         <div class="regards">
           <span>{{regards}}</span>分
@@ -35,23 +35,23 @@
         <div class="text-commen go-wallet" v-else>下载贴近APP，去“我的-钱包”查看</div>
         <div class="text-commen tips" @click="goTips">提高正确率，请查看攻略<span class="arrow"></span> </div>
       </div>
-      <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" :path="path"  @close="closeDialog"></local-dialog>
+      <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" :path="path" @close="closeDialog"></local-dialog>
     </div>
     <div ref="canvasContainer" class="share-box">
       <div v-if="answerId" class="share-score">
         <div class="share-user-img">
-          <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
+          <img :src="makeFileUrl(avatar)" class="share-user-avatar" crossOrigin="Anonymous">
           <div class="share-user-filter">
             <img :src="levelData.logoImg" alt="">
           </div>
         </div>
-          <div class="share-user-name">{{user.fullname}}</div>
+        <div class="share-user-name">{{fullname}}</div>
         <div class="share-desc">
           在【谁是成都最土著】中获得
           <span class="share-desc-score"> {{score}}</span> 分，
           <br/>
           <span class="share-desc-tip">{{levelData.tip}}</span>
-        </div> 
+        </div>
         <div class="share-title box box-lr box-center-center">
           <div class="line left"></div>
           <div class="name">获得称号</div>
@@ -60,7 +60,7 @@
         <div class="share-tag">
           <img :src="levelData.tagImg" alt="">
         </div>
-          <div class="share-qrcode"> 
+        <div class="share-qrcode">
           <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
         </div>
         <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
@@ -123,7 +123,7 @@
           // 弹窗文字内容
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
         },
-
+  
         shareImg: defaultImg,
         qrcode: {
           val: 'https://a.tiejin.cn/local',
@@ -143,19 +143,26 @@
           tagImg: require('../assets/images/local3.png')
         }],
         defaultImg: defaultImg,
-        path:""
+        path: ""
       };
     },
-    beforeRouteEnter (to, from, next) {
-      console.log(to, from)
-      if (/^\/local\/(share|answer)/.test(from.path)) {
+    beforeRouteEnter(to, from, next) {
+      console.log('beforeRouteEnter:',from)
+      if (/^\/local\/(share|answer)/.test(from.path) || localStorage.resultCache != '{}') {
         next();
       } else {
         next('/local')
       }
     },
     created() {
-   if (this.IS_DEV) {
+      if (localStorage.resultCache &&localStorage.resultCache != '{}') {
+        let CACHE = JSON.parse(localStorage.resultCache);
+        console.log('window.CACHE',CACHE)
+        localStorage.resultCache = '{}';
+        this.setCache(CACHE)
+      }
+
+      if (this.IS_DEV) {
         this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
         this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
@@ -184,8 +191,8 @@
         let data = {
           activityId: this.activityId
         }
-        if (this.user.objectID) {
-          data['inviter'] = this.user.objectID;
+        if (this.objectID) {
+          data['inviter'] = this.objectID;
         }
         // this.$router.push({
         //     name: 'localIndex'
@@ -197,17 +204,16 @@
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
-        user: state => state.user,
         chance: state => state.statistic.chance,
         currentQuesitionNum: state => state.questions.currentQuesitionNum,
         statistic: state => state.statistic,
         endData: state => state.endData,
-        activityId: state => state.activityId
-      }),
-      ...mapState('local', {
+        activityId: state => state.activityId,
         objectID: state => state.user.objectID || '',
         salt: state => state.statistic.signSalt,
         user: state => state.user,
+        avatar: state => state.user.avatar,
+        fullname: state => state.user.fullname,
         answerId: state => state.endData.userAnswerId,
         shareData: state => state.shareData,
         level: state => state.endData.level,
@@ -220,7 +226,10 @@
     methods: {
       ...mapMutations([
         "updateChance",
-        "updateCurrentQuestionNum"
+        "updateCurrentQuestionNum",
+      ]),
+      ...mapMutations('local', [
+        "setCache"
       ]),
       ...mapActions('local', [
         "updateChance",
@@ -276,12 +285,14 @@
             name: 'localShare'
           })
         } else {
+          this.setLocalStorage()
           downloadApp()
         }
       },
       goShare() {
         if (this.IS_WX) {
-         location.href = `/static/share.html?path=${this.path}`
+          this.setLocalStorage()
+          location.href = `/static/share.html?path=${this.path}`
         }
       },
       goTips() {
@@ -290,6 +301,7 @@
           location.href = 'closer://community/9Mj8OC0TUL'
         } else {
           // 跳转对应栏目页
+          this.setLocalStorage()
           location.href = 'https://h5.tiejin.cn/community/9Mj8OC0TUL'
         }
       },
@@ -300,18 +312,34 @@
           // img.setAttribute('class', 'qr-img');
           // img.setAttribute("crossOrigin", 'Anonymous')
           let src = img.getAttribute('src');
-          window.shareImg=src;
+          window.shareImg = src;
           console.log('html2Image-finish。img')
           // container.appendChild(img);
           if (self.IS_WX) {
             tjUploadFile(img).then(({
               data
             }) => {
-               Indicator.close();
+              Indicator.close();
               self.path = data.result.url;
             })
           }
         })
+      },
+      setLocalStorage() {
+        let resultCache = {
+          chance: this.chance,
+          currentQuesitionNum: this.currentQuesitionNum,
+          statistic: this.statistic,
+          endData: this.endData,
+          activityId: this.activityId,
+          salt: this.signSalt,
+          user: this.user,
+          answerId: this.userAnswerId,
+          shareData: this.shareData,
+          level: this.level,
+          score: this.score
+        };
+        localStorage.resultCache =  JSON.stringify(resultCache);
       }
     }
   };

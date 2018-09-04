@@ -103,6 +103,14 @@ export default {
     },
     setWxConfig(state, payload) {
       state.wxConfig = payload
+    },
+    setCache(state, payload) {
+      state.statistic = payload.statistic;
+      state.endData = payload.endData;
+      state.shareData = payload.shareData;
+      state.user = payload.user;
+      state.objectID = payload.objectID;
+      state.questions.currentQuesitionNum = payload.currentQuesitionNum;
     }
   },
 
