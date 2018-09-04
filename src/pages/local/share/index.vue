@@ -199,7 +199,7 @@
           console.log('html2Image-finish')
           // container.appendChild(img);
           console.log(shareWrap,shareImg)
-          shareImg.src = img.src;
+          // shareImg.src = img.src;
           shareWrap.style.display = 'block'
             Indicator.close();
           if (self.IS_APP) {
