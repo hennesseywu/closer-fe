@@ -183,14 +183,16 @@
       drawHtmlToCanvas() {
         let self = this;
         let container = self.$refs.canvasContainer;
+        let img = document.getElementById("share-img");
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
-          // img.setAttribute("crossOrigin", 'Anonymous')
-          // document.getElementById("share-img").src=img.src;
+          img.setAttribute("crossOrigin", 'Anonymous')
+          self.imgUrl=img.src;
+          
           console.log('html2Image-finish')
           // container.appendChild(img);
             Indicator.close();
-          // if (self.IS_APP) {
+          if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
             }) => {
@@ -227,10 +229,10 @@
 
           var imgBase64=TextureO.baseTexture.source.toDataURL();
           console.log('imgBase64:',imgBase64);
-          // this.imgUrl = imgBase64;
-          shareImg.src=imgBase64;
-          shareWrap.style.width=width+'px'
-          shareWrap.style.height=height+'px'
+          this.imgUrl = imgBase64;
+          // shareImg.src=imgBase64;
+          // shareWrap.style.width=width+'px'
+          // shareWrap.style.height=height+'px'
         },100)
       }
     }

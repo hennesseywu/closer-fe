@@ -40,23 +40,18 @@
       <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
     </section>
     <section class="ft"></section>
-    <div class="share-default" ref="canvasContainer">
-      <img :src="defaultImg" alt="" class="share-default-bg">
-      <div class="share-qrcode">
-        <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-      </div>
-    </div>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 571f4472a32db938f1834c14b21cc9f68b225f21
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
-  import QrcodeVue from 'qrcode.vue';
   import localDialog from '../components/dialog';
   import localHeader from '../components/header';
-  import defaultImg from '../assets/images/default_share.png';
   
   import {
     mapState,
@@ -65,8 +60,6 @@
   } from 'vuex';
   import {
     makeFileUrl,
-    html2Image,
-    tjUploadFile,
     transAmount,
     parseQuery,
     downloadApp
@@ -87,17 +80,11 @@
           share: false,
           // 弹窗文字内容
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
-        },
-        qrcode: {
-          val: 'https://a.tiejin.cn/local',
-          size: 80
-        },
-        defaultImg: defaultImg
+        }
   
       }
     },
     components: {
-      QrcodeVue,
       localDialog,
       localHeader
     },
@@ -291,17 +278,17 @@
         let avatar = makeFileUrl(url)
         return avatar
       },
-      drawHtmlToCanvas() {
-        let container = this.$refs.canvasContainer;
-        html2Image(container).then(img => {
-          tjUploadFile(img).then(({
-            data
-          }) => {
-            this.imgUrl = this.makeFileUrl(data.result.url);
-            console.log(this.imgUrl)
-          })
-        })
-      }
+      // drawHtmlToCanvas() {
+      //   let container = this.$refs.canvasContainer;
+      //   html2Image(container).then(img => {
+      //     tjUploadFile(img).then(({
+      //       data
+      //     }) => {
+      //       this.imgUrl = this.makeFileUrl(data.result.url);
+      //       console.log(this.imgUrl)
+      //     })
+      //   })
+      // }
     },
     mounted() {
       setTimeout(() => {
