@@ -71,7 +71,6 @@
           <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
         </div>
       </div>
-      <img class="share-img" id="share-img" :src="shareImg">
     </div>
   </div>
 </template>
@@ -159,13 +158,6 @@
     created() {
   
       console.log("parkk", this.$route.params.from)
-  
-      // if (this.$route.params.from != 'answer') {
-      //   this.$router.push({
-      //     name: 'localIndex'
-      //   })
-      //   return
-      // }
       if (this.IS_WX) {
         this.initWxConfig()
       }
@@ -177,7 +169,7 @@
       this.awardAmt = this.endData.awardAmt
       this.userShare();
       if (this.score != '') {
-        this.regardsAdd();
+        // this.regardsAdd();
       } else {
         let data = {
           activityId: this.activityId
@@ -185,10 +177,6 @@
         if (this.user.objectID) {
           data['inviter'] = this.user.objectID;
         }
-        // this.$router.push({
-        //     name: 'localIndex'
-        //   })
-        // location.href = addParamsForUrl(location.origin + '/local', data)
       }
       this.drawHtmlToCanvas()
     },
@@ -297,24 +285,13 @@
         let self = this;
         let container = self.$refs.canvasContainer;
         html2Image(container).then(img => {
-          // img.setAttribute('class', 'qr-img');
-          // img.setAttribute("crossOrigin", 'Anonymous')
-          let src = img.getAttribute('src');
-          window.shareImg=src;
           console.log('html2Image-finish。img')
-          // container.appendChild(img);
             Indicator.close();
-          if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
             }) => {
-
               self.appShareImg = data.result.url;
-              window.shareImgUrl=data.result.url;
-               document.getElementById("share-img").src=self.appShareImg;
-
             })
-          }
         })
       }
     }
