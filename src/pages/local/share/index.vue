@@ -208,7 +208,7 @@
         let width = container.clientWidth;
         let height = container.clientHeight;
 
-        let shareWrap = document.querySelector('share-wrap');
+        let shareWrap = document.querySelector('#share-wrap');
         let shareImg = document.querySelector('#share-img')
 
         let _stage1Container = new PIXI.Container();
