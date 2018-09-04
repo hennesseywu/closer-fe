@@ -149,7 +149,7 @@
       ]),
       toShare(type) {
         let ua = this.$store.state.UA
-        let url = this.imgUrl;
+        let url = this.appShareImg;
         console.log('share--', type, url, ua)
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
