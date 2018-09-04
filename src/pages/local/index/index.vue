@@ -41,10 +41,6 @@
     </section>
     <section class="ft"></section>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
-<<<<<<< HEAD
-
-=======
->>>>>>> 571f4472a32db938f1834c14b21cc9f68b225f21
   </div>
 </template>
 

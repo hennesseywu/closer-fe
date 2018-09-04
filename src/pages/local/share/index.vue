@@ -138,7 +138,7 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-      setTimeout(this.drawHtmlToCanvas, 100)
+      setTimeout(this.drawHtmlToCanvas, 0)
       // this.pixiImg()
     },
     methods: {
@@ -198,6 +198,7 @@
             }) => {
               self.imgUrl = self.makeFileUrl(data.result.url);
             })
+          }
         })
       },
       pixiImg() {
