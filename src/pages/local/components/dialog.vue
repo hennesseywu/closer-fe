@@ -35,8 +35,7 @@
             this.$router.push({
               name: 'localShare'
             })
-          } else if (this.IS_WX) {
-            // 微信端调sdk
+          } else  {
            location.href = `/static/share.html?path=${this.path}`
           }
         } else {
