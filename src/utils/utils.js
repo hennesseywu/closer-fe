@@ -325,8 +325,8 @@ export function tjUploadFile(img) {
   var fd = new FormData(form);
   fd.append("file", file);
   // Submit Form and upload file
-
-  return axios.post("https://file-sandbox.tiejin.cn/file/upload/public", fd, {
+  let fileUrl = Cookies.get("IS_DEV") ? 'https://file-sandbox.tiejin.cn' : 'https://file.tiejin.cn'
+  return axios.post(fileUrl + "/file/upload/public", fd, {
     headers: {
       Accept: "application/json; charset=utf-8",
       Authorization: Cookies.get('GroukAuth')
@@ -346,7 +346,7 @@ export function tjUploadFile(img) {
     // return new File([u8arr], `${filename}.${suffix}`, {
     //   type: mime
     // })
-
+    IS_dev
     var blobBin = atob(dataurl.split(',')[1]);
     var array = [];
     for (var i = 0; i < blobBin.length; i++) {
