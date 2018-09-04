@@ -128,6 +128,11 @@
       }
     },
     created() {
+       if (this.IS_DEV) {
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+      } else {
+        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+      }
       const self = this;
       console.log('isLogin:', self.isLogin)
       // 种cookie
