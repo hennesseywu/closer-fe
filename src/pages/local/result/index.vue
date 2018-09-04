@@ -124,7 +124,6 @@
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
         },
 
-
         shareImg: defaultImg,
         qrcode: {
           val: 'https://a.tiejin.cn/local',
@@ -156,7 +155,11 @@
       }
     },
     created() {
-  
+   if (this.IS_DEV) {
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+      } else {
+        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+      }
       console.log("parkk", this.$route.params.from)
   
       // if (this.$route.params.from != 'answer') {

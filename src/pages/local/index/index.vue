@@ -106,7 +106,7 @@
     },
     computed: {
       ...mapState('local', ['aid', 'isLogin', 'statistic']),
-      ...mapState(['IS_APP', 'IS_WX']),
+      ...mapState(['IS_APP', 'IS_WX','IS_DEV']),
       ...mapState('local', {
         currentQuesitionNum: state => state.questions.currentQuesitionNum,
         objectID: state => state.user.objectID || '',
