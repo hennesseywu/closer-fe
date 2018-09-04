@@ -140,7 +140,7 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-      setTimeout(this.drawHtmlToCanvas, 100)
+      // setTimeout(this.drawHtmlToCanvas, 100)
       // this.pixiImg()
     },
     methods: {
@@ -206,7 +206,6 @@
             tjUploadFile(img).then(({
               data
             }) => {
-
               self.imgUrl = self.makeFileUrl(data.result.url);
                document.getElementById("share-img").src=self.imgUrl;
 
