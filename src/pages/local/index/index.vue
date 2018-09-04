@@ -40,12 +40,6 @@
       <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
     </section>
     <section class="ft"></section>
-    <div class="share-default" ref="canvasContainer">
-      <img :src="defaultImg" alt="" class="share-default-bg">
-      <div class="share-qrcode">
-        <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-      </div>
-    </div>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
   </div>
 </template>
@@ -294,24 +288,11 @@
        makeFileUrl(url) {
         let avatar = makeFileUrl(url)
         return avatar
-      },
-      drawHtmlToCanvas() {
-        let container = this.$refs.canvasContainer;
-        console.log("xxxx")
-        html2Image(container).then(img => {
-          tjUploadFile(img).then(({
-            data
-          }) => {
-            this.imgUrl = this.makeFileUrl(data.result.url);
-            console.log(this.imgUrl)
-          })
-        })
       }
+     
     },
     mounted() {
-      setTimeout(() => {
-        this.drawHtmlToCanvas()
-      }, 800);
+    
       setTimeout(() => {
         this.mounted = true;
       }, 800);

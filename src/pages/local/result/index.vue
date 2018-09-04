@@ -71,7 +71,6 @@
           <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
         </div>
       </div>
-      <img class="share-img" id="share-img" :src="shareImg">
     </div>
   </div>
 </template>
@@ -279,9 +278,7 @@
       },
       goShare() {
         if (this.IS_WX) {
-          this.$router.push({
-            name: 'localShare'
-          })
+         location.href = `/static/share.html?path=${this.appShareImg}`
         }
       },
       goTips() {
@@ -303,16 +300,12 @@
           window.shareImg=src;
           console.log('html2Image-finish。img')
           // container.appendChild(img);
-            Indicator.close();
-          if (self.IS_APP) {
+          if (self.IS_WX) {
             tjUploadFile(img).then(({
               data
             }) => {
-
+               Indicator.close();
               self.appShareImg = data.result.url;
-              window.shareImgUrl=data.result.url;
-               document.getElementById("share-img").src=self.appShareImg;
-
             })
           }
         })

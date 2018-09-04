@@ -27,31 +27,12 @@
         .share-img {
             width: 90%;
         }
-        
-        .bottom {
-            width: 90%;
-            margin: 1em;
-            background: #fff;
-            border-radius: 0.5em;
-            text-align: center;
-            display: none;
-        }
-        
-        .icon {
-            margin: 1em;
-            width: 2.5em;
-        }
     </style>
 </head>
 
 <body>
     <div class="share" id="shareContainer">
         <img id="shareImg" src="./img/bg.png" class="share-img">
-        <div class="bottom" id="shareBottom">
-            <img src="./img/wx.png" class="icon" onclick="toShare('inviteNewGuyActionWeChat')">
-            <img src="./img/pyq.png" class="icon" onclick="toShare('inviteNewGuyActionWxTimeLine')">
-            <img src="./img/download.png" class="icon" onclick="toShare('inviteNewGuyActionSavePicture')">
-        </div>
     </div>
 </body>
 <script>
@@ -65,61 +46,6 @@
     }
     fileUrl += path;
     document.getElementById("shareImg").src = fileUrl;
-    window.onload = function() {
-        if (isApp()) {
-            document.getElementById("shareContainer").style.background = "#144a9d";
-            document.getElementById("shareBottom").style.display = "block";
-        }
-        window.setupWebViewJavascriptBridge = function(callback) {
-            if (window.WebViewJavascriptBridge) {
-                return callback(WebViewJavascriptBridge);
-            }
-            if (window.WVJBCallbacks) {
-                return window.WVJBCallbacks.push(callback);
-            }
-            window.WVJBCallbacks = [callback];
-            var WVJBIframe = document.createElement('iframe');
-            WVJBIframe.style.display = 'none';
-            WVJBIframe.src = 'https://__bridge_loaded__';
-            document.documentElement.appendChild(WVJBIframe);
-            setTimeout(function() {
-                document.documentElement.removeChild(WVJBIframe)
-            }, 0)
-        }
-    }
-
-    function isApp() {
-        let ua = navigator.userAgent.toLowerCase();
-        return /closer-(android|ios)/.test(ua);
-    }
-
-    function toShare(type) {
-        let ua = navigator.userAgent.toLowerCase();
-        console.log("toShare", type, "---", url)
-        if (ua.indexOf("closer-ios") > -1) {
-            setupWebViewJavascriptBridge(function(bridge) {
-                console.log("toShare ios bridge", bridge)
-                if (bridge) {
-                    bridge.callHandler("inviteNewerAction", {
-                        "type": type,
-                        "img": url
-                    }, function(data, responseCallback) {})
-                }
-            })
-        } else if (ua.indexOf("closer-android") > -1) {
-            console.log("toShare android bridge", bridge)
-            if (typeof window.bridge != "undefined") {
-                try {
-                    window.bridge.inviteNewerAction(JSON.stringify({
-                        "type": type,
-                        "img": url
-                    }));
-                } catch (e) {
-                    Toast("请升级最新版本客户端")
-                }
-            }
-        }
-    }
 
     function GetQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
