@@ -281,7 +281,7 @@
       },
       goShare() {
         if (this.IS_WX) {
-         location.href = `/static/share.html?path=${this.appShareImg}`
+         location.href = `/static/share.html?path=${this.path}`
         }
       },
       goTips() {
