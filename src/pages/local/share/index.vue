@@ -1,6 +1,6 @@
 <template>
   <div class="main local-share" :class="{'in-app': IS_APP}">
-    <local-header v-if="IS_APP" back home></local-header>
+    <local-header v-if="IS_APP" back home :path="imgUrl"></local-header>
     <div class="share-wrapper">
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
@@ -74,7 +74,6 @@
     html2Image,
     tjUploadFile
   } from '../../../utils/utils'
-  import * as PIXI from 'pixi.js';
   import QrcodeVue from 'qrcode.vue';
   import defaultImg from '../assets/images/default_share.png';
   export default {
@@ -139,8 +138,8 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-      // setTimeout(this.drawHtmlToCanvas, 100)
-      this.pixiImg()
+      setTimeout(this.drawHtmlToCanvas, 100)
+      // this.pixiImg()
     },
     methods: {
       ...mapActions("local", [
@@ -195,12 +194,8 @@
             tjUploadFile(img).then(({
               data
             }) => {
-
               self.imgUrl = self.makeFileUrl(data.result.url);
-               document.getElementById("share-img").src=self.imgUrl;
-
             })
-          // }
         })
       },
       pixiImg() {

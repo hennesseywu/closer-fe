@@ -19,7 +19,8 @@
     props: {
       back: Boolean,
       close: Boolean,
-      share: Boolean
+      share: Boolean,
+      imgUrl:String
     },
     computed: {
       ...mapState(['UA', 'V_1_2_3'])
@@ -53,9 +54,7 @@
       },
       // 点击分享跳转到分享页
       handleShare() {
-        this.$router.push({
-          name: 'localShare'
-        })
+        location.href=`/static/share.html?path=${this.imgUrl}`
       }
     }
   }

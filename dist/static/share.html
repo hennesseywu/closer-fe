@@ -38,15 +38,15 @@
         }
         
         .icon {
-            margin: 1.5em;
-            width: 2em;
+            margin: 1em;
+            width: 2.5em;
         }
     </style>
 </head>
 
 <body>
     <div class="share" id="shareContainer">
-        <img id="shareImg" src="https://file-sandbox.tiejin.cn/public/a161gNu0qY/blob.png" class="share-img">
+        <img id="shareImg" src="./img/bg.png" class="share-img">
         <div class="bottom" id="shareBottom">
             <img src="./img/wx.png" class="icon" onclick="toShare('inviteNewGuyActionWeChat')">
             <img src="./img/pyq.png" class="icon" onclick="toShare('inviteNewGuyActionWxTimeLine')">
@@ -55,21 +55,21 @@
     </div>
 </body>
 <script>
-    let url = GetQueryString("url");
+    let path = GetQueryString("path");
+    let fileUrl = "https://file.tiejin.com"
+    let is_dev = false;
+    console.log(path);
     if (/sandbox.tiejin/.test(window.location.href) || /local.tiejin/.test(window.location.href)) {
         is_dev = true;
         fileUrl = "https://file-sandbox.tiejin.cn"
     }
-    url = fileUrl + "/public/" + url + "/blob.png";
-    document.getElementById("shareImg").src = url;
+    fileUrl += path;
+    document.getElementById("shareImg").src = fileUrl;
     window.onload = function() {
         if (isApp()) {
             document.getElementById("shareContainer").style.background = "#144a9d";
             document.getElementById("shareBottom").style.display = "block";
         }
-        let fileUrl = "https://file.tiejin.cn";
-        let is_dev = false;
-
         window.setupWebViewJavascriptBridge = function(callback) {
             if (window.WebViewJavascriptBridge) {
                 return callback(WebViewJavascriptBridge);

@@ -37,6 +37,42 @@
       </div>
       <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
     </div>
+    <div ref="canvasContainer" class="share-box">
+      <div v-if="answerId" class="share-score">
+        <div class="share-user-img">
+          <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
+          <div class="share-user-filter">
+            <img :src="levelData.logoImg" alt="">
+          </div>
+        </div>
+        <div class="share-user-name">{{user.fullname}}</div>
+        <div class="share-desc">
+          在【谁是成都最土著】中获得
+          <span class="share-desc-score"> {{score}}</span> 分，
+          <br/>
+          <span class="share-desc-tip">{{levelData.tip}}</span>
+        </div>
+        <div class="share-title box box-lr box-center-center">
+          <div class="line left"></div>
+          <div class="name">获得称号</div>
+          <div class="line right"></div>
+        </div>
+        <div class="share-tag">
+          <img :src="levelData.tagImg" alt="">
+        </div>
+        <div class="share-qrcode">
+          <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+        </div>
+        <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
+      </div>
+      <div v-else class="share-default">
+        <img :src="defaultImg" alt="" class="share-default-bg">
+        <div class="share-qrcode">
+          <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+        </div>
+      </div>
+      <img class="share-img" id="share-img" src="">
+    </div>
   </div>
 </template>
 
@@ -55,14 +91,20 @@
   } from '../../../utils/utils'
   import localDialog from '../components/dialog'
   import localHeader from '../components/header';
+  import defaultImg from '../assets/images/default_share.png';
+  import QrcodeVue from 'qrcode.vue';
+  
   import {
+    addParamsForUrl,
     makeFileUrl,
-    addParamsForUrl
+    html2Image,
+    tjUploadFile,
   } from '../../../utils/utils'
   export default {
     components: {
       localDialog,
-      localHeader
+      localHeader,
+      QrcodeVue
     },
     data() {
       return {
@@ -84,16 +126,22 @@
           share: false,
           // 弹窗文字内容
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
-        }
-      };
-    },
-    beforeRouteEnter (to, from, next) {
-      console.log(to, from)
-      if (/^\/local\/(share|answer)/.test(from.path)) {
-        next();
-      } else {
-        next('/local')
+        },
+        qrcode: {
+          val: 'https://a.tiejin.cn/local',
+          size: 80
+        },
+        defaultImg: defaultImg
       }
+    },
+    beforeRouteEnter(to, from, next) {
+      console.log(to, from)
+      // if (/^\/local\/(share|answer)/.test(from.path)) {
+      //   next();
+      // } else {
+      //   next('/local')
+      // }
+      next();
     },
     created() {
   
@@ -129,7 +177,7 @@
         //   })
         // location.href = addParamsForUrl(location.origin + '/local', data)
       }
-      // this.drawHtmlToCanvas()
+      this.drawHtmlToCanvas()
     },
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
@@ -139,7 +187,9 @@
         currentQuesitionNum: state => state.questions.currentQuesitionNum,
         statistic: state => state.statistic,
         endData: state => state.endData,
-        activityId: state => state.activityId
+        activityId: state => state.activityId,
+        answerId: state => state.endData.userAnswerId,
+        shareData: state => state.shareData,
       })
     },
     methods: {
@@ -206,10 +256,22 @@
       },
       goShare() {
         if (this.IS_WX) {
-          this.$router.push({
-            name: 'localShare'
-          })
+          // this.$router.push({
+          //   name: 'localShare'
+          // })
+          location.href = `/static/share.html?path=${this.imgUrl}`
         }
+      },
+      drawHtmlToCanvas() {
+        let container = this.$refs.canvasContainer;
+        html2Image(container).then(img => {
+          tjUploadFile(img).then(({
+            data
+          }) => {
+            this.imgUrl = data.result.url;
+            console.log(this.imgUrl)
+          })
+        })
       },
       goTips() {
         if (this.isApp) {
