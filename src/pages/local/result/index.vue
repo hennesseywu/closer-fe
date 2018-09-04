@@ -147,7 +147,7 @@
       };
     },
     beforeRouteEnter(to, from, next) {
-      console.log('beforeRouteEnter:',from)
+      console.log('beforeRouteEnter:', from)
       if (/^\/local\/(share|answer)/.test(from.path) || localStorage.resultCache != '{}') {
         next();
       } else {
@@ -155,13 +155,13 @@
       }
     },
     created() {
-      if (localStorage.resultCache &&localStorage.resultCache != '{}') {
+      if (localStorage.resultCache && localStorage.resultCache != '{}') {
         let CACHE = JSON.parse(localStorage.resultCache);
-        console.log('window.CACHE',CACHE)
+        console.log('window.CACHE', CACHE)
         localStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
-
+  
       if (this.IS_DEV) {
         this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
@@ -199,7 +199,9 @@
         //   })
         // location.href = addParamsForUrl(location.origin + '/local', data)
       }
-      this.drawHtmlToCanvas()
+      setTimeout(() => {
+        this.drawHtmlToCanvas();
+      }, 100)
     },
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
@@ -339,7 +341,7 @@
           level: this.level,
           score: this.score
         };
-        localStorage.resultCache =  JSON.stringify(resultCache);
+        localStorage.resultCache = JSON.stringify(resultCache);
       }
     }
   };

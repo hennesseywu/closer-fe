@@ -76,7 +76,7 @@
     data() {
       return {
         currentWidth: 0,
-        path:"",
+        path: "",
         // mounted
         mounted: false,
         // 弹窗
@@ -106,13 +106,13 @@
     },
     computed: {
       ...mapState('local', ['aid', 'isLogin', 'statistic']),
-      ...mapState(['IS_APP', 'IS_WX','IS_DEV']),
+      ...mapState(['IS_APP', 'IS_WX', 'IS_DEV']),
       ...mapState('local', {
         currentQuesitionNum: state => state.questions.currentQuesitionNum,
         objectID: state => state.user.objectID || '',
         salt: state => state.statistic.signSalt,
         activityId: state => state.activityId,
-
+  
       }),
       remainTimesToMax() {
         return Math.ceil(transAmount(this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
@@ -128,7 +128,7 @@
       }
     },
     created() {
-       if (this.IS_DEV) {
+      if (this.IS_DEV) {
         this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
         this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
@@ -306,14 +306,16 @@
           downloadApp();
         }
       },
-       makeFileUrl(url) {
+      makeFileUrl(url) {
         let avatar = makeFileUrl(url)
         return avatar
       }
-     
+  
     },
     mounted() {
-    this.drawHtmlToCanvas();
+      setTimeout(() => {
+        this.drawHtmlToCanvas();
+      }, 100)
       setTimeout(() => {
         this.mounted = true;
       }, 800);
