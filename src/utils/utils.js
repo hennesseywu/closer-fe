@@ -290,7 +290,7 @@ function convertToImage(canvas, width, height, type) {
     retCanvas.height = height;
     retCanvas.style.width = width;
     retCanvas.style.height = height;
-    console.log(1,w,h,width, height);
+    console.log(1, w, h, width, height);
     retCtx.mozImageSmoothingEnabled = false;
     retCtx.webkitImageSmoothingEnabled = false;
     retCtx.msImageSmoothingEnabled = false;

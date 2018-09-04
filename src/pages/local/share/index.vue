@@ -149,7 +149,7 @@
       ]),
       toShare(type) {
         let ua = this.$store.state.UA
-        let url = this.appShareImg;
+        let url = this.imgUrl;
         console.log('share--', type, url, ua)
         if (ua.indexOf("closer-ios") > -1) {
           setupWebViewJavascriptBridge(function(bridge) {
@@ -189,16 +189,14 @@
           console.log('html2Image-finish')
           // container.appendChild(img);
             Indicator.close();
-          // if (self.IS_APP) {
+          if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
             }) => {
-
               self.imgUrl = self.makeFileUrl(data.result.url);
                document.getElementById("share-img").src=self.imgUrl;
-
             })
-          // }
+          }
         })
       }
     }

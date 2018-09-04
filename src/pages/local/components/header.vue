@@ -54,7 +54,7 @@
       },
       // 点击分享跳转到分享页
       handleShare() {
-        location.href=`/static/share.html?path=${this.imgUrl}`
+        this.$router.push({name:"localShare"})
       }
     }
   }
