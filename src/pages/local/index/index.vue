@@ -40,20 +40,36 @@
       <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
     </section>
     <section class="ft"></section>
+    <div class="share-default" ref="canvasContainer">
+      <img :src="defaultImg" alt="" class="share-default-bg">
+      <div class="share-qrcode">
+        <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+      </div>
+    </div>
     <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
+  import QrcodeVue from 'qrcode.vue';
   import localDialog from '../components/dialog';
   import localHeader from '../components/header';
+  import defaultImg from '../assets/images/default_share.png';
+  
   import {
     mapState,
     mapActions,
     mapMutations
   } from 'vuex';
-  import {transAmount, parseQuery, downloadApp} from '../../../utils/utils'
+  import {
+    makeFileUrl,
+    html2Image,
+    tjUploadFile,
+    transAmount,
+    parseQuery,
+    downloadApp
+  } from '../../../utils/utils'
   
   export default {
     name: 'localIndex',
@@ -70,15 +86,27 @@
           share: false,
           // 弹窗文字内容
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
-        }
+        },
+        qrcode: {
+          val: 'https://a.tiejin.cn/local',
+          size: 80
+        },
+        defaultImg: defaultImg
+  
       }
     },
     components: {
+      QrcodeVue,
       localDialog,
       localHeader
     },
-    computed(){
-     this.userShare()
+    beforeMount(){
+      let img=document.createElement("img");
+      img.src="https://file-sandbox.tiejin.cn/public/a161gNu0qY/blob.png";
+      document.body.appendChild(img)
+    },
+    computed() {
+      this.userShare()
     },
     computed: {
       ...mapState('local', ['aid', 'isLogin', 'statistic']),
@@ -90,7 +118,7 @@
         return Math.ceil(transAmount(this.statistic.maxAwardAmt - this.statistic.totalAwardAmt) / 5)
       },
       currentTotalAmount() {
-        return (this.statistic.totalAwardAmt/100).toFixed(0);
+        return (this.statistic.totalAwardAmt / 100).toFixed(0);
       },
       currentDesc() {
         if (this.remainTimesToMax == 0) {
@@ -101,9 +129,11 @@
     },
     created() {
       const self = this;
-      console.log('isLogin:',self.isLogin)
+      console.log('isLogin:', self.isLogin)
       // 种cookie
-      Cookies.set('aid', self.aid, {expires: 7});
+      Cookies.set('aid', self.aid, {
+        expires: 7
+      });
       self.checkParams(self.$route.query);
       if (self.isLogin) {
         self.initAnimation();
@@ -118,20 +148,21 @@
         // if (typeof(Cookies.get("token")) != "undefined" && typeof(user) != "undefined") {
         //   self.SET_USER(JSON.parse(user))
         // } else {
-          self.getUserInfoAndLoginWithWx(self.$route.query).then(sign => {
-            if (sign) {
-              self.initAnimation();
-              self.initWxConfig();
-            } else {
-              this.dialog.share = false;
-              this.dialog.content = '亲，请先登录再参与答题吧~';
-              this.dialog.show = true;
-            }
-          })
+        self.getUserInfoAndLoginWithWx(self.$route.query).then(sign => {
+          if (sign) {
+            self.initAnimation();
+            self.initWxConfig();
+          } else {
+            this.dialog.share = false;
+            this.dialog.content = '亲，请先登录再参与答题吧~';
+            this.dialog.show = true;
+          }
+        })
         // }
       }
-      
+  
     },
+  
     methods: {
       ...mapActions('local', [
         'checkParams',
@@ -148,7 +179,7 @@
       ]),
       // 展示金额，rate为百分比率，count为除以10的指数
       showAmount(rate, count = 0) {
-        return parseInt(this.statistic.maxAwardAmt*rate/(10**count))
+        return parseInt(this.statistic.maxAwardAmt * rate / (10 ** count))
       },
       // 转到排行榜
       showRankingList() {
@@ -187,7 +218,9 @@
           window.pageTo = 'answer'
           this.$router.push({
             name: 'localAnswer',
-            params: {from:'fromIndex'}
+            params: {
+              from: 'fromIndex'
+            }
           })
         }
       },
@@ -223,11 +256,11 @@
         }
       },
       setCurrentWidth() {
-        return this.currentWidth = this.statistic.totalAwardAmt*100/this.statistic.maxAwardAmt + '%'
+        return this.currentWidth = this.statistic.totalAwardAmt * 100 / this.statistic.maxAwardAmt + '%'
       },
       initAnimation() {
         this.getStatistic().then(() => {
-            this.setCurrentWidth();
+          this.setCurrentWidth();
         })
       },
       handleWithDraw() {
@@ -257,14 +290,33 @@
           // DOWNLOAD
           downloadApp();
         }
+      },
+       makeFileUrl(url) {
+        let avatar = makeFileUrl(url)
+        return avatar
+      },
+      drawHtmlToCanvas() {
+        let container = this.$refs.canvasContainer;
+        console.log("xxxx")
+        html2Image(container).then(img => {
+          tjUploadFile(img).then(({
+            data
+          }) => {
+            this.imgUrl = this.makeFileUrl(data.result.url);
+            console.log(this.imgUrl)
+          })
+        })
       }
     },
     mounted() {
       setTimeout(() => {
+        this.drawHtmlToCanvas()
+      }, 800);
+      setTimeout(() => {
         this.mounted = true;
       }, 800);
       this.updateCurrentQuestionNum()
-      console.log('index',this.currentQuesitionNum)
+      console.log('index', this.currentQuesitionNum)
     }
   }
 </script>

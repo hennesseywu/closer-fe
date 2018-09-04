@@ -37,42 +37,6 @@
       </div>
       <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" @close="closeDialog"></local-dialog>
     </div>
-    <div ref="canvasContainer" class="share-box">
-      <div v-if="answerId" class="share-score">
-        <div class="share-user-img">
-          <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
-          <div class="share-user-filter">
-            <img :src="levelData.logoImg" alt="">
-          </div>
-        </div>
-          <div class="share-user-name">{{user.fullname}}</div>
-        <div class="share-desc">
-          在【谁是成都最土著】中获得
-          <span class="share-desc-score"> {{score}}</span> 分，
-          <br/>
-          <span class="share-desc-tip">{{levelData.tip}}</span>
-        </div> 
-        <div class="share-title box box-lr box-center-center">
-          <div class="line left"></div>
-          <div class="name">获得称号</div>
-          <div class="line right"></div>
-        </div>
-        <div class="share-tag">
-          <img :src="levelData.tagImg" alt="">
-        </div>
-          <div class="share-qrcode"> 
-          <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-        </div>
-        <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
-      </div>
-      <div v-else class="share-default">
-        <img :src="defaultImg" alt="" class="share-default-bg">
-        <div class="share-qrcode">
-          <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-        </div>
-      </div>
-      <img class="share-img" id="share-img" :src="shareImg">
-    </div>
   </div>
 </template>
 
@@ -91,19 +55,14 @@
   } from '../../../utils/utils'
   import localDialog from '../components/dialog'
   import localHeader from '../components/header';
-  import QrcodeVue from 'qrcode.vue';
-  import defaultImg from '../assets/images/default_share.png';
   import {
     makeFileUrl,
-    addParamsForUrl,
-    html2Image,
-    tjUploadFile
+    addParamsForUrl
   } from '../../../utils/utils'
   export default {
     components: {
       localDialog,
-      localHeader,
-      QrcodeVue
+      localHeader
     },
     data() {
       return {
@@ -112,6 +71,8 @@
         regards: 0,
         awardAmt: 0,
         // chance: 0,
+        score: 0,
+        level: null,
         localText1: '同样是九年义务教育，为什么你那么优秀？你“土”的一览众山小，谁都没你DIAO',
         localText2: '恭喜你获得2元奖励，但你对成都了解还不够多哦！冲击满分赢5元！',
         localText3: '盆友，你是路过成都吗？得满分可以领5元现<br/>金，再试试吧',
@@ -123,29 +84,7 @@
           share: false,
           // 弹窗文字内容
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
-        },
-
-
-        shareImg: defaultImg,
-        qrcode: {
-          val: 'https://a.tiejin.cn/local',
-          size: 80
-        },
-        showData: [{
-          logoImg: require('../assets/images/avatar1.png'),
-          tip: '赢得5元红包！',
-          tagImg: require('../assets/images/local1.png')
-        }, {
-          logoImg: require('../assets/images/avatar2.png'),
-          tip: '赢得2元现金红包，全答对可得5元哦！',
-          tagImg: require('../assets/images/local2.png')
-        }, {
-          logoImg: require('../assets/images/avatar3.png'),
-          tip: '和5元现金红包失之交臂，你要来试试吗？',
-          tagImg: require('../assets/images/local3.png')
-        }],
-        defaultImg: defaultImg,
-        appShareImg: ''
+        }
       };
     },
     beforeRouteEnter (to, from, next) {
@@ -171,9 +110,9 @@
       }
     },
     mounted() {
-      // this.chance = this.$store.state.local.statistic.chance
-      // this.score = this.endData.score ? this.endData.score : ''
-      // this.level = this.endData.level
+      this.chance = this.$store.state.local.statistic.chance
+      this.score = this.endData.score ? this.endData.score : ''
+      this.level = this.endData.level
       this.awardAmt = this.endData.awardAmt
       this.userShare();
       if (this.score != '') {
@@ -190,7 +129,7 @@
         //   })
         // location.href = addParamsForUrl(location.origin + '/local', data)
       }
-      this.drawHtmlToCanvas()
+      // this.drawHtmlToCanvas()
     },
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
@@ -201,19 +140,7 @@
         statistic: state => state.statistic,
         endData: state => state.endData,
         activityId: state => state.activityId
-      }),
-      ...mapState('local', {
-        objectID: state => state.user.objectID || '',
-        salt: state => state.statistic.signSalt,
-        user: state => state.user,
-        answerId: state => state.endData.userAnswerId,
-        shareData: state => state.shareData,
-        level: state => state.endData.level,
-        score: state => state.endData.score
-      }),
-      levelData() {
-        return this.showData[parseInt(this.level) - 1]
-      }
+      })
     },
     methods: {
       ...mapMutations([
@@ -292,30 +219,6 @@
           // 跳转对应栏目页
           location.href = 'https://h5.tiejin.cn/community/9Mj8OC0TUL'
         }
-      },
-      drawHtmlToCanvas() {
-        let self = this;
-        let container = self.$refs.canvasContainer;
-        html2Image(container).then(img => {
-          // img.setAttribute('class', 'qr-img');
-          // img.setAttribute("crossOrigin", 'Anonymous')
-          let src = img.getAttribute('src');
-          window.shareImg=src;
-          console.log('html2Image-finish。img')
-          // container.appendChild(img);
-            Indicator.close();
-          if (self.IS_APP) {
-            tjUploadFile(img).then(({
-              data
-            }) => {
-
-              self.appShareImg = data.result.url;
-              window.shareImgUrl=data.result.url;
-               document.getElementById("share-img").src=self.appShareImg;
-
-            })
-          }
-        })
       }
     }
   };
