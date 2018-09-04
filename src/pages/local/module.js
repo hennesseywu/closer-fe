@@ -47,7 +47,8 @@ export default {
     },
     endData: {
     },
-    shareData: ''
+    shareData: '',
+    wxConfig: null
   },
   mutations: {
     // 设置微信授权后用户信息
@@ -100,6 +101,9 @@ export default {
     nextQuestion(state) {
       let currentQuesitionNum = state.questions.currentQuesitionNum
       state.questions.currentQuesitionNum = ++currentQuesitionNum
+    },
+    setWxConfig(state, payload) {
+      state.wxConfig = payload
     }
   },
 
@@ -415,30 +419,31 @@ export default {
         data.result && Toast(data.result)
       }
     },
-    initWxConfig({
+    async initWxConfig({
       state,
       rootState
     }) {
-      let params = {
-        url: location.href
-      };
-      service.wechatConfig(params).catch(err => {
-        Toast('网络开小差啦，请稍后再试')
-        return;
-      }).then(({
-        data
-      }) => {
-        let wxConfig = {};
+        let wxConfig = state.wxConfig;
+        if (!wxConfig || !wxConfig.signature || !wxConfig.appId || !wxConfig.nonceStr || !wxConfig.timestamp) {
+          let params = {
+            url: location.href
+          };
+          let data = await service.wechatConfig(params).catch(err => {
+            Toast('网络开小差啦，请稍后再试')
+            return;
+          })
+          if (typeof (data.code) != "undefined" && data.code == 0) {
+            commit('setWxConfig', data.result);
+            wxConfig = data.result;
+          } else {
+            return;
+          }
+        }
         let link = addParamsForUrl(location.origin + '/local', {
           inviter: state.user.objectID,
           activityId: state.activityId,
           salt: state.statistic.signSalt
         });
-        if (typeof (data.code) != "undefined" && data.code == 0) {
-          wxConfig = data.result;
-        } else {
-          return;
-        }
         console.log('wxConfig::', link);
         if (wxConfig && wxConfig.signature && wxConfig.appId && wxConfig.nonceStr && wxConfig.timestamp) {
           wx.config({
@@ -482,7 +487,7 @@ export default {
             // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
           });
         }
-      })
+    
     }
   }
 }

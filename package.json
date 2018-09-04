@@ -16,6 +16,7 @@
     "mint-ui": "^2.2.13",
     "mobile-detect": "^1.4.2",
     "npm": "^6.1.0",
+    "pixi.js": "^4.8.2",
     "promise-polyfill": "^8.0.0",
     "qrcode.vue": "^1.6.0",
     "vconsole": "^3.2.0",
