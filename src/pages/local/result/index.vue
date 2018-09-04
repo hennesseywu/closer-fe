@@ -319,8 +319,8 @@
             tjUploadFile(img).then(({
               data
             }) => {
-              Indicator.close();
               self.path = data.result.url;
+              Indicator.close();
             })
           }
         })
