@@ -132,11 +132,6 @@
       }
     },
     created() {
-      if (this.IS_DEV) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      } else {
-        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      }
       const self = this;
       console.log('isLogin:', self.isLogin)
       // 种cookie
@@ -160,7 +155,6 @@
         self.getUserInfoAndLoginWithWx(self.$route.query).then(sign => {
           if (sign) {
             self.initAnimation();
-            self.initWxConfig();
           } else {
             this.dialog.share = false;
             this.dialog.content = '亲，请先登录再参与答题吧~';
@@ -287,6 +281,13 @@
       },
       initAnimation() {
         this.getStatistic().then(() => {
+          if (this.IS_DEV) {
+            this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+          } else {
+            this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+          }
+          console.log('qrcode.val:',this.qrcode.val);
+          this.initWxConfig();
           this.setCurrentWidth();
         })
       },
@@ -342,7 +343,7 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import '../assets/style/animation.less';
   @import '../assets/style/main.less';
   @import '../assets/style/index.less';
