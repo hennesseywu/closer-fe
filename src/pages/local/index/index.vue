@@ -327,7 +327,7 @@
     },
     mounted() {
       Indicator.open();
-      if (typeof(Cookies.get("path")) == "undefined") {
+      if (typeof(Cookies.get("path")) == "undefined"&&this.IS_WX) {
         setTimeout(() => {
           this.drawHtmlToCanvas();
         }, 100)

@@ -138,7 +138,9 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
+      if(this.IS_WX){
       setTimeout(this.drawHtmlToCanvas, 100)
+      }
     },
     methods: {
       ...mapActions("local", [
