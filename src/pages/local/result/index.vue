@@ -109,7 +109,6 @@
         isApp: this.$store.state.IS_APP,
         // btnText: "下载APP",
         regards: 0,
-        awardAmt: 0,
         // chance: 0,
         localText1: '同样是九年义务教育，为什么你那么优秀？你“土”的一览众山小，谁都没你DIAO',
         localText2: '恭喜你获得2元奖励，但你对成都了解还不够多哦！冲击满分赢5元！',
@@ -171,10 +170,6 @@
       }
     },
     mounted() {
-      // this.chance = this.$store.state.local.statistic.chance
-      // this.score = this.endData.score ? this.endData.score : ''
-      // this.level = this.endData.level
-      this.awardAmt = this.endData.awardAmt
       this.userShare();
       if (this.score != '') {
         this.regardsAdd();
@@ -210,7 +205,8 @@
         answerId: state => state.endData.userAnswerId,
         shareData: state => state.shareData,
         level: state => state.endData.level,
-        score: state => state.endData.score
+        score: state => state.endData.score,
+        awardAmt: state => state.endData.awardAmt
       }),
       levelData() {
         return this.showData[parseInt(this.level) - 1]

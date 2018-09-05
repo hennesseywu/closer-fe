@@ -6,7 +6,7 @@
       <div class="hd-img"></div>
       <div class="answer-box">
         <div class="answer-acount">{{currentQuesitionNum + 1}}/8</div>
-        <div class="subject" :class="isUpdate ? 'animated slideInUp' : ''">{{startData[currentQuesitionNum].title}}</div>
+        <div class="subject" :class="isUpdate ? 'animated slideInUp' : ''" v-html="startData[currentQuesitionNum].title"></div>
         <div class="optoins" :class="isUpdate ? 'animated slideInUp' : ''" v-for="(item, index) in startData[currentQuesitionNum].answers" :key="index">
           <div class="list" :data-index="index" :data-seq="item.seq" :data-questionId="item.questionId" :class="index===checkNum ? 'bg-yellow' : ''" @click="checkOptions($event)">{{item.title}}</div>
         </div>
@@ -127,7 +127,8 @@
           sign: this.sign(),
           inviteUser: this.inviter
         }
-        console.log("currentQuesitionNum---", this.questionNum)
+        console.log(this.answers)
+        // console.log("currentQuesitionNum---", this.questionNum)
         if (this.currentQuesitionNum < 7) {
           this.checkNum = ''
           this.isCheck = false
