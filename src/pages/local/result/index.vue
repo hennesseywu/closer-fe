@@ -347,7 +347,7 @@
   };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import '../assets/style/main.less';
   @import '../assets/style/animation.less';
   @import '../assets/style/result.less';
