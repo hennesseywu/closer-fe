@@ -165,7 +165,9 @@
         } else {
           if (this.isCommit) return
           this.isCommit = true
-          this.commitTest(params).then(() => {})
+          this.commitTest(params).then(() => {
+            this.isCommit = false
+          })
         }
       }
     }
