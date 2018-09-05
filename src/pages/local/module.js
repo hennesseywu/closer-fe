@@ -70,10 +70,9 @@ export default {
       state.startData = data.questions
     },
     // 结束测试数据
-    endData(state, payload) {
-      let data = payload.data
-      state.endData = data.result
-      data.result.totalAwardAmt && (state.statistic.totalAwardAmt = data.result.totalAwardAmt);
+    setEndData(state, payload) {
+      state.endData = payload.result
+      payload.result.totalAwardAmt && (state.statistic.totalAwardAmt = payload.result.totalAwardAmt);
     },
     shareData(state, payload) {
       let data = payload.data.result
@@ -343,7 +342,6 @@ export default {
       } = await service.getStatistic({
         activityId: state.activityId
       });
-      console.log(data.code, data.result)
       if (data.code == 0) {
         commit('SET_STATISTIC', data.result)
       } else {
@@ -411,10 +409,7 @@ export default {
       })
       console.log(3, data)
       if (typeof(data.code != undefined) && data.code == 0) {
-        commit({
-          type: 'endData',
-          data
-        })
+        commit('setEndData', data)
         Router.push({
           name: "localResult",
           params: {

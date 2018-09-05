@@ -124,7 +124,6 @@
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
         },
   
-        shareImg: defaultImg,
         qrcode: {
           val: 'https://a.tiejin.cn/local',
           size: 80
@@ -161,20 +160,12 @@
         localStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
-  
       if (this.IS_DEV) {
         this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
         this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       }
       console.log("parkk", this.$route.params.from)
-  
-      // if (this.$route.params.from != 'answer') {
-      //   this.$router.push({
-      //     name: 'localIndex'
-      //   })
-      //   return
-      // }
       if (this.IS_WX) {
         this.initWxConfig()
       }
@@ -314,7 +305,6 @@
           // img.setAttribute('class', 'qr-img');
           // img.setAttribute("crossOrigin", 'Anonymous')
           let src = img.getAttribute('src');
-          window.shareImg = src;
           console.log('html2Image-finish。img')
           // container.appendChild(img);
           if (self.IS_WX) {
