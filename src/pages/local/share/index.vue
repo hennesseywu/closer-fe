@@ -11,13 +11,13 @@
                 <img :src="levelData.logoImg" alt="">
               </div>
             </div>
-             <div class="share-user-name">{{user.fullname}}</div>
+            <div class="share-user-name">{{user.fullname}}</div>
             <div class="share-desc">
               在【谁是成都最土著】中获得
               <span class="share-desc-score"> {{score}}</span> 分，
               <br/>
               <span class="share-desc-tip">{{levelData.tip}}</span>
-            </div> 
+            </div>
             <div class="share-title box box-lr box-center-center">
               <div class="line left"></div>
               <div class="name">获得称号</div>
@@ -26,7 +26,7 @@
             <div class="share-tag">
               <img :src="levelData.tagImg" alt="">
             </div>
-             <div class="share-qrcode"> 
+            <div class="share-qrcode">
               <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
             </div>
             <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
@@ -138,9 +138,7 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-      if(this.IS_WX){
-      setTimeout(this.drawHtmlToCanvas, 100)
-      }
+        setTimeout(this.drawHtmlToCanvas, 100)
     },
     methods: {
       ...mapActions("local", [
@@ -190,13 +188,13 @@
           // document.getElementById("share-img").src=img.src;
           console.log('html2Image-finish')
           // container.appendChild(img);
-            Indicator.close();
+          Indicator.close();
           if (self.IS_APP) {
             tjUploadFile(img).then(({
               data
             }) => {
               self.imgUrl = self.makeFileUrl(data.result.url);
-               document.getElementById("share-img").src=self.imgUrl;
+              document.getElementById("share-img").src = self.imgUrl;
             })
           }
         })
