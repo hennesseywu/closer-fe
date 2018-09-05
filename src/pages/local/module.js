@@ -42,9 +42,7 @@ export default {
     },
     startResult: {},
     startData: [],
-    questions: {
-      currentQuesitionNum: 0
-    },
+    currentQuesitionNum: 0,
     endData: {},
     shareData: '',
     wxConfig: null
@@ -93,12 +91,14 @@ export default {
       state.statistic.chance = --chance
     },
     updateCurrentQuestionNum(state) {
-      state.questions.currentQuesitionNum = 0
-      console.log(123, state.questions.currentQuesitionNum)
+      state.currentQuesitionNum = 0
+      state.startResult = {}
+      state.startData = []
+      console.log(123, state.currentQuesitionNum)
     },
     nextQuestion(state) {
-      let currentQuesitionNum = state.questions.currentQuesitionNum
-      state.questions.currentQuesitionNum = ++currentQuesitionNum
+      let currentQuesitionNum = state.currentQuesitionNum
+      state.currentQuesitionNum = ++currentQuesitionNum
     },
     setWxConfig(state, payload) {
       state.wxConfig = payload
@@ -109,7 +109,7 @@ export default {
       state.shareData = payload.shareData;
       state.user = payload.user;
       state.objectID = payload.objectID;
-      state.questions.currentQuesitionNum = payload.currentQuesitionNum;
+      state.currentQuesitionNum = payload.currentQuesitionNum;
     }
   },
 
@@ -394,7 +394,7 @@ export default {
       commit
     }, payload) {
       commit("nextQuestion")
-      if (state.questions.currentQuesitionNum > state.startData.length) return
+      if (state.currentQuesitionNum > state.startData.length) return
     },
     // 结束测试
     async commitTest({

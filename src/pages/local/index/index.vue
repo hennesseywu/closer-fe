@@ -112,7 +112,7 @@
       ...mapState('local', ['aid', 'isLogin', 'statistic']),
       ...mapState(['IS_APP', 'IS_WX', 'IS_DEV']),
       ...mapState('local', {
-        currentQuesitionNum: state => state.questions.currentQuesitionNum,
+        currentQuesitionNum: state => state.currentQuesitionNum,
         objectID: state => state.user.objectID || '',
         salt: state => state.statistic.signSalt,
         activityId: state => state.activityId,
