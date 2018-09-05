@@ -71,6 +71,10 @@
     downloadApp
   } from '../../../utils/utils'
   
+  import {
+    Indicator
+  } from 'mint-ui'
+  
   export default {
     name: 'localIndex',
     data() {
@@ -232,11 +236,19 @@
       drawHtmlToCanvas() {
         let container = this.$refs.canvasContainer;
         html2Image(container).then(img => {
-          tjUploadFile(img).then(({
-            data
-          }) => {
-            this.path = data.result.url
-          })
+          setTimeout(() => {
+            tjUploadFile(img).then(({
+              data
+            }) => {
+              console.log("draw path")
+              Cookies.set("path", data.result.url, {
+                expires: 30
+              });
+              this.path = data.result.url
+              Indicator.close();
+            })
+          }, 1000)
+  
         })
       },
       closeDialog() {
@@ -313,9 +325,14 @@
   
     },
     mounted() {
-      setTimeout(() => {
-        this.drawHtmlToCanvas();
-      }, 100)
+      Indicator.open();
+      if (typeof(Cookies.get("path")) == "undefined") {
+        setTimeout(() => {
+          this.drawHtmlToCanvas();
+        }, 100)
+      } else {
+        this.path = Cookies.get("path")
+      }
       setTimeout(() => {
         this.mounted = true;
       }, 800);
