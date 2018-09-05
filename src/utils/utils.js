@@ -263,7 +263,7 @@ function convertToImage(canvas, width, height, type) {
   function getDataURL(canvas, type, width, height) {
     canvas = scaleCanvas(canvas, width, height);
     console.log(3, canvas);
-    let dataUrl = canvas.toDataURL('image/png', 1);
+    let dataUrl = canvas.toDataURL(type);
     console.log(4);
     return dataUrl
   }
