@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App'
+import 'babel-polyfill'
 // import './reset.css'
 import './assets/style/reset.less'
 import './assets/style/common.css'
