@@ -147,7 +147,7 @@
     },
     beforeRouteEnter(to, from, next) {
       console.log('beforeRouteEnter:', from)
-      if (/^\/local\/(share|answer)/.test(from.path) || localStorage.resultCache != '{}') {
+      if (/^\/local\/(share|answer)/.test(from.path) || localStorage.resultCache && localStorage.resultCache != '{}') {
         next();
       } else {
         next('/local')
