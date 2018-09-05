@@ -11,7 +11,7 @@
           <div class="list" :data-index="index" :data-seq="item.seq" :data-questionId="item.questionId" :class="index===checkNum ? 'bg-yellow' : ''" @click="checkOptions($event)">{{item.title}}</div>
         </div>-->
       </div>
-      <div class="next-box" :class="isUpdate ? 'animated slideInUp' : ''">
+      <div class="next-box" :class="isUpdate ? 'animated slideInUp faster' : ''">
         <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)">下一题</div>
         <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-else @click="next(startResult.userAnswerId)">完成答题</div>
       </div>
@@ -89,17 +89,17 @@
 
         return `
           <div class="answer-acount">${questionNum}/8</div>
-          <div class="subject animated slideInUp">${title}</div>
-          <div class="optoins animated slideInUp">
+          <div class="subject animated slideInUp faster">${title}</div>
+          <div class="optoins animated slideInUp faster" style="animation-delay: 30ms">
             <div class="list" data-seq="${answers[0].seq}" data-questionId="${answers[0].questionId}">${answers[0].title}</div>
           </div>
-          <div class="optoins animated slideInUp">
+          <div class="optoins animated slideInUp faster" style="animation-delay: 60ms">
             <div class="list" data-seq="${answers[1].seq}" data-questionId="${answers[1].questionId}">${answers[1].title}</div>
           </div>
-          <div class="optoins animated slideInUp">
+          <div class="optoins animated slideInUp faster" style="animation-delay: 90ms">
             <div class="list" data-seq="${answers[2].seq}" data-questionId="${answers[2].questionId}">${answers[2].title}</div>
           </div>
-          <div class="optoins animated slideInUp">
+          <div class="optoins animated slideInUp faster" style="animation-delay: 120ms">
             <div class="list" data-seq="${answers[3].seq}" data-questionId="${answers[3].questionId}">${answers[3].title}</div>
           </div>
         `
@@ -129,7 +129,7 @@
             "questionId": questionId
           }
           this.isCheck = true
-          }
+        }
       },
       sign() {
         let todayTimeStamp = '056fef44ea0ca7ad63a0aae84024ef2d'
@@ -161,7 +161,7 @@
             this.nextQuestion()
           // setTimeout(() => {
             this.isUpdate = true
-          // }, 50)
+          // }, 10)
         } else {
           if (this.isCommit) return
           this.isCommit = true
