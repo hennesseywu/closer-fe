@@ -190,9 +190,11 @@
         //   })
         // location.href = addParamsForUrl(location.origin + '/local', data)
       }
-      setTimeout(() => {
-        this.drawHtmlToCanvas();
-      }, 100)
+      if (this.IS_WX) {
+        setTimeout(() => {
+          this.drawHtmlToCanvas();
+        }, 100)
+      }
     },
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
