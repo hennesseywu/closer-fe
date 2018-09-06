@@ -6,7 +6,7 @@
         <div ref="canvasContainer" class="share-box">
           <div v-if="answerId" class="share-score">
             <div class="share-user-img">
-              <img :src="makeFileUrl(user.avatar)" class="share-user-avatar" crossOrigin="Anonymous">
+              <img :src="makeFileUrl(user.avatar)" :load="avatarLoad($event, true)" :error="avatarLoad($event, false)" class="share-user-avatar" crossOrigin="Anonymous">
               <div class="share-user-filter">
                 <img :src="levelData.logoImg" alt="">
               </div>
@@ -138,7 +138,7 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-        setTimeout(this.drawHtmlToCanvas, 100)
+        // setTimeout(this.drawHtmlToCanvas, 100)
     },
     methods: {
       ...mapActions("local", [
@@ -198,6 +198,10 @@
             })
           }
         })
+      },
+      avatarLoad(e, type) {
+        !type && (e.target.style.display='none')
+        setTimeout(this.drawHtmlToCanvas, 100)
       }
     }
   }

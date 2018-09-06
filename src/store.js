@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import index from './pages/worldcup/index/module'
-import activity from './pages/worldcup/activity/module'
-import tbLogin from './pages/teabar/index/module'
 import pullNew from './pages/pullnew/index/module'
 import local from './pages/local/module'
 
@@ -20,9 +17,6 @@ export default new Vuex.Store({
         V_1_2_3: false
     },
     modules: {
-        index,
-        activity,
-        tbLogin,
         pullNew,
         local
     }

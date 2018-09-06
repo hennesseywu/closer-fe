@@ -40,7 +40,7 @@
     <div ref="canvasContainer" class="share-box">
       <div v-if="answerId" class="share-score">
         <div class="share-user-img">
-          <img :src="makeFileUrl(avatar)" class="share-user-avatar" crossOrigin="Anonymous">
+          <img :src="makeFileUrl(avatar)" :load="avatarLoad($event, true)" :error="avatarLoad($event, false)" class="share-user-avatar" crossOrigin="Anonymous">
           <div class="share-user-filter">
             <img :src="levelData.logoImg" alt="">
           </div>
@@ -185,11 +185,6 @@
         //   })
         // location.href = addParamsForUrl(location.origin + '/local', data)
       }
-      if (this.IS_WX) {
-        setTimeout(() => {
-          this.drawHtmlToCanvas();
-        }, 100)
-      }
     },
     computed: {
       ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
@@ -330,6 +325,10 @@
           score: this.score
         };
         sessionStorage.resultCache = JSON.stringify(resultCache);
+      },
+      avatarLoad(e, type) {
+        !type && (e.target.style.display='none')
+        this.IS_WX && setTimeout(this.drawHtmlToCanvas, 100)
       }
     }
   };
