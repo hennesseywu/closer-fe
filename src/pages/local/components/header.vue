@@ -20,7 +20,7 @@
       back: Boolean,
       close: Boolean,
       share: Boolean,
-      imgUrl:String
+      home: Boolean
     },
     computed: {
       ...mapState(['UA', 'V_1_2_3'])

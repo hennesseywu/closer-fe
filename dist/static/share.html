@@ -40,11 +40,13 @@
 <script>
     let path = GetQueryString("path");
     let fileUrl = "https://file.tiejin.cn"
+    let wxConfigUrl = 'https://api.tiejin.cn'
     let is_dev = false;
     console.log(path);
     if (/sandbox.tiejin/.test(window.location.href) || /local.tiejin/.test(window.location.href)) {
         is_dev = true;
         fileUrl = "https://file-sandbox.tiejin.cn";
+        wxConfigUrl = 'https://api-sandbox.tiejin.cn';
         var vConsole = new VConsole();
     }
     fileUrl += path;
@@ -58,7 +60,7 @@
     }
     window.onload = function() {
         ajax({
-            url: "https://api.tiejin.cn/command/closer_share.wechat_config", //请求地址
+            url: wxConfigUrl+"/command/closer_share.wechat_config", //请求地址
             type: "post", //请求方式
             data: {
                 url: window.location.href

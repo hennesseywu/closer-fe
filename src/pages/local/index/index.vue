@@ -112,7 +112,7 @@
       ...mapState('local', ['aid', 'isLogin', 'statistic']),
       ...mapState(['IS_APP', 'IS_WX', 'IS_DEV']),
       ...mapState('local', {
-        currentQuesitionNum: state => state.questions.currentQuesitionNum,
+        currentQuesitionNum: state => state.currentQuesitionNum,
         objectID: state => state.user.objectID || '',
         salt: state => state.statistic.signSalt,
         activityId: state => state.activityId,
@@ -289,6 +289,13 @@
           console.log('qrcode.val:',this.qrcode.val);
           this.initWxConfig();
           this.setCurrentWidth();
+          if (typeof(Cookies.get("path")) == "undefined"&&this.IS_WX) {
+            setTimeout(() => {
+              this.drawHtmlToCanvas();
+            }, 100)
+          } else {
+            this.path = Cookies.get("path")
+          }
         })
       },
       handleWithDraw() {
@@ -327,13 +334,6 @@
     },
     mounted() {
       Indicator.open();
-      if (typeof(Cookies.get("path")) == "undefined"&&this.IS_WX) {
-        setTimeout(() => {
-          this.drawHtmlToCanvas();
-        }, 100)
-      } else {
-        this.path = Cookies.get("path")
-      }
       setTimeout(() => {
         this.mounted = true;
       }, 800);
