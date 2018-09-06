@@ -6,7 +6,7 @@
         <div ref="canvasContainer" class="share-box">
           <div v-if="answerId" class="share-score">
             <div class="share-user-img">
-              <img :src="makeFileUrl(user.avatar)" :load="avatarLoad($event, true)" :error="avatarLoad($event, false)" class="share-user-avatar" crossOrigin="Anonymous">
+              <img :src="makeFileUrl(user.avatar)" @load="avatarLoad(true, $event)" @error="avatarLoad(false, $event)" class="share-user-avatar" crossOrigin="Anonymous">
               <div class="share-user-filter">
                 <img :src="levelData.logoImg" alt="">
               </div>
@@ -199,8 +199,9 @@
           }
         })
       },
-      avatarLoad(e, type) {
+      avatarLoad(type, e) {
         !type && (e.target.style.display='none')
+        console.log('avatar.load:', type);
         setTimeout(this.drawHtmlToCanvas, 100)
       }
     }
