@@ -170,13 +170,13 @@
             this.isCommit = false;
             console.log('commitTest:end:', this.isCommit)
             localStorage.resultCache && (localStorage.resultCache = '{}')
+            console.log(console.log('commitTest:end1:', this.isCommit));
             this.$router.push({
               name: "localResult",
               params: {
                 from: 'answer'
               }
             })
-            window.sessionStorage.userAnswerId = state.endData.userAnswerId
           })
         }
       }
