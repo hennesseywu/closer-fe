@@ -410,14 +410,6 @@ export default {
       console.log(3, data)
       if (typeof(data.code != undefined) && data.code == 0) {
         commit('setEndData', data)
-        localStorage.resultCache && (localStorage.resultCache = '{}')
-        Router.push({
-          name: "localResult",
-          params: {
-            from: 'answer'
-          }
-        })
-        window.sessionStorage.userAnswerId = state.endData.userAnswerId
       } else {
         data.result && Toast(data.result)
       }

@@ -164,9 +164,19 @@
           // }, 10)
         } else {
           if (this.isCommit) return
-          this.isCommit = true
+          this.isCommit = true;
+          console.log('commitTest:', this.isCommit)
           this.commitTest(params).then(() => {
-            this.isCommit = false
+            this.isCommit = false;
+            console.log('commitTest:end:', this.isCommit)
+            localStorage.resultCache && (localStorage.resultCache = '{}')
+            this.$router.push({
+              name: "localResult",
+              params: {
+                from: 'answer'
+              }
+            })
+            window.sessionStorage.userAnswerId = state.endData.userAnswerId
           })
         }
       }
