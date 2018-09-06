@@ -146,17 +146,17 @@
     },
     beforeRouteEnter(to, from, next) {
       console.log('beforeRouteEnter:', from)
-      if (/^\/local\/(share|answer)/.test(from.path) || localStorage.resultCache && localStorage.resultCache != '{}') {
+      if (/^\/local\/(share|answer)/.test(from.path) || sessionStorage.resultCache && sessionStorage.resultCache != '{}') {
         next();
       } else {
         next('/local')
       }
     },
     created() {
-      if (localStorage.resultCache && localStorage.resultCache != '{}') {
-        let CACHE = JSON.parse(localStorage.resultCache);
+      if (sessionStorage.resultCache && sessionStorage.resultCache != '{}') {
+        let CACHE = JSON.parse(sessionStorage.resultCache);
         console.log('window.CACHE', CACHE)
-        localStorage.resultCache = '{}';
+        sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
       if (this.IS_DEV) {
@@ -329,7 +329,7 @@
           level: this.level,
           score: this.score
         };
-        localStorage.resultCache = JSON.stringify(resultCache);
+        sessionStorage.resultCache = JSON.stringify(resultCache);
       }
     }
   };

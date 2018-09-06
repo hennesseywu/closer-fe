@@ -441,7 +441,7 @@ export default {
         activityId: state.activityId,
         salt: state.statistic.signSalt
       });
-      localStorage.setItem("link", link);
+      sessionStorage.setItem("link", link);
 
       console.log('wxConfig::', link);
       if (wxConfig && wxConfig.signature && wxConfig.appId && wxConfig.nonceStr && wxConfig.timestamp) {
