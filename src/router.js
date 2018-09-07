@@ -126,8 +126,6 @@ router.beforeEach(({
     params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
-    console.log('router.beforeEach', name,path,fullPath,query);
-    // next()
     if (name == 'localIndex') {
         if (isApp()) {
             console.log("closer device")
@@ -138,8 +136,9 @@ router.beforeEach(({
                 next();
                 return;
             }
+            console.log('fullpath:',fullPath,query)
 
-            // test hashRouter
+             // test hashRouter
             // let _path = '',
             //     reUrl = api.wxRedirectUrl,
             //     url = api.wxLoginUrl;
@@ -152,7 +151,7 @@ router.beforeEach(({
             // console.log('redirectUrl:', reUrl, url)
             // _path = reUrl + url
 
-            let _path = api.wxRedirectUrl + encodeURI((location.origin.indexOf('local.tiejin.cn') > -1 ? api.wxLoginLocalUrl : Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query)))
+            let _path = (location.origin.indexOf('local.tiejin.cn') > -1 ? api.wxLoginLocalUrl : Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query))
             let params = {
                 path: _path
             };
