@@ -33,7 +33,7 @@
         <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 3">下载APP</div>
         <div class="text-commen go-wallet" v-if="isApp">去“我的-钱包”查看</div>
         <div class="text-commen go-wallet" v-if="!isApp && level == 3">下载贴近app，领10元新手红包</div>
-        <div class="text-commen go-wallet" v-else>下载贴近APP，去“我的-钱包”查看</div>
+        <div class="text-commen go-wallet" v-if="!isApp && level != 3">下载贴近APP，去“我的-钱包”查看</div>
         <div class="text-commen tips" @click="goTips">查看正确答案，点这里<span class="arrow"></span> </div>
       </div>
       <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" :path="path" @close="closeDialog"></local-dialog>
