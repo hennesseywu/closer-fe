@@ -42,7 +42,7 @@ Vue.use(Router)
 
 const router = new Router({
 
-    mode: 'history',
+    mode: 'hash',
     routes: [{
             path: '/landing',
             name: 'landing',
