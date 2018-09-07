@@ -41,7 +41,7 @@
     </section>
     <section class="ft"></section>
     <local-dialog :show="dialog.show" :share="dialog.share" :path="path" :content="dialog.content" @close="closeDialog"></local-dialog>
-    <div class="share-default" ref="canvasContainer" style="top:0">
+    <div class="share-default" ref="canvasContainer">
       <img :src="defaultImg" alt="" class="share-default-bg">
       <div class="share-qrcode">
         <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
