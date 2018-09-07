@@ -81,6 +81,7 @@
       return {
         isApp: this.$store.state.IS_APP,
         isLogin: false,
+        isDrawed: false,
         qrcode: {
           val: 'https://a.tiejin.cn/local',
           size: 80
@@ -138,7 +139,15 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-        // setTimeout(this.drawHtmlToCanvas, 100)
+      if (!this.answerId) {
+        setTimeout(this.drawHtmlToCanvas, 100)
+      } else {
+        setTimeout(() => {
+          if (!this.isDrawed) {
+            this.drawHtmlToCanvas()
+          }
+        }, 10000)
+      }
     },
     methods: {
       ...mapActions("local", [
@@ -182,6 +191,7 @@
       drawHtmlToCanvas() {
         let self = this;
         let container = self.$refs.canvasContainer;
+        self.isDrawed = true;
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
           // img.setAttribute("crossOrigin", 'Anonymous')
@@ -202,7 +212,9 @@
       avatarLoad(type, e) {
         !type && (e.target.style.display='none')
         console.log('avatar.load:', type);
-        setTimeout(this.drawHtmlToCanvas, 100)
+        if (!this.isDrawed) {
+          setTimeout(this.drawHtmlToCanvas, 100)
+        }
       }
     }
   }
