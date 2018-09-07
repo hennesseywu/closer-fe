@@ -42,7 +42,7 @@ Vue.use(Router)
 
 const router = new Router({
 
-    mode: 'history',
+    // mode: 'history',
     routes: [{
             path: '/landing',
             name: 'landing',
@@ -126,6 +126,7 @@ router.beforeEach(({
     params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
+    console.log('router.beforeEach', name,fullPath,query);
     if (name == 'localIndex') {
         if (isApp()) {
             console.log("closer device")

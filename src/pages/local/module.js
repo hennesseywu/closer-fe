@@ -436,7 +436,7 @@ export default {
           return;
         }
       }
-      let link = addParamsForUrl(location.origin + '/local', {
+      let link = addParamsForUrl(location.origin + '/#/local', {
         inviter: state.user.objectID,
         activityId: state.activityId,
         salt: state.statistic.signSalt
