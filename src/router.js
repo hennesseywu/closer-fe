@@ -42,7 +42,7 @@ Vue.use(Router)
 
 const router = new Router({
 
-    // mode: 'history',
+    mode: 'history',
     routes: [{
             path: '/landing',
             name: 'landing',
@@ -140,19 +140,19 @@ router.beforeEach(({
             }
 
             // test hashRouter
-            let _path = '',
-                reUrl = api.wxRedirectUrl,
-                url = api.wxLoginUrl;
-            console.log('fullpath:',fullPath,query)
-            if (location.origin.indexOf('local.tiejin.cn') > -1 || Cookies.get("IS_DEV")) {
-                reUrl = api.wxRedirectDevUrl
-                url = Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginLocalUrl
-            }
-            url = encodeURIComponent(url+path + '?params=' + encodeURIComponent(JSON.stringify(query)))
-            console.log('redirectUrl:', reUrl, url)
-            _path = reUrl + url
+            // let _path = '',
+            //     reUrl = api.wxRedirectUrl,
+            //     url = api.wxLoginUrl;
+            // console.log('fullpath:',fullPath,query)
+            // if (location.origin.indexOf('local.tiejin.cn') > -1 || Cookies.get("IS_DEV")) {
+            //     reUrl = api.wxRedirectDevUrl
+            //     url = Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginLocalUrl
+            // }
+            // url = encodeURIComponent(url+path + '?params=' + encodeURIComponent(JSON.stringify(query)))
+            // console.log('redirectUrl:', reUrl, url)
+            // _path = reUrl + url
 
-            // let _path = api.wxRedirectUrl + encodeURI((location.origin.indexOf('local.tiejin.cn') > -1 ? api.wxLoginLocalUrl : Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query)))
+            let _path = api.wxRedirectUrl + encodeURI((location.origin.indexOf('local.tiejin.cn') > -1 ? api.wxLoginLocalUrl : Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query)))
             let params = {
                 path: _path
             };
