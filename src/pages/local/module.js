@@ -426,12 +426,12 @@ export default {
         url: location.href
       };
       if (window.hostUrl == '' || window.hostUrl == undefined) {
-        var url = location.origin + location.pathname
+        var url = location.href//location.origin + location.pathname
         window.hostUrl = url    // 将后面的参数去除
       }
-      // if (window.__wxjs_is_wkwebview) {
-      //   params.url = window.hostUrl
-      // }
+      if (rootState.UA.indexOf('iphone') > -1) {
+        params.url = window.hostUrl
+      }
       let { data } = await service.wechatConfig(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
@@ -439,6 +439,7 @@ export default {
       if (typeof(data.code) != "undefined" && data.code == 0) {
         commit('setWxConfig', data.result);
         wxConfig = data.result;
+        console.log('WxConfig:', wxConfig);
       } else {
         return;
       }
@@ -449,7 +450,7 @@ export default {
       });
       sessionStorage.setItem("link", link);
 
-      console.log('wxConfig::', link);
+      console.log('wxShare:link:', link);
       if (wxConfig && wxConfig.signature && wxConfig.appId && wxConfig.nonceStr && wxConfig.timestamp) {
         wx.config({
           "debug": false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -489,7 +490,7 @@ export default {
           callback && callback();
         })
         wx.error(function(res) {
-          console.log("error", res)
+          console.error("wx.config.error", res)
             // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
         });
       }
