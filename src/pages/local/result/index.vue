@@ -277,10 +277,13 @@
         }
       },
       goShare() {
-        if (this.IS_WX) {
-          this.setLocalStorage()
-          location.href = `/static/share.html?path=${this.path}`
-        }
+        this.$router.push({
+          name: 'localShare'
+        })
+        // if (this.IS_WX) {
+        //   this.setLocalStorage()
+        //   location.href = `/static/share.html?path=${this.path}`
+        // }
       },
       goTips() {
         if (this.isApp) {
