@@ -429,9 +429,9 @@ export default {
         var url = location.origin + location.pathname
         window.hostUrl = url    // 将后面的参数去除
       }
-      if (rootState.UA.indexOf('iphone') > -1) {
-        params.url = window.hostUrl
-      }
+      // if (window.__wxjs_is_wkwebview) {
+      //   params.url = window.hostUrl
+      // }
       let { data } = await service.wechatConfig(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
