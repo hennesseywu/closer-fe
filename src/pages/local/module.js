@@ -425,9 +425,9 @@ export default {
       let params = {
         url: location.href
       };
-      // if (rootState.UA.indexOf('iphone') > -1) {
-      //   params.url = window.hostUrl || params.url
-      // }
+      if (rootState.UA.indexOf('iphone') > -1) {
+        params.url = window.hostUrl || params.url
+      }
       let { data } = await service.wechatConfig(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
