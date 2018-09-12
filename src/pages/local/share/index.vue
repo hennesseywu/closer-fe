@@ -65,7 +65,8 @@
   } from 'mint-ui';
   import {
     mapState,
-    mapActions
+    mapActions,
+    mapMutations
   } from "vuex";
   import localHeader from '../components/header';
   import {
@@ -109,8 +110,17 @@
     },
     created() {
       Indicator.open();
-      console.log('isAPP', this.isApp)
       // this.userShare()
+      if (sessionStorage.resultCache && sessionStorage.resultCache != '{}') {
+        let CACHE = JSON.parse(sessionStorage.resultCache);
+        console.log('window.CACHE', CACHE)
+        sessionStorage.resultCache = '{}';
+        this.setCache(CACHE)
+      }
+      if (this.IS_WX) {
+        console.log('share wxshare--')
+        this.initWxConfig()
+      }
       if (this.IS_DEV) {
         this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
@@ -135,23 +145,15 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
-
-      if (this.IS_WX) {
-        console.log('share wxshare--')
-        this.initWxConfig(this.drawHtmlToCanvas)
+      if (!this.answerId) {
+        setTimeout(this.drawHtmlToCanvas, 100)
       } else {
-        this.drawHtmlToCanvas()
+        setTimeout(() => {
+          if (!this.isDrawed) {
+            this.drawHtmlToCanvas()
+          }
+        }, 10000)
       }
-
-      // if (!this.answerId) {
-      //   setTimeout(this.drawHtmlToCanvas, 100)
-      // } else {
-      //   setTimeout(() => {
-      //     if (!this.isDrawed) {
-      //       this.drawHtmlToCanvas()
-      //     }
-      //   }, 10000)
-      // }
     },
     methods: {
       ...mapActions("local", [
@@ -159,6 +161,9 @@
         "userShare",
         "checkLoginInApp",
         "initWxConfig"
+      ]),
+      ...mapMutations('local', [
+        "setCache"
       ]),
       toShare(type) {
         let ua = this.$store.state.UA
@@ -196,33 +201,29 @@
         let self = this;
         let container = self.$refs.canvasContainer;
         self.isDrawed = true;
-        setTimeout(() => {
-          html2Image(container).then(img => {
-            // img.setAttribute('class', 'qr-img');
-            // img.setAttribute("crossOrigin", 'Anonymous')
-            // document.getElementById("share-img").src=img.src;
-            console.log('html2Image-finish')
-            // container.appendChild(img);
-            Indicator.close();
-            if (self.IS_APP) {
-              tjUploadFile(img).then(({
-                data
-              }) => {
-                self.imgUrl = self.makeFileUrl(data.result.url);
-                document.getElementById("share-img").src = self.imgUrl;
-              })
-            } else {
-              document.getElementById("share-img").src = img.src
-            }
-          })        
-        }, 500)
+        html2Image(container).then(img => {
+          // img.setAttribute('class', 'qr-img');
+          // img.setAttribute("crossOrigin", 'Anonymous')
+          // document.getElementById("share-img").src=img.src;
+          console.log('html2Image-finish')
+          // container.appendChild(img);
+          Indicator.close();
+          if (self.IS_APP) {
+            tjUploadFile(img).then(({
+              data
+            }) => {
+              self.imgUrl = self.makeFileUrl(data.result.url);
+              document.getElementById("share-img").src = self.imgUrl;
+            })
+          }
+        })
       },
       avatarLoad(type, e) {
         !type && (e.target.style.display='none')
         console.log('avatar.load:', type);
-        // if (!this.isDrawed) {
-        //   setTimeout(this.drawHtmlToCanvas, 100)
-        // }
+        if (!this.isDrawed) {
+          setTimeout(this.drawHtmlToCanvas, 100)
+        }
       }
     }
   }

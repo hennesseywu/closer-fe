@@ -19,8 +19,7 @@
       <div class="content2">
         <div class="commen-width animated bounceInDown" :class="level == 1 ? 'local1-img' : (level == 2 ? 'local2-img' : 'local3-img')">
           <div class="logo animated shake"></div>
-          <!-- div class="go-share animated bounceInDown1" v-if="IS_WX" @click="goShare">去分享</div -->
-          <a class="go-share animated bounceInDown1" v-if="IS_WX" :href="sharePage">去分享</a>
+          <div class="go-share animated bounceInDown1" v-if="IS_WX" @click="goShare">去分享</div>
         </div>
         <div class="local-desc localText" v-html="level == 1 ? localText1 : (level == 2) ? localText2 : localText3">
         </div>
@@ -209,9 +208,6 @@
       }),
       levelData() {
         return this.showData[parseInt(this.level) - 1]
-      },
-      sharePage() {
-        return (location.origin + '/local/share')
       }
     },
     methods: {
@@ -281,16 +277,10 @@
         }
       },
       goShare() {
-        // this.$router.push({
-        //   name: 'localShare'
-        // })
-
-        
-
-        // if (this.IS_WX) {
-        //   this.setLocalStorage()
-        //   location.href = `/static/share.html?path=${this.path}`
-        // }
+        if (this.IS_WX) {
+          this.setLocalStorage()
+          location.href = `${location.origin}/local/share`
+        }
       },
       goTips() {
         if (this.isApp) {

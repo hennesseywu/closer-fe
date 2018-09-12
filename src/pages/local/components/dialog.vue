@@ -36,7 +36,8 @@
               name: 'localShare'
             })
           } else  {
-           location.href = `/static/share.html?path=${this.path}`
+            location.href = `${location.origin}/local/share`
+          //  location.href = `/static/share.html?path=${this.path}`
           }
         } else {
           this.handleClose();
