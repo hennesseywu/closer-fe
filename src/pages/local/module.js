@@ -420,24 +420,22 @@ export default {
       state,
       rootState,
       commit
-    }, callback) {
+    }) {
       let wxConfig = state.wxConfig;
-      let params = {
-        url: location.href
-      };
-      if (rootState.UA.indexOf('iphone') > -1) {
-        params.url = window.hostUrl || params.url
-      }
-      let { data } = await service.wechatConfig(params).catch(err => {
-        Toast('网络开小差啦，请稍后再试')
-        return;
-      })
-      if (typeof(data.code) != "undefined" && data.code == 0) {
-        commit('setWxConfig', data.result);
-        wxConfig = data.result;
-        console.log('WxConfig:', wxConfig);
-      } else {
-        return;
+      if (!wxConfig || !wxConfig.signature || !wxConfig.appId || !wxConfig.nonceStr || !wxConfig.timestamp) {
+        let params = {
+          url: location.href
+        };
+        let { data } = await service.wechatConfig(params).catch(err => {
+          Toast('网络开小差啦，请稍后再试')
+          return;
+        })
+        if (typeof(data.code) != "undefined" && data.code == 0) {
+          commit('setWxConfig', data.result);
+          wxConfig = data.result;
+        } else {
+          return;
+        }
       }
       let link = addParamsForUrl(location.origin + '/local', {
         inviter: state.user.objectID,
@@ -483,7 +481,6 @@ export default {
               }
             })
             // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-          callback && callback();
         })
         wx.error(function(res) {
           console.error("wx.config.error", res)
