@@ -126,6 +126,10 @@ router.beforeEach(({
     params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
+    if (window.hostUrl == '' || window.hostUrl == undefined) {
+      let url = location.href.split('#')[0]
+      window.hostUrl = url    // 将后面的参数去除
+    }
     if (name == 'localIndex') {
         if (isApp()) {
             console.log("closer device")

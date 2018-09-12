@@ -425,13 +425,9 @@ export default {
       let params = {
         url: location.href
       };
-      if (window.hostUrl == '' || window.hostUrl == undefined) {
-        var url = location.href//location.origin + location.pathname
-        window.hostUrl = url    // 将后面的参数去除
-      }
-      if (rootState.UA.indexOf('iphone') > -1) {
-        params.url = window.hostUrl
-      }
+      // if (rootState.UA.indexOf('iphone') > -1) {
+      //   params.url = window.hostUrl || params.url
+      // }
       let { data } = await service.wechatConfig(params).catch(err => {
         Toast('网络开小差啦，请稍后再试')
         return;
