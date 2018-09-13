@@ -38,41 +38,6 @@
       </div>
       <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" :path="path" @close="closeDialog"></local-dialog>
     </div>
-    <div ref="canvasContainer" class="share-box">
-      <div v-if="answerId" class="share-score">
-        <div class="share-user-img">
-          <img :src="makeFileUrl(avatar)" @load="avatarLoad(true,$event)" @error="avatarLoad(false,$event)" class="share-user-avatar" crossOrigin="Anonymous">
-          <div class="share-user-filter">
-            <img :src="levelData.logoImg" alt="">
-          </div>
-        </div>
-        <div class="share-user-name">{{fullname}}</div>
-        <div class="share-desc">
-          在【谁是成都最土著】中获得
-          <span class="share-desc-score"> {{score}}</span> 分，
-          <br/>
-          <span class="share-desc-tip">{{levelData.tip}}</span>
-        </div>
-        <div class="share-title box box-lr box-center-center">
-          <div class="line left"></div>
-          <div class="name">获得称号</div>
-          <div class="line right"></div>
-        </div>
-        <div class="share-tag">
-          <img :src="levelData.tagImg" alt="">
-        </div>
-        <div class="share-qrcode">
-          <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-        </div>
-        <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
-      </div>
-      <div v-else class="share-default">
-        <img :src="defaultImg" alt="" class="share-default-bg">
-        <div class="share-qrcode">
-          <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -292,25 +257,6 @@
           location.href = 'https://h5.tiejin.cn/community/9Mj8OC0TUL'
         }
       },
-      drawHtmlToCanvas() {
-        let self = this;
-        let container = self.$refs.canvasContainer;
-        html2Image(container).then(img => {
-          // img.setAttribute('class', 'qr-img');
-          // img.setAttribute("crossOrigin", 'Anonymous')
-          let src = img.getAttribute('src');
-          console.log('html2Image-finish。img')
-          // container.appendChild(img);
-          if (self.IS_WX) {
-            tjUploadFile(img).then(({
-              data
-            }) => {
-              self.path = data.result.url;
-              Indicator.close();
-            })
-          }
-        })
-      },
       setLocalStorage() {
         let resultCache = {
           chance: this.chance,
@@ -329,8 +275,6 @@
       },
       avatarLoad(type, e) {
         !type && (e.target.style.display='none')
-        console.log('avatar.load:', type);
-        this.IS_WX && setTimeout(this.drawHtmlToCanvas, 100)
       }
     }
   };

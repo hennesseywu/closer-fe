@@ -41,12 +41,6 @@
     </section>
     <section class="ft"></section>
     <local-dialog :show="dialog.show" :share="dialog.share" :path="path" :content="dialog.content" @close="closeDialog"></local-dialog>
-    <div class="share-default" ref="canvasContainer">
-      <img :src="defaultImg" alt="" class="share-default-bg">
-      <div class="share-qrcode">
-        <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -91,12 +85,7 @@
           share: false,
           // 弹窗文字内容
           content: '呃~没有答题机会了，<br/>快去分享给好友获取答题机会吧！'
-        },
-        qrcode: {
-          val: 'https://a.tiejin.cn/local',
-          size: 80
-        },
-        defaultImg: defaultImg
+        }
   
       }
     },
@@ -227,24 +216,6 @@
           })
         }
       },
-      drawHtmlToCanvas() {
-        let container = this.$refs.canvasContainer;
-        html2Image(container).then(img => {
-          setTimeout(() => {
-            tjUploadFile(img).then(({
-              data
-            }) => {
-              console.log("draw path")
-              Cookies.set("path", data.result.url, {
-                expires: 30
-              });
-              this.path = data.result.url
-              Indicator.close();
-            })
-          }, 1000)
-  
-        })
-      },
       closeDialog() {
         this.dialog.show = false;
       },
@@ -281,12 +252,6 @@
       },
       initAnimation() {
         this.getStatistic().then(() => {
-          if (this.IS_DEV) {
-            this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-          } else {
-            this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-          }
-          console.log('qrcode.val:',this.qrcode.val);
           this.initWxConfig();
           this.setCurrentWidth();
           if (typeof(Cookies.get("path")) == "undefined"&&this.IS_WX) {
