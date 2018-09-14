@@ -5,7 +5,7 @@
       <div class="common close" :style="{display: close ? 'block' : 'none'}" @click="handleClose()"></div>
     </div>
     <div class="right">
-      <div class="common share" :style="{display: share ? 'block' : 'none'}" @click="handleShare()"></div>
+      <div class="share" :style="{display: share ? 'block' : 'none'}" @click="handleShare()"></div>
     </div>
   </header>
 </template>
@@ -65,6 +65,7 @@
   height: 76pr;
   margin-bottom: 20pr;
   z-index: 999;
+  // border: 1px solid red;
   .left, .right {
     position: absolute;
     top: 0;
@@ -77,8 +78,8 @@
     right: 20pr;
   }
   .common {
-    width: 68pr;
-    height: 76pr;
+    width: 50pr;
+    height: 50pr;
   }
   .back {
     float: left;
@@ -92,6 +93,8 @@
     background-size: contain;
   }
   .share {
+    width: 54pr;
+    height: 50pr;
     float: right;
     background: url(../assets/images/index_share.png) center no-repeat;
     background-size: contain;

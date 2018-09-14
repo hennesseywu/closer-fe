@@ -2,14 +2,10 @@
   <div class="main local-index" :class="{'in-app': IS_APP}" v-if="showIndex">
     <local-header v-if="IS_APP" close share></local-header>
     <section class="tab">
-      <div class="tab-default tab-left" @click="showRankingList()">好友排行榜</div>
-      <div class="tab-default tab-right" @click="showRule()">活动规则</div>
+      <div class="tab-default tab-left" @click="showRankingList()"></div>
+      <div class="tab-default tab-right" @click="showRule()"></div>
     </section>
-    <section class="hd animated bounceInDown fast">
-      <div class="hd-default hd-1" :class="{active: mounted}"></div>
-      <div class="hd-default hd-2" :class="{active: mounted}"></div>
-      <div class="hd-default hd-3" :class="{active: mounted}"></div>
-      <div class="hd-default hd-4" :class="{active: mounted}"></div>
+    <section class="hd">
       <div class="hd-img"></div>
     </section>
     <section class="bd" :class="{active: mounted}">
@@ -21,25 +17,25 @@
           <span class="bd-arrow bd-arrow-left"></span>
           <span class="bd-scale-amount">{{showAmount(0, 2)}}</span>
         </div>
-        <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
+        <!-- <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
           <span class="bd-arrow bd-arrow-center"></span>
           <span class="bd-scale-amount">{{showAmount(.5, 2)}}</span>
         </div>
         <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
           <span class="bd-arrow bd-arrow-right"></span>
           <span class="bd-scale-amount">{{showAmount(1, 2)}}</span>
-        </div>
+        </div> -->
       </div>
       <div class="bd-total">
         累计获得：
         <span class="bd-count">{{currentTotalAmount}}</span> 元
-        <span class="bd-tixian" @click="handleWithDraw()">去提现</span>
+        <div class="bd-tixian" @click="handleWithDraw()">去提现</div>
       </div>
       <div class="bd-desc" v-html="currentDesc"></div>
       <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>
       <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
     </section>
-    <section class="ft"></section>
+    <section class="index-logo"></section>
     <local-dialog :show="dialog.show" :share="dialog.share" :path="path" :content="dialog.content" @close="closeDialog"></local-dialog>
   </div>
 </template>

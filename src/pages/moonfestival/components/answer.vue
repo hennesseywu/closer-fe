@@ -2,7 +2,6 @@
   
   <div class="main local-answer" :class="{'in-app': IS_APP}" v-if="showAnswer">
     <local-header v-if="IS_APP" back close></local-header>
-    <div>{{startData}}</div>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
       <div class="answer-box" v-html="currentQuestion" @click="checkOptions($event)">

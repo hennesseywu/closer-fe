@@ -1,14 +1,14 @@
 @aniTime: .2s;
 @aniFun: ease-out;
 .local-index {
-  padding: 70pr 0 40pr;
+  padding: 1pr 0 40pr;
   font-size: 28pr;
-
   .header .close {
     display: none;
   }
 
   &.in-app {
+    padding: 60pr 0 40pr;
     .header {
       display: block;
     }
@@ -16,102 +16,47 @@
   .tab {
     display: flex;
     justify-content: space-between;
-    // margin-top: 20pr;
+    margin: 30pr 40pr;
   }
   .tab-default {
-    width: 180pr;
-    // height: 60pr;
-    // line-height: 60pr;
-    padding: 10pr 0;
-    text-align: center;
-    background: #fddb00;
+    width: 162pr;
+    height: 64pr;
   }
   .tab-left {
-    border-top-right-radius: 30pr;
-    border-bottom-right-radius: 30pr;
+    background: url(../images/rank.png) no-repeat;
+    background-size: contain;
   }
   .tab-right {
-    border-top-left-radius: 30pr;
-    border-bottom-left-radius: 30pr;
+    background: url(../images/rule.png) no-repeat;
+    background-size: contain;
   }
   .hd {
     position: relative;
-    width: 650pr;
-    height: 296pr;
-    margin: 10pr auto 0;
-
+    width: 560pr;
+    height: 210pr;
+    margin: 201pr auto 0;
   }
   .hd-default {
     position: absolute;
     transition: all @aniTime @aniFun;
     opacity: 0;
   }
-  .hd-1 {
-    width: 76pr;
-    height: 44pr;
-    top: 40%;
-    left: 40%;
-    background: url(../images/index_hd_1.png) no-repeat;
-    background-size: contain;
-    &.active {
-      opacity: 1;
-      top: 30pr;
-      left: 50pr;
-    }
-  }
-  .hd-2 {
-    width: 150pr;
-    height: 124pr;
-    top: 40%;
-    right: 40%;
-    background: url(../images/index_hd_2.png) no-repeat;
-    background-size: contain;
-    &.active {
-      opacity: 1;
-      top: 0;
-      right: 48pr;
-    }
-  }
-  .hd-3 {
-    width: 68pr;
-    height: 54pr;
-    bottom: 40%;
-    right: 40%;
-    background: url(../images/index_hd_3.png) no-repeat;
-    background-size: contain;
-    &.active {
-      opacity: 1;
-      bottom: 0;
-      right: 0;
-    }
-  }
-  .hd-4 {
-    width: 68pr;
-    height: 30pr;
-    bottom: 40%;
-    left: 40%;
-    background: url(../images/index_hd_4.png) no-repeat;
-    background-size: contain;
-    &.active {
-      opacity: 1;
-      bottom: 0;
-      left: 0;
-    }
-  }
   .hd-img {
     position: absolute;
-    width: 650pr;
-    height: 224pr;
+    width: 560pr;
+    height: 210pr;
     bottom: 0;
     left: 0;
     background: url(../images/index_hd.png) no-repeat;
     background-size: contain;
+    z-index: 999;;
   }
   .bd {
     position: relative;
-    width: 660pr;
-    margin: -40pr auto 0;
-    padding-top: 130pr;
+    width: 590pr;
+    height: 632pr;
+    margin: -44pr auto 0;
+    padding-top: 77pr;
     background: url(../images/index_bd.png) no-repeat;
     background-size: contain;
     transition: opacity @aniTime @aniFun;
@@ -123,21 +68,21 @@
     }
   }
   .bd-progress {
-    width: 550pr;
+    width: 510pr;
     height: 32pr;
     margin: 0 auto;
-    background: #eee;
-    border-radius: 16pr;
+    background: #B1A785;
+    border-radius: 18pr;
   }
   .bd-complete {
     width: 0;
     height: 100%;
     transition: width @aniTime @aniFun;
-    background: linear-gradient(to right, #ffdd00, #fff227);
+    background: #895607;
     border-radius: 16pr;
   }
   .bd-scale {
-    width: 550pr;
+    width: 510pr;
     height: 52pr;
     margin: 0 auto;
     display: flex;
@@ -181,26 +126,26 @@
   }
   .bd-arrow-left {
     left: 0;
-    border-left-color: #e7e7e7;
-    border-bottom-color: #e7e7e7;
+    border-left-color: #885504;
+    border-bottom-color: #885504;
   }
   .bd-arrow-center {
     left: 50%;
     margin-left: -8pr;
     border-top-width: 0;
     border-bottom-width: 24pr;
-    border-bottom-color: #e7e7e7;
+    border-bottom-color: #885504;
   }
   .bd-arrow-right {
     right: 0;
-    border-right-color: #e7e7e7;
-    border-bottom-color: #e7e7e7;
+    border-right-color: #885504;
+    border-bottom-color: #885504;
   }
   .bd-scale-amount {
     position: absolute;
     top: 12pr;
     min-width: 78pr;
-    background: #e7e7e7;
+    background: #885504;
     line-height: 1.5;
     white-space: nowrap;
     padding: 0 8pr;
@@ -228,51 +173,50 @@
   }
   .bd-scale-default.active {
     .bd-arrow-left {
-      border-left-color: #FDDB00;
-      border-bottom-color: #FDDB00;
+      border-left-color: #885504;
+      border-bottom-color: #885504;
     }
     .bd-arrow-center {
-      border-bottom-color: #FDDB00;
+      border-bottom-color: #885504;
     }
     .bd-arrow-right {
-      border-right-color: #FDDB00;
-      border-bottom-color: #FDDB00;
+      border-right-color: #885504;
+      border-bottom-color: #885504;
     }
     .bd-scale-amount {
-      background: #FDDB00;
-      box-shadow: 0 4pr 0 0 #FFB300;
+      background: #885504;
+      box-shadow: 0 4pr 0 0 #885504;
     }
   }
   .bd-total {
-    margin: 40pr auto 28pr;
+    margin: 4pr auto 28pr;
     color: #333;
     text-align: center;
   }
   .bd-count {
     font-size: 64pr;
-    color: #fdd800;
-    text-shadow: 0 4pr 0 #ffb300, 0 6pr 0 #929292;
+    color: #885504;
   }
   .bd-tixian {
-    padding: 4pr 20pr;
-    border: 2pr solid #75ade9;
     border-radius: 30pr;
-    color: #75ade9;
+    color: #885504;
+    text-decoration: underline;
   }
   .bd-desc {
     width: 460pr;
     min-height: 80pr;
     line-height: 48pr;
     margin: 0 auto;
-    color: #999;
+    color: #888;
   }
   .bd-desc-remain {
-    color: #f20707;
+    color: #885505;
+    font-size: 28pr;
   }
   .bd-btn {
-    width: 460pr;
-    height: 140pr;
-    margin: 32pr auto 0;
+    width: 300pr;
+    height: 104pr;
+    margin: 20pr auto 0;
     background: url(../images/index_btn.png) center no-repeat;
     background-size: contain;
   }
@@ -281,19 +225,10 @@
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    // height: 46pr;
-    // line-height: 46pr;
     padding: 4pr 20pr;
     border-radius: 23pr;
-    background: #0f57a6;
-    color: rgba(255,255,255,.5);
-  }
-  .ft {
-    width: 80pr;
-    height: 80pr;
-    margin: 36pr auto 0;
-    background: url(../images/logo.png) center no-repeat;
-    background-size: contain;
+    color: #B49455;
+    margin-top: 10pr;
   }
   .share-default, .share-score {
     position: fixed;
@@ -306,7 +241,13 @@
     width:100%;
     height:100%;
   }
- 
+  .index-logo {
+    width: 80pr;
+    height: 80pr;
+    background: url(../images/login_logo.png) center no-repeat;
+    background-size: contain;
+    margin: 20pr auto;
+  }
   .share-qrcode {
     position: absolute;
     left: 50%;
@@ -314,9 +255,6 @@
     margin-left: -90pr;
     width: 180pr;
     height: 180pr;
-    // padding: 10pr;
-    // background: #fff;
-    // border: 1px solid red;
     canvas {
       width: 100%!important;
       height: 100%!important;
