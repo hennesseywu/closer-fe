@@ -1,0 +1,143 @@
+
+.rank {
+  padding-top: 70pr;
+  .hd {
+    width: 60pr;
+    height: 68pr;
+    margin: 0 40pr;
+    background: url(../images/back.png) center no-repeat;
+    background-size: contain;
+  }
+  .bd {
+    width: 670pr;
+    height: 1138pr;
+    margin: 0 auto;
+    padding: 12pr 10pr 0;
+    text-align: center;
+    background: url(../images/rule_bg.png) center no-repeat;
+    background-size: contain;
+  }
+  .bd-name {
+    // line-height: 78pr;
+    font-size: 36pr;
+    color: #fff;
+  }
+  .bd-mine {
+    margin-top: 60pr;
+  }
+  .bd-friends {
+    height: 860pr;
+    overflow: auto;
+    margin-top: 10pr;
+    padding-top: 10pr;
+  }
+  .bd-item {
+    position: relative;
+    width: 610pr;
+    height: 96pr;
+    border-radius: 48pr;
+    margin: 0 auto 20pr;
+    padding: 8pr 30pr;
+    line-height: 80pr;
+    color: #FFDF34;
+  }
+  .bd-item-mine {
+    background: #126fbd;
+    box-shadow: 0 -4pr 0 0 #e2eef8;
+    color: #fff;
+    margin-bottom: 0;
+    &::after {
+      content: '我的';
+      position: absolute;
+      top: -20pr;
+      left: 12pr;
+      font-size: 24pr;
+      line-height: 1.5;
+      color: #333;
+      border: 6pr solid #333;
+      border-radius: 40pr;
+      padding: 0 18pr;
+      background: #fdd800;
+    }
+  }
+  .bd-item-1 {
+    background: #ffdf34;
+    box-shadow: 0 -4pr 0 0 #f1edd6;
+    color: #333;
+    .user-rank {
+      line-height: 70pr;
+      top: 6pr;
+      color: #FFEF9A;
+      background: url(../images/rank_1x2.png) center no-repeat;
+      background-size: contain;
+    }
+    .user-name {
+      color: #333;
+    }
+  }
+  .bd-item-2 {
+    background: #d3e1ea;
+    box-shadow: 0 -4pr 0 0 #fff;
+    color: #333;
+    .user-rank {
+      line-height: 70pr;
+      top: 6pr;
+      color: #E1EDF5;
+      background: url(../images/rank_2x2.png) center no-repeat;
+      background-size: contain;
+    }
+    .user-name {
+      color: #333;
+    }
+  }
+  .bd-item-3 {
+    background: #d69982;
+    box-shadow: 0 -4pr 0 0 #f2e4df;
+    color: #333;
+    .user-rank {
+      line-height: 70pr;
+      top: 6pr;
+      color: #F8C6AD;
+      background: url(../images/rank_3x2.png) center no-repeat;
+      background-size: contain;
+    }
+    .user-name {
+      color: #333;
+    }
+  }
+  .user-rank {
+    position: absolute;
+    left: 30pr;
+    top: 8pr;
+    height: 84pr;
+    // line-height: 64pr;
+    width: 74pr;
+  }
+  .user-info {
+    display: flex;
+    position: absolute;
+    top: 8pr;
+    left: 120pr;
+    width: 350pr;
+  }
+  .user-img {
+    width: 80pr;
+    height: 80pr;
+    border-radius: 80pr;
+    background: #aaa;
+    overflow: hidden;
+  }
+  .user-name {
+    max-width: 250pr;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: 16pr;
+    color: #fff;
+  }
+  .user-score {
+    position: absolute;
+    top: 8pr;
+    right: 30pr;
+  }
+}

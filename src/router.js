@@ -1,8 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import api from './utils/api';
-import { Toast } from 'mint-ui';
-import { isApp, isWechat } from './utils/utils';
+import {
+    Toast
+} from 'mint-ui';
+import {
+    isApp,
+    isWechat
+} from './utils/utils';
 import Store from './store'
 
 // landing 页
@@ -19,7 +24,7 @@ const PullNewIndex = () =>
 const PullNewRule = () =>
     import ('@/pages/pullnew/rule')
 
-    // 成都土著活动
+// 成都土著活动
 const LocalIndex = () =>
     import ('@/pages/local/index')
 
@@ -37,84 +42,123 @@ const LocalRule = () =>
 // 土著活动排行榜
 const LocalRank = () =>
     import ('@/pages/local/rank')
+// 中秋节活动
+const FestivalIndex = () =>
+    import ('@/pages/moonfestival/home')
 
+const FestivalShare = () =>
+    import ('@/pages/moonfestival/share')
+
+const FestivalRule = () =>
+    import ('@/pages/moonfestival/rule')
+
+const FestivalRank = () =>
+    import ('@/pages/moonfestival/rank')
+    
 Vue.use(Router)
 
 const router = new Router({
 
     mode: 'history',
     routes: [{
-            path: '/landing',
-            name: 'landing',
-            component: Landing,
-            meta: {
-                title: '贴近Closer'
-            }
-        }, {
-            path: '/over',
-            name: 'activityOver',
-            component: ActivityOver,
-            meta: {
-                title: '贴近Closer'
-            }
-        }, {
-            path: '/pullnew',
-            name: 'pullNew',
-            component: PullNewIndex,
-            meta: {
-                title: '邀好友，赚现金'
-            }
-        }, {
-            path: '/pullNew/rule',
-            name: 'pullNewRule',
-            component: PullNewRule,
-            meta: {
-                title: '邀好友，赚现金'
-            }
-        }, {
-            path: '/local',
-            name: 'localIndex',
-            component: LocalIndex,
-            meta: {
-                title: '谁是成都最土著'
-            }
-        }, {
-            path: '/local/answer',
-            name: 'localAnswer',
-            component: LocalAnswer,
-            meta: {
-                title: '谁是成都最土著'
-            }
-        }, {
-            path: '/local/result',
-            name: 'localResult',
-            component: LocalResult,
-            meta: {
-                title: '谁是成都最土著'
-            }
-        }, {
-            path: '/local/share',
-            name: 'localShare',
-            component: LocalShare,
-            meta: {
-                title: '分享'
-            }
-        }, {
-            path: '/local/rule',
-            name: 'localRule',
-            component: LocalRule,
-            meta: {
-                title: '活动规则'
-            }
-        }, {
-            path: '/local/rank',
-            name: 'localRank',
-            component: LocalRank,
-            meta: {
-                title: '排行榜'
-            }
+        path: '/landing',
+        name: 'landing',
+        component: Landing,
+        meta: {
+            title: '贴近Closer'
         }
-    ]
+    }, {
+        path: '/over',
+        name: 'activityOver',
+        component: ActivityOver,
+        meta: {
+            title: '贴近Closer'
+        }
+    }, {
+        path: '/pullnew',
+        name: 'pullNew',
+        component: PullNewIndex,
+        meta: {
+            title: '邀好友，赚现金'
+        }
+    }, {
+        path: '/pullNew/rule',
+        name: 'pullNewRule',
+        component: PullNewRule,
+        meta: {
+            title: '邀好友，赚现金'
+        }
+    }, {
+        path: '/local',
+        name: 'localIndex',
+        component: LocalIndex,
+        meta: {
+            title: '谁是成都最土著'
+        }
+    }, {
+        path: '/local/answer',
+        name: 'localAnswer',
+        component: LocalAnswer,
+        meta: {
+            title: '谁是成都最土著'
+        }
+    }, {
+        path: '/local/result',
+        name: 'localResult',
+        component: LocalResult,
+        meta: {
+            title: '谁是成都最土著'
+        }
+    }, {
+        path: '/local/share',
+        name: 'localShare',
+        component: LocalShare,
+        meta: {
+            title: '分享'
+        }
+    }, {
+        path: '/local/rule',
+        name: 'localRule',
+        component: LocalRule,
+        meta: {
+            title: '活动规则'
+        }
+    }, {
+        path: '/local/rank',
+        name: 'localRank',
+        component: LocalRank,
+        meta: {
+            title: '排行榜'
+        }
+    }, {
+        path: '/moonfestival',
+        name: 'festivalIndex',
+        component: FestivalIndex,
+        meta: {
+            title: '首页'
+        }
+    }, {
+        path: '/moonfestival/rule',
+        name: 'festivalRule',
+        component: FestivalRule,
+        meta: {
+            title: '活动规则'
+        }
+    }, {
+        path: '/moonfestival/rank',
+        name: 'festivalRank',
+        component: FestivalRank,
+        meta: {
+            title: '活动规则'
+        }
+    }, {
+        path: '/moonfestival/share',
+        name: 'festivalShare',
+        component: FestivalShare,
+        meta: {
+            title: '分享'
+        }
+    }]
 
 })
 router.beforeEach(({
@@ -136,9 +180,9 @@ router.beforeEach(({
                 next();
                 return;
             }
-            console.log('fullpath:',fullPath,query)
+            console.log('fullpath:', fullPath, query)
 
-             // test hashRouter
+            // test hashRouter
             // let _path = '',
             //     reUrl = api.wxRedirectUrl,
             //     url = api.wxLoginUrl;
@@ -155,9 +199,11 @@ router.beforeEach(({
             let params = {
                 path: _path
             };
-            console.log('from:',_path)
-            axios.post(api.admin.get_auth_path, params).then(({ data }) => {
-                if (typeof(data.code) != "undefined" && data.code == 0) {
+            console.log('from:', _path)
+            axios.post(api.admin.get_auth_path, params).then(({
+                data
+            }) => {
+                if (typeof (data.code) != "undefined" && data.code == 0) {
                     location.href = data.result;
                 } else {
                     next()

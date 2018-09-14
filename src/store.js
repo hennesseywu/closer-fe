@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import pullNew from './pages/pullnew/index/module'
 import local from './pages/local/module'
+import moonFestival from './pages/moonfestival/module'
 
 
 Vue.use(Vuex)
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     },
     modules: {
         pullNew,
-        local
+        local,
+        moonFestival
     }
 })
