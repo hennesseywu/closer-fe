@@ -1,6 +1,6 @@
 <template>
-  <div class="main local-index" :class="{'in-app': IS_APP}">
-    <local-header v-if="IS_APP" close share></local-header>
+  <div class="main local-index" :class="{'in-app': ENV.app}">
+    <local-header v-if="ENV.app" close share></local-header>
     <section class="tab">
       <div class="tab-default tab-left" @click="showRankingList()">好友排行榜</div>
       <div class="tab-default tab-right" @click="showRule()">活动规则</div>
@@ -99,7 +99,6 @@
     },
     computed: {
       ...mapState('local', ['aid', 'isLogin', 'statistic']),
-      ...mapState(['IS_APP', 'IS_WX', 'IS_DEV']),
       ...mapState('local', {
         currentQuesitionNum: state => state.currentQuesitionNum,
         objectID: state => state.user.objectID || '',
@@ -132,10 +131,10 @@
         self.initAnimation();
         return;
       }
-      if (self.IS_APP) {
+      if (self.ENV.app) {
         // 端内
         self.checkLoginInApp(self.initAnimation);
-      } else if (self.IS_WX) {
+      } else if (self.ENV.wx) {
         // 微信端
         // let user = Cookies.get("user");
         // if (typeof(Cookies.get("token")) != "undefined" && typeof(user) != "undefined") {
@@ -198,7 +197,7 @@
         //   this.dialog.content = '亲，没有答题积会了，<br/>快去分享给好友获取答题机会吧！';
         //   this.dialog.show = true;
         //   return false;
-        if (!this.IS_APP && !this.IS_WX) {
+        if (!this.ENV.app && !this.ENV.wx) {
           this.dialog = {
             share: false,
             content: '亲，请去微信环境下答题吧',
@@ -222,7 +221,7 @@
       // 其他环境下弹窗提示去微信答题
       checkOtherEnv(needLogin) {
         console.log(this.statistic.chance)
-        if (!this.IS_APP && !this.IS_WX) {
+        if (!this.ENV.app && !this.ENV.wx) {
           this.dialog = {
             share: false,
             content: '亲，请去微信环境下答题吧',
@@ -254,29 +253,28 @@
         this.getStatistic().then(() => {
           this.initWxConfig();
           this.setCurrentWidth();
-          if (typeof(Cookies.get("path")) == "undefined"&&this.IS_WX) {
-            setTimeout(() => {
-              this.drawHtmlToCanvas();
-            }, 100)
-          } else {
-            this.path = Cookies.get("path")
-          }
+          // if (typeof(Cookies.get("path")) == "undefined"&&this.ENV.wx) {
+          //   setTimeout(() => {
+          //     this.drawHtmlToCanvas();
+          //   }, 100)
+          // } else {
+          //   this.path = Cookies.get("path")
+          // }
         })
       },
       handleWithDraw() {
-        if (this.IS_APP) {
+        if (this.ENV.app) {
           if (!this.isLogin) {
             this.checkLoginInApp(this.initAnimation);
           } else {
-            let ua = this.$store.state.UA;
-            if (ua.indexOf("closer-ios") > -1) {
+            if (this.ENV.ios) {
               setupWebViewJavascriptBridge(function(bridge) {
                 if (bridge) {
                   //ios获取用户token 判断登录
                   bridge.callHandler("inviteNewGuyAction", 'inviteNewGuyActionWithdraw', function(data, responseCallback) {})
                 }
               })
-            } else if (ua.indexOf("closer-android") > -1) {
+            } else if (this.ENV.android) {
               if (typeof window.bridge != "undefined") {
                 try {
                   window.bridge.inviteNewGuyAction('inviteNewGuyActionWithdraw');
@@ -303,7 +301,6 @@
         this.mounted = true;
       }, 800);
       this.updateCurrentQuestionNum()
-      console.log('index', this.currentQuesitionNum)
     }
   }
 </script>

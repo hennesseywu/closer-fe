@@ -119,7 +119,7 @@
     Indicator
   } from 'mint-ui';
   
-  import feConfig from '../../../utils/api';
+  import feConfig from '../../../config/api';
   import {
     dateFormat
   } from "../../../utils/utils";
@@ -153,10 +153,10 @@
       }
     },
     async mounted() {
-      if (this.$store.state.IS_DEV) {
+      if (this.ENV.dev) {
         this.fileUrl = feConfig.fileDevURL;
       }
-      if (this.$store.state.IS_APP) {
+      if (this.ENV.app) {
         this.checkLogin(async(res) => {
           if (res) {
             this.isLogin = true;
@@ -309,8 +309,7 @@
           this.checkLogin(async(res) => {})
           return;
         }
-        let ua = this.$store.state.UA;
-        if (ua.indexOf("closer-ios") > -1) {
+        if (window.ENV.app && window.ENV.ios) {
           let isOK = false;
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
@@ -318,7 +317,7 @@
               bridge.callHandler("inviteNewGuyAction", type, function(data, responseCallback) {})
             }
           })
-        } else if (ua.indexOf("closer-android") > -1) {
+        } else if (window.ENV.app && window.ENV.android) {
           if (typeof window.bridge != "undefined") {
             try {
               window.bridge.inviteNewGuyAction(type);
@@ -329,8 +328,7 @@
         }
       },
       back() {
-        let ua = this.$store.state.UA;
-        if (ua.indexOf("closer-ios") > -1) {
+        if (window.ENV.app && window.ENV.ios) {
           let isOK = false;
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
@@ -338,7 +336,7 @@
               bridge.callHandler("exitPage", function(data, responseCallback) {})
             }
           })
-        } else if (ua.indexOf("closer-android") > -1) {
+        } else if (window.ENV.app && window.ENV.android) {
           if (typeof window.bridge != "undefined") {
             try {
               window.bridge.exitPage();
@@ -364,8 +362,7 @@
           this.checkLogin(async(res) => {})
           return;
         }
-        let ua = this.$store.state.UA;
-        if (ua.indexOf("closer-ios") > -1) {
+        if (window.ENV.app && window.ENV.ios) {
           setupWebViewJavascriptBridge(function(bridge) {
             //console.log("toShare ios bridge", bridge)
             if (bridge) {
@@ -373,7 +370,7 @@
               bridge.callHandler("inviteUser", null, function(data, responseCallback) {})
             }
           })
-        } else if (ua.indexOf("closer-android") > -1) {
+        } else if (window.ENV.app && window.ENV.android) {
           if (typeof window.bridge != "undefined") {
             window.bridge.inviteUser(null);
           } else {

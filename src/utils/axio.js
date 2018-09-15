@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
-import feConfig from '../utils/api';
+import baseURL from '../config/index';
 import Store from '../store'
 const axio = axios.create({ 
     baseURL: process.env.BASE_API, // node环境的不同，对应不同的baseURL
@@ -15,22 +15,22 @@ const axio = axios.create({ 
   // http request 拦截器 
 axio.interceptors.request.use(
   config => {
-    let reqUrl = feConfig.serverDevUrl + config.url
-    if (/^https?:\/\//.test(config.url)) {
-      reqUrl = config.url;
-    } else if (/a-sandbox.tiejin/.test(window.location.href)) {
-      reqUrl = feConfig.serverDevUrl + config.url;
-    } else if (/a.tiejin/.test(window.location.href)) {
-      reqUrl = feConfig.serverUrl + config.url;
-    }
+    let reqUrl = baseURL.server[window.ENV.env] + config.url
+    // if (/^https?:\/\//.test(config.url)) {
+    //   reqUrl = config.url;
+    // } else if (/a-sandbox.tiejin/.test(window.location.href)) {
+    //   reqUrl = feConfig.serverDevUrl + config.url;
+    // } else if (/a.tiejin/.test(window.location.href)) {
+    //   reqUrl = feConfig.serverUrl + config.url;
+    // }
     // console.log("requrl", reqUrl)
     config.url = reqUrl;
-    if (!Store.state.IS_APP) {
+    if (!window.ENV.app) {
       config.headers['Closer-Agent'] = 'Closer-H5';
     } else {
-      if (Store.state.UA.indexOf("closer-ios") > -1) {
+      if (this.ENV.app && this.ENV.ios) {
         config.headers['Closer-Agent'] = 'Closer-Ios';
-      } else if (Store.state.UA.indexOf('closer-android') > -1) {
+      } else if (this.ENV.app && this.ENV.android) {
         config.headers['Closer-Agent'] = 'Closer-Android';
       }
     }

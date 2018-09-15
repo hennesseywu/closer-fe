@@ -1,6 +1,6 @@
 <template>
-  <div class="main local-share" :class="{'in-app': IS_APP}">
-    <local-header v-if="IS_APP" back home></local-header>
+  <div class="main local-share" :class="{'in-app': ENV.app}">
+    <local-header v-if="ENV.app" back home></local-header>
     <div class="share-wrapper">
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
@@ -40,7 +40,7 @@
           <img class="share-img" id="share-img" src="">
         </div>
       </div>
-      <div v-if="IS_APP" class="share-items box box-lr box-center-center">
+      <div v-if="ENV.app" class="share-items box box-lr box-center-center">
         <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
           <span class="weixin"></span>
           <span>好友</span>
@@ -80,7 +80,7 @@
   export default {
     data() {
       return {
-        isApp: this.$store.state.IS_APP,
+        isApp: this.ENV.app,
         isLogin: false,
         isDrawed: false,
         qrcode: {
@@ -117,18 +117,17 @@
         sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
-      if (this.IS_WX) {
+      if (this.ENV.wx) {
         console.log('share wxshare--')
         this.initWxConfig()
       }
-      if (this.IS_DEV) {
+      if (this.ENV.dev) {
         this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
         this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       }
     },
     computed: {
-      ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
         objectID: state => state.user.objectID || '',
         salt: state => state.statistic.signSalt,
@@ -166,10 +165,8 @@
         "setCache"
       ]),
       toShare(type) {
-        let ua = this.$store.state.UA
         let url = this.imgUrl;
-        console.log('share--', type, url, ua)
-        if (ua.indexOf("closer-ios") > -1) {
+        if (window.ENV.app && window.ENV.ios) {
           setupWebViewJavascriptBridge(function(bridge) {
             console.log("toShare ios bridge", bridge)
             if (bridge) {
@@ -179,7 +176,7 @@
               }, function(data, responseCallback) {})
             }
           })
-        } else if (ua.indexOf("closer-android") > -1) {
+        } else if (window.ENV.app && window.ENV.android) {
           console.log("toShare android bridge", bridge)
           if (typeof window.bridge != "undefined") {
             try {
@@ -208,7 +205,7 @@
           console.log('html2Image-finish')
           // container.appendChild(img);
           Indicator.close();
-          if (self.IS_APP) {
+          if (self.ENV.app) {
             tjUploadFile(img).then(({
               data
             }) => {

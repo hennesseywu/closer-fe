@@ -25,7 +25,7 @@ import {
   
     },
     beforeMount(){
-      if(this.$store.state.IS_APP){
+      if(this.ENV.app){
         this.buttonDesc="去首页";
       }
       if (!Cookies.get("uid")) {
@@ -38,11 +38,11 @@ import {
     methods: {
       ...mapActions('index', ['getAdCookies']),
      async activityOver() {
-        if (this.$store.state.IS_APP) {
+        if (this.ENV.app) {
           location.href = 'closer://jump/to/home'
         } else {
           if (Cookies.get("aid") != "0") {
-          let md = new MobileDetect(this.$store.state.UA);
+          let md = new MobileDetect(this.ENV.ua);
           let deviceType = md.os();
           let deviceVersion = "";
           if (deviceType == "iOS") {

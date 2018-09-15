@@ -1,7 +1,7 @@
 <template>
   <div class="main rank">
     rank
-    <!-- <local-header v-if="IS_APP" back></local-header> -->
+    <!-- <local-header v-if="ENV.app" back></local-header> -->
     <!-- <section class="bd">
       <div class="bd-name">排行榜</div>
       <div class="bd-mine">
@@ -48,7 +48,6 @@
     //   localHeader
     // },
     // computed: {
-    //   ...mapState(['IS_APP']),
     //   ...mapState('local', {
     //     selfRank: state => state.rank.selfRank,
     //     rankList: state => state.rank.rankList

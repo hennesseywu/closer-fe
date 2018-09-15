@@ -199,9 +199,7 @@ export default {
       commit,
       rootState
     }, cb) {
-      console.log("checkLogin", rootState.IS_APP);
-      let ua = rootState.UA;
-      if (ua.indexOf("closer-ios") > -1) {
+      if (window.ENV.app && window.ENV.ios) {
         console.log("module closer-ios");
         setTimeout(() => {
           setupWebViewJavascriptBridge(function(bridge) {
@@ -244,7 +242,7 @@ export default {
             }
           })
         }, 500)
-      } else if (ua.indexOf("closer-android") > -1) {
+      } else if (window.ENV.app && window.ENV.android) {
         console.log("closer-android")
         console.log("module android", typeof window.bridge != "undefined")
           //安卓检查登录状态

@@ -1,4 +1,4 @@
-import api from './api';
+import api from '../config/api';
 import html2canvas from 'html2canvas';
 import md5 from "js-md5"
 
@@ -49,25 +49,6 @@ export function getQueryString() {
   if (!str) return null
   let strLen = str.length
   return str[strLen - 1]
-}
-
-export function getPlatform() {
-  var u = navigator.userAgent;
-  return {
-    android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
-    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-    windows: !!u.match(/windows mobile/i) //windows终端
-  }
-}
-
-export function isApp() {
-  const ua = navigator.userAgent.toLowerCase();
-  return /closer-(android|ios)/.test(ua);
-}
-
-export function isWechat() {
-  const ua = navigator.userAgent.toLowerCase();
-  return /micromessenger/.test(ua);
 }
 
 // 禁用微信分享功能
@@ -142,7 +123,8 @@ export function dateFormat(time) {
 export function makeFileUrl(url, type, size) {
   if (url) {
     let sizes = size ? size : 500
-    let fileUrl = Cookies.get("IS_DEV") ? api.fileDevURL : api.fileUrl
+    // let fileUrl = Cookies.get("IS_DEV") ? api.fileDevURL : api.fileUrl
+    let fileUrl = api.file[window.ENV.env]
     if (type === 'src') {
       return (url.indexOf('://') !== -1) ? url + '?s=' + sizes : fileUrl + url + '?s=' + sizes;
     } else {
@@ -176,17 +158,6 @@ export function parseQuery() {
     obj[RegExp.$1] = RegExp.$2;
   }
   return obj;
-}
-// 版本号比较，ver1为安卓，ver2为ios
-export function compareVersion(ua, ver1, ver2) {
-  let ver = ua.indexOf('android') > -1 ? ver1 : ver2;
-  try {
-    let a = parseInt(ver.replace(/\./g, ''));
-    let b = parseInt((ua.split('closerapp/version/')[1] || '').replace(/\./g, ''));
-    return b >= a;
-  } catch (e) {
-    return false
-  }
 }
 
 export function html2Image(dom) {
@@ -325,7 +296,8 @@ export function tjUploadFile(img) {
   var fd = new FormData(form);
   fd.append("file", file);
   // Submit Form and upload file
-  let fileUrl = Cookies.get("IS_DEV") ? 'https://file-sandbox.tiejin.cn' : 'https://file.tiejin.cn'
+  // let fileUrl = Cookies.get("IS_DEV") ? 'https://file-sandbox.tiejin.cn' : 'https://file.tiejin.cn'
+  let fileUrl = api.file[window.ENV.env]
   return axios.post(fileUrl + "/file/upload/public", fd, {
     headers: {
       Accept: "application/json; charset=utf-8",

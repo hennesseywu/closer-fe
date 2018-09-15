@@ -1,5 +1,5 @@
 <template>
-  <header v-if="V_1_2_3" class="header">
+  <header v-if="ENV.v123" class="header">
     <div class="left">
       <div class="common back" :style="{display: back ? 'block' : 'none'}" @click="handleBack()"></div>
       <div class="common close" :style="{display: close ? 'block' : 'none'}" @click="handleClose()"></div>
@@ -22,9 +22,6 @@
       share: Boolean,
       home: Boolean
     },
-    computed: {
-      ...mapState(['UA', 'V_1_2_3'])
-    },
     methods: {
       handleBack() {
         if (this.home) {
@@ -36,13 +33,13 @@
         }
       },
       handleClose() {
-        if (this.UA.indexOf("closer-ios") > -1) {
+        if (this.ENV.app && this.ENV.ios) {
           setupWebViewJavascriptBridge(function(bridge) {
             if (bridge) {
               bridge.callHandler("exitPage")
             }
           })
-        } else if (this.UA.indexOf("closer-android") > -1) {
+        } else if (this.ENV.app && this.ENV.android) {
           if (typeof window.bridge != "undefined") {
             try {
               window.bridge.exitPage();

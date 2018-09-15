@@ -1,5 +1,5 @@
 import { Toast } from 'mint-ui'
-import api from '../../../utils/api'
+import api from '../../../config/api'
 import Router from 'vue-router';
 import { getInviteStatistic, getYesterdayAwardAmt, getInviteUserLoginPageList, remindLogin } from './service'
 export default {
@@ -51,9 +51,8 @@ export default {
     },
     actions: {
         checkLogin({ state, rootState }, cb) {
-            let ua = rootState.UA;
             //console.log("checkLogin")
-            if (ua.indexOf("closer-ios") > -1) {
+            if (window.ENV.app && window.ENV.ios) {
                 setTimeout(() => {
                     setupWebViewJavascriptBridge(function(bridge) {
                         if (bridge) {
@@ -86,7 +85,7 @@ export default {
                         }
                     })
                 }, 500)
-            } else if (ua.indexOf("closer-android") > -1) {
+            } else if (window.ENV.app && window.ENV.android) {
                 //安卓检查登录状态
                 if (typeof window.bridge != "undefined") {
                     let token = window.bridge.getUserToken(null);

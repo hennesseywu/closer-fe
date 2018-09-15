@@ -13,15 +13,13 @@ import Cookies from 'js-cookie';
 import Vconsole from 'vconsole';
 import MobileDetect from 'mobile-detect';
 import wx from 'weixin-js-sdk';
-import { isApp, isWechat, compareVersion } from './utils/utils';
-
-
-if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.location.href) || /local.tiejin/.test(window.location.href)) {
+import ENV from './config/init';
+if (ENV.dev) {
   const vconsole = new Vconsole()
-  store.state.IS_DEV = true;
-  Cookies.set("IS_DEV", true, {
-    expires: 1
-  });
+  // store.state.IS_DEV = true;
+  // Cookies.set("IS_DEV", true, {
+  //   expires: 1
+  // });
 
   // if (/local.tiejin.cn/.test(window.location.href)) {
   //   Cookies.set("GroukAuth", '1.a35f4f962297c68519b7ece0243a162d9091571d7d37df63d2833ea30d7a711cd722492c834580c8500e224a273f94dc', {
@@ -30,6 +28,8 @@ if (/sandbox.tiejin/.test(window.location.href) || /127.0.0.1/.test(window.locat
   // }
 }
 
+// 将ENV环境变量挂载到vue全局以及window全局
+Vue.prototype.ENV = ENV;
 window.wx = wx;
 window.axios = axio;
 window.Cookies = Cookies;
@@ -56,7 +56,6 @@ window.setupWebViewJavascriptBridge = function(callback) {
 Vue.config.productionTip = false
 Vue.use(MintUI)
 
-initState();
 // 运行时动态设置
 pageResize()
 window.onresize = pageResize;
@@ -64,14 +63,6 @@ window.onresize = pageResize;
 function pageResize() {
   let fontSize = Math.min(screen.width, document.documentElement.getBoundingClientRect().width) / 375 * 16
   document.documentElement.style.fontSize = (fontSize >= 32 ? 32 : fontSize) + 'px'
-}
-
-function initState() {
-  let ua = (navigator.userAgent || window.navigator.userAgent).toLowerCase();
-  store.state.V_1_2_3 = compareVersion(ua, '1.2.3', '1.2.2');
-  store.state.UA = ua;
-  store.state.IS_APP = isApp();
-  store.state.IS_WX = isWechat();
 }
 
 new Vue({

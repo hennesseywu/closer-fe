@@ -1,58 +1,41 @@
+/**
+ * build: 线上使用
+ * dev: sandbox环境
+ * local: 本地调试
+ */
+
+// 为方便vue.config.js中引入，这里使用nodejs识别的CommonJS规范
+// 在项目中引用该模块时，请使用require()，而非es6的import from
+
 export default {
-    serverUrl: 'https://api-sandbox.tiejin.cn/command/',
-    downUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
-    file: '/file/upload/public',
-    admin: {
-        // 微信授权获取code
-        get_auth_path: 'closer_auth.get_auth_path',
-        login_with_wechat: 'closer_auth.login_with_wechat',
-        closeruser_regist: 'closer_auth.closeruser_regist',
-        get_code_by_phone: 'closer_account.get_code_by_phone',
-        check: 'closer_account.check',
-        check_wechat: 'closer_account.check_wechat',
-        info: 'closer_user.info',
-        // 用户详情
-        user_show: 'closer_user.show',
-        // 点赞
-        like: 'closer_reply.like',
-        // 回复 评论
-        add_reply: 'closer_reply.add_reply',
-        // 邀请人书
-        invite_counts: 'closer_user.invite_counts'
-    },
-    command: {
-        // 贴子详情
-        show: 'closer_subject.show',
-        // 阅读量统计
-        incr_view: 'closer_subject.incr_view',
-        // 留言列表
-        comments: 'closer_reply.comments',
-        // 获取video播放密钥
-        videos: 'ali_vod.accessInfo',
-        // 举报
-        report: 'closer_report.add',
-        // 点赞
-        like: 'closer_reply.like',
-        // 评论以及回复评论
-        add_reply: 'closer_reply.add_reply',
-        // 富评论下的子评论
-        replys: 'closer_reply.replys',
-        // 举报列表
-        reportType: 'closer_report.get_report_types'
-    },
-    community: {
-        // 栏目实体
-        show: 'closer_community.show',
-        // 获取栏目下贴子列表
-        community_subject_list_index: 'closer_subject.community_subject_list_index',
-        // 订阅/取消订阅
-        subscription: 'closer_community.subscription'
-    },
-    group: {
-        show: 'closer_class.show',
-        // 正在招募的群组
-        recruiting: 'closer_class.recruiting',
-        group_subject_list: 'closer_subject.class_subject_list_index',
-        share_group: 'closer_share.outer_group'
-    }
+  href: {
+    build: 'https://a.tiejin.cn',
+    dev: 'https://a-sandbox.tiejin.cn',
+    sandbox: 'https://a-sandbox.tiejin.cn',
+    local: 'http://local.tiejin.cn:8889'
+  },
+  file: {
+    build: 'https://file.tiejin.cn',
+    dev: 'https://file-sandbox.tiejin.cn',
+    sandbox: 'https://file-sandbox.tiejin.cn',
+    local: 'https://file-sandbox.tiejin.cn'
+  },
+  server: {
+    build: 'https://api.tiejin.cn/command/',
+    dev: 'https://api-sandbox.tiejin.cn/command/',
+    sandbox: 'https://api-sandbox.tiejin.cn/command/',
+    local: 'https://api-sandbox.tiejin.cn/command/'
+  },
+  download: {
+    build: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
+    dev: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
+    sandbox: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer',
+    local: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.ums.closer'
+  },
+  wxAuthorization: {
+    build: 'https://h5.tiejin.cn/redirect?redirectUrl=',
+    dev: 'https://h5-sandbox.tiejin.cn/redirect?redirectUrl=',
+    sandbox: 'https://h5-sandbox.tiejin.cn/redirect?redirectUrl=',
+    local: 'https://h5-sandbox.tiejin.cn/redirect?redirectUrl='
+  }
 }

@@ -1,7 +1,7 @@
 <template>
   
-  <div class="commen local-answer" :class="{'in-app': IS_APP}" v-if="showAnswer">
-    <local-header v-if="IS_APP" back close></local-header>
+  <div class="commen local-answer" :class="{'in-app': ENV.app}" v-if="showAnswer">
+    <local-header v-if="ENV.app" back close></local-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
       <div class="answer-box" v-html="currentQuestion" @click="checkOptions($event)">
@@ -50,7 +50,7 @@
     },
     data() {
       return {
-        isApp: this.$store.state.IS_APP,
+        isApp: this.ENV.app,
         checkNum: '',
         isCheck: false,
         options: {},
@@ -77,7 +77,7 @@
       this.updateChance()
       this.updateCurrentQuestionNum()
       // this.startTest()
-      if (this.IS_WX) {
+      if (this.ENV.app) {
         console.log('answer wxshare--')
         this.initWxConfig()
       }
@@ -87,7 +87,6 @@
       this.isUpdate = true;
     },
     computed: {
-      ...mapState(['IS_APP', 'IS_WX']),
       ...mapState("local", {
         statistic: state => state.statistic,
         // startResult: state => state.startResult,

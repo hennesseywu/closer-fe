@@ -1,14 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import api from './utils/api';
+import baseUrl from './config/index';
 import {
     Toast
 } from 'mint-ui';
-import {
-    isApp,
-    isWechat
-} from './utils/utils';
-import Store from './store'
+import api from './config/api'
 
 // landing 页
 const Landing = () =>
@@ -170,36 +166,25 @@ router.beforeEach(({
     params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
-    if (name == 'localIndex') {
-        if (isApp()) {
+    console.log('router-before:', name, window.ENV.app, window.ENV.wx, query)
+    if (name == 'localIndex' || name == 'festivalIndex') {
+        if (window.ENV.app) {
             console.log("closer device")
             Cookies.remove('user'); //app端user完全依赖APP
             next();
-        } else if (isWechat()) {
+        } else if (window.ENV.wx) {
             if (query.code) {
                 next();
                 return;
             }
             console.log('fullpath:', fullPath, query)
 
-            // test hashRouter
-            // let _path = '',
-            //     reUrl = api.wxRedirectUrl,
-            //     url = api.wxLoginUrl;
-            // console.log('fullpath:',fullPath,query)
-            // if (location.origin.indexOf('local.tiejin.cn') > -1 || Cookies.get("IS_DEV")) {
-            //     reUrl = api.wxRedirectDevUrl
-            //     url = Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginLocalUrl
-            // }
-            // url = encodeURIComponent(url+path + '?params=' + encodeURIComponent(JSON.stringify(query)))
-            // console.log('redirectUrl:', reUrl, url)
-            // _path = reUrl + url
+            // let _path = (location.origin.indexOf('local.tiejin.cn') > -1 ? api.wxLoginLocalUrl : Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query))
 
-            let _path = (location.origin.indexOf('local.tiejin.cn') > -1 ? api.wxLoginLocalUrl : Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query))
+            let _path = baseUrl.wxAuthorization[window.ENV.env] + baseUrl.href[window.ENV.env] + path + '?params=' + encodeURIComponent(JSON.stringify(query))
             let params = {
                 path: _path
             };
-            console.log('from:', _path)
             axios.post(api.admin.get_auth_path, params).then(({
                 data
             }) => {

@@ -21,16 +21,13 @@
       content: String,
       path:String
     },
-    computed: {
-      ...mapState(['IS_APP'])
-    },
     methods:{
       handleClose() {
         this.$emit('close');
       },
       handleClick() {
         if (this.share) {
-          if (this.IS_APP) {
+          if (this.ENV.app) {
             // 端内跳分享页
             this.$router.push({
               name: 'localShare'

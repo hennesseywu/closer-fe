@@ -1,6 +1,6 @@
 <template>
   <div class="main rule">
-    <local-header v-if="IS_APP" back></local-header>
+    <local-header v-if="ENV.app" back></local-header>
     <section class="bd">
       <div class="bd-name">游戏规则</div>
       <div class="bd-wrap">
@@ -35,9 +35,6 @@
     name: 'rule',
     components: {
       localHeader
-    },
-    computed: {
-      ...mapState(['IS_APP']),
     },
     created() {
       let {from} = this.$route.params

@@ -1,6 +1,6 @@
 <template>
-  <div class="main local-result" :class="{'in-app': IS_APP}" v-if="showResult">
-    <local-header v-if="IS_APP" back home></local-header>
+  <div class="main local-result" :class="{'in-app': ENV.app}" v-if="showResult">
+    <local-header v-if="ENV.app" back home></local-header>
     <div class="yun-wrapper">
       <div class="yun"></div>
       <div class="yun-right">
@@ -73,7 +73,7 @@
     },
     data() {
       return {
-        isApp: this.$store.state.IS_APP,
+        isApp: this.ENV.app,,
         levelText1: '额滴个神，皓月千万里，C位属于你。邀请各路神仙一起搞事情吧',
         levelText2: '上天了！你已喜提中秋盒饭，价值2元。想打怪升级？再试试吧',
         levelText3: '恭喜大帅，今年中秋你可以下凡赏月了。想见嫦娥姐姐？再试试吧',
@@ -124,13 +124,13 @@
         sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
-      if (this.IS_DEV) {
+      if (this.ENV.dev) {
         this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
         this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       }
       console.log("parkk", this.$route.params.from)
-      if (this.IS_WX) {
+      if (this.ENV.wx) {
         this.initWxConfig()
       }
     },
@@ -152,7 +152,6 @@
       }
     },
     computed: {
-      ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
         chance: state => state.statistic.chance,
         currentQuesitionNum: state => state.currentQuesitionNum,
@@ -236,7 +235,7 @@
         }
       },
       goShare() {
-        if (this.IS_WX) {
+        if (this.ENV.wx) {
           this.setLocalStorage()
           location.href = `${location.origin}/moonfestival/share`
         }

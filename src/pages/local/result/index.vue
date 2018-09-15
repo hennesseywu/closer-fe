@@ -1,6 +1,6 @@
 <template>
-  <div class="main local-result" :class="{'in-app': IS_APP}">
-    <local-header v-if="IS_APP" back home></local-header>
+  <div class="main local-result" :class="{'in-app': ENV.app}">
+    <local-header v-if="ENV.app" back home></local-header>
     <div class="result-wrapper">
       <div class="content1">
         <div class="avater" :class="level == 1 ? 'avater1' : (level == 2 ? 'avater2' : 'avater3')">
@@ -19,7 +19,7 @@
       <div class="content2">
         <div class="commen-width animated bounceInDown" :class="level == 1 ? 'local1-img' : (level == 2 ? 'local2-img' : 'local3-img')">
           <div class="logo animated shake"></div>
-          <div class="go-share animated bounceInDown1" v-if="IS_WX" @click="goShare">去分享</div>
+          <div class="go-share animated bounceInDown1" v-if="ENV.wx" @click="goShare">去分享</div>
         </div>
         <div class="local-desc localText" v-html="level == 1 ? localText1 : (level == 2) ? localText2 : localText3">
         </div>
@@ -72,7 +72,7 @@
     },
     data() {
       return {
-        isApp: this.$store.state.IS_APP,
+        isApp: this.ENV.app,
         // btnText: "下载APP",
         // regards: 0,
         // chance: 0,
@@ -125,13 +125,13 @@
         sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
-      if (this.IS_DEV) {
+      if (this.ENV.dev) {
         this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
         this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       }
       console.log("parkk", this.$route.params.from)
-      if (this.IS_WX) {
+      if (this.ENV.wx) {
         this.initWxConfig()
       }
     },
@@ -153,7 +153,6 @@
       }
     },
     computed: {
-      ...mapState(['IS_DEV', 'IS_APP', 'IS_WX']),
       ...mapState('local', {
         chance: state => state.statistic.chance,
         currentQuesitionNum: state => state.currentQuesitionNum,
@@ -242,7 +241,7 @@
         }
       },
       goShare() {
-        if (this.IS_WX) {
+        if (this.ENV.wx) {
           this.setLocalStorage()
           location.href = `${location.origin}/local/share`
         }
