@@ -1,6 +1,10 @@
 <template>
   
   <div class="commen local-answer" :class="{'in-app': ENV.app}" v-if="showAnswer">
+    <div class="yun-wrapper min">
+      <div class="yun"></div>
+      <div class="yun1"></div>
+    </div>
     <local-header v-if="ENV.app" back close></local-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>

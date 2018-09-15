@@ -2,13 +2,12 @@
 
 .local-answer {
   // padding: -20pr 0 40pr;
-  background: url(../images/answer_bg.png) no-repeat center;
-  background-size: cover;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  padding-top: 50pr;
   &.in-app {
     padding-top: 70pr;
   }
@@ -24,13 +23,18 @@
 //   border: 1px solid red;
 // }
 .answer-wrapper {
-  border: 1px solid rgba(0, 0, 0, 0);
-  width: 100%;
-  height: 100%;
+  position: relative;  
+  width: 670pr;
+  height: 1078pr;
+  background: url(../images/answer_bg.png) center 0 no-repeat;
+  background-size: contain;
+  margin: 0 auto;
   // min-height: 1434pr;
+  padding-top: 240pr;
   color: #885505;
+  z-index: 1;
   .answer-box {
-    margin: 324pr 40pr 0 40pr;
+    margin: 0 40pr 0 40pr;
     padding: 40pr;
     // background: #fff;
     // box-shadow: 0px 6pr 20pr 0px rgba(6, 53, 118, 0.5);

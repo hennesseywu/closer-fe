@@ -1,5 +1,10 @@
 <template>
   <div class="local-index" :class="{'in-app': ENV.app}" v-if="showIndex">
+    <div class="yun-wrapper">
+      <div class="yun"></div>
+      <div class="yun1"></div>
+      <div class="yun2"></div>
+    </div>
     <local-header v-if="ENV.app" close share></local-header>
     <section class="tab">
       <div class="tab-default tab-left" @click="showRankingList"></div>
@@ -118,7 +123,7 @@
         if (this.remainTimesToMax == 0) {
           return `恭喜，您已获得全部${transAmount(this.statistic.maxAwardAmt)}元的现金奖励~`
         }
-        return `您再获得<span style="color: #f20707;">${this.remainTimesToMax}次</span>王者称号就可以拿到总计${transAmount(this.statistic.maxAwardAmt)}元的现金奖励了！`
+        return `您再获得<span style="color: #885505;">${this.remainTimesToMax}次</span>王者称号就可以拿到总计${transAmount(this.statistic.maxAwardAmt)}元的现金奖励了！`
       }
     },
     created() {

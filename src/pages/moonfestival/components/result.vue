@@ -1,12 +1,10 @@
 <template>
   <div class="local-result" :class="{'in-app': ENV.app}" v-if="showResult">
-    <local-header v-if="ENV.app" back home></local-header>
-    <div class="yun-wrapper">
+    <div class="yun-wrapper min">
       <div class="yun"></div>
-      <div class="yun-right">
-        <div class="yun1 result-yun1"></div>
-      </div>
+      <div class="yun1"></div>
     </div>
+    <local-header v-if="ENV.app" back home></local-header>
     <div class="result-wrapper">
       <div class="content1">
         <div class="avater">
