@@ -2,9 +2,16 @@
   <div class="main local-index" :class="{'in-app': IS_APP}" v-if="showIndex">
     <local-header v-if="IS_APP" close share></local-header>
     <section class="tab">
-      <div class="tab-default tab-left" @click="showRankingList()"></div>
-      <div class="tab-default tab-right" @click="showRule()"></div>
+      <div class="tab-default tab-left" @click="showRankingList"></div>
+      <div class="tab-default tab-right" @click="showRule"></div>
     </section>
+    <div class="yun-wrapper">
+      <div class="yun"></div>
+      <div class="yun-right">
+        <div class="yun1"></div>
+        <div class="yun2"></div>
+      </div>
+    </div>
     <section class="hd">
       <div class="hd-img"></div>
     </section>
@@ -18,13 +25,13 @@
           <span class="bd-scale-amount">{{showAmount(0, 2)}}</span>
         </div>
         <!-- <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
-          <span class="bd-arrow bd-arrow-center"></span>
-          <span class="bd-scale-amount">{{showAmount(.5, 2)}}</span>
-        </div>
-        <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
-          <span class="bd-arrow bd-arrow-right"></span>
-          <span class="bd-scale-amount">{{showAmount(1, 2)}}</span>
-        </div> -->
+            <span class="bd-arrow bd-arrow-center"></span>
+            <span class="bd-scale-amount">{{showAmount(.5, 2)}}</span>
+          </div>
+          <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
+            <span class="bd-arrow bd-arrow-right"></span>
+            <span class="bd-scale-amount">{{showAmount(1, 2)}}</span>
+          </div> -->
       </div>
       <div class="bd-total">
         累计获得：
@@ -165,7 +172,8 @@
         'getStatistic',
         'initWxConfig',
         'updateCurrentQuestionNum',
-        'userShare'
+        'userShare',
+        'updateChance'
       ]),
       ...mapMutations('local', [
         'SET_USER',
@@ -177,6 +185,7 @@
       },
       // 转到排行榜
       showRankingList() {
+        console.log('rank=====')
         if (!this.isLogin) {
           this.checkLoginInApp(this.initAnimation);
         } else if (this.checkOtherEnv()) {
@@ -187,6 +196,7 @@
       },
       // 转到规则
       showRule() {
+        console.log('rule====')
         this.$router.push({
           name: 'festivalRule'
         })
@@ -214,6 +224,7 @@
           //   }
           // })
           this.$emit('openAnswer')
+          this.updateChance()
         }
       },
       closeDialog() {
@@ -254,7 +265,7 @@
         this.getStatistic().then(() => {
           this.initWxConfig();
           this.setCurrentWidth();
-          if (typeof(Cookies.get("path")) == "undefined"&&this.IS_WX) {
+          if (typeof(Cookies.get("path")) == "undefined" && this.IS_WX) {
             setTimeout(() => {
               this.drawHtmlToCanvas();
             }, 100)

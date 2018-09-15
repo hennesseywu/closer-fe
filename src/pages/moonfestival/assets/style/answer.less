@@ -1,30 +1,39 @@
 
 
 .local-answer {
-  padding: -20pr 0 40pr;
+  // padding: -20pr 0 40pr;
+  background: url(../images/answer_bg.png) no-repeat center;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   &.in-app {
     padding-top: 70pr;
   }
   .header {
     margin-bottom: 0;
   }
-.hd-img {
-  width: 672pr;
-  height: 314pr;
-  margin: 0 auto 10pr;
-  background: url(../images/answer_bg1.png) no-repeat center;
-  background-size: cover;
-}
+// .hd-img {
+//   width: 672pr;
+//   height: 314pr;
+//   margin: 0 auto 10pr;
+//   background: url(../images/answer_bg1.png) no-repeat center;
+//   background-size: cover;
+//   border: 1px solid red;
+// }
 .answer-wrapper {
+  border: 1px solid rgba(0, 0, 0, 0);
   width: 100%;
   height: 100%;
   // min-height: 1434pr;
-  color: #333;
+  color: #885505;
   .answer-box {
-    margin: -14pr 40pr 0 40pr;
+    margin: 324pr 40pr 0 40pr;
     padding: 40pr;
-    background: #fff;
-    box-shadow: 0px 6pr 20pr 0px rgba(6, 53, 118, 0.5);
+    // background: #fff;
+    // box-shadow: 0px 6pr 20pr 0px rgba(6, 53, 118, 0.5);
     border-radius: 20pr;
     text-align: center;
     display: flex;
@@ -37,9 +46,10 @@
       height: 50pr;
       line-height: 50pr;
       text-align: center;
-      background: #fddb00;
+      background: #885504;
       border-radius: 50pr;
-      border: 4pr solid #333;
+      border: 4pr solid #885504;
+      color: #D5CBAD;
     }
     .subject {
       width: 100%;
@@ -55,15 +65,15 @@
       .list {
         width: 100%;
         margin-top: 10pr;
-        border: 4px solid #333;
+        border: 4pr solid #895707;
         font-size: 30pr;
         line-height: 42pr;
         border-radius: 50pr;
-        border: 4pr solid #333;
-        padding: 10pr 0;
+        padding: 20pr 0;
       }
       .bg-yellow {
-        background: #fddb00;
+        background: #885505;
+        color: #D5CBAD;
       }
     }
   }
@@ -72,19 +82,19 @@
     justify-content: center;
     align-items: center;
     .next-btn {
-      margin-top: 28pr;
-      width: 308pr;
+      margin-top: -18pr;
+      width: 260pr;
       height: 90pr;
       background: url(../images/next_btn.png) no-repeat center;
       background-size: cover;
     }
-    .checked {
-      margin-top: 16pr;
-      width: 348pr;
-      height: 130pr;
-      background: url(../images/next.png) no-repeat center;
-      background-size: cover;
-    }
+    // .checked {
+    //   margin-top: 16pr;
+    //   width: 348pr;
+    //   height: 130pr;
+    //   background: url(../images/next.png) no-repeat center;
+    //   background-size: cover;
+    // }
     .finish {
       margin-top: 16pr;
       font-size: 36pr;

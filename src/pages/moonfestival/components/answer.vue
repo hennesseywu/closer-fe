@@ -1,6 +1,6 @@
 <template>
   
-  <div class="main local-answer" :class="{'in-app': IS_APP}" v-if="showAnswer">
+  <div class="commen local-answer" :class="{'in-app': IS_APP}" v-if="showAnswer">
     <local-header v-if="IS_APP" back close></local-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
@@ -12,8 +12,8 @@
         </div>-->
       </div>
       <div class="next-box" :class="isUpdate ? 'animated slideInUp faster' : ''">
-        <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)">下一题</div>
-        <div class="finish" :class="isCheck ? 'isfinish' : 'unfinish'" v-else @click="next(startResult.userAnswerId)">完成答题</div>
+        <div class="finish next-btn" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)"></div>
+        <div class="finish next-btn" v-else @click="next(startResult.userAnswerId)"></div>
       </div>
     </div>
   </div>

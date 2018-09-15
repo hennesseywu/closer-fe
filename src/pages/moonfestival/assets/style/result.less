@@ -9,6 +9,7 @@
   .header {
     margin-bottom: 0;
   }
+  
   .result-wrapper {
     width: 100%;
     // min-height: 1334pr;
@@ -19,12 +20,14 @@
   }
 
   .content1 {
+    // border: 1px solid red;
     .avater {
       position: relative;
       width: 180pr;
       height: 180pr;
       border-radius: 180pr;
-      margin: 15pr auto 0;
+      margin: -100pr auto 0;
+      border: 8pr solid #D5CBAD;
       .avater-commen {
         position: absolute;
         top: -42pr;
@@ -39,27 +42,6 @@
         height: 165pr;
         border-radius: 165pr;
       }
-      .avater1-icon {
-        background: url(../images/avater1_logo.png) no-repeat center;
-        background-size: cover;
-      }
-      .avater2-icon {
-        background: url(../images/avater2_logo.png) no-repeat center;
-        background-size: cover;
-      }
-      .avater3-icon {
-        background: url(../images/avater3_logo.png) no-repeat center;
-        background-size: cover;
-      }
-    }
-    .avater1 {
-      border: 8pr solid #d3b2d3;
-    }
-    .avater2 {
-      border: 8pr solid #ffee00;
-    }
-    .avater3 {
-      border: 8pr solid #ffffff;
     }
     .regards {
       font-size: 40pr;
@@ -68,150 +50,90 @@
         font-size: 72pr;
       }
     }
-    .local-name {
-      position: relative;
-      margin-top: 20pr;
-      margin-bottom: 29pr;
-      font-size: 36pr;
-      height: 50pr;
-      line-height: 50pr;
-      .line {
-        width: 258pr;
-        height: 1px;
-        background: url(../images/line.png) no-repeat center;
-        background-size: cover;
-      }
-      .name {
-        margin: 0 10pr;
-      }
-      .left {
-        transform: rotate(180deg);
-      }
-    }
   }
   .content2 {
+    border: 1px solid rgba(0,0,0,0);
     position: relative;
-    height: 258pr;
-    width: 100%;
+    width: 670pr;
+    height: 646pr;
+    background: url(../images/Bitmap@2x.png) no-repeat center;
+    background-size: cover;
+    margin: 60pr auto 0 auto;
     .commen-width {
-      width: 568pr;
-      height: 138pr;
-      margin-left: 91pr;
-      .go-share {
-        position: absolute;
-        top: -30pr;
-        right: -60pr;
-        width: 140pr;
-        height: 60pr;
-        font-size: 28pr;
-        line-height: 55pr;
-        color: #333333;
+      .result-bd {
+        padding: 40pr;
+        .level-commen {
+          width: 260pr;
+          height: 280pr;
+        }
+        .wangmu {
+          background: url(../images/wangmu.png) no-repeat center;
+          background-size: cover;
+        }
+        .change {
+          background: url(../images/change.png) no-repeat center;
+          background-size: cover;
+        }
+        .bajie {
+          background: url(../images/bajie.png) no-repeat center;
+          background-size: cover;
+        }
+        .result-text {
+          width: 294pr;
+          margin-left: 36pr;
+          .level {
+            width: 214pr;
+            height: 64pr;
+            margin: 0 auto;
+          }
+          .wangmu-text {
+            background: url(../images/wangmu_text.png) no-repeat center;
+            background-size: cover;
+          }
+          .chenge-text {
+            background: url(../images/change_text.png) no-repeat center;
+            background-size: cover;
+          }
+          .bajie-text {
+            background: url(../images/bajie_text.png) no-repeat center;
+            background-size: cover;
+          }
+          .desc {
+            margin-top: 40pr;
+            font-size: 32pr;
+            color: #8A5707;
+            text-align: left;
+          }
+        }
+      }
+    }
+    .btn-box {
+      width: 100%;
+      margin-top: 84pr;
+      padding: 0 40pr;
+      position: relative;
+      .btn-commen {
+        width: 260pr;
+        height: 106pr;
+      }
+      .share-btn {
         background: url(../images/share_btn.png) no-repeat center;
         background-size: cover;
       }
-    }
-    .local1-img {
-      position: absolute;
-      top: 0;
-      background: url(../images/local1.png) no-repeat center;
-      background-size: cover;
-      .logo {
-        margin: 0 auto;
-        width: 230pr;
-        height: 134pr;
-        background: url(../images/local1_logo.png) no-repeat center;
-        background-size: cover;
-        opacity: 0;
+      .go-answer {
         position: absolute;
-        top: -30pr;
-        right: 30%;
-      }
-    }
-    .local2-img {
-      position: absolute;
-      top: 0;
-      background: url(../images/local2.png) no-repeat center;
-      background-size: cover;
-      .logo {
-        margin: 0 auto;
-        width: 202pr;
-        height: 186pr;
-        background: url(../images/local2_logo.png) no-repeat center;
+        right: 40pr;
+        background: url(../images/go_answer.png) no-repeat center;
         background-size: cover;
       }
-    }
-    .local3-img {
-      position: absolute;
-      top: 0;
-      background: url(../images/local3.png) no-repeat center;
-      background-size: cover;
-      .logo {
-        margin: 0 auto;
-        width: 238pr;
-        height: 206pr;
-        background: url(../images/local3_logo.png) no-repeat center;
-        background-size: cover;
-      }
-    }
-    .local-desc {
-      position: absolute;
-      top: 160pr;
-      padding: 0 40pr;
-      font-size: 32pr;
-      line-height: 44pr;
-      transition: all .3s .8s ease-in;
-      opacity: 0;
-    }
-    .localText {
-      animation: localText .5s 1.6s linear;
-      -webkit-animation: localText .5s 1.6s linear;
-      animation-fill-mode: forwards;
-      -webkit-animation-fill-mode: forwards;
-    }
-  }
-  .content3 {
-    .btn-commen {
-      width: 348pr;
-      height: 130pr;
-      line-height: 110pr;
-      font-size: 36pr;
-      color: #333;
-      font-weight: bold;
-    }
-    .go-answer {
-      background: url(../images/go_answer.png) no-repeat center;
-      background-size: cover;
-      margin: -10pr auto 0;
     }
     .chance-remain {
-      font-size: 28pr;
-      line-height: 40pr;
-    }
-    .get-cash {
-      background: url(../images/white_btn.png) no-repeat center;
-      background-size: cover;
-      margin: 0 auto;
-      opacity: 0;
-    }
-    .cash {
-      animation: cash .5s 2s ease-in;
-      opacity: 1;
-    }
-    .text-commen {
-      font-size: 28pr;
-      line-height: 40pr;
-    }
-    .tips {
-      color: #fddb00;
+      color: #B49455;
       margin-top: 20pr;
-      .arrow {
-        display: inline-block;
-        margin-left: 10pr;
-        width: 12pr;
-        height: 20pr;
-        background: url(../images/arrow.png) no-repeat center;
-        background-size: cover;
-      }
+      font-size: 28pr;
+      line-height: 40pr;
+      padding: 0 40pr;
+      text-align: right;
     }
   }
 
@@ -265,7 +187,7 @@
   }
   .share-score {
     padding-top: 40pr;
-    background: url(../images/bg.png) no-repeat;
+    background: url(../images/bg.jpg) no-repeat;
     background-size: cover;
     .share-qrcode {
       bottom: 70pr;

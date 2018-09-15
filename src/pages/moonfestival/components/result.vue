@@ -1,40 +1,37 @@
 <template>
   <div class="main local-result" :class="{'in-app': IS_APP}" v-if="showResult">
     <local-header v-if="IS_APP" back home></local-header>
+    <div class="yun-wrapper">
+      <div class="yun"></div>
+      <div class="yun-right">
+        <div class="yun1 result-yun1"></div>
+      </div>
+    </div>
     <div class="result-wrapper">
       <div class="content1">
-        <div class="avater" :class="level == 1 ? 'avater1' : (level == 2 ? 'avater2' : 'avater3')">
+        <div class="avater">
           <span class="avater-commen" :class="level == 1 ? 'avater1-icon' : (level == 2 ? 'avater2-icon' : 'avater3-icon')"></span>
           <img :src="makeFileUrl(avatar)">
         </div>
         <div class="regards">
           <span>{{score}}</span>分
         </div>
-        <div class="local-name box box-lr box-center-center">
-          <div class="line left"></div>
-          <div class="name">获得称号</div>
-          <div class="line right"></div>
-        </div>
       </div>
       <div class="content2">
-        <div class="commen-width animated bounceInDown" :class="level == 1 ? 'local1-img' : (level == 2 ? 'local2-img' : 'local3-img')">
-          <div class="logo animated shake"></div>
-          <div class="go-share animated bounceInDown1" v-if="IS_WX" @click="goShare">去分享</div>
+        <div class="commen-width animated bounceInDown">
+          <div class="result-bd box box-lr">
+            <div class="level-commen" :class="level == 1 ? 'wangmu' : (level == 2 ? 'change' : 'bajie')"></div>
+            <div class="result-text box box-tb">
+              <div class="level" :class="level == 1 ? 'wangmu-text' : (level == 2 ? 'change-text' : 'bajie-text')"></div>
+              <div class="desc" v-html="level == 1 ? levelText1 : (level == 2) ? levelText2 : levelText3"></div>
+            </div>
+          </div>
         </div>
-        <div class="local-desc localText" v-html="level == 1 ? localText1 : (level == 2) ? localText2 : localText3">
+        <div class="btn-box box box-lr">
+          <div class="share-btn btn-commen" @click="goShare"></div>
+          <div class="go-answer btn-commen" @click="goAnswer"></div>
         </div>
-      </div>
-      <div class="content3">
-        <div class="btn-commen go-answer" @click="goAnswer">再次答题</div>
         <div class="chance-remain">剩余{{chance >= 0 ? chance : '0'}}次答题机会</div>
-        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-if="isApp">去分享</div>
-        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 1">领5元奖励</div>
-        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 2">领2元奖励</div>
-        <div class="btn-commen get-cash animated zoomIn" @click="downloadApp" v-else-if="level == 3">下载APP</div>
-        <div class="text-commen go-wallet" v-if="isApp">去“我的-钱包”查看</div>
-        <div class="text-commen go-wallet" v-if="!isApp && level == 3">下载贴近app，领10元新手红包</div>
-        <div class="text-commen go-wallet" v-if="!isApp && level != 3">下载贴近APP，去“我的-钱包”查看</div>
-        <div class="text-commen tips" @click="goTips">查看正确答案，点这里<span class="arrow"></span> </div>
       </div>
       <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" :path="path" @close="closeDialog"></local-dialog>
     </div>
@@ -77,12 +74,9 @@
     data() {
       return {
         isApp: this.$store.state.IS_APP,
-        // btnText: "下载APP",
-        // regards: 0,
-        // chance: 0,
-        localText1: '同样是九年义务教育，为什么你那么优秀？你“土”的一览众山小，谁都没你DIAO',
-        localText2: '恭喜你获得2元奖励，但你对成都了解还不够多哦！冲击满分赢5元！',
-        localText3: '盆友，你是路过成都吗？得满分可以领5元现<br/>金，再试试吧',
+        levelText1: '额滴个神，皓月千万里，C位属于你。邀请各路神仙一起搞事情吧',
+        levelText2: '上天了！你已喜提中秋盒饭，价值2元。想打怪升级？再试试吧',
+        levelText3: '恭喜大帅，今年中秋你可以下凡赏月了。想见嫦娥姐姐？再试试吧',
         // 弹窗
         dialog: {
           // 是否显示弹窗
@@ -213,20 +207,14 @@
         }, 10)
       },
       goAnswer() {
-        if (this.statistic.totalAwardAmt >= this.statistic.maxAwardAmt) {
-          Toast('您已经获得奖励100元，不能再答题了~')
-          return
-        }
+        // if (this.statistic.totalAwardAmt >= this.statistic.maxAwardAmt) {
+        //   Toast('您已经获得奖励100元，不能再答题了~')
+        //   return
+        // }
         if (this.chance > 0) {
           this.updateCurrentQuestionNum()
-          window.pageTo = 'answer'
-          // this.$router.push({
-          //   name: 'localAnswer',
-          //   params: {
-          //     from: 'playAgain'
-          //   }
-          // })
           this.$emit('openAnswer', {params: 'fromResult'})
+          this.updateChance()
         } else {
           this.dialog.show = true
           this.dialog.share = true

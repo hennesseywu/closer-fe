@@ -77,10 +77,10 @@
       position: absolute;
       top: 20pr;
       right: 20pr;
-      width: 60pr;
+      width: 48pr;
       height: 68pr;
       background: url(../assets/images/close.png) center no-repeat;
-      background-size: 60pr 68pr;
+      background-size: cover;
     }
     .dlg-img {
       position: absolute;
@@ -107,8 +107,8 @@
       position: absolute;
       bottom: 62pr;
       left: 166pr;
-      width: 300pr;
-      height: 94pr;
+      width: 260pr;
+      height: 90pr;
       font-size: 32pr;
       font-weight: bold;
       line-height: 90pr;

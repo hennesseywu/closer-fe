@@ -1,6 +1,40 @@
 .main {
   position: relative;
   min-height: 100%;
-  background: url(../images/bg.png);
-  background-size: contain;
+  background: url(../images/bg.jpg);
+  background-size: cover;
+}
+
+.yun-wrapper {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  .yun {
+    margin-top: 30pr;
+    width: 204pr;
+    height: 152pr;
+    background: url(../images/yun@2x.png) no-repeat;
+    background-size: contain;
+  }
+  .yun-right {
+    position: absolute;
+    right: -50pr;
+    display: flex;
+    flex-direction: column;
+    .yun1 {
+      width: 160pr;
+      height: 84pr;
+      background: url(../images/yun1@2x.png) no-repeat;
+      background-size: contain;
+    }
+    .result-yun1 {
+      margin-top: 80pr;
+    }
+    .yun2 {
+      width: 118pr;
+      height: 188pr;
+      background: url(../images/yun2@2x.png) no-repeat;
+      background-size: contain;
+    }
+  }
 }

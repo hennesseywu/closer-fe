@@ -1,8 +1,8 @@
 <template>
-  <div class="main rule">
+  <div class="rule">
     <local-header v-if="IS_APP" back></local-header>
     <section class="bd">
-      <div class="bd-name">游戏规则</div>
+      <div class="bd-name">活动规则</div>
       <div class="bd-wrap">
         <div class="bd-chance">
           <div class="bd-title">
