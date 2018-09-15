@@ -1,4 +1,5 @@
 import api from '../config/api';
+import baseURL from '../config/index';
 import html2canvas from 'html2canvas';
 import md5 from "js-md5"
 
@@ -124,7 +125,7 @@ export function makeFileUrl(url, type, size) {
   if (url) {
     let sizes = size ? size : 500
     // let fileUrl = Cookies.get("IS_DEV") ? api.fileDevURL : api.fileUrl
-    let fileUrl = api.file[window.ENV.env]
+    let fileUrl = baseURL.file[window.ENV.env]
     if (type === 'src') {
       return (url.indexOf('://') !== -1) ? url + '?s=' + sizes : fileUrl + url + '?s=' + sizes;
     } else {
@@ -297,7 +298,7 @@ export function tjUploadFile(img) {
   fd.append("file", file);
   // Submit Form and upload file
   // let fileUrl = Cookies.get("IS_DEV") ? 'https://file-sandbox.tiejin.cn' : 'https://file.tiejin.cn'
-  let fileUrl = api.file[window.ENV.env]
+  let fileUrl = baseURL.file[window.ENV.env]
   return axios.post(fileUrl + "/file/upload/public", fd, {
     headers: {
       Accept: "application/json; charset=utf-8",

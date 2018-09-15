@@ -1,17 +1,10 @@
 <template>
-  <div class="main local-index" :class="{'in-app': ENV.app}" v-if="showIndex">
+  <div class="local-index" :class="{'in-app': ENV.app}" v-if="showIndex">
     <local-header v-if="ENV.app" close share></local-header>
     <section class="tab">
       <div class="tab-default tab-left" @click="showRankingList"></div>
       <div class="tab-default tab-right" @click="showRule"></div>
     </section>
-    <div class="yun-wrapper">
-      <div class="yun"></div>
-      <div class="yun-right">
-        <div class="yun1"></div>
-        <div class="yun2"></div>
-      </div>
-    </div>
     <section class="hd">
       <div class="hd-img"></div>
     </section>

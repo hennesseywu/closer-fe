@@ -1,9 +1,11 @@
 @aniTime: .2s;
 @aniFun: ease-out;
 .local-index {
-  padding: 1pr 0 40pr;
+  position: relative;
+  padding: 0 0 40pr;
   font-size: 28pr;
   overflow-x: hidden;
+  z-index: 1;
   .header .close {
     display: none;
   }
@@ -15,9 +17,11 @@
     }
   }
   .tab {
+    position: relative;
     display: flex;
     justify-content: space-between;
     margin: 30pr 40pr;
+    z-index: 10;
   }
   .tab-default {
     width: 162pr;
@@ -35,7 +39,8 @@
     position: relative;
     width: 560pr;
     height: 210pr;
-    margin: 201pr auto 0;
+    margin: 360pr auto 0;
+    z-index: 1;
   }
   .hd-default {
     position: absolute;

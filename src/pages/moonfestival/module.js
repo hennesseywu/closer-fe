@@ -358,6 +358,7 @@ export default {
         activityId: state.activityId,
         inviteUser: state.inviter
       });
+      console.log('getRankList', data)
       if (data.code == 0) {
         commit('SET_RANKLIST', data.result)
       } else {

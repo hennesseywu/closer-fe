@@ -1,5 +1,10 @@
 <template>
-  <div class="home">
+  <div class="main home">
+    <div class="yun-wrapper">
+      <div class="yun"></div>
+      <div class="yun1"></div>
+      <div class="yun2"></div>
+    </div>
     <local-index ref="localIndex" :showIndex="propData.showIndex" @openAnswer="openAnswerPop"></local-index>
     <local-answer ref="localAnswer" :startData="startData" :startResult="startResult" :showAnswer="propData.showAnswer" @openResult="openResultPop"></local-answer>
     <local-result ref="localResult" :showResult="propData.showResult" @openAnswer="openAnswerPop"></local-result>

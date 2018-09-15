@@ -6,35 +6,59 @@
 }
 
 .yun-wrapper {
-  display: flex;
-  flex-direction: row;
-  position: relative;
+  // display: flex;
+  // flex-direction: row;
+  position: absolute;
+  top: 80pr;
+  left: 0;
+  width: 100%;
+  z-index: 0;
   .yun {
-    margin-top: 30pr;
+    // margin-top: 30pr;
+    // width: 204pr;
+    // height: 152pr;
+    // background: url(../images/yun@2x.png) no-repeat;
+    // background-size: contain;
+    position: absolute;
+    left: 0;
+    top: 60pr;
     width: 204pr;
     height: 152pr;
     background: url(../images/yun@2x.png) no-repeat;
     background-size: contain;
   }
-  .yun-right {
+  .yun1 {
     position: absolute;
-    right: -50pr;
-    display: flex;
-    flex-direction: column;
+    top: 0;
+    right: 0;
+    width: 106pr;
+    height: 84pr;
+    background: url(../images/yun1@2x.png) no-repeat;
+    background-size: contain;
+  }
+  .result-yun1 {
+    margin-top: 80pr;
+  }
+  .yun2 {
+    position: absolute;
+    top: 80pr;
+    right: 0;
+    width: 118pr;
+    height: 188pr;
+    background: url(../images/yun2@2x.png) no-repeat;
+    background-size: contain;
+  }
+
+  &.min {
+    .yun {
+      top: 45pr;
+      width: 153pr;
+      height: 114pr;
+    }
     .yun1 {
-      width: 160pr;
-      height: 84pr;
-      background: url(../images/yun1@2x.png) no-repeat;
-      background-size: contain;
-    }
-    .result-yun1 {
-      margin-top: 80pr;
-    }
-    .yun2 {
-      width: 118pr;
-      height: 188pr;
-      background: url(../images/yun2@2x.png) no-repeat;
-      background-size: contain;
+      top: 80pr;
+      width: 79.5pr;
+      height: 63pr;
     }
   }
 }

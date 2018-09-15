@@ -1,5 +1,5 @@
 <template>
-  <div class="main local-result" :class="{'in-app': ENV.app}" v-if="showResult">
+  <div class="local-result" :class="{'in-app': ENV.app}" v-if="showResult">
     <local-header v-if="ENV.app" back home></local-header>
     <div class="yun-wrapper">
       <div class="yun"></div>
