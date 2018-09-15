@@ -73,7 +73,7 @@
     },
     data() {
       return {
-        isApp: this.ENV.app,,
+        isApp: this.ENV.app,
         levelText1: '额滴个神，皓月千万里，C位属于你。邀请各路神仙一起搞事情吧',
         levelText2: '上天了！你已喜提中秋盒饭，价值2元。想打怪升级？再试试吧',
         levelText3: '恭喜大帅，今年中秋你可以下凡赏月了。想见嫦娥姐姐？再试试吧',
