@@ -22,6 +22,9 @@
       share: Boolean,
       home: Boolean
     },
+    mounted() {
+      console.log('evn.v123---', this.ENV.v123)
+    },
     methods: {
       handleBack() {
         if (this.home) {
