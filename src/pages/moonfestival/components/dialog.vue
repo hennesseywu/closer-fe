@@ -14,7 +14,7 @@
 
   import { mapState } from 'vuex';
   export default {
-    name: 'localDialog',
+    name: 'moonDialog',
     props:{
       show: Boolean,
       share: Boolean,
@@ -30,10 +30,10 @@
           if (this.ENV.app) {
             // 端内跳分享页
             this.$router.push({
-              name: 'localShare'
+              name: 'moonShare'
             })
           } else  {
-            location.href = `${location.origin}/local/share`
+            location.href = `${location.origin}/moon/share`
           //  location.href = `/static/share.html?path=${this.path}`
           }
         } else {
@@ -55,6 +55,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,.3);
+    z-index: 99;
     display: none;
     &.active {
       display: block;

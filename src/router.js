@@ -39,16 +39,16 @@ const LocalRule = () =>
 const LocalRank = () =>
     import ('@/pages/local/rank')
 // 中秋节活动
-const FestivalIndex = () =>
+const MoonIndex = () =>
     import ('@/pages/moonfestival/home')
 
-const FestivalShare = () =>
+const MoonShare = () =>
     import ('@/pages/moonfestival/share')
 
-const FestivalRule = () =>
+const MoonRule = () =>
     import ('@/pages/moonfestival/rule')
 
-const FestivalRank = () =>
+const MoonRank = () =>
     import ('@/pages/moonfestival/rank')
     
 Vue.use(Router)
@@ -127,30 +127,30 @@ const router = new Router({
             title: '排行榜'
         }
     }, {
-        path: '/moonfestival',
-        name: 'festivalIndex',
-        component: FestivalIndex,
+        path: '/moon',
+        name: 'moonIndex',
+        component: MoonIndex,
         meta: {
             title: '首页'
         }
     }, {
-        path: '/moonfestival/rule',
-        name: 'festivalRule',
-        component: FestivalRule,
+        path: '/moon/rule',
+        name: 'moonRule',
+        component: MoonRule,
         meta: {
             title: '活动规则'
         }
     }, {
-        path: '/moonfestival/rank',
-        name: 'festivalRank',
-        component: FestivalRank,
+        path: '/moon/rank',
+        name: 'moonRank',
+        component: MoonRank,
         meta: {
             title: '活动规则'
         }
     }, {
-        path: '/moonfestival/share',
-        name: 'festivalShare',
-        component: FestivalShare,
+        path: '/moon/share',
+        name: 'moonShare',
+        component: MoonShare,
         meta: {
             title: '分享'
         }

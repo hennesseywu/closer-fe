@@ -4,8 +4,8 @@
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <div class="rule">
-      <local-header v-if="ENV.app" back></local-header>
+    <div class="moon-rule">
+      <moon-header v-if="ENV.app" back></moon-header>
       <section class="bd">
         <div class="bd-name">活动规则</div>
         <div class="bd-wrap">
@@ -36,18 +36,18 @@
 <script>
   import Vue from 'vue';
   import {mapState} from 'vuex';
-  import localHeader from '../components/header';
+  import moonHeader from '../components/header';
   export default {
     name: 'rule',
     components: {
-      localHeader
+      moonHeader
     },
     created() {
       
     }
   }
 </script>
-<style lang="less">
+<style lang="less" scoped>
   @import '../assets/style/main.less';
   @import '../assets/style/rule.less';
 </style>

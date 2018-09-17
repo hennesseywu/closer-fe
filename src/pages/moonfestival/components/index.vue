@@ -1,11 +1,11 @@
 <template>
-  <div class="local-index" :class="{'in-app': ENV.app}" v-if="showIndex">
+  <div class="moon-index" :class="{'in-app': ENV.app}" v-if="showIndex">
     <div class="yun-wrapper">
       <div class="yun"></div>
       <div class="yun1"></div>
       <div class="yun2"></div>
     </div>
-    <local-header v-if="ENV.app" close share></local-header>
+    <moon-header v-if="ENV.app" close share></moon-header>
     <section class="tab">
       <div class="tab-default tab-left" @click="showRankingList"></div>
       <div class="tab-default tab-right" @click="showRule"></div>
@@ -41,15 +41,15 @@
       <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
     </section>
     <section class="index-logo"></section>
-    <local-dialog :show="dialog.show" :share="dialog.share" :path="path" :content="dialog.content" @close="closeDialog"></local-dialog>
+    <moon-dialog :show="dialog.show" :share="dialog.share" :path="path" :content="dialog.content" @close="closeDialog"></moon-dialog>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
   import QrcodeVue from 'qrcode.vue';
-  import localDialog from './dialog';
-  import localHeader from './header';
+  import moonDialog from './dialog';
+  import moonHeader from './header';
   import defaultImg from '../assets/images/default_share.png';
   
   import {
@@ -71,7 +71,7 @@
   } from 'mint-ui'
   
   export default {
-    name: 'localIndex',
+    name: 'moonIndex',
     props: {
       showIndex: {
         type: Boolean,
@@ -98,15 +98,15 @@
     },
     components: {
       QrcodeVue,
-      localDialog,
-      localHeader
+      moonDialog,
+      moonHeader
     },
     computed() {
       this.userShare()
     },
     computed: {
-      ...mapState('local', ['aid', 'isLogin', 'statistic']),
-      ...mapState('local', {
+      ...mapState('moon', ['aid', 'isLogin', 'statistic']),
+      ...mapState('moon', {
         currentQuesitionNum: state => state.currentQuesitionNum,
         objectID: state => state.user.objectID || '',
         salt: state => state.statistic.signSalt,
@@ -162,7 +162,7 @@
     },
   
     methods: {
-      ...mapActions('local', [
+      ...mapActions('moon', [
         'checkParams',
         'checkLoginInApp',
         'getUserInfoAndLoginWithWx',
@@ -172,7 +172,7 @@
         'userShare',
         'updateChance'
       ]),
-      ...mapMutations('local', [
+      ...mapMutations('moon', [
         'SET_USER',
         'updateCurrentQuestionNum'
       ]),
@@ -187,7 +187,7 @@
           this.checkLoginInApp(this.initAnimation);
         } else if (this.checkOtherEnv()) {
           this.$router.push({
-            name: 'festivalRank'
+            name: 'moonRank'
           })
         }
       },
@@ -195,7 +195,7 @@
       showRule() {
         console.log('rule====')
         this.$router.push({
-          name: 'festivalRule'
+          name: 'moonRule'
         })
       },
       // 开始答题
@@ -215,7 +215,7 @@
         } else if (this.checkOtherEnv(true)) {
           window.pageTo = 'answer'
           // this.$router.push({
-          //   name: 'localAnswer',
+          //   name: 'moonAnswer',
           //   params: {
           //     from: 'fromIndex'
           //   }
@@ -315,8 +315,7 @@
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   @import '../assets/style/animation.less';
-  @import '../assets/style/main.less';
   @import '../assets/style/index.less';
 </style>

@@ -1,10 +1,10 @@
 <template>
-  <div class="local-result" :class="{'in-app': ENV.app}" v-if="showResult">
+  <div class="moon-result" :class="{'in-app': ENV.app}" v-if="showResult">
     <div class="yun-wrapper min">
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <local-header v-if="ENV.app" back home></local-header>
+    <moon-header v-if="ENV.app" back home></moon-header>
     <div class="result-wrapper">
       <div class="content1">
         <div class="avater">
@@ -31,7 +31,7 @@
         </div>
         <div class="chance-remain">剩余{{chance >= 0 ? chance : '0'}}次答题机会</div>
       </div>
-      <local-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" :path="path" @close="closeDialog"></local-dialog>
+      <moon-dialog :show="dialog.show" :share="dialog.share" :content="dialog.content" :path="path" @close="closeDialog"></moon-dialog>
     </div>
   </div>
 </template>
@@ -53,8 +53,8 @@
     html2Image,
     tjUploadFile
   } from '../../../utils/utils'
-  import localDialog from './dialog'
-  import localHeader from './header';
+  import moonDialog from './dialog'
+  import moonHeader from './header';
   import QrcodeVue from 'qrcode.vue';
   import defaultImg from '../assets/images/default_share.png';
   export default {
@@ -65,8 +65,8 @@
       }
     },
     components: {
-      localDialog,
-      localHeader,
+      moonDialog,
+      moonHeader,
       QrcodeVue
     },
     data() {
@@ -86,7 +86,7 @@
         },
   
         qrcode: {
-          val: 'https://a.tiejin.cn/local',
+          val: 'https://a.tiejin.cn/moon',
           size: 80
         },
         showData: [{
@@ -108,10 +108,10 @@
     },
     beforeRouteEnter(to, from, next) {
       console.log('beforeRouteEnter:', from)
-      if (/^\/local\/(share|answer)/.test(from.path) || sessionStorage.resultCache && sessionStorage.resultCache != '{}') {
+      if (/^\/moon\/(share|answer)/.test(from.path) || sessionStorage.resultCache && sessionStorage.resultCache != '{}') {
         next();
       } else {
-        next('/local')
+        next('/moon')
       }
     },
     created() {
@@ -123,9 +123,9 @@
         this.setCache(CACHE)
       }
       if (this.ENV.dev) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
-        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+        this.qrcode.val = 'https://a.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       }
       console.log("parkk", this.$route.params.from)
       if (this.ENV.wx) {
@@ -144,13 +144,13 @@
           data['inviter'] = this.objectID;
         }
         // this.$router.push({
-        //     name: 'localIndex'
+        //     name: 'moonIndex'
         //   })
-        // location.href = addParamsForUrl(location.origin + '/local', data)
+        // location.href = addParamsForUrl(location.origin + '/moon', data)
       }
     },
     computed: {
-      ...mapState('local', {
+      ...mapState('moon', {
         chance: state => state.statistic.chance,
         currentQuesitionNum: state => state.currentQuesitionNum,
         statistic: state => state.statistic,
@@ -176,10 +176,10 @@
         "updateChance",
         "updateCurrentQuestionNum",
       ]),
-      ...mapMutations('local', [
+      ...mapMutations('moon', [
         "setCache"
       ]),
-      ...mapActions('local', [
+      ...mapActions('moon', [
         "updateChance",
         "initWxConfig",
         "userShare",
@@ -225,7 +225,7 @@
         if (this.isApp) {
           // 去分享
           this.$router.push({
-            name: 'festivalShare'
+            name: 'moonShare'
           })
         } else {
           this.setLocalStorage()
@@ -235,7 +235,7 @@
       goShare() {
         if (this.ENV.wx) {
           this.setLocalStorage()
-          location.href = `${location.origin}/moonfestival/share`
+          location.href = `${location.origin}/moon/share`
         }
       },
       goTips() {
@@ -272,7 +272,6 @@
 </script>
 
 <style lang="less">
-  @import '../assets/style/main.less';
   @import '../assets/style/animation.less';
   @import '../assets/style/result.less';
 </style>
