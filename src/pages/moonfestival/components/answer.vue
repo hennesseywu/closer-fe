@@ -8,14 +8,14 @@
     <moon-header v-if="ENV.app" back close></moon-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
-      <div class="answer-box" v-html="currentQuestion" @click="checkOptions($event)">
+      <div class="answer-box box box-tb box-center-center" v-html="currentQuestion" @click="checkOptions($event)">
         <!--<div class="answer-acount">{{currentQuesitionNum + 1}}/8</div>
         <div class="subject" :class="isUpdate ? 'animated slideInUp' : ''" v-html="currentQuestion.title"></div>
         <div class="optoins" :class="isUpdate ? 'animated slideInUp' : ''" v-for="(item, index) in currentQuestion.answers" :key="index">
           <div class="list" :data-index="index" :data-seq="item.seq" :data-questionId="item.questionId" :class="index===checkNum ? 'bg-yellow' : ''" @click="checkOptions($event)">{{item.title}}</div>
         </div>-->
       </div>
-      <div class="next-box" :class="isUpdate ? 'animated slideInUp faster' : ''">
+      <div class="next-box box box-center-center" :class="isUpdate ? 'animated slideInUp faster' : ''">
         <div class="btn-width next-btn" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)"></div>
         <div class="btn-width complate-btn" v-else @click="next(startResult.userAnswerId)"></div>
       </div>

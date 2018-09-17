@@ -6,7 +6,7 @@
       <div class="yun2"></div>
     </div>
     <moon-header v-if="ENV.app" close share></moon-header>
-    <section class="tab">
+    <section class="tab box box-pack-between">
       <div class="tab-default tab-left" @click="showRankingList"></div>
       <div class="tab-default tab-right" @click="showRule"></div>
     </section>
@@ -17,7 +17,7 @@
       <div class="bd-progress">
         <div class="bd-complete" :style="{width: currentWidth}"></div>
       </div>
-      <div class="bd-scale">
+      <div class="bd-scale box box-pack-between">
         <div class="bd-scale-default bd-scale-0" :class="{active: statistic.totalAwardAmt > showAmount(0)}">
           <span class="bd-arrow bd-arrow-left"></span>
           <span class="bd-scale-amount">{{showAmount(0, 2)}}</span>

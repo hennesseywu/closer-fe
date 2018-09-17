@@ -1,5 +1,6 @@
 @aniTime: .2s;
 @aniFun: ease-out;
+@themeColor: #885504;
 .moon-index {
   position: relative;
   padding: 0 0 40pr;
@@ -18,8 +19,6 @@
   }
   .tab {
     position: relative;
-    display: flex;
-    justify-content: space-between;
     margin: 30pr 40pr;
     z-index: 10;
   }
@@ -90,17 +89,13 @@
     width: 510pr;
     height: 52pr;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
   }
   .bd-scale-default {
     position: relative;
-    // width: 78pr;
     height: 52pr;
     line-height: 64pr;
     text-align: center;
     font-size: 24pr;
-    // background: url(../images/index_scale.png);
     background-size: 232pr 104pr;
     &.active {
       background-position-y: -52pr;
@@ -110,7 +105,6 @@
     background-position: 0 0;
   }
   .bd-scale-50 {
-    // width: 76pr;
     background-position: -78pr 0;
   }
   .bd-scale-100 {
@@ -131,26 +125,26 @@
   }
   .bd-arrow-left {
     left: 0;
-    border-left-color: #885504;
-    border-bottom-color: #885504;
+    border-left-color: @themeColor;
+    border-bottom-color: @themeColor;
   }
   .bd-arrow-center {
     left: 50%;
     margin-left: -8pr;
     border-top-width: 0;
     border-bottom-width: 24pr;
-    border-bottom-color: #885504;
+    border-bottom-color: @themeColor;
   }
   .bd-arrow-right {
     right: 0;
-    border-right-color: #885504;
-    border-bottom-color: #885504;
+    border-right-color: @themeColor;
+    border-bottom-color: @themeColor;
   }
   .bd-scale-amount {
     position: absolute;
     top: 12pr;
     min-width: 78pr;
-    background: #885504;
+    background: @themeColor;
     line-height: 1.5;
     white-space: nowrap;
     padding: 0 8pr;
@@ -178,19 +172,19 @@
   }
   .bd-scale-default.active {
     .bd-arrow-left {
-      border-left-color: #885504;
-      border-bottom-color: #885504;
+      border-left-color: @themeColor;
+      border-bottom-color: @themeColor;
     }
     .bd-arrow-center {
-      border-bottom-color: #885504;
+      border-bottom-color: @themeColor;
     }
     .bd-arrow-right {
-      border-right-color: #885504;
-      border-bottom-color: #885504;
+      border-right-color: @themeColor;
+      border-bottom-color: @themeColor;
     }
     .bd-scale-amount {
-      background: #885504;
-      box-shadow: 0 4pr 0 0 #885504;
+      background: @themeColor;
+      box-shadow: 0 4pr 0 0 @themeColor;
     }
   }
   .bd-total {
@@ -200,11 +194,11 @@
   }
   .bd-count {
     font-size: 64pr;
-    color: #885504;
+    color: @themeColor;
   }
   .bd-tixian {
     border-radius: 30pr;
-    color: #885504;
+    color: @themeColor;
     text-decoration: underline;
   }
   .bd-desc {
