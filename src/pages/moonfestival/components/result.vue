@@ -217,10 +217,10 @@
         }
       },
       goShare() {
-        if (this.ENV.wx) {
+        // if (this.ENV.wx) {
           this.setLocalStorage()
           location.href = `${location.origin}/moon/share`
-        }
+        // }
       },
       goTips() {
         if (this.isApp) {

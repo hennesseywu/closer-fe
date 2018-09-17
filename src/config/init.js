@@ -51,7 +51,7 @@ function checkVersion(ver1, ver2) {
     for (let i = 0; i < len; i++) {
       let ver1 = parseInt(version[i] || 0),
         ver2 = parseInt(ver[i] || 0);
-      if (ver1 > ver2) {
+      if (ver1 >= ver2) {
         return true;
       }
     }

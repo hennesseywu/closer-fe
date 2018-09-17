@@ -4,7 +4,7 @@
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <div class="moon-rule">
+    <div class="moon-rule" :class="{'in-app': ENV.app}">
       <moon-header v-if="ENV.app" back></moon-header>
       <section class="bd">
         <div class="bd-name">活动规则</div>
