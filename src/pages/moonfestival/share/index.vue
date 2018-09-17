@@ -1,60 +1,98 @@
 <template>
-  <div class="main moon-share" :class="{'in-app': ENV.app}">
-    <moon-header v-if="ENV.app" back home></moon-header>
-    <div class="share-wrapper">
-      <div class="share-container">
-        <div ref="canvasContainer" class="share-box">
-          <div v-if="answerId" class="share-score">
-            <div class="share-user-img">
-              <img :src="makeFileUrl(user.avatar)" @load="avatarLoad(true, $event)" @error="avatarLoad(false, $event)" class="share-user-avatar" crossOrigin="Anonymous">
-              <div class="share-user-filter">
-                <img :src="levelData.logoImg" alt="">
+  <div class="main moon-share">
+
+      <div v-if="ENV.app" class="main share-app">
+        <div class="yun-wrapper min">
+          <div class="yun"></div>
+          <div class="yun1"></div>
+        </div>
+        <div class="share-wrapper">
+          <moon-header back home></moon-header>
+          <div class="share-wrap">
+            <div class="share-container">
+              <div v-if="answerId" class="share-score">
+                <div class="share-user-img">
+                  <img :src="makeFileUrl(user.avatar)" @load="avatarLoad(true, $event)" @error="avatarLoad(false, $event)" class="share-user-avatar" crossOrigin="Anonymous">
+                </div>
+                <div class="share-user-name">{{user.fullname}}</div>
+                <div class="share-desc">
+                  在【广寒攻略】中获得
+                  <span class="share-desc-score"> {{score}}</span> 分，
+                  <span class="share-desc-tip">{{levelData.tip}}</span>
+                  猜猜你是广寒宫里的谁？
+                </div>
+                <div class="share-tag">
+                  <img :src="levelData.tagImg">
+                </div>
+                <div class="share-qrcode">
+                  <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+                </div>
+                <div class="share-tip">长按识别二维码参与游戏，和他Pk吧！</div>
+              </div>
+              <div v-else class="share-default">
+                <div class="share-default-hd"></div>
+                <div class="share-qrcode share-default-qrcode">
+                  <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+                </div>
+                <div class="share-tip share-default-tip">长按识别二维码答题</div>
+                <div class="share-logo share-default-logo"></div>
               </div>
             </div>
-            <div class="share-user-name">{{user.fullname}}</div>
-            <div class="share-desc">
-              在【谁是成都最土著】中获得
-              <span class="share-desc-score"> {{score}}</span> 分，
-              <br/>
-              <span class="share-desc-tip">{{levelData.tip}}</span>
-            </div>
-            <div class="share-title box box-lr box-center-center">
-              <div class="line left"></div>
-              <div class="name">获得称号</div>
-              <div class="line right"></div>
-            </div>
-            <div class="share-tag">
-              <img :src="levelData.tagImg" alt="">
-            </div>
-            <div class="share-qrcode">
-              <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
-            </div>
-            <div class="share-tip">长按识别二维码参与游戏，和他Pk吧</div>
-          </div>
-          <div v-else class="share-default">
-            <img :src="defaultImg" alt="" class="share-default-bg">
-            <div class="share-qrcode">
-              <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+            <div class="share-items box box-lr box-center-center">
+              <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
+                <span class="weixin"></span>
+                <span>好友</span>
+              </div>
+              <div class="item item2 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWxTimeLine', shareData)">
+                <span class="pyq"></span>
+                <span>朋友圈</span>
+              </div>
+              <div class="item item3 box box-tb box-center-center" @click="toShare('inviteNewGuyActionSavePicture', shareData)">
+                <span class="download"></span>
+                <span>保存至相册</span>
+              </div>
             </div>
           </div>
-          <img class="share-img" id="share-img" src="">
         </div>
       </div>
-      <div v-if="ENV.app" class="share-items box box-lr box-center-center">
-        <div class="item item1 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWeChat', shareData)">
-          <span class="weixin"></span>
-          <span>好友</span>
+      <div ref="canvasContainer" class="main share-wx" :class="{'share-wx-app': ENV.app}">
+        <div class="yun-wrapper min">
+          <div class="yun"></div>
+          <div class="yun1"></div>
         </div>
-        <div class="item item2 box box-tb box-center-center" @click="toShare('inviteNewGuyActionWxTimeLine', shareData)">
-          <span class="pyq"></span>
-          <span>朋友圈</span>
-        </div>
-        <div class="item item3 box box-tb box-center-center" @click="toShare('inviteNewGuyActionSavePicture', shareData)">
-          <span class="download"></span>
-          <span>保存至相册</span>
+        <div class="share-wrapper">
+          <div class="share-container">
+            <div v-if="answerId" class="share-wx-score">
+              <div class="share-user-img">
+                <img :src="makeFileUrl(user.avatar)" @load="avatarLoad(true, $event)" @error="avatarLoad(false, $event)" class="share-user-avatar" crossOrigin="Anonymous">
+              </div>
+              <div class="share-user-name">{{user.fullname}}</div>
+              <div class="share-desc">
+                在【广寒攻略】中获得
+                <span class="share-desc-score"> {{score}}</span> 分，
+                <span class="share-desc-tip">{{levelData.tip}}</span>
+                猜猜你是广寒宫里的谁？
+              </div>
+              <div class="share-tag">
+                <img :src="levelData.tagImg">
+              </div>
+              <div class="share-qrcode">
+                <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+              </div>
+              <div class="share-tip">长按识别二维码参与游戏，和他Pk吧！</div>
+            </div>
+            <div v-else class="share-wx-wrap">
+              <img :src="headImg" class="share-wx-hd">
+              <div class="share-qrcode share-wx-qrcode">
+                <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+              </div>
+              <div class="share-tip share-wx-tip">长按识别二维码答题</div>
+              <div class="share-logo share-wx-logo"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      <img src="" id="share-img" class="share-img" :class="{'share-img-app': ENV.app}">
   </div>
 </template>
 
@@ -75,33 +113,30 @@
     html2Image,
     tjUploadFile
   } from '../../../utils/utils'
+  import baseUrl from '../../../config/index'
   import QrcodeVue from 'qrcode.vue';
   import defaultImg from '../assets/images/default_share.png';
   export default {
     data() {
       return {
-        isApp: this.ENV.app,
-        isLogin: false,
         isDrawed: false,
         qrcode: {
           val: 'https://a.tiejin.cn/moon',
           size: 80
         },
         showData: [{
-          logoImg: require('../assets/images/avatar1.png'),
           tip: '赢得5元红包！',
           tagImg: require('../assets/images/local1.png')
         }, {
-          logoImg: require('../assets/images/avatar2.png'),
-          tip: '赢得2元现金红包，全答对可得5元哦！',
+          tip: '喜提盒饭价值2元。',
           tagImg: require('../assets/images/local2.png')
         }, {
-          logoImg: require('../assets/images/avatar3.png'),
-          tip: '和5元现金红包失之交臂，你要来试试吗？',
+          tip: '和5元红包失之交臂。',
           tagImg: require('../assets/images/local3.png')
         }],
         defaultImg: defaultImg,
-        imgUrl: ''
+        imgUrl: '',
+        headImg: require('../assets/images/index_hd.png')
       }
     },
     components: {
@@ -117,15 +152,11 @@
         sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
-      if (this.ENV.app) {
+      if (this.ENV.wx) {
         console.log('share wxshare--')
         this.initWxConfig()
       }
-      if (this.ENV.app) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      } else {
-        this.qrcode.val = 'https://a.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      }
+      this.qrcode.val = baseUrl.href[this.ENV.env] + '/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
     },
     computed: {
       ...mapState('moon', {
@@ -195,13 +226,13 @@
         return avatar
       },
       drawHtmlToCanvas() {
+        // return;
         let self = this;
         let container = self.$refs.canvasContainer;
         self.isDrawed = true;
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
           // img.setAttribute("crossOrigin", 'Anonymous')
-          // document.getElementById("share-img").src=img.src;
           console.log('html2Image-finish')
           // container.appendChild(img);
           Indicator.close();
@@ -209,9 +240,10 @@
             tjUploadFile(img).then(({
               data
             }) => {
-              self.imgUrl = self.makeFileUrl(data.result.url);
               document.getElementById("share-img").src = self.imgUrl;
             })
+          } else {
+            document.getElementById("share-img").src=img.src;
           }
         })
       },

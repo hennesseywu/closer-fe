@@ -68,7 +68,8 @@
       height: 618pr;
       margin-top: -309pr;
       margin-left: -315pr;
-      background: #fff;
+      background: url(../assets/images/bitmap.png) no-repeat;
+      background-size: cover;
       border-radius: 24pr;
     }
     .dlg-close {

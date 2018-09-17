@@ -89,19 +89,6 @@
           val: 'https://a.tiejin.cn/moon',
           size: 80
         },
-        showData: [{
-          logoImg: require('../assets/images/avatar1.png'),
-          tip: '赢得5元红包！',
-          tagImg: require('../assets/images/local1.png')
-        }, {
-          logoImg: require('../assets/images/avatar2.png'),
-          tip: '赢得2元现金红包，全答对可得5元哦！',
-          tagImg: require('../assets/images/local2.png')
-        }, {
-          logoImg: require('../assets/images/avatar3.png'),
-          tip: '和5元现金红包失之交臂，你要来试试吗？',
-          tagImg: require('../assets/images/local3.png')
-        }],
         defaultImg: defaultImg,
         path: ""
       };
@@ -166,10 +153,7 @@
         level: state => state.endData.level,
         score: state => state.endData.score,
         awardAmt: state => state.endData.awardAmt
-      }),
-      levelData() {
-        return this.showData[parseInt(this.level) - 1]
-      }
+      })
     },
     methods: {
       ...mapMutations([
@@ -262,7 +246,9 @@
           level: this.level,
           score: this.score
         };
+        console.log(resultCache);
         sessionStorage.resultCache = JSON.stringify(resultCache);
+        localStorage.resultCache = JSON.stringify(resultCache);
       },
       avatarLoad(type, e) {
         !type && (e.target.style.display='none')
