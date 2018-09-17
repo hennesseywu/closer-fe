@@ -45,7 +45,6 @@ function checkVersion(ver1, ver2) {
   let version = window.ENV.version
   let ver = (!ver2 || window.ENV.android) ? ver1 : ver2;
   if (version && ver) {
-    version = version[1]
     version = version.split('.');
     ver = ver.split('.');
     let len = Math.max(version.length, ver.length);
