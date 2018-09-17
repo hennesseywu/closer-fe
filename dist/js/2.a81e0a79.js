@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[2],{CTVC:function(n,t,a){"use strict";var e=a("UvfR"),r=a.n(e);r.a},UvfR:function(n,t,a){},lgAz:function(n,t,a){"use strict";a.r(t);var e=function(){var n=this,t=n.$createElement,a=n._self._c||t;return a("div",{staticClass:"main rank"},[n._v("\n  rank\n  ")])},r=[],s={name:"rank"},c=s,i=(a("CTVC"),a("KHd+")),u=Object(i["a"])(c,e,r,!1,null,null,null);t["default"]=u.exports}}]);
-//# sourceMappingURL=2.a81e0a79.js.map

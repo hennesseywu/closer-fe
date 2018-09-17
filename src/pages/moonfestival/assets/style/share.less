@@ -1,14 +1,5 @@
 .moon-share {
-  height: 100%;
-  background: #000;
-  color: #fff;
-  font-size: 32pr;
   text-align: center;
-  padding-bottom: 26pr;
-  padding-top: 70pr;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   &.in-app {
     background: #144a9d;
     min-height: 1334pr;
@@ -19,22 +10,161 @@
     width: 100%;
     // border: 1px solid red;
   }
+
+  .share-app {
+    position: relative;
+    width: 100%;
+    min-height: 1334pr;
+  }
+
   .share-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     // height: 100%;
-    flex-grow: 1;
+    
+    z-index: 1;
   }
-  .is-weixin {
+  .share-wrap {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 40pr;
+  }
+  .share-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+
+  .share-default, .share-score, .share-wx-score {
+    position: relative;
+    width: 670pr;
+    height: 964pr;
+    border-radius: 10pr;
+    background: url(../images/bitmap.png) no-repeat;
+    background-position: center 90pr;
+    background-size: cover;
+  }
+  .share-wx-score {
+    height: 1040pr;
+    background-size: cover;
+  }
+  .share-default {
+    height: 958pr;
+    background-position: center 400pr;
+  }
+  .share-default-hd, .share-wx-hd {
+    width: 562pr;
+    height: 446pr;
+    margin: 0 auto;
+  }
+  .share-default-hd {
+    background: url(../images/index_hd.png);
+    background-size: contain;
+  }
+  .share-wx-hd {
+    position: relative;
+    top: 100pr;
+
+  }
+  .share-qrcode {
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    >img {
+    left: 246pr;
+    bottom: 120pr;
+    width: 180pr;
+    height: 180pr;
+    padding: 10pr;
+    background: #fff;
+    // border: 1px solid red;
+    canvas {
+      width: 100%!important;
+      height: 100%!important;
+    }
+  }
+  .share-default-qrcode {
+    bottom: 260pr;
+  }
+  .share-wx-qrcode {
+    left: 286pr;
+    bottom: 320pr;
+  }
+  .share-user-img {
+    position: relative;
+    width: 180pr;
+    height: 180pr;
+    margin: 0 auto;
+    border: 8pr solid #D5CBAD;
+    border-radius: 180pr;
+    background: url(../images/default_avatar.png) center no-repeat;
+    background-size: 164pr;
+    box-shadow: 0 0 10pr 6pr rgba(0, 0, 0, .2);
+    overflow: hidden;
+  }
+  .share-user-avatar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 164pr;
+    height: 164pr;
+  }
+  .share-user-name {
+    margin-top: 20pr;
+    text-align: center;
+    font-size: 36pr;
+    color: #895709;
+  }
+  .share-desc {
+    padding: 0 35pr;
+    margin-top: 20pr;
+    font-size: 32pr;
+    color: #895807;
+  }
+  .share-desc-score {
+    font-weight: bold;
+  }
+  .share-tag {
+    width: 578pr;
+    height: 206pr;
+    margin: 40pr auto 0;
+    img {
       width: 100%;
       height: 100%;
     }
+  }
+  .share-tip {
+    position: absolute;
+    bottom: 50pr;
+    width: 100%;
+    font-size: 24pr;
+    color: #B49455;
+  }
+  .share-default-tip {
+    bottom: 200pr;
+  }
+  .share-wx-tip {
+    bottom: 260pr;
+  }
+  .share-logo {
+    position: absolute;
+    bottom: 40pr;
+    width: 100%;
+    height: 80pr;
+  }
+  .share-default-logo {
+    background: url(../images/logo2.png) center no-repeat;
+    background-size: contain;
+  }
+  .share-wx-logo {
+    background: url(../images/logo3.png) center no-repeat;
+    background-size: contain;
   }
   .share-items {
     // width: 90%;
@@ -42,7 +172,7 @@
     margin: 0 40pr;
     background: #fff;
     box-shadow: 0 4pr 20pr 0 rgba(0, 0, 0, 0.2);
-    border-radius: 12pr;
+    border-radius: 10pr;
     padding: 22pr 6pr 22pr 36pr;
     .item {
       > span:first-child {
@@ -76,142 +206,38 @@
       margin: 0 134pr;
     }
   }
-  .share-container {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-  }
-  .share-box {
-    position: relative;
-    width: 670pr;
-    height: 916pr;
-    border-radius: 10pr;
-    overflow: hidden;
-  }
-  .share-img {
+
+
+  .share-wx {
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
+  }
+  .share-wx-app {
+    top: -224pr;
     opacity: 0;
   }
-  .default-share{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-
-  .share-default, .share-score {
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-  }
-  .share-default-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
- 
-  .share-qrcode {
-    position: absolute;
-    left: 246pr;
-    bottom: 170pr;
-    width: 180pr;
-    height: 180pr;
-    padding: 10pr;
-    background: #fff;
-    // border: 1px solid red;
-    canvas {
-      width: 100%!important;
-      height: 100%!important;
-    }
-  }
-  .share-score {
-    padding-top: 40pr;
-    background: url(../images/bg.jpg) no-repeat;
-    background-size: cover;
-    .share-qrcode {
-      bottom: 70pr;
-      // border: 1px solid red;
-    }
-  }
-  .share-user-img {
+  .share-wx-container {
     position: relative;
-    width: 188pr;
-    height: 222pr;
-    margin: 0 auto;
-    background: url(../images/default_avatar.png) 4pr 38pr no-repeat;
-    background-size: 180pr;
+    height: 100%;
   }
-  .share-user-filter {
+  .share-wx-wrap {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 2;
-    img {
-      width: 100%;
-      height: 100%;
-    }
   }
-  .share-user-avatar {
-    position: absolute;
-    left: 4pr;
-    bottom: 4pr;
-    width: 180pr;
-    height: 180pr;
-    border-radius: 172pr;
 
-  }
-  .share-user-name {
-    margin-top: 10pr;
-    text-align: center;
-  }
-  .share-desc {
-    margin-top: 10pr;
-  }
-  .share-desc-score {
-    color: #f30808;
-  }
-  .share-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10pr;
-    .line {
-      width: 200pr;
-      height: 1px;
-    }
-    .name {
-      margin: 0 10pr;
-    }
-    .left {
-      background: linear-gradient(to left, white 65%, transparent);
-    }
-    .right {
-      background: linear-gradient(to left, transparent, white 35%);
-    }
-  }
-  .share-tag {
-    width: 578pr;
-    height: 148pr;
-    margin: 20pr auto 0;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .share-tip {
-    position: absolute;
-    bottom: 20pr;
+
+  .share-img {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    font-size: 24pr;
+    opacity: 0;
+  }
+  .share-img-app {
+    top: -224pr;
   }
 }

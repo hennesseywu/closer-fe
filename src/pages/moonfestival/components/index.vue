@@ -22,14 +22,14 @@
           <span class="bd-arrow bd-arrow-left"></span>
           <span class="bd-scale-amount">{{showAmount(0, 2)}}</span>
         </div>
-        <!-- <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
-            <span class="bd-arrow bd-arrow-center"></span>
-            <span class="bd-scale-amount">{{showAmount(.5, 2)}}</span>
-          </div>
-          <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
-            <span class="bd-arrow bd-arrow-right"></span>
-            <span class="bd-scale-amount">{{showAmount(1, 2)}}</span>
-          </div> -->
+        <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
+          <span class="bd-arrow bd-arrow-center"></span>
+          <span class="bd-scale-amount">{{showAmount(.5, 2)}}</span>
+        </div>
+        <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
+          <span class="bd-arrow bd-arrow-right"></span>
+          <span class="bd-scale-amount">{{showAmount(1, 2)}}</span>
+        </div>
       </div>
       <div class="bd-total">
         累计获得：
