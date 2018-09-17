@@ -114,7 +114,7 @@
       background-size: cover;
     }
     .confirm {
-      background: url(../assets/images/dialog_btn_share.png) center no-repeat;
+      background: url(../assets/images/dialog_btn_confirm.png) center no-repeat;
       background-size: cover;
     }
   }
