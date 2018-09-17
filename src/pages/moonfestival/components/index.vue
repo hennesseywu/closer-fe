@@ -310,7 +310,7 @@
         this.mounted = true;
       }, 800);
       this.updateCurrentQuestionNum()
-      console.log('index', this.currentQuesitionNum)
+      console.log('evn-isapp', this.ENV.app)
     }
   }
 </script>
