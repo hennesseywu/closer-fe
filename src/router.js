@@ -167,7 +167,7 @@ router.beforeEach(({
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
     console.log('router-before:', name, window.ENV.app, window.ENV.wx, query)
-    if (name == 'localIndex' || name == 'festivalIndex') {
+    if (name == 'localIndex' || name == 'moonIndex') {
         if (window.ENV.app) {
             console.log("closer device")
             Cookies.remove('user'); //app端user完全依赖APP
