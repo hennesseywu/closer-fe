@@ -132,13 +132,13 @@ export default {
       if (sessionStorage.userAnswerId) {
         let params = {
           userAnswerId: sessionStorage.userAnswerId
-        }
+        };
         let {
           data
         } = await service.userShare(params).catch(err => {
           Toast('网络开小差啦，请稍后再试')
           return;
-        })
+        });
         if (typeof(data.code) != undefined && data.code == 0) {
           commit({
             type: 'shareData',
@@ -199,6 +199,13 @@ export default {
       commit,
       rootState
     }, cb) {
+
+      // 本地测试不经过native接口
+      if (window.ENV.env == 'local') {
+        cb && cb();
+        return
+      }
+      
       if (window.ENV.app && window.ENV.ios) {
         console.log("module closer-ios");
         setTimeout(() => {
@@ -420,6 +427,7 @@ export default {
       rootState,
       commit
     }) {
+      if (!window.ENV.wx) return;
       let wxConfig = state.wxConfig;
       if (!wxConfig || !wxConfig.signature || !wxConfig.appId || !wxConfig.nonceStr || !wxConfig.timestamp) {
         let params = {
@@ -436,7 +444,7 @@ export default {
           return;
         }
       }
-      let link = addParamsForUrl(location.origin + '/local', {
+      let link = addParamsForUrl(location.origin + '/moon', {
         inviter: state.user.objectID,
         activityId: state.activityId,
         salt: state.statistic.signSalt

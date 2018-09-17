@@ -1,21 +1,21 @@
 <template>
   <div class="main home">
-    <local-index ref="localIndex" :showIndex="propData.showIndex" @openAnswer="openAnswerPop"></local-index>
-    <local-answer ref="localAnswer" :startData="startData" :startResult="startResult" :showAnswer="propData.showAnswer" @openResult="openResultPop"></local-answer>
-    <local-result ref="localResult" :showResult="propData.showResult" @openAnswer="openAnswerPop"></local-result>
+    <moon-index ref="moonIndex" :showIndex="propData.showIndex" @openAnswer="openAnswerPop"></moon-index>
+    <moon-answer ref="moonAnswer" :startData="startData" :startResult="startResult" :showAnswer="propData.showAnswer" @openResult="openResultPop"></moon-answer>
+    <moon-result ref="moonResult" :showResult="propData.showResult" @openAnswer="openAnswerPop"></moon-result>
   </div>
 </template>
 <script>
-import localIndex from '../components/index' 
-import localAnswer from '../components/answer' 
-import localResult from '../components/result' 
+import moonIndex from '../components/index' 
+import moonAnswer from '../components/answer' 
+import moonResult from '../components/result' 
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   props: [],
   components: {
-    localIndex,
-    localAnswer,
-    localResult
+    moonIndex,
+    moonAnswer,
+    moonResult
   },
   data() {
     return {
@@ -31,13 +31,13 @@ export default {
     this.propData.showIndex = true
   },
   computed: {
-    ...mapState('moonFestival', {
+    ...mapState('moon', {
       startData: state => state.startData,
       startResult: state => state.startResult
     })
   },
   methods: {
-    ...mapActions('moonFestival', [
+    ...mapActions('moon', [
       'startTest'
     ]),
    async openAnswerPop() {
@@ -54,7 +54,8 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
+  @import '../assets/style/main.less';
 .home {
   width: 100%;
   height: 100%;

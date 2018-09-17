@@ -1,6 +1,6 @@
 <template>
-  <div class="main local-share" :class="{'in-app': ENV.app}">
-    <local-header v-if="ENV.app" back home></local-header>
+  <div class="main moon-share" :class="{'in-app': ENV.app}">
+    <moon-header v-if="ENV.app" back home></moon-header>
     <div class="share-wrapper">
       <div class="share-container">
         <div ref="canvasContainer" class="share-box">
@@ -68,7 +68,7 @@
     mapActions,
     mapMutations
   } from "vuex";
-  import localHeader from '../components/header';
+  import moonHeader from '../components/header';
   import {
     makeFileUrl,
     addParamsForUrl,
@@ -84,7 +84,7 @@
         isLogin: false,
         isDrawed: false,
         qrcode: {
-          val: 'https://a.tiejin.cn/local',
+          val: 'https://a.tiejin.cn/moon',
           size: 80
         },
         showData: [{
@@ -105,7 +105,7 @@
       }
     },
     components: {
-      localHeader,
+      moonHeader,
       QrcodeVue
     },
     created() {
@@ -122,13 +122,13 @@
         this.initWxConfig()
       }
       if (this.ENV.app) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+        this.qrcode.val = 'https://a-sandbox.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       } else {
-        this.qrcode.val = 'https://a.tiejin.cn/local?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
+        this.qrcode.val = 'https://a.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
       }
     },
     computed: {
-      ...mapState('local', {
+      ...mapState('moon', {
         objectID: state => state.user.objectID || '',
         salt: state => state.statistic.signSalt,
         activityId: state => state.activityId,
@@ -155,13 +155,13 @@
       }
     },
     methods: {
-      ...mapActions("local", [
+      ...mapActions("moon", [
         "wechatConfig",
         "userShare",
         "checkLoginInApp",
         "initWxConfig"
       ]),
-      ...mapMutations('local', [
+      ...mapMutations('moon', [
         "setCache"
       ]),
       toShare(type) {
@@ -226,7 +226,7 @@
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   @import '../assets/style/main.less';
   @import '../assets/style/share.less';
 </style>

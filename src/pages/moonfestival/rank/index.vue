@@ -4,8 +4,8 @@
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <div class="rank">
-      <local-header v-if="ENV.app" back></local-header>
+    <div class="moon-rank">
+      <moon-header v-if="ENV.app" back></moon-header>
       <section class="bd">
         <div class="bd-name">排行榜</div>
         <div class="bd-mine">
@@ -41,7 +41,7 @@
   import Vue from 'vue';
   import { mapState, mapActions } from 'vuex';
   import { makeFileUrl } from '../../../utils/utils';
-  import localHeader from '../components/header';
+  import moonHeader from '../components/header';
   
   export default {
     name: 'rank',
@@ -49,17 +49,17 @@
       return {}
     },
     components: {
-      localHeader
+      moonHeader
     },
     computed: {
-      ...mapState('moonFestival', {
+      ...mapState('moon', {
         selfRank: state => state.rank.selfRank,
         rankList: state => state.rank.rankList
       })
     },
     // beforeRouteEnter(to, from, next) {
-    //   if (from.name != 'localIndex') {
-    //     this.$router.replace({name: 'localIndex'})
+    //   if (from.name != 'moonIndex') {
+    //     this.$router.replace({name: 'moonIndex'})
     //   } else {
     //     next();
     //   }
@@ -68,7 +68,7 @@
       this.getRankList();
     },
     methods: {
-      ...mapActions('moonFestival', [
+      ...mapActions('moon', [
         'getRankList'
       ]),
       makeFileUrl(url) {
@@ -81,7 +81,7 @@
     }
   }
 </script>
-<style lang="less">
+<style lang="less" scoped>
   @import '../assets/style/main.less';
   @import '../assets/style/rank.less';
   @import '../assets/style/animation.less';

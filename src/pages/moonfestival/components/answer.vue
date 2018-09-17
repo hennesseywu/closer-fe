@@ -1,11 +1,11 @@
 <template>
   
-  <div class="commen local-answer" :class="{'in-app': ENV.app}" v-if="showAnswer">
+  <div class="commen moon-answer" :class="{'in-app': ENV.app}" v-if="showAnswer">
     <div class="yun-wrapper min">
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <local-header v-if="ENV.app" back close></local-header>
+    <moon-header v-if="ENV.app" back close></moon-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
       <div class="answer-box" v-html="currentQuestion" @click="checkOptions($event)">
@@ -36,7 +36,7 @@
   import {
     parseQuery
   } from '../../../utils/utils'
-  import localHeader from './header';
+  import moonHeader from './header';
   export default {
     props: {
       showAnswer: {
@@ -66,14 +66,14 @@
       }
     },
     components: {
-      localHeader
+      moonHeader
     },
     beforeRouteEnter(to, from, next) {
       if (window.pageTo == 'answer') {
         window.pageTo = null
         next()
       } else {
-        next('/local')
+        next('/moon')
       }
     },
     created() {
@@ -91,7 +91,7 @@
       this.isUpdate = true;
     },
     computed: {
-      ...mapState("local", {
+      ...mapState("moon", {
         statistic: state => state.statistic,
         // startResult: state => state.startResult,
         // startData: state => state.startData,
@@ -124,7 +124,7 @@
       }
     },
     methods: {
-      ...mapActions("local", [
+      ...mapActions("moon", [
         "startTest",
         "nextQuestion",
         "commitTest",
@@ -194,7 +194,6 @@
 </script>
 
 <style lang="less">
-  @import '../assets/style/main.less';
   @import '../assets/style/animation.less';
   @import '../assets/style/answer.less';
 </style>

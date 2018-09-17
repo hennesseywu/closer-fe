@@ -26,7 +26,7 @@
       handleBack() {
         if (this.home) {
           this.$router.push({
-            name: 'localIndex'
+            name: 'moonIndex'
           });
         } else {
           this.$router.back();
@@ -51,12 +51,12 @@
       },
       // 点击分享跳转到分享页
       handleShare() {
-        this.$router.push({name:"localShare"})
+        this.$router.push({name:"moonShare"})
       }
     }
   }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .header {
   position: relative;
   height: 76pr;
