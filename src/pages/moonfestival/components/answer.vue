@@ -16,8 +16,8 @@
         </div>-->
       </div>
       <div class="next-box" :class="isUpdate ? 'animated slideInUp faster' : ''">
-        <div class="finish next-btn" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)"></div>
-        <div class="finish next-btn" v-else @click="next(startResult.userAnswerId)"></div>
+        <div class="btn-width next-btn" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)"></div>
+        <div class="btn-width complate-btn" v-else @click="next(startResult.userAnswerId)"></div>
       </div>
     </div>
   </div>

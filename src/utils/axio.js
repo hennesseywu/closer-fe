@@ -28,9 +28,9 @@ axio.interceptors.request.use(
     if (!window.ENV.app) {
       config.headers['Closer-Agent'] = 'Closer-H5';
     } else {
-      if (this.ENV.app && this.ENV.ios) {
+      if (window.ENV.app && window.ENV.ios) {
         config.headers['Closer-Agent'] = 'Closer-Ios';
-      } else if (this.ENV.app && this.ENV.android) {
+      } else if (window.ENV.app && window.ENV.android) {
         config.headers['Closer-Agent'] = 'Closer-Android';
       }
     }
