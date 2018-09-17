@@ -149,7 +149,7 @@
       if (sessionStorage.resultCache && sessionStorage.resultCache != '{}') {
         let CACHE = JSON.parse(sessionStorage.resultCache);
         console.log('window.CACHE', CACHE)
-        sessionStorage.resultCache = '{}';
+        // sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
       if (this.ENV.wx) {
