@@ -204,10 +204,10 @@
         }, 10)
       },
       goAnswer() {
-        // if (this.statistic.totalAwardAmt >= this.statistic.maxAwardAmt) {
-        //   Toast('您已经获得奖励100元，不能再答题了~')
-        //   return
-        // }
+        if (this.statistic.totalAwardAmt >= this.statistic.maxAwardAmt) {
+          Toast('您已经获得奖励100元，不能再答题了~')
+          return
+        }
         if (this.chance > 0) {
           this.updateCurrentQuestionNum()
           this.$emit('openAnswer', {params: 'fromResult'})
