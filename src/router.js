@@ -131,7 +131,7 @@ const router = new Router({
         name: 'moonIndex',
         component: MoonIndex,
         meta: {
-            title: '首页'
+            title: '广寒攻略'
         }
     }, {
         path: '/moon/rule',
@@ -145,7 +145,7 @@ const router = new Router({
         name: 'moonRank',
         component: MoonRank,
         meta: {
-            title: '活动规则'
+            title: '排行榜'
         }
     }, {
         path: '/moon/share',

@@ -465,8 +465,8 @@ export default {
           console.log("ready")
             // 分享朋友
           wx.onMenuShareAppMessage({
-            title: '是成都人就来瓜分百万大奖', // 分享标题
-            desc: '参与成都人纯度测试，纯度越高，奖金越多！', // 分享描述
+            title: '广寒攻略，你是哪路神仙？', // 分享标题
+            desc: '上仙，中秋节广寒盒饭全面升级！答题送大礼，领盒饭还能预测你的上位之路。', // 分享描述
             link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'http://file.tiejin.cn/public/a7tpUA3rSP/share_wx.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
@@ -479,7 +479,7 @@ export default {
 
           // 分享朋友圈
           wx.onMenuShareTimeline({
-              title: '是成都人就来瓜分百万大奖', // 分享标题
+              title: '广寒攻略，你是哪路神仙？', // 分享标题
               link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: 'http://file.tiejin.cn/public/a7tpUA3rSP/share_wx.png', // 分享图标
               success: function() {
