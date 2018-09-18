@@ -24,7 +24,7 @@
       result: Boolean
     },
     mounted() {
-      console.log('header:', this.back, this.close, this.share, this.home, this.result)
+      console.log('header:', this.back, this.close, this.share, this.home, this.result, this.goBack)
     },
     methods: {
       handleBack() {
@@ -33,7 +33,7 @@
         // }
         // this.result && (sessionStorage.goResult = true);
         // this.$router.back();
-        if (this.goBack) {
+        if (this.home) {
           this.$emit('goBack')
         } else {
           this.$router.back();

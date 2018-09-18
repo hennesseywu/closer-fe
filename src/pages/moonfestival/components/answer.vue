@@ -5,7 +5,7 @@
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <moon-header v-if="ENV.app" back close @goBack="handleBack"></moon-header>
+    <moon-header v-if="ENV.app" back close home @goBack="handleBack"></moon-header>
     <div class="answer-wrapper" v-if="startData && startData.length > 0">
       <div class="hd-img"></div>
       <div class="answer-box box box-tb box-center-center" v-html="currentQuestion" @click="checkOptions($event)">

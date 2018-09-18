@@ -7,7 +7,7 @@
           <div class="yun1"></div>
         </div>
         <div class="share-wrapper">
-          <moon-header back @goBack="handleBack"></moon-header>
+          <moon-header back home @goBack="handleBack"></moon-header>
           <div class="share-wrap">
             <div class="share-container">
               <div v-if="answerId" class="share-score">
@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div ref="canvasContainer" class="main share-wx" :class="{'share-wx-app': ENV.app}">
+      <div ref="canvasContainer" class="share-wx" :class="{'share-wx-app': ENV.app}">
         <div class="yun-wrapper min">
           <div class="yun"></div>
           <div class="yun1"></div>
@@ -229,6 +229,7 @@
         // return;
         let self = this;
         let container = self.$refs.canvasContainer;
+        let shareImg = document.getElementById("share-img");
         self.isDrawed = true;
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
@@ -241,10 +242,10 @@
               data
             }) => {
               this.imgUrl = self.makeFileUrl(data.result.url);
-              document.getElementById("share-img").src = self.imgUrl;
+              shareImg.src = self.imgUrl;
             })
           } else {
-            document.getElementById("share-img").src=img.src;
+            shareImg.src=img.src;
           }
         })
       },
