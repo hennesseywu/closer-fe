@@ -257,6 +257,7 @@
         }
       },
       handleBack() {
+        console.log('share.back');
         this.answerId && (sessionStorage.goResult = true);
         this.$router.back();
       }

@@ -57,7 +57,9 @@ export default {
       this.propData.showResult = true;
     },
     handleBack() {
+      this.propData.showAnswer = false;
       this.propData.showIndex = true;
+      this.propData.showResult = false;
     }
   }
 }
