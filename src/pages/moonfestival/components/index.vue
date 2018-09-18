@@ -38,7 +38,7 @@
       </div>
       <div class="bd-desc" v-html="currentDesc"></div>
       <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>
-      <div class="bd-remain">您还有{{statistic.chance}}次答题机会</div>
+      <div class="bd-remain">您还有{{statistic.chance > 0 ? statistic.chance : 0}}次答题机会</div>
     </section>
     <section class="index-logo"></section>
     <moon-dialog :show="dialog.show" :share="dialog.share" :path="path" :content="dialog.content" @close="closeDialog"></moon-dialog>
