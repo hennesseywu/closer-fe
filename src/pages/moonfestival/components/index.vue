@@ -125,7 +125,7 @@
         if (this.remainTimesToMax == 0) {
           return `恭喜，您已获得全部${transAmount(this.statistic.maxAwardAmt)}元的现金奖励~`
         }
-        return `您再获得<span style="color: #885505;">${this.remainTimesToMax}次</span>王者称号就可以拿到总计${transAmount(this.statistic.maxAwardAmt)}元的现金奖励了！`
+        return `您再获得<span style="color: #885505;">${this.remainTimesToMax}次</span>满分就可以拿到总计${transAmount(this.statistic.maxAwardAmt)}元的现金奖励了！`
       }
     },
     created() {

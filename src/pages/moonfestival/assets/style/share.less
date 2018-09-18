@@ -93,10 +93,11 @@
   }
   .share-qrcode {
     position: absolute;
-    left: 246pr;
+    left: 50%;
     bottom: 120pr;
     width: 180pr;
     height: 180pr;
+    margin-left: -90pr;
     // background: #fff;
     // border: 1px solid red;
     canvas {
@@ -225,15 +226,13 @@
 
 
   .share-wx {
-    position: absolute;
-    top: 0;
-    width: 100%;
     min-height: 100%;
-  }
-  .share-wx-app {
     top: -100%;
-    // opacity: 0;
     z-index: 9;
+  }
+  .share-in-wx {
+    // opacity: 0;
+    top: 0;
   }
   .share-wx-container {
     position: relative;
@@ -245,6 +244,22 @@
     left: 0;
     width: 100%;
     height: 100%;
+  }
+  .share-other {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .share-default {
+      width: 100%;
+      background: url(../images/bg.jpg) center no-repeat;
+      background-size: cover;
+    }
   }
 
 
