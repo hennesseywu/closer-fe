@@ -56,9 +56,5 @@ export default {
 </script>
 <style lang="less">
   @import '../assets/style/main.less';
-.home {
-  width: 100%;
-  height: 100%;
-}
 </style>
 
