@@ -57,6 +57,11 @@
       </div>
       <div v-else-if="!ENV.app && !answerId" class="share-other">
         <div class="share-default">
+          <div class="yun-wrapper min share">
+            <div class="yun"></div>
+            <div class="yun1"></div>
+            <div class="yun2"></div>
+          </div>
           <div class="share-default-hd"></div>
           <div class="share-qrcode share-default-qrcode">
             <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
