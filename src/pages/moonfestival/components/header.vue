@@ -20,20 +20,16 @@
       back: Boolean,
       close: Boolean,
       share: Boolean,
-      home: Boolean
+      home: Boolean,
+      result: Boolean
     },
     mounted() {
-      console.log('evn.v123---', this.ENV.v123)
+      console.log('header:', back, close, share, home, result)
     },
     methods: {
       handleBack() {
-        if (this.home) {
-          this.$router.push({
-            name: 'moonIndex'
-          });
-        } else {
-          this.$router.back();
-        }
+        this.result && (sessionStorage.goResult = true);
+        this.$router.back();
       },
       handleClose() {
         if (this.ENV.app && this.ENV.ios) {

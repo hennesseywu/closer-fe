@@ -7,7 +7,7 @@
           <div class="yun1"></div>
         </div>
         <div class="share-wrapper">
-          <moon-header back home></moon-header>
+          <moon-header back :result="answerId"></moon-header>
           <div class="share-wrap">
             <div class="share-container">
               <div v-if="answerId" class="share-score">
@@ -240,6 +240,7 @@
             tjUploadFile(img).then(({
               data
             }) => {
+              this.imgUrl = self.makeFileUrl(data.result.url);
               document.getElementById("share-img").src = self.imgUrl;
             })
           } else {
@@ -258,7 +259,7 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import '../assets/style/main.less';
   @import '../assets/style/share.less';
 </style>

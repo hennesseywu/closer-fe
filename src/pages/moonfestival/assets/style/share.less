@@ -8,8 +8,6 @@
   background: url(../images/bg.jpg);
   background-size: cover;
   &.in-app {
-    background: #144a9d;
-    min-height: 1334pr;
     .share-wrapper {
       padding-top: 70pr;
     }
@@ -23,15 +21,14 @@
   }
 
   .share-app {
-    position: relative;
-    width: 100%;
-    min-height: 1334pr;
-    height: 100%;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    width: 100%;
+    min-height: 1334pr;
+    height: 100%;
     background: url(../images/bg.jpg);
     background-size: cover;
   }
@@ -54,7 +51,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 40pr;
+    padding-bottom: 20pr;
   }
   .share-container {
     flex-grow: 1;
@@ -100,7 +97,7 @@
     bottom: 120pr;
     width: 180pr;
     height: 180pr;
-    background: #fff;
+    // background: #fff;
     // border: 1px solid red;
     canvas {
       width: 100%!important;
@@ -124,6 +121,7 @@
     border-radius: 180pr;
     background: url(../images/default_avatar.png) center no-repeat;
     background-size: 164pr;
+    box-sizing: content-box;
     box-shadow: 0 0 10pr 6pr rgba(0, 0, 0, .2);
     overflow: hidden;
   }
@@ -131,8 +129,8 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 164pr;
-    height: 164pr;
+    width: 180pr;
+    height: 180pr;
   }
   .share-user-name {
     margin-top: 20pr;

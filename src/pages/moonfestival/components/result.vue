@@ -109,11 +109,6 @@
         sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
-      if (this.ENV.dev) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      } else {
-        this.qrcode.val = 'https://a.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      }
       console.log("parkk", this.$route.params.from)
       if (this.ENV.wx) {
         this.initWxConfig()
@@ -248,7 +243,6 @@
         };
         console.log(resultCache);
         sessionStorage.resultCache = JSON.stringify(resultCache);
-        localStorage.resultCache = JSON.stringify(resultCache);
       },
       avatarLoad(type, e) {
         !type && (e.target.style.display='none')

@@ -28,7 +28,12 @@ export default {
   },
   created() {
     // this.startTest()
-    this.propData.showIndex = true
+    if (sessionStorage.goResult) {
+      this.propData.showResult = true
+      sessionStorage.goResult = null;
+    } else {
+      this.propData.showIndex = true
+    }
   },
   computed: {
     ...mapState('moon', {

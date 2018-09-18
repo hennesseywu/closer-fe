@@ -10,37 +10,39 @@
       <div class="tab-default tab-left" @click="showRankingList"></div>
       <div class="tab-default tab-right" @click="showRule"></div>
     </section>
-    <section class="hd">
-      <div class="hd-img"></div>
+    <section class="content">
+      <section class="hd">
+        <div class="hd-img"></div>
+      </section>
+      <section class="bd" :class="{active: mounted}">
+        <div class="bd-progress">
+          <div class="bd-complete" :style="{width: currentWidth}"></div>
+        </div>
+        <div class="bd-scale box box-pack-between">
+          <div class="bd-scale-default bd-scale-0" :class="{active: statistic.totalAwardAmt > showAmount(0)}">
+            <span class="bd-arrow bd-arrow-left"></span>
+            <span class="bd-scale-amount">{{showAmount(0, 2)}}</span>
+          </div>
+          <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
+            <span class="bd-arrow bd-arrow-center"></span>
+            <span class="bd-scale-amount">{{showAmount(.5, 2)}}</span>
+          </div>
+          <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
+            <span class="bd-arrow bd-arrow-right"></span>
+            <span class="bd-scale-amount">{{showAmount(1, 2)}}</span>
+          </div>
+        </div>
+        <div class="bd-total">
+          累计获得：
+          <span class="bd-count">{{currentTotalAmount}}</span> 元
+          <div class="bd-tixian" @click="handleWithDraw()">去提现</div>
+        </div>
+        <div class="bd-desc" v-html="currentDesc"></div>
+        <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>
+        <div class="bd-remain">您还有{{statistic.chance > 0 ? statistic.chance : 0}}次答题机会</div>
+      </section>
+      <section class="index-logo"></section>
     </section>
-    <section class="bd" :class="{active: mounted}">
-      <div class="bd-progress">
-        <div class="bd-complete" :style="{width: currentWidth}"></div>
-      </div>
-      <div class="bd-scale box box-pack-between">
-        <div class="bd-scale-default bd-scale-0" :class="{active: statistic.totalAwardAmt > showAmount(0)}">
-          <span class="bd-arrow bd-arrow-left"></span>
-          <span class="bd-scale-amount">{{showAmount(0, 2)}}</span>
-        </div>
-        <div class="bd-scale-default bd-scale-50" :class="{active: statistic.totalAwardAmt >= showAmount(.5)}">
-          <span class="bd-arrow bd-arrow-center"></span>
-          <span class="bd-scale-amount">{{showAmount(.5, 2)}}</span>
-        </div>
-        <div class="bd-scale-default bd-scale-100" :class="{active: statistic.totalAwardAmt >= showAmount(1)}">
-          <span class="bd-arrow bd-arrow-right"></span>
-          <span class="bd-scale-amount">{{showAmount(1, 2)}}</span>
-        </div>
-      </div>
-      <div class="bd-total">
-        累计获得：
-        <span class="bd-count">{{currentTotalAmount}}</span> 元
-        <div class="bd-tixian" @click="handleWithDraw()">去提现</div>
-      </div>
-      <div class="bd-desc" v-html="currentDesc"></div>
-      <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>
-      <div class="bd-remain">您还有{{statistic.chance > 0 ? statistic.chance : 0}}次答题机会</div>
-    </section>
-    <section class="index-logo"></section>
     <moon-dialog :show="dialog.show" :share="dialog.share" :path="path" :content="dialog.content" @close="closeDialog"></moon-dialog>
   </div>
 </template>

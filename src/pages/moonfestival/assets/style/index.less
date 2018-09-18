@@ -2,7 +2,11 @@
 @aniFun: ease-out;
 @themeColor: #885504;
 .moon-index {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
   padding: 0 0 40pr;
   font-size: 28pr;
   overflow-x: hidden;
@@ -33,6 +37,15 @@
   .tab-right {
     background: url(../images/rule.png) no-repeat;
     background-size: contain;
+  }
+  .content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .hd {
     position: relative;
