@@ -7,7 +7,7 @@
           <div class="yun1"></div>
         </div>
         <div class="share-wrapper">
-          <moon-header back home @goBack="handleBack"></moon-header>
+          <moon-header back></moon-header>
           <div class="share-wrap">
             <div class="share-container">
               <div v-if="answerId" class="share-score">
@@ -255,11 +255,6 @@
         if (!this.isDrawed) {
           setTimeout(this.drawHtmlToCanvas, 100)
         }
-      },
-      handleBack() {
-        console.log('share.back');
-        this.answerId && (sessionStorage.goResult = true);
-        this.$router.back();
       }
     }
   }

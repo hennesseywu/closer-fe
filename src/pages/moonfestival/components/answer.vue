@@ -1,6 +1,6 @@
 <template>
   
-  <div class="commen moon-answer" :class="{'in-app': ENV.app}" v-if="showAnswer">
+  <div class="commen moon-answer" :class="{'in-app': ENV.app}">
     <div class="yun-wrapper min">
       <div class="yun"></div>
       <div class="yun1"></div>

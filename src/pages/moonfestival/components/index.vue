@@ -1,5 +1,5 @@
 <template>
-  <div class="moon-index" :class="{'in-app': ENV.app}" v-if="showIndex">
+  <div class="moon-index" :class="{'in-app': ENV.app}">
     <div class="yun-wrapper">
       <div class="yun"></div>
       <div class="yun1"></div>

@@ -1,8 +1,8 @@
 <template>
   <div class="main home">
-    <moon-index ref="moonIndex" :showIndex="propData.showIndex" @openAnswer="openAnswerPop"></moon-index>
-    <moon-answer ref="moonAnswer" :startData="startData" :startResult="startResult" :showAnswer="propData.showAnswer" @openResult="openResultPop" @goBack="handleBack"></moon-answer>
-    <moon-result ref="moonResult" :showResult="propData.showResult" @openAnswer="openAnswerPop" @goBack="handleBack"></moon-result>
+    <moon-index ref="moonIndex" v-if="propData.showIndex" @openAnswer="openAnswerPop"></moon-index>
+    <moon-answer ref="moonAnswer" v-if="propData.showAnswer" :startData="startData" :startResult="startResult" @openResult="openResultPop" @goBack="handleBack"></moon-answer>
+    <moon-result ref="moonResult" v-if="propData.showResult" @openAnswer="openAnswerPop" @goBack="handleBack"></moon-result>
   </div>
 </template>
 <script>

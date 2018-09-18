@@ -59,8 +59,12 @@
       // 点击分享跳转到分享页
       handleShare() {
         console.log('handleShare');
-        // this.$router.push({name:"moonShare"})
-        location.href = `${location.origin}/moon/share`
+        if (this.ENV.app) {
+          // 端内跳分享页
+          this.$router.push({
+            name: 'moonShare'
+          })
+        }
       }
     }
   }
