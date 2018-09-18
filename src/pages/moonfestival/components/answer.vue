@@ -107,17 +107,17 @@
 
         return `
           <div class="answer-acount">${questionNum}/8</div>
-          <div class="subject animated slideInUp faster">${title}</div>
-          <div class="optoins animated slideInUp faster" style="animation-delay: 30ms">
+          <div class="subject animated fadeInUp faster">${title}</div>
+          <div class="optoins animated fadeInUp faster" style="animation-delay: 30ms">
             <div class="list" data-seq="${answers[0].seq}" data-questionId="${answers[0].questionId}">${answers[0].title}</div>
           </div>
-          <div class="optoins animated slideInUp faster" style="animation-delay: 60ms">
+          <div class="optoins animated fadeInUp faster" style="animation-delay: 60ms">
             <div class="list" data-seq="${answers[1].seq}" data-questionId="${answers[1].questionId}">${answers[1].title}</div>
           </div>
-          <div class="optoins animated slideInUp faster" style="animation-delay: 90ms">
+          <div class="optoins animated fadeInUp faster" style="animation-delay: 90ms">
             <div class="list" data-seq="${answers[2].seq}" data-questionId="${answers[2].questionId}">${answers[2].title}</div>
           </div>
-          <div class="optoins animated slideInUp faster" style="animation-delay: 120ms">
+          <div class="optoins animated fadeInUp faster" style="animation-delay: 120ms">
             <div class="list" data-seq="${answers[3].seq}" data-questionId="${answers[3].questionId}">${answers[3].title}</div>
           </div>
         `

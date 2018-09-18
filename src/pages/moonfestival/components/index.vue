@@ -35,7 +35,7 @@
         <div class="bd-total">
           累计获得：
           <span class="bd-count">{{currentTotalAmount}}</span> 元
-          <div class="bd-tixian" @click="handleWithDraw()">去提现</div>
+          <div class="bd-tixian" @click="handleWithDraw()">去提现></div>
         </div>
         <div class="bd-desc" v-html="currentDesc"></div>
         <div class="bd-btn animated pulse infinite delay-2" @click="handleStart()"></div>

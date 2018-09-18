@@ -14,6 +14,7 @@
         <div class="regards">
           <span>{{score}}</span>分
         </div>
+        <div class="toShare" @click="handleShare">去分享</div>
       </div>
       <div class="content2">
         <div class="commen-width animated bounceInDown">
@@ -26,7 +27,7 @@
           </div>
         </div>
         <div class="btn-box box box-lr">
-          <div class="share-btn btn-commen" @click="goShare"></div>
+          <div class="btn-commen" :class="wxBtnClass" @click="goShare"></div>
           <div class="go-answer btn-commen" @click="goAnswer"></div>
         </div>
         <div class="chance-remain">剩余{{chance >= 0 ? chance : '0'}}次答题机会</div>
@@ -148,7 +149,24 @@
         level: state => state.endData.level,
         score: state => state.endData.score,
         awardAmt: state => state.endData.awardAmt
-      })
+      }),
+      wxBtnClass() {
+        let cls = 'share-btn';
+        if (this.ENV.wx) {
+          switch (this.level) {
+            case '1':
+              cls='share-btn-5';
+              break;
+            case '2':
+              cls='share-btn-2';
+              break;
+            default:
+              cls='share-btn-dl';
+              break;
+          }
+        }
+        return cls;
+      }
     },
     methods: {
       ...mapMutations([
@@ -200,7 +218,7 @@
       closeDialog() {
         this.dialog.show = false;
       },
-      downloadApp() {
+      goShare() {
         if (this.isApp) {
           // 去分享
           this.$router.push({
@@ -211,16 +229,9 @@
           downloadApp()
         }
       },
-      goShare() {
-        if (this.ENV.app) {
-          // 端内跳分享页
-          this.$router.push({
-            name: 'moonShare'
-          })
-        } else {
-          this.setLocalStorage()
-          location.href = `${location.origin}/moon/share`
-        }
+      handleShare() {
+        this.setLocalStorage()
+        location.href = `${location.origin}/moon/share`
       },
       goTips() {
         if (this.isApp) {
