@@ -1,5 +1,12 @@
 .moon-share {
   text-align: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url(../images/bg.jpg);
+  background-size: cover;
   &.in-app {
     background: #144a9d;
     min-height: 1334pr;
@@ -19,6 +26,14 @@
     position: relative;
     width: 100%;
     min-height: 1334pr;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url(../images/bg.jpg);
+    background-size: cover;
   }
 
   .share-wrapper {
@@ -171,9 +186,8 @@
     background-size: contain;
   }
   .share-items {
-    // width: 90%;
     width: 670pr;
-    margin: 0 40pr;
+    margin: 10pr 40pr;
     background: #fff;
     box-shadow: 0 4pr 20pr 0 rgba(0, 0, 0, 0.2);
     border-radius: 10pr;

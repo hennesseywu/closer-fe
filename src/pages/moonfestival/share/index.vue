@@ -1,7 +1,7 @@
 <template>
-  <div class="main moon-share" :class="{'in-app': ENV.app}">
+  <div class=" moon-share" :class="{'in-app': ENV.app}">
 
-      <div v-if="ENV.app" class="main share-app">
+      <div v-if="ENV.app" class=" share-app">
         <div class="yun-wrapper min">
           <div class="yun"></div>
           <div class="yun1"></div>
