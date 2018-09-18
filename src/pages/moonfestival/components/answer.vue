@@ -47,10 +47,10 @@
       //   type: Array,
       //   default: []
       // },
-      startResult: {
-        type: Object,
-        default: {}
-      }
+      // startResult: {
+      //   type: Object,
+      //   default: {}
+      // }
     },
     data() {
       return {
