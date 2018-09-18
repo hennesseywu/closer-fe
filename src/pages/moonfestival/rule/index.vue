@@ -1,10 +1,10 @@
 <template>
-  <div class="main">
+  <div class="main" :class="{'in-app': ENV.app}">
     <div class="yun-wrapper min">
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <div class="moon-rule" :class="{'in-app': ENV.app}">
+    <div class="moon-rule">
       <moon-header v-if="ENV.app" back></moon-header>
       <section class="bd">
         <div class="bd-name">活动规则</div>
