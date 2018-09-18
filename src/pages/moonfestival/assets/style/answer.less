@@ -10,6 +10,9 @@
   padding-top: 50pr;
   &.in-app {
     padding-top: 70pr;
+    .yun-wrapper {
+      top: 200pr;
+    }
   }
   .header {
     margin-bottom: 0;
@@ -18,12 +21,22 @@
   position: relative;  
   width: 670pr;
   height: 1078pr;
-  background: url(../images/answer_bg.png) center 0 no-repeat;
+  background: url(../images/bitmap.png) center 190pr no-repeat;
   background-size: contain;
   margin: 0 auto;
   padding-top: 240pr;
   color: #885505;
+  border-radius: 10pr;
   z-index: 1;
+  .hd-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 214pr;
+    background: url(../images/answer_hd.png) center 0 no-repeat;
+    background-size: cover;
+  }
   .answer-box {
     margin: 0 40pr 0 40pr;
     padding: 40pr;

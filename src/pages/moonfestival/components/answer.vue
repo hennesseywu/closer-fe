@@ -15,7 +15,7 @@
           <div class="list" :data-index="index" :data-seq="item.seq" :data-questionId="item.questionId" :class="index===checkNum ? 'bg-yellow' : ''" @click="checkOptions($event)">{{item.title}}</div>
         </div>-->
       </div>
-      <div class="next-box box box-center-center" :class="isUpdate ? 'animated slideInUp faster' : ''">
+      <div class="next-box box box-center-center" :class="isUpdate ? 'animated fadeInUp faster' : ''">
         <div class="btn-width next-btn" v-if="currentQuesitionNum < 7" @click="next(startResult.userAnswerId)"></div>
         <div class="btn-width complate-btn" v-else @click="next(startResult.userAnswerId)"></div>
       </div>
