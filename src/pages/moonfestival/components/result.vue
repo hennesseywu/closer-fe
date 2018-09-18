@@ -212,10 +212,15 @@
         }
       },
       goShare() {
-        // if (this.ENV.wx) {
+        if (this.ENV.app) {
+          // 端内跳分享页
+          this.$router.push({
+            name: 'moonShare'
+          })
+        } else {
           this.setLocalStorage()
           location.href = `${location.origin}/moon/share`
-        // }
+        }
       },
       goTips() {
         if (this.isApp) {
