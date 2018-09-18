@@ -1,8 +1,8 @@
 <template>
   <div class="main home">
     <moon-index ref="moonIndex" :showIndex="propData.showIndex" @openAnswer="openAnswerPop"></moon-index>
-    <moon-answer ref="moonAnswer" :startData="startData" :startResult="startResult" :showAnswer="propData.showAnswer" @openResult="openResultPop"></moon-answer>
-    <moon-result ref="moonResult" :showResult="propData.showResult" @openAnswer="openAnswerPop"></moon-result>
+    <moon-answer ref="moonAnswer" :startData="startData" :startResult="startResult" :showAnswer="propData.showAnswer" @openResult="openResultPop" @goBack="handleBack"></moon-answer>
+    <moon-result ref="moonResult" :showResult="propData.showResult" @openAnswer="openAnswerPop" @goBack="handleBack"></moon-result>
   </div>
 </template>
 <script>
@@ -55,6 +55,9 @@ export default {
       this.propData.showAnswer = false;
       this.propData.showIndex = false;
       this.propData.showResult = true;
+    },
+    handleBack() {
+      this.propData.showIndex = true;
     }
   }
 }

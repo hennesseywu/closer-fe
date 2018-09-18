@@ -24,12 +24,20 @@
       result: Boolean
     },
     mounted() {
-      console.log('header:', back, close, share, home, result)
+      console.log('header:', this.back, this.close, this.share, this.home, this.result)
     },
     methods: {
       handleBack() {
-        this.result && (sessionStorage.goResult = true);
-        this.$router.back();
+        // if (this.home) {
+
+        // }
+        // this.result && (sessionStorage.goResult = true);
+        // this.$router.back();
+        if (this.goBack) {
+          this.$emit('goBack')
+        } else {
+          this.$router.back();
+        }
       },
       handleClose() {
         if (this.ENV.app && this.ENV.ios) {
@@ -50,7 +58,9 @@
       },
       // 点击分享跳转到分享页
       handleShare() {
-        this.$router.push({name:"moonShare"})
+        console.log('handleShare');
+        // this.$router.push({name:"moonShare"})
+        location.href = `${location.origin}/moon/share`
       }
     }
   }

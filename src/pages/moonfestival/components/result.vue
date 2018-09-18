@@ -4,7 +4,7 @@
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <moon-header v-if="ENV.app" back home></moon-header>
+    <moon-header v-if="ENV.app" back home @goBack="handleBack"></moon-header>
     <div class="result-wrapper">
       <div class="content1">
         <div class="avater">
@@ -246,6 +246,9 @@
       },
       avatarLoad(type, e) {
         !type && (e.target.style.display='none')
+      },
+      handleBack() {
+        this.$emit('goBack');
       }
     }
   };
