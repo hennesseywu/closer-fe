@@ -171,8 +171,7 @@
         'getStatistic',
         'initWxConfig',
         'updateCurrentQuestionNum',
-        'userShare',
-        'updateChance'
+        'userShare'
       ]),
       ...mapMutations('moon', [
         'SET_USER',
@@ -223,7 +222,6 @@
           //   }
           // })
           this.$emit('openAnswer')
-          this.updateChance()
         }
       },
       closeDialog() {
