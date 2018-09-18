@@ -14,7 +14,7 @@
         <div class="regards">
           <span>{{score}}</span>分
         </div>
-        <div class="toShare" @click="handleShare">去分享</div>
+        <div class="toShare" @click="handleShare">去分享></div>
       </div>
       <div class="content2">
         <div class="commen-width animated bounceInDown">
@@ -152,12 +152,13 @@
       }),
       wxBtnClass() {
         let cls = 'share-btn';
+        console.log('wxBtnClass',this.level)
         if (this.ENV.wx) {
           switch (this.level) {
-            case '1':
+            case 1:
               cls='share-btn-5';
               break;
-            case '2':
+            case 2:
               cls='share-btn-2';
               break;
             default:
