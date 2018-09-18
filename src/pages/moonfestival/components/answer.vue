@@ -43,10 +43,10 @@
         type: Boolean,
         default: false
       },
-      startData: {
-        type: Array,
-        default: []
-      },
+      // startData: {
+      //   type: Array,
+      //   default: []
+      // },
       startResult: {
         type: Object,
         default: {}
@@ -80,8 +80,8 @@
       console.log('answer create======')
       this.updateChance()
       this.updateCurrentQuestionNum()
-      // this.startTest()
-      if (this.ENV.app) {
+      this.startTest()
+      if (this.ENV.wx) {
         console.log('answer wxshare--')
         this.initWxConfig()
       }
@@ -93,8 +93,8 @@
     computed: {
       ...mapState("moon", {
         statistic: state => state.statistic,
-        // startResult: state => state.startResult,
-        // startData: state => state.startData,
+        startResult: state => state.startResult,
+        startData: state => state.startData,
         currentQuesitionNum: state => state.currentQuesitionNum,
         endData: state => state.endData,
         chance: state => state.statistic.chance,

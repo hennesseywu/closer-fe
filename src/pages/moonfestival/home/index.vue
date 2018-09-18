@@ -1,7 +1,7 @@
 <template>
   <div class="main home">
     <moon-index ref="moonIndex" v-if="propData.showIndex" @openAnswer="openAnswerPop"></moon-index>
-    <moon-answer ref="moonAnswer" v-if="propData.showAnswer" :startData="startData" :startResult="startResult" @openResult="openResultPop" @goBack="handleBack"></moon-answer>
+    <moon-answer ref="moonAnswer" v-if="propData.showAnswer" @openResult="openResultPop" @goBack="handleBack"></moon-answer>
     <moon-result ref="moonResult" v-if="propData.showResult" @openAnswer="openAnswerPop" @goBack="handleBack"></moon-result>
   </div>
 </template>
@@ -36,17 +36,13 @@ export default {
     }
   },
   computed: {
-    ...mapState('moon', {
-      startData: state => state.startData,
-      startResult: state => state.startResult
-    })
   },
   methods: {
     ...mapActions('moon', [
       'startTest'
     ]),
    async openAnswerPop() {
-     await this.startTest()
+    //  await this.startTest()
      this.propData.showAnswer = true;
       this.propData.showIndex = false;
       this.propData.showResult = false;

@@ -1,9 +1,9 @@
 module.exports = {
   lintOnSave: false,
   devServer: {
-    host: 'a-sandbox.tiejin.cn',
+    host: 'local.tiejin.cn',
     port: 8889,
-    https: true
+    // https: true
   },
   configureWebpack: {
     entry: [
