@@ -199,6 +199,10 @@
             this.drawHtmlToCanvas()
           }
         }, 10000)
+        if (sessionStorage.fromResult) {
+          sessionStorage.toResult = true;
+          sessionStorage.fromResult = false;
+        }
       }
     },
     methods: {

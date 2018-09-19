@@ -28,11 +28,6 @@
     },
     methods: {
       handleBack() {
-        // if (this.home) {
-
-        // }
-        // this.result && (sessionStorage.goResult = true);
-        // this.$router.back();
         if (this.home) {
           this.$emit('goBack')
         } else {

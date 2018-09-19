@@ -28,11 +28,16 @@ export default {
   },
   created() {
     // this.startTest()
-    if (sessionStorage.goResult) {
-      this.propData.showResult = true
-      sessionStorage.goResult = null;
+    console.log('sessionStorage.toResult:', sessionStorage.toResult);
+    if (sessionStorage.toResult) {
+      this.propData.showAnswer = false;
+      this.propData.showIndex = false;
+      this.propData.showResult = true;
+      sessionStorage.toResult = false;
     } else {
-      this.propData.showIndex = true
+      this.propData.showAnswer = false;
+      this.propData.showIndex = true;
+      this.propData.showResult = false;
     }
   },
   computed: {

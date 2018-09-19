@@ -78,8 +78,8 @@
       right: 20pr;
       width: 48pr;
       height: 68pr;
-      background: url(../assets/images/close.png) center no-repeat;
-      background-size: cover;
+      background: url(../assets/images/close1.png) center no-repeat;
+      background-size: contain;
     }
     .dlg-img {
       position: absolute;
