@@ -16,7 +16,7 @@ export default {
   state: {
     aid: 'TuZhuActivity-2',
     isLogin: false,
-    activityId: 2,
+    activityId: 3,
     inviter: '',
     signSalt: '',
     user: {
@@ -449,7 +449,6 @@ export default {
         activityId: state.activityId,
         salt: state.statistic.signSalt
       });
-      sessionStorage.setItem("link", link);
 
       console.log('wxShare:link:', link);
       if (wxConfig && wxConfig.signature && wxConfig.appId && wxConfig.nonceStr && wxConfig.timestamp) {

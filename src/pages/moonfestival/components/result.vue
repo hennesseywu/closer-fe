@@ -228,6 +228,7 @@
           })
         } else {
           this.setLocalStorage()
+          sessionStorage.setItem("toDownLoad", "1");
           downloadApp()
         }
       },

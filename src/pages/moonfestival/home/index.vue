@@ -25,12 +25,14 @@ export default {
     }
   },
   created() {
-    let toResult = sessionStorage.toResult;
-    if (!!toResult) {
+    let toResult = sessionStorage.toResult,
+      toDownLoad = sessionStorage.toDownLoad;
+    if (!!toResult || !!toDownLoad) {
       this.showAnswer = false;
       this.showIndex = false;
       this.showResult = true;
       sessionStorage.removeItem("toResult");
+      sessionStorage.removeItem("toDownLoad");
     } else {
       this.showAnswer = false;
       this.showIndex = true;

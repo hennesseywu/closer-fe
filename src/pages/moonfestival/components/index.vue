@@ -184,7 +184,13 @@
       // 转到排行榜
       showRankingList() {
         console.log('rank=====')
-        if (!this.isLogin) {
+        if (!this.ENV.app && !this.ENV.wx) {
+          this.dialog = {
+            share: false,
+            content: '亲，请去微信环境下答题吧',
+            show: true
+          }
+        } else if (!this.isLogin) {
           this.checkLoginInApp(this.initAnimation);
         } else if (this.checkOtherEnv()) {
           this.$router.push({

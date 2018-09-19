@@ -166,10 +166,10 @@ router.beforeEach(({
     params
 }, from, next) => {
     document.title = meta.title ? meta.title : '贴近'
-    console.log('router-before:', name, window.ENV.app, window.ENV.wx, query)
+    // console.log('router-before:', name, window.ENV.app, window.ENV.wx, query)
     if (name == 'localIndex' || name == 'moonIndex') {
         if (window.ENV.app) {
-            console.log("closer device")
+            // console.log("closer device")
             Cookies.remove('user'); //app端user完全依赖APP
             next();
         } else if (window.ENV.wx) {
@@ -177,7 +177,7 @@ router.beforeEach(({
                 next();
                 return;
             }
-            console.log('fullpath:', fullPath, query)
+            // console.log('fullpath:', fullPath, query)
 
             // let _path = (location.origin.indexOf('local.tiejin.cn') > -1 ? api.wxLoginLocalUrl : Cookies.get("IS_DEV") ? api.wxLoginDevUrl : api.wxLoginUrl) + path + '?params=' + encodeURIComponent(JSON.stringify(query))
 

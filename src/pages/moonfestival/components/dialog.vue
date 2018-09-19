@@ -105,7 +105,8 @@
     .dlg-btn {
       position: absolute;
       bottom: 62pr;
-      left: 166pr;
+      left: 50%;
+      transform: translate(-50%, 0);
       width: 260pr;
       height: 90pr;
     }
