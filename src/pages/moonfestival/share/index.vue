@@ -200,8 +200,8 @@
           }
         }, 10000)
         if (sessionStorage.fromResult) {
-          sessionStorage.toResult = true;
-          sessionStorage.fromResult = false;
+          sessionStorage.setItem("toResult", "1");
+          sessionStorage.removeItem("fromResult");
         }
       }
     },

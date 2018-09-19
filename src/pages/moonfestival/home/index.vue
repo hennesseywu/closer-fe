@@ -1,8 +1,8 @@
 <template>
   <div class="main home">
-    <moon-index ref="moonIndex" v-if="propData.showIndex" @openAnswer="openAnswerPop"></moon-index>
-    <moon-answer ref="moonAnswer" v-if="propData.showAnswer" @openResult="openResultPop" @goBack="handleBack"></moon-answer>
-    <moon-result ref="moonResult" v-if="propData.showResult" @openAnswer="openAnswerPop" @goBack="handleBack"></moon-result>
+    <moon-index ref="moonIndex" v-if="showIndex" @openAnswer="openAnswerPop"></moon-index>
+    <moon-answer ref="moonAnswer" v-if="showAnswer" @openResult="openResultPop" @goBack="handleBack"></moon-answer>
+    <moon-result ref="moonResult" v-if="showResult" @openAnswer="openAnswerPop" @goBack="handleBack"></moon-result>
   </div>
 </template>
 <script>
@@ -19,48 +19,39 @@ export default {
   },
   data() {
     return {
-      propData: {
-        showIndex: false,
-        showAnswer: false,
-        showResult: false
-      }
+      showIndex: false,
+      showAnswer: false,
+      showResult: false
     }
   },
   created() {
-    // this.startTest()
-    console.log('sessionStorage.toResult:', sessionStorage.toResult);
-    if (sessionStorage.toResult) {
-      this.propData.showAnswer = false;
-      this.propData.showIndex = false;
-      this.propData.showResult = true;
-      sessionStorage.toResult = false;
+    let toResult = sessionStorage.toResult;
+    if (!!toResult) {
+      this.showAnswer = false;
+      this.showIndex = false;
+      this.showResult = true;
+      sessionStorage.removeItem("toResult");
     } else {
-      this.propData.showAnswer = false;
-      this.propData.showIndex = true;
-      this.propData.showResult = false;
+      this.showAnswer = false;
+      this.showIndex = true;
+      this.showResult = false;
     }
   },
-  computed: {
-  },
   methods: {
-    ...mapActions('moon', [
-      'startTest'
-    ]),
    async openAnswerPop() {
-    //  await this.startTest()
-     this.propData.showAnswer = true;
-      this.propData.showIndex = false;
-      this.propData.showResult = false;
+     this.showAnswer = true;
+      this.showIndex = false;
+      this.showResult = false;
     },
     openResultPop() {
-      this.propData.showAnswer = false;
-      this.propData.showIndex = false;
-      this.propData.showResult = true;
+      this.showAnswer = false;
+      this.showIndex = false;
+      this.showResult = true;
     },
     handleBack() {
-      this.propData.showAnswer = false;
-      this.propData.showIndex = true;
-      this.propData.showResult = false;
+      this.showAnswer = false;
+      this.showIndex = true;
+      this.showResult = false;
     }
   }
 }

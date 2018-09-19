@@ -14,7 +14,7 @@
         <div class="regards">
           <span>{{score}}</span>分
         </div>
-        <div v-if="!ENV.app" class="toShare" @click="handleShare">去分享></div>
+        <div v-if="!ENV.app" class="toShare" @click="handleShare"></div>
       </div>
       <div class="content2">
         <div class="commen-width animated bounceInDown">
@@ -260,7 +260,7 @@
         };
         console.log(resultCache);
         sessionStorage.resultCache = JSON.stringify(resultCache);
-        sessionStorage.fromResult = true;
+        sessionStorage.setItem("fromResult", "1");
       },
       avatarLoad(type, e) {
         !type && (e.target.style.display='none')
