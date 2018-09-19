@@ -191,6 +191,10 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
+      if (sessionStorage.fromResult) {
+        sessionStorage.setItem("toResult", "1");
+        sessionStorage.removeItem("fromResult");
+      }
       if (!this.answerId) {
         setTimeout(this.drawHtmlToCanvas, 100)
       } else {
@@ -199,10 +203,6 @@
             this.drawHtmlToCanvas()
           }
         }, 10000)
-        if (sessionStorage.fromResult) {
-          sessionStorage.setItem("toResult", "1");
-          sessionStorage.removeItem("fromResult");
-        }
       }
     },
     methods: {

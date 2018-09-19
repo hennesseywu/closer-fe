@@ -221,6 +221,7 @@
       },
       goShare() {
         if (this.isApp) {
+          sessionStorage.setItem("fromResult", "1");
           // 去分享
           this.$router.push({
             name: 'moonShare'
