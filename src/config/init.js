@@ -8,7 +8,8 @@ let UA = navigator.userAgent.toLowerCase() || navigator.userAgent.toLowerCase(),
 function initENV() {
   // 根据href值设置当前开发环境（build,dev,local）
   for (let key in href) {
-    let index = HREF.indexOf(href[key]);
+    let host = href[key].split('//')[1];
+    let index = HREF.indexOf(host);
     index > -1 && index <= 11 && (ENV.env = key)
   }
   if (!ENV.env) {
