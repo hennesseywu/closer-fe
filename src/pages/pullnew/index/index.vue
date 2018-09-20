@@ -119,7 +119,7 @@
     Indicator
   } from 'mint-ui';
   
-  import feConfig from '../../../config/api';
+  import feConfig from '../../../config/index';
   import {
     dateFormat
   } from "../../../utils/utils";
@@ -149,13 +149,11 @@
         totalPageNum: 0,
         isLogin: false,
         tabActive: 'tabLeft',
-        fileUrl: feConfig.fileUrl
+        fileUrl: ''
       }
     },
     async mounted() {
-      if (this.ENV.dev) {
-        this.fileUrl = feConfig.fileDevURL;
-      }
+      this.fileUrl = feConfig.file[this.ENV.env];
       if (this.ENV.app) {
         this.checkLogin(async(res) => {
           if (res) {
