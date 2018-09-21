@@ -209,7 +209,7 @@
         if (this.chance > 0) {
           this.updateCurrentQuestionNum()
           this.$emit('openAnswer', {params: 'fromResult'})
-          this.updateChance()
+          // this.updateChance()
         } else {
           this.dialog.show = true
           this.dialog.share = true
