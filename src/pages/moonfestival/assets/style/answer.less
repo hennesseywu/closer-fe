@@ -7,79 +7,103 @@
   right: 0;
   bottom: 0;
   left: 0;
-  padding-top: 50pr;
+  padding-top: 20pr;
   &.in-app {
     padding-top: 70pr;
+    .yun-wrapper {
+      top: 100pr;
+    }
   }
   .header {
     margin-bottom: 0;
   }
-.answer-wrapper {
-  position: relative;  
-  width: 670pr;
-  height: 1078pr;
-  background: url(../images/answer_bg.png) center 0 no-repeat;
-  background-size: contain;
-  margin: 0 auto;
-  padding-top: 240pr;
-  color: #885505;
-  z-index: 1;
-  .answer-box {
-    margin: 0 40pr 0 40pr;
-    padding: 40pr;
-    border-radius: 20pr;
-    text-align: center;
-    .answer-acount {
-      margin-top: -65pr;
-      width: 156pr;
-      height: 50pr;
-      line-height: 50pr;
+  .answer-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .answer-wrapper {
+    position: relative;  
+    width: 670pr;
+    height: 1078pr;
+    background: url(../images/bitmap.png) center 190pr no-repeat;
+    background-size: contain;
+    margin: 0 auto;
+    padding-top: 240pr;
+    color: #885505;
+    border-radius: 10pr;
+    z-index: 1;
+    .hd-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 214pr;
+      background: url(../images/answer_hd.png) center 0 no-repeat;
+      background-size: cover;
+    }
+    .answer-box {
+      margin: 0 40pr 0 40pr;
+      padding: 40pr;
+      border-radius: 20pr;
       text-align: center;
-      background: #885504;
-      border-radius: 50pr;
-      border: 4pr solid #885504;
-      color: #D5CBAD;
-    }
-    .subject {
-      width: 100%;
-      min-height: 150pr;
-      text-align: left;
-      margin-top: 20pr;
-      font-size: 36pr;
-      line-height: 50pr;
-    }
-    .optoins {
-      width: 100%;
-      margin-top: 20pr;
-      .list {
-        width: 100%;
-        margin-top: 10pr;
-        border: 4pr solid #895707;
-        font-size: 30pr;
-        line-height: 42pr;
+      .answer-acount {
+        margin-top: -65pr;
+        width: 156pr;
+        height: 50pr;
+        line-height: 50pr;
+        text-align: center;
+        background: #885504;
         border-radius: 50pr;
-        padding: 20pr 0;
-      }
-      .bg-yellow {
-        background: #885505;
+        border: 4pr solid #885504;
         color: #D5CBAD;
       }
+      .subject {
+        width: 100%;
+        min-height: 150pr;
+        text-align: left;
+        margin-top: 20pr;
+        font-size: 36pr;
+        line-height: 50pr;
+      }
+      .optoins {
+        width: 100%;
+        margin-top: 20pr;
+        .list {
+          width: 100%;
+          margin-top: 10pr;
+          border: 4pr solid #895707;
+          font-size: 30pr;
+          line-height: 42pr;
+          border-radius: 50pr;
+          padding: 20pr 0;
+        }
+        .bg-yellow {
+          background: #885505;
+          color: #D5CBAD;
+        }
+      }
+    }
+    .next-box {
+      .btn-width {
+        width: 260pr;
+        height: 90pr;
+        margin-top: 8pr;
+      }
+      .next-btn {
+        background: url(../images/next_btn.png) no-repeat center;
+        background-size: cover;
+      }
+      .complate-btn {
+        background: url(../images/complate.png) no-repeat center;
+        background-size: cover;
+      }
     }
   }
-  .next-box {
-    .btn-width {
-      width: 260pr;
-      height: 90pr;
-      margin-top: 8pr;
-    }
-    .next-btn {
-      background: url(../images/next_btn.png) no-repeat center;
-      background-size: cover;
-    }
-    .complate-btn {
-      background: url(../images/complate.png) no-repeat center;
-      background-size: cover;
-    }
-  }
-}
 }

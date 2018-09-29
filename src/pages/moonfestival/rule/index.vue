@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" :class="{'in-app': ENV.app}">
     <div class="yun-wrapper min">
       <div class="yun"></div>
       <div class="yun1"></div>

@@ -1,10 +1,10 @@
 <template>
-  <div class="moon-result" :class="{'in-app': ENV.app}" v-if="showResult">
+  <div class="moon-result" :class="{'in-app': ENV.app}">
     <div class="yun-wrapper min">
       <div class="yun"></div>
       <div class="yun1"></div>
     </div>
-    <moon-header v-if="ENV.app" back home></moon-header>
+    <moon-header v-if="ENV.app" back home @goBack="handleBack"></moon-header>
     <div class="result-wrapper">
       <div class="content1">
         <div class="avater">
@@ -14,6 +14,7 @@
         <div class="regards">
           <span>{{score}}</span>分
         </div>
+        <div v-if="!ENV.app" class="toShare" @click="handleShare"></div>
       </div>
       <div class="content2">
         <div class="commen-width animated bounceInDown">
@@ -26,7 +27,7 @@
           </div>
         </div>
         <div class="btn-box box box-lr">
-          <div class="share-btn btn-commen" @click="goShare"></div>
+          <div class="btn-commen" :class="wxBtnClass" @click="goShare"></div>
           <div class="go-answer btn-commen" @click="goAnswer"></div>
         </div>
         <div class="chance-remain">剩余{{chance >= 0 ? chance : '0'}}次答题机会</div>
@@ -109,11 +110,6 @@
         sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
-      if (this.ENV.dev) {
-        this.qrcode.val = 'https://a-sandbox.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      } else {
-        this.qrcode.val = 'https://a.tiejin.cn/moon?activityId=' + this.activityId + '&inviter=' + this.objectID + '&salt=' + this.salt
-      }
       console.log("parkk", this.$route.params.from)
       if (this.ENV.wx) {
         this.initWxConfig()
@@ -153,7 +149,25 @@
         level: state => state.endData.level,
         score: state => state.endData.score,
         awardAmt: state => state.endData.awardAmt
-      })
+      }),
+      wxBtnClass() {
+        let cls = 'share-btn';
+        console.log('wxBtnClass',this.level)
+        if (this.ENV.wx) {
+          switch (this.level) {
+            case 1:
+              cls='share-btn-5';
+              break;
+            case 2:
+              cls='share-btn-2';
+              break;
+            default:
+              cls='share-btn-dl';
+              break;
+          }
+        }
+        return cls;
+      }
     },
     methods: {
       ...mapMutations([
@@ -195,7 +209,7 @@
         if (this.chance > 0) {
           this.updateCurrentQuestionNum()
           this.$emit('openAnswer', {params: 'fromResult'})
-          this.updateChance()
+          // this.updateChance()
         } else {
           this.dialog.show = true
           this.dialog.share = true
@@ -205,22 +219,22 @@
       closeDialog() {
         this.dialog.show = false;
       },
-      downloadApp() {
+      goShare() {
         if (this.isApp) {
+          sessionStorage.setItem("fromResult", "1");
           // 去分享
           this.$router.push({
             name: 'moonShare'
           })
         } else {
           this.setLocalStorage()
+          sessionStorage.setItem("toDownLoad", "1");
           downloadApp()
         }
       },
-      goShare() {
-        if (this.ENV.wx) {
-          this.setLocalStorage()
-          location.href = `${location.origin}/moon/share`
-        }
+      handleShare() {
+        this.setLocalStorage()
+        location.href = `${location.origin}/moon/share`
       },
       goTips() {
         if (this.isApp) {
@@ -248,10 +262,13 @@
         };
         console.log(resultCache);
         sessionStorage.resultCache = JSON.stringify(resultCache);
-        localStorage.resultCache = JSON.stringify(resultCache);
+        sessionStorage.setItem("fromResult", "1");
       },
       avatarLoad(type, e) {
         !type && (e.target.style.display='none')
+      },
+      handleBack() {
+        this.$emit('goBack');
       }
     }
   };

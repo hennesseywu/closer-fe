@@ -8,7 +8,8 @@ let UA = navigator.userAgent.toLowerCase() || navigator.userAgent.toLowerCase(),
 function initENV() {
   // 根据href值设置当前开发环境（build,dev,local）
   for (let key in href) {
-    let index = HREF.indexOf(href[key]);
+    let host = href[key].split('//')[1];
+    let index = HREF.indexOf(host);
     index > -1 && index <= 11 && (ENV.env = key)
   }
   if (!ENV.env) {
@@ -45,14 +46,13 @@ function checkVersion(ver1, ver2) {
   let version = window.ENV.version
   let ver = (!ver2 || window.ENV.android) ? ver1 : ver2;
   if (version && ver) {
-    version = version[1]
     version = version.split('.');
     ver = ver.split('.');
     let len = Math.max(version.length, ver.length);
     for (let i = 0; i < len; i++) {
       let ver1 = parseInt(version[i] || 0),
         ver2 = parseInt(ver[i] || 0);
-      if (ver1 > ver2) {
+      if (ver1 >= ver2) {
         return true;
       }
     }

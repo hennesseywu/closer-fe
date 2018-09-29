@@ -5,7 +5,7 @@
       <div class="dlg-close" @click="handleClose()"></div>
       <div class="dlg-img"></div>
       <div class="dlg-desc" v-html="content"></div>
-      <div class="dlg-btn" @click="handleClick()">{{share ? '去分享' : '确定'}}</div>
+      <div class="dlg-btn" :class="share ? 'share' : 'confirm'" @click="handleClick()"></div>
     </div>
   </section>
 </template>
@@ -78,8 +78,8 @@
       right: 20pr;
       width: 48pr;
       height: 68pr;
-      background: url(../assets/images/close.png) center no-repeat;
-      background-size: cover;
+      background: url(../assets/images/close1.png) center no-repeat;
+      background-size: contain;
     }
     .dlg-img {
       position: absolute;
@@ -105,16 +105,18 @@
     .dlg-btn {
       position: absolute;
       bottom: 62pr;
-      left: 166pr;
+      left: 50%;
+      transform: translate(-50%, 0);
       width: 260pr;
       height: 90pr;
-      font-size: 32pr;
-      font-weight: bold;
-      line-height: 90pr;
-      text-align: center;
+    }
+    .share {
       background: url(../assets/images/dialog_btn_share.png) center no-repeat;
-      background-size: 300pr 94pr;
-      color: #333;
+      background-size: cover;
+    }
+    .confirm {
+      background: url(../assets/images/dialog_btn_confirm.png) center no-repeat;
+      background-size: cover;
     }
   }
 </style>

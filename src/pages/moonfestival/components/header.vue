@@ -20,14 +20,16 @@
       back: Boolean,
       close: Boolean,
       share: Boolean,
-      home: Boolean
+      home: Boolean,
+      result: Boolean
+    },
+    mounted() {
+      console.log('header:', this.back, this.close, this.share, this.home, this.result, this.goBack)
     },
     methods: {
       handleBack() {
         if (this.home) {
-          this.$router.push({
-            name: 'moonIndex'
-          });
+          this.$emit('goBack')
         } else {
           this.$router.back();
         }
@@ -51,7 +53,13 @@
       },
       // 点击分享跳转到分享页
       handleShare() {
-        this.$router.push({name:"moonShare"})
+        console.log('handleShare');
+        if (this.ENV.app) {
+          // 端内跳分享页
+          this.$router.push({
+            name: 'moonShare'
+          })
+        }
       }
     }
   }

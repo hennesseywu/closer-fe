@@ -1,13 +1,13 @@
 <template>
-  <div class="main moon-share">
+  <div class=" moon-share" :class="{'in-app': ENV.app}">
 
-      <div v-if="ENV.app" class="main share-app">
+      <div v-if="ENV.app" class=" share-app">
         <div class="yun-wrapper min">
           <div class="yun"></div>
           <div class="yun1"></div>
         </div>
         <div class="share-wrapper">
-          <moon-header back home></moon-header>
+          <moon-header back></moon-header>
           <div class="share-wrap">
             <div class="share-container">
               <div v-if="answerId" class="share-score">
@@ -55,10 +55,26 @@
           </div>
         </div>
       </div>
-      <div ref="canvasContainer" class="main share-wx" :class="{'share-wx-app': ENV.app}">
-        <div class="yun-wrapper min">
+      <div v-else-if="!ENV.app && !answerId" class="share-other">
+        <div class="share-default">
+          <div class="yun-wrapper min share">
+            <div class="yun"></div>
+            <div class="yun1"></div>
+            <div class="yun2"></div>
+          </div>
+          <div class="share-default-hd"></div>
+          <div class="share-qrcode share-default-qrcode">
+            <qrcode-vue :value="qrcode.val" :size="qrcode.size"></qrcode-vue>
+          </div>
+          <div class="share-tip share-default-tip">长按识别二维码答题</div>
+          <div class="share-logo share-default-logo"></div>
+        </div>
+      </div>
+      <div ref="canvasContainer" class="share-wx" :class="{'share-in-wx': !ENV.app && answerId}">
+        <div class="yun-wrapper min share">
           <div class="yun"></div>
           <div class="yun1"></div>
+          <div class="yun2"></div>
         </div>
         <div class="share-wrapper">
           <div class="share-container">
@@ -149,7 +165,7 @@
       if (sessionStorage.resultCache && sessionStorage.resultCache != '{}') {
         let CACHE = JSON.parse(sessionStorage.resultCache);
         console.log('window.CACHE', CACHE)
-        sessionStorage.resultCache = '{}';
+        // sessionStorage.resultCache = '{}';
         this.setCache(CACHE)
       }
       if (this.ENV.wx) {
@@ -175,6 +191,10 @@
     },
     mounted() {
       console.log('answerId:', this.answerId)
+      if (sessionStorage.fromResult) {
+        sessionStorage.setItem("toResult", "1");
+        sessionStorage.removeItem("fromResult");
+      }
       if (!this.answerId) {
         setTimeout(this.drawHtmlToCanvas, 100)
       } else {
@@ -229,6 +249,7 @@
         // return;
         let self = this;
         let container = self.$refs.canvasContainer;
+        let shareImg = document.getElementById("share-img");
         self.isDrawed = true;
         html2Image(container).then(img => {
           // img.setAttribute('class', 'qr-img');
@@ -240,10 +261,11 @@
             tjUploadFile(img).then(({
               data
             }) => {
-              document.getElementById("share-img").src = self.imgUrl;
+              this.imgUrl = self.makeFileUrl(data.result.url);
+              shareImg.src = self.imgUrl;
             })
           } else {
-            document.getElementById("share-img").src=img.src;
+            shareImg.src=img.src;
           }
         })
       },
@@ -258,7 +280,7 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @import '../assets/style/main.less';
   @import '../assets/style/share.less';
 </style>

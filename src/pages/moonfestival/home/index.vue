@@ -1,8 +1,8 @@
 <template>
   <div class="main home">
-    <moon-index ref="moonIndex" :showIndex="propData.showIndex" @openAnswer="openAnswerPop"></moon-index>
-    <moon-answer ref="moonAnswer" :startData="startData" :startResult="startResult" :showAnswer="propData.showAnswer" @openResult="openResultPop"></moon-answer>
-    <moon-result ref="moonResult" :showResult="propData.showResult" @openAnswer="openAnswerPop"></moon-result>
+    <moon-index ref="moonIndex" v-if="showIndex" @openAnswer="openAnswerPop"></moon-index>
+    <moon-answer ref="moonAnswer" v-if="showAnswer" @openResult="openResultPop" @goBack="handleBack"></moon-answer>
+    <moon-result ref="moonResult" v-if="showResult" @openAnswer="openAnswerPop" @goBack="handleBack"></moon-result>
   </div>
 </template>
 <script>
@@ -19,46 +19,46 @@ export default {
   },
   data() {
     return {
-      propData: {
-        showIndex: false,
-        showAnswer: false,
-        showResult: false
-      }
+      showIndex: false,
+      showAnswer: false,
+      showResult: false
     }
   },
   created() {
-    // this.startTest()
-    this.propData.showIndex = true
-  },
-  computed: {
-    ...mapState('moon', {
-      startData: state => state.startData,
-      startResult: state => state.startResult
-    })
+    let toResult = sessionStorage.toResult,
+      toDownLoad = sessionStorage.toDownLoad;
+    if (!!toResult || !!toDownLoad) {
+      this.showAnswer = false;
+      this.showIndex = false;
+      this.showResult = true;
+      sessionStorage.removeItem("toResult");
+      sessionStorage.removeItem("toDownLoad");
+    } else {
+      this.showAnswer = false;
+      this.showIndex = true;
+      this.showResult = false;
+    }
   },
   methods: {
-    ...mapActions('moon', [
-      'startTest'
-    ]),
    async openAnswerPop() {
-     await this.startTest()
-     this.propData.showAnswer = true;
-      this.propData.showIndex = false;
-      this.propData.showResult = false;
+     this.showAnswer = true;
+      this.showIndex = false;
+      this.showResult = false;
     },
     openResultPop() {
-      this.propData.showAnswer = false;
-      this.propData.showIndex = false;
-      this.propData.showResult = true;
+      this.showAnswer = false;
+      this.showIndex = false;
+      this.showResult = true;
+    },
+    handleBack() {
+      this.showAnswer = false;
+      this.showIndex = true;
+      this.showResult = false;
     }
   }
 }
 </script>
 <style lang="less">
   @import '../assets/style/main.less';
-.home {
-  width: 100%;
-  height: 100%;
-}
 </style>
 

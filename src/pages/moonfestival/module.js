@@ -16,7 +16,7 @@ export default {
   state: {
     aid: 'TuZhuActivity-2',
     isLogin: false,
-    activityId: 2,
+    activityId: 3,
     inviter: '',
     signSalt: '',
     user: {
@@ -205,7 +205,7 @@ export default {
         cb && cb();
         return
       }
-      
+
       if (window.ENV.app && window.ENV.ios) {
         console.log("module closer-ios");
         setTimeout(() => {
@@ -449,7 +449,6 @@ export default {
         activityId: state.activityId,
         salt: state.statistic.signSalt
       });
-      sessionStorage.setItem("link", link);
 
       console.log('wxShare:link:', link);
       if (wxConfig && wxConfig.signature && wxConfig.appId && wxConfig.nonceStr && wxConfig.timestamp) {
@@ -465,10 +464,10 @@ export default {
           console.log("ready")
             // 分享朋友
           wx.onMenuShareAppMessage({
-            title: '是成都人就来瓜分百万大奖', // 分享标题
-            desc: '参与成都人纯度测试，纯度越高，奖金越多！', // 分享描述
+            title: '广寒攻略，你是哪路神仙？', // 分享标题
+            desc: '上仙，中秋节广寒盒饭全面升级！答题送大礼，领盒饭还能预测你的上位之路。', // 分享描述
             link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://file.tiejin.cn/public/9Ykg0XgzgX/share_img.png', // 分享图标
+            imgUrl: 'http://file.tiejin.cn/public/a7tpUA3rSP/share_wx.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function() {
@@ -479,9 +478,9 @@ export default {
 
           // 分享朋友圈
           wx.onMenuShareTimeline({
-              title: '是成都人就来瓜分百万大奖', // 分享标题
+              title: '广寒攻略，你是哪路神仙？', // 分享标题
               link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: 'http://file.tiejin.cn/public/9Ykg0XgzgX/share_img.png', // 分享图标
+              imgUrl: 'http://file.tiejin.cn/public/a7tpUA3rSP/share_wx.png', // 分享图标
               success: function() {
                 // 用户点击了分享后执行的回调函数
                 Toast('分享成功~')
