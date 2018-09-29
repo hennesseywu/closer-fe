@@ -1,7 +1,7 @@
 <template>
-<div class="redict" @click="redict()">
-  <div class="close" @click="handleClose">
-  </div>
+  <div class="redict" @click="redict()">
+    <div class="close" @click="handleClose">
+    </div>
   </div>
 </template>
 
@@ -9,8 +9,9 @@
   export default {
     methods: {
       redict() {
-        if (this.$route.query.url&&this.$route.query.url!="") {
-          window.location.href = this.$route.params.url;
+        console.log(this.$route.query.url)
+        if (this.$route.query.url && this.$route.query.url != "") {
+          window.location.href = "//" + this.$route.query.url;
         }
       },
       handleClose() {
@@ -36,18 +37,19 @@
 </script>
 
 <style lang="less" scoped>
-  .redict{
+  .redict {
     background: url("./assets/bg.png");
-    background-size:cover;
+    background-size: cover;
     width: 750pr;
     height: 1334pr;
   }
-  .close{
+  
+  .close {
     position: absolute;
-    top:10pr;
+    top: 10pr;
     left: 10pr;
-     background: url("./assets/close.png");
-    background-size:cover;
+    background: url("./assets/close.png");
+    background-size: cover;
     width: 68pr;
     height: 76pr;
   }

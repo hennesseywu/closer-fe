@@ -210,6 +210,8 @@ router.beforeEach(({
     } else {
       next()
     }
+  } else {
+    next()
   }
 })
 
