@@ -159,10 +159,7 @@ const router = new Router({
   }, {
     path: '/redirect',
     name: 'redirect',
-    component: Redirect,
-    meta: {
-      title: '分享'
-    }
+    component: Redirect
   }]
 
 })
