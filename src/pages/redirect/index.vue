@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="redirect">
     <div class="close" @click="handleClose">
     </div>
-    <div class="redict" @click="redict()">
+    <div class="bd" @click="redict()">
     </div>
   </div>
 </template>
@@ -40,11 +40,18 @@
 </script>
 
 <style lang="less" scoped>
-  .redict {
-    background: url("./assets/bg.jpg");
-    background-size: cover;
+  .redirect {
+    height: 100%;
+    padding-top: 20%;
+    background: url("./assets/bg.jpg") center;
+    background-size: 750pr 100%;
     width: 750pr;
-    height: 1334pr;
+  }
+  .bd {
+    width: 100%;
+    height: 865pr;
+    background: url("./assets/bd.png") center;
+    background-size: cover;
   }
   
   .close {
