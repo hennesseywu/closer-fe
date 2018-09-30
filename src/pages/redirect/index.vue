@@ -57,8 +57,8 @@
   .close {
     position: fixed;
     z-index: 1000;
-    top: 40pr;
-    left: 10pr;
+    top: 80pr;
+    left: 40pr;
     background: url("./assets/close.png");
     background-size: cover;
     width: 68pr;
